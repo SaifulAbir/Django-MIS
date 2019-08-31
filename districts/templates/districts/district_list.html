@@ -1,0 +1,42 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+
+<!-- Main content -->
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Data Table With Full Features</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Division</th>
+                <th>District Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for district in district_list %}
+            <tr>
+                <td>{{ district.division }}</td>
+                <td>{{ district.name }}</td>
+                <td><a href=""><button class="btn btn-primary">Edit</button></a>
+                <a href=""><button class="btn btn-danger">Delete</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Division</th>
+                <th>District Name</th>
+                <th>Actions</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+<!-- /.content -->
+{% endblock %}
