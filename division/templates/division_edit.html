@@ -1,0 +1,50 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Tables
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">Blank page</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Data Table With Full Features</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+
+                <form action="/update/{{ division.id }}">
+
+                    {% csrf_token %}
+
+                    <label class="form-group" for="Division">Division: </label>
+                    <input class="form-control" type="text" name="Division" value="{{ division.Division}}" placeholder="{{ division.Division}}">
+
+
+
+                    <!-- <input class="btn btn-primary" type="submit" value="Update"> -->
+                    <button type="submit" class="btn btn-primary"value="Update">Update</button>
+
+                </form>
+
+
+            </table>
+
+        </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    {% endblock %}

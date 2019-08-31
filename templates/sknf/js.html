@@ -10,6 +10,9 @@
 <script src="{% static 'vendor/fastclick/lib/fastclick.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'vendor/dist/js/adminlte.min.js' %}"></script>
+<!-- Database Tables -->
+<script src="{% static 'vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'vendor/dist/js/demo.js' %}"></script>
 <script>
@@ -17,3 +20,17 @@
     $('.sidebar-menu').tree()
   })
 </script>
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
+
