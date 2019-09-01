@@ -17,7 +17,20 @@
 <script src="{% static 'vendor/dist/js/demo.js' %}"></script>
 <script>
   $(document).ready(function () {
-    $('.sidebar-menu').tree()
+    $('.sidebar-menu').tree();
+        $(".update-division").click(function () {
+          var id = $(this).attr('id');
+          $.ajax({
+            url: '/division/update-division',
+            data: {
+              'id': id
+            },
+            success: function (data) {
+                $('#division-update').val(data);
+                jQuery('#division-update-form').attr('action','/division/update/'+id);
+            }
+          });
+        });
   })
 </script>
 <script>
