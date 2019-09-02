@@ -107,6 +107,23 @@
               </ul>
             </li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+          </ul>
+
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-share"></i> <span>District</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{% url 'districts:create_district' %}"><i class="fa fa-circle-o"></i> Add District</a></li>
+            <li><a href="{% url 'districts:district_list' %}"><i class="fa fa-circle-o"></i> All District</a></li>
+          </ul>
+
+        </li>
+
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -340,10 +357,11 @@
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
+
 <!-- ./wrapper -->
 {% include "sknf/js.html" %}
+{% block extra_js %}
 
-
-
+{% endblock %}
 </body>
 </html>

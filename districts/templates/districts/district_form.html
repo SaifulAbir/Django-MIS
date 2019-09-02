@@ -1,37 +1,36 @@
-{% extends 'sknf/base.html' %}
-{% block body_block %}
-<!-- Main content -->
-<section class="content">
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-            <div class="box box-info">
-                <div class="box-header">
-                    <h3 class="box-title">Add District</h3>
-                </div>
-                <div class="box-body">
-                    <!-- Color Picker -->
-                    <form action="{% url 'districts:create_district' %}" method='POST'>
-                        {% csrf_token %}
-                        <!-- select -->
-                        <div class="form-group">
-                            <label>Select Division</label>
-                            {{form.division}}
-                        </div>
-                        <!-- text input -->
-                        <div class="form-group">
-                            <label>District</label>
-                            {{ form.name }}
-                        </div>
-                        <input type="submit" value="Save" class="btn btn-primary">
-                    </form>
-                    <!-- /.form group -->
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box-body -->
-        </div>
+{% load widget_tweaks %}
+
+<form action="{% url 'districts:create_district' %}" class="js-district-create-form" method='POST'>
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Create a new district</h4>
     </div>
-</section>
-<!--/.col (left) -->
-{% endblock %}
+    <div class="modal-body">
+        <div class="{% if form.non_field_errors %}invalid{% endif %}">
+    {% for error in form.non_field_errors %}
+    {{ error }}
+    {% endfor %}
+</div>
+{% for field in form %}
+<div class="form-group">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% render_field field class="form-control" placeholder=field.label %}
+    <div class="{% if field.errors %} invalid{% endif %}">
+        {% for error in field.errors %}
+        <p class="help-block">{{ error }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+    </div>
+    <div class="modal-footer">
+        <input type="submit" value="Create" id="id_username" class="btn btn-primary"/>
+
+    </div>
+</form>
+
+<!-- /.form group -->
+

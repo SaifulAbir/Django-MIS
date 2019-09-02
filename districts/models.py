@@ -21,8 +21,8 @@ class District(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('districts:district_list')
+    """def get_absolute_url(self):
+        return reverse('districts:district_list')"""
 
     class Meta:
         ordering = ['-created_date']
