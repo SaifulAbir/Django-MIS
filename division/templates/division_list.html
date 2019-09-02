@@ -27,9 +27,13 @@
 
                         <td>
                             <button type="button" class="btn btn-info update-division" id="{{ divi.id}}"  data-toggle="modal" data-target="#modal-edit" >
-                            Edit
-                        </button>
-                            <a class="btn btn-danger" href="/division/delete/{{ divi.id}}"> Delete</a>
+                                Edit
+                            </button>
+                            <!-- <a class="btn btn-danger" href="/division/delete/{{ divi.id}}"> Delete</a>-->
+                            <button type="button" class="btn btn-danger delete-division" id="{{ divi.id}}"  data-toggle="modal" data-target="#modal-delete" >
+                                Delete
+                            </button>
+
                         </td>
 
 
@@ -84,9 +88,9 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="closedivision_add" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">ADD Division</h4>
+                            <h4 class="modal-title">Edit Division</h4>
                         </div>
                         <div class="modal-footer">
 
@@ -95,7 +99,7 @@
                                 {% csrf_token %}
 
                                 <label class="form-group" for="Division"> </label>
-                                <input class="form-control" type="text" id="division-update" name="Division" value="{{ division.Division}}" placeholder="{{ division.Division}}">
+                                <input class="form-control" type="text" id="division-update" name="Division" value="{{ division.Division}}" placeholder="{{ division.Division}}"><br>
 
                                 <!-- <input class="btn btn-primary" type="submit" value="Update"> -->
                                 <button type="submit" class="btn btn-primary"value="Update">Save Changes</button>
@@ -109,8 +113,86 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
+
+
+          <div class="modal fade" id="modal-delete">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete Division</h4>
+              </div>
+              <div class="modal-body">
+                <p> Are  You Sure Delete This Division ? </p>
+
+                  <tbody>
+                  {% for divi in division %}
+
+                  <tr>
+                      <td>{{ divi.Division }}</td>
+
+
+
+<!--                      <td><a class="btn btn-info" href="/division/edit/{{ divi.id}}"> Edit</a>-->
+<!--                          <a class="btn btn-danger" href="/division/delete/{{ divi.id}}"> Delete</a>-->
+                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, Close</button>
+
+                      <a class="btn btn-danger" href="/division/delete/{{ divi.id}}">Yes, Delete </a>
+<!--                      <a type="button" class="btn btn-danger" href="/division/delete/{{ divi.id}}" >Yes, Delete</a>-->
+
+
+                      <div class="modal-footer">
+
+<!--                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, Close</button>-->
+<!--                          <button type="button" class="btn btn-danger" href="/division/delete/{{ divi.id}}" >Yes, Delete</button>-->
+
+                      </div>
+
+
+
+                      </td>
+
+
+                  </tr>
+
+                  {% endfor %}
+
+                  </tbody>
+
+
+<!--                  <form id="division-delete-form">-->
+
+<!--                    {% csrf_token %}-->
+
+<!--                    <input class="form-control" type="text" name="Division" value="{{ division.Division}}" placeholder="{{ division.Division}}">-->
+
+<!--                      <div class="modal-footer">-->
+<!--                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, Close</button>-->
+<!--                          <a class="btn btn-danger" href="/division/delete/{{ divi.id}}"> Delete</a>-->
+<!--&lt;!&ndash;                          <button type="button" class="btn btn-danger" href="/division/delete/{{ divi.id}}" >Yes, Delete</button>&ndash;&gt;-->
+<!--                      </div>-->
+
+
+
+                  </form>
+
+              </div>
+
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+
+
+
         </div>
         <!-- /.content-wrapper -->
-        {% endblock %}
+
     </div>
 </div>
+
+
+{% endblock %}

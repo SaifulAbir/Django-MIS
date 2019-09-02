@@ -12,7 +12,6 @@ def division_list(request):
     }
     return render(request, 'division_list.html', context)
 
-
 def create(request):
     print(request.POST)
     Division = request.GET['Division']
@@ -24,6 +23,15 @@ def create(request):
 
 def division_add(request):
     return render(request, 'division_add.html')
+
+# def delete_divison_ajax(request):
+#     division_id = request.GET.get('id')
+#     division = Division_name.objects.get(pk=division_id)
+#     context = {
+#         'division': division
+#     }
+#     return HttpResponse(division.Division)
+
 
 
 def delete(request, id):
@@ -40,12 +48,17 @@ def edit(request, id):
     return render(request, 'edit.html', context)
 
 
-def update(request, id):
+def update_divison_ajax(request):
     division_id = request.GET.get('id')
     division = Division_name.objects.get(pk=division_id)
     context = {
         'division': division
     }
     return HttpResponse(division.Division)
-    #return render(request, 'ajax-edit.html', context)
+    return render(request, 'ajax-edit.html', context)
 
+def update(request, id):
+    division = Division_name.objects.get(pk=id)
+    division.Division = request.GET['Division']
+    division.save()
+    return redirect('/division/division_list')
