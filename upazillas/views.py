@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from upazillas.models import Upazilla
-
+from .forms import UpazillaForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
