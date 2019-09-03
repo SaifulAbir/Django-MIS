@@ -1,0 +1,20 @@
+
+{% for upazilla in upazilla_list %}
+<tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ upazilla.division }}</td>
+    <td>{{ upazilla.district }}</td>
+    <td>{{ upazilla.name }}</td>
+    <td><button type="button"
+                class="btn btn-warning btn-sm js-update-upazilla"
+                data-url="{% url 'upazillas:update_upazilla' upazilla.id %}">
+        <span class="fa fa-edit"></span> Edit
+    </button>
+        <button type="button"
+                class="btn btn-danger btn-sm js-delete-upazilla"
+                data-url="{% url 'upazillas:delete_upazilla' upazilla.id %}">
+            <span class="fa fa-trash"></span> Delete
+        </button>
+    </td>
+</tr>
+{% endfor %}

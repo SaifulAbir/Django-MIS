@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+
+from districts.models import District
 from upazillas.models import Upazilla
 from .forms import UpazillaForm
 # Create your views here.
@@ -15,7 +17,7 @@ def save_upazilla_form(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            upazilla_list = District.objects.all()
+            upazilla_list = Upazilla.objects.all()
             data['html_upazilla_list'] = render_to_string('upazillas/partial_upazillas_list.html',
                                                           {'upazilla_list': upazilla_list})
         else:
@@ -64,3 +66,8 @@ def upazilla_delete(request, pk):
             request=request,
         )
     return JsonResponse(data)
+
+def load_districts(request):
+    division_id = request.GET.get('division')
+    districts = District.objects.filter(division_id=division_id).order_by('name')
+    return render(request, 'upazillas/district_dropdown_list_options.html', {'districts': districts})
