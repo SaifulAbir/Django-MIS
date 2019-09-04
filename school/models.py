@@ -17,7 +17,7 @@ class School(models.Model):
     district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
     upazilla = models.ForeignKey(Upazilla, on_delete=models.SET_NULL, null=True)
     union = models.ForeignKey(Union, on_delete=models.SET_NULL, null=True)
-    address = models.TextField(max_length=264)
+    address = models.TextField(max_length=200)
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
