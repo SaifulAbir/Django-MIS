@@ -9,7 +9,7 @@ class Division(models.Model):
     name = models.CharField(max_length=128)
     created_date = models.DateTimeField(default=timezone.now)
 
-    objects  = models.Manager
+    objects = models.Manager
 
     def __str__(self):
         return self.name
