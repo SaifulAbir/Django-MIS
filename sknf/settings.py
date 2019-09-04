@@ -41,15 +41,10 @@ INSTALLED_APPS = [
     'accounts',
     'districts',
     'upazillas',
-<<<<<<< HEAD
     'widget_tweaks',
     'division',
-
-=======
     'unions',
     'school',
-    'widget_tweaks'
->>>>>>> feature/05_schoolorclub
 ]
 
 MIDDLEWARE = [
