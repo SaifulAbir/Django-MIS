@@ -19,9 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
-<<<<<<< HEAD
-    path('district/', include('districts.urls'))
-=======
+    path('district/', include('districts.urls')),
     path('division/', include('division.urls')),
->>>>>>> feature/03_division
 ]

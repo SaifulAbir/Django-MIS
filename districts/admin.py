@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import District, Division
+from .models import District
 
-admin.site.register(Division)
+
 admin.site.register(District)

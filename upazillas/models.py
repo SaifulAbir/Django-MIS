@@ -3,7 +3,8 @@ from django.db import models
 # Create your models here.
 from django.utils import timezone
 
-from districts.models import Division, District
+from districts.models import District
+from division.models import Division
 
 
 class Upazilla(models.Model):

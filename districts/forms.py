@@ -1,5 +1,5 @@
 from django import forms
-from .models import District, Division
+from .models import District
 
 
 """class DistrictForm(forms.ModelForm):
