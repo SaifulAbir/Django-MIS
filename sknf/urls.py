@@ -20,5 +20,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('district/', include('districts.urls')),
+<<<<<<< HEAD
     path('division/', include('division.urls')),
+=======
+    path('school/', include('school.urls'))
+>>>>>>> feature/05_schoolorclub
 ]

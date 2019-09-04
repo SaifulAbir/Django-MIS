@@ -1,0 +1,24 @@
+
+{% for school in school_list %}
+<tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ school.name }}</td>
+    <td>{{ school.school_id }}</td>
+    <td><a type="button"
+                class="btn btn-info btn-sm"
+                href="{% url 'school:detail_school' school.pk %}">
+        <span class="fa fa-eye"></span> Detail
+    </a>
+        <a type="button"
+                class="btn btn-warning btn-sm"
+                href="{% url 'school:update_school' school.pk %}">
+        <span class="fa fa-edit"></span> Edit
+    </a>
+        <button type="button"
+                class="btn btn-danger btn-sm js-delete-school"
+                data-url="{% url 'school:delete_school' school.id %}">
+            <span class="fa fa-trash"></span> Delete
+        </button>
+    </td>
+</tr>
+{% endfor %}
