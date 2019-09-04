@@ -59,19 +59,7 @@
         </li>
         <li class="treeview active">
           <a href="#">
-            <i class="fa fa-folder"></i> <span>Division</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-         <ul class="treeview-menu">
-            <li><a href="{% url 'division_add' %}"><i class="fa fa-circle-o"></i> Add Division</a></li>
-            <li><a href="{% url 'division_list' %}"><i class="fa fa-circle-o"></i> Division List</a></li>
-          </ul>
-        </li>
-        <li class="treeview active">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Division</span>
+            <i class="fa fa-folder"></i> <span>Examples</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -119,6 +107,11 @@
               </ul>
             </li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+          </ul>
+
+        </li>
+
+
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -128,23 +121,10 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Blank page
-        <small>it all starts here</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Examples</a></li>
-        <li class="active">Blank page</li>
-      </ol>
-    </section>
 
-    <!-- Main content -->
-    <section class="content">
     {% block body_block %}
     {% endblock %}
-    </section>
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -352,10 +332,11 @@
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
+
 <!-- ./wrapper -->
 {% include "sknf/js.html" %}
+{% block extra_js %}
 
-
-
+{% endblock %}
 </body>
 </html>

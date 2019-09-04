@@ -1,14 +1,12 @@
-
 from django.urls import path
-from .import views
+from . import views
+
+app_name = 'division'
+
 urlpatterns = [
-    path('', views.division_add, name='division_add'),
-    path('division_add/', views.division_add, name='division_add'),
-    path('division_list/', views.division_list, name='division_list'),
-    path('create/', views.create, name='create'),
-    path('delete/<id>/', views.delete, name='delete'),
-    path('edit/<id>/', views.edit, name='edit'),
-    path('update/<id>/', views.update, name='update'),
-    path('update-division', views.update_divison_ajax, name='update_divison_ajax'),
-    # path('delete-division', views.delete_divison_ajax, name='delete_divison_ajax'),
+    path('add/', views.division_create, name = 'create_division'),
+    path('division_list/', views.DivisionList.as_view(), name = 'division_list'),
+    path('delete/<int:pk>/', views.division_delete, name = 'delete_division'),
+    path('update/<int:pk>', views.division_update, name = 'update_division'),
+
 ]

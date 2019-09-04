@@ -1,72 +1,50 @@
-from django.test import SimpleTestCase
 from django.test import TestCase
-from division.models import Division_name
+
+# Create your tests here.
+from django.test import TestCase
+
+# Create your tests here.
+from django.urls import reverse
+from django.utils import timezone
+from .forms import DivisionForm
+from .models import Division
 
 
-class DivisionTest(SimpleTestCase):
+class DivisionTest(TestCase):
 
-    def test_division_add(self):
-        response = self.client.get('/division/division_add/')
-        self.assertEqual(response.status_code, 200)
+    def create_division(self, name="Dhaka"):
+        return Division.objects.create(name=name, created_date=timezone.now())
 
-#
-# class Division_name_test(TestCase):
-#
-#     def test_create_divition(self, Division="Dhaka"):
-#         return Division.objects.create(Division=Division, )
-#
-#     def test_Division_creation(self):
-#         D = self.create_division()
-#         self.assertTrue(isinstance(D, Division))
-#         self.assertEqual(D.__unicode__(), D.Division)
+    # def create_division(self, division, name="Lakshmipur"):
+    #     return District.objects.create(division=division, name=name, created_date=timezone.now())
 
+    # models
+    def testDivision_whenContentIsCorrect_shouldCreateObject(self):
+        division = self.create_division()
+        # division = self.create_division(division = division)
+        actual = division.__str__()
+        expected = division.name
+        self.assertTrue(isinstance(division, Division))
+        self.assertEqual(actual, expected)
 
-
-class Setup_Class(TestCase):
-
-    def setUp(self):
-        self.Division = Division_name.objects.create(Division="Dhaka")
-
-class Division_Form_Test(TestCase):
+    # views
+    # Valid Data
+    def testDivision_create_View_whenValidData_shouldResponse200(self):
+        division = self.create_division()
+        response = self.client.post(reverse('division:create_division'),
+                                    {'division': division, 'name': "Dhaka", 'created_date': timezone.now()})
+        actual = response.status_code
+        expected = 200
+        self.assertEqual(actual, expected)
 
     # Valid Form Data
-    def test_UserForm_valid(self):
-        form = Division_name(data={'Division': "Dhaka",})
+    def testDivisionForm_whenValidData_shouldReturnTrue(self):
+        division = self.create_division()
+        form = DivisionForm(data={'division': str(division.id), 'name': "Dhaka"})
         self.assertTrue(form.is_valid())
 
     # Invalid Form Data
-    def test_DivisionForm_invalid(self):
-        form = Division_name(data={'Division': "Dhaka",})
+    def testDivisionForm_whenInValidData_shouldReturnFalse(self):
+        division = self.create_division()
+        form = DivisionForm(data={'division': str(division.id), 'name': ""})
         self.assertFalse(form.is_valid())
-
-
-
-class Division_Views_Test(TestCase):
-
-    def setUp(self):
-        self.Division = Division_name.objects.create(Division="Dhaka")
-
-
-    def test_home_view(self):
-        user_login = self.client.login(email="user@mp.com", password="user")
-        self.assertTrue(user_login)
-        response = self.client.get("/")
-        self.assertEqual(response.status_code, 302)
-
-    def test_add_user_view(self):
-        response = self.client.get("include url for add user view")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "include template name to render the response")
-
-    # Invalid Data
-    def test_add_user_invalidform_view(self):
-        response = self.client.post()
-        self.assertTrue('"error": true' in response.content)
-
-    # Valid Data
-    def test_add_admin_form_view(self):
-        user_count = Division.objects.count()
-        response = self.client.post(data={'Division': "Dhaka",})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(Division.objects.count(), user_count+1)
-        self.assertTrue('"error": false' in response.content)

@@ -1,64 +1,72 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.http import HttpResponse, JsonResponse
-from .models import Division_name
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 
-
+from division.models import Division
+from .forms import DivisionForm
 # Create your views here.
-
-def division_list(request):
-    division = Division_name.objects.all()
-    context = {
-        'division': division
-    }
-    return render(request, 'division_list.html', context)
-
-def create(request):
-    print(request.POST)
-    Division = request.GET['Division']
-
-    Division_name_details = Division_name(Division=Division)
-    Division_name_details.save()
-    return redirect("/division/division_list")
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
+from . import models
 
 
-def division_add(request):
-    return render(request, 'division_add.html')
+def save_division_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            division_list = Division.objects.all()
+            data['html_division_list'] = render_to_string('division/partial_division_list.html',
+                                                          {'division_list': division_list})
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
 
-# def delete_divison_ajax(request):
-#     division_id = request.GET.get('id')
-#     division = Division_name.objects.get(pk=division_id)
-#     context = {
-#         'division': division
-#     }
-#     return HttpResponse(division.Division)
+def division_create(request):
+    data = dict()
+
+    if request.method == 'POST':
+        form = DivisionForm(request.POST)
+    else:
+        form = DivisionForm()
+    return save_division_form(request, form, 'division/division_form.html')
+
+def division_update(request, pk):
+    division = get_object_or_404(Division, pk=pk)
+    if request.method == 'POST':
+        form = DivisionForm(request.POST, instance=division)
+    else:
+        form = DivisionForm(instance=division)
+    return save_division_form(request, form, 'division/division_update_form.html')
 
 
+class DivisionList(LoginRequiredMixin, generic.ListView):
 
-def delete(request, id):
-    division = Division_name.objects.get(pk=id)
-    division.delete()
-    return redirect('/division/division_list')
+    model = models.Division
 
+"""class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
 
-def edit(request, id):
-    division = Division_name.objects.get(pk=id)
-    context = {
-        'division': division
-    }
-    return render(request, 'edit.html', context)
+    model = models.District
+    success_url = reverse_lazy('districts:district_list')"""
 
-
-def update_divison_ajax(request):
-    division_id = request.GET.get('id')
-    division = Division_name.objects.get(pk=division_id)
-    context = {
-        'division': division
-    }
-    return HttpResponse(division.Division)
-    return render(request, 'ajax-edit.html', context)
-
-def update(request, id):
-    division = Division_name.objects.get(pk=id)
-    division.Division = request.GET['Division']
-    division.save()
-    return redirect('/division/division_list')
+def division_delete(request, pk):
+    division = get_object_or_404(Division, pk=pk)
+    data = dict()
+    if request.method == 'POST':
+        division.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        division_list = Division.objects.all()
+        data['html_division_list'] = render_to_string('division/partial_division_list.html', {
+            'division_list': division_list
+        })
+    else:
+        context = {'division': division}
+        data['html_form'] = render_to_string('division/division_confirm_delete.html',
+            context,
+            request=request,
+        )
+    return JsonResponse(data)
