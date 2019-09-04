@@ -28,7 +28,11 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
+<<<<<<< HEAD
 $VIRTUAL_ENV = r"/home/username/DjangoOfficeProject/Dev/venv"
+=======
+$VIRTUAL_ENV = r"/home/rakib/Desktop/sknf_project/venv"
+>>>>>>> feature/03_division
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]

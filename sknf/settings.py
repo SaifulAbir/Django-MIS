@@ -39,9 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+<<<<<<< HEAD
     'districts',
     'upazillas',
     'widget_tweaks'
+=======
+    'widget_tweaks',
+    'division',
+>>>>>>> feature/03_division
 ]
 
 MIDDLEWARE = [

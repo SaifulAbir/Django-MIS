@@ -46,7 +46,11 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
+<<<<<<< HEAD
 VIRTUAL_ENV="/home/username/DjangoOfficeProject/Dev/venv"
+=======
+VIRTUAL_ENV="/home/rakib/Desktop/sknf_project/venv"
+>>>>>>> feature/03_division
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

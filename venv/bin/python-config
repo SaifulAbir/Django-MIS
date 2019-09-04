@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/home/username/DjangoOfficeProject/Dev/venv/bin/python
+=======
+#!/home/rakib/Desktop/sknf_project/venv/bin/python
+>>>>>>> feature/03_division
 
 import sys
 import getopt

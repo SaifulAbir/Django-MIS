@@ -57,7 +57,11 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 set -gx VIRTUAL_ENV "/home/username/DjangoOfficeProject/Dev/venv"
+=======
+set -gx VIRTUAL_ENV "/home/rakib/Desktop/sknf_project/venv"
+>>>>>>> feature/03_division
 
 # https://github.com/fish-shell/fish-shell/issues/436 altered PATH handling
 if test (echo $FISH_VERSION | tr "." "\n")[1] -lt 3
