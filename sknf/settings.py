@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'accounts',
     'districts',
     'upazillas',
+    'unions',
+    'school',
     'widget_tweaks'
 ]
 
