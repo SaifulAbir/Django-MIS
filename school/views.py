@@ -15,7 +15,7 @@ from . import models
 
 
 class CreateSchool(LoginRequiredMixin, generic.CreateView):
-    fields = ['name', 'school_id', 'division', 'district', 'upazilla', 'union', 'address']
+    form_class = SchoolForm
     model = School
 
 class SchoolUpdate(LoginRequiredMixin, generic.UpdateView):
