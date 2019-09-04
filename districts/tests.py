@@ -3,8 +3,10 @@ from django.test import TestCase
 # Create your tests here.
 from django.urls import reverse
 from django.utils import timezone
+
+from division.models import Division
 from .forms import DistrictForm
-from .models import District, Division
+from .models import District
 
 
 class DistrictTest(TestCase):
