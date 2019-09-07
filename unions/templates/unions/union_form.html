@@ -44,5 +44,49 @@
     </div>
 </form>
 
-<!-- /.form group -->
+<script>
+$(function(){
+    $("#id_division").change(function () {
+    var divisionId = $(this).val();
+    $.ajax({
+        url: '/school/ajax/load-districts/',
+        data: {
+            'division': divisionId
+        },
+        success: function (data) {
+        $("#id_district").html(data);
+
+    }
+});
+});
+
+   $("#id_district").change(function () {
+    var districtId = $(this).val();
+    $.ajax({
+        url: '/school/ajax/load-upazillas/',
+        data: {
+            'district': districtId
+        },
+        success: function (data) {
+        $("#id_upazilla").html(data);
+
+    }
+});
+});
+
+$("#id_upazilla").change(function () {
+    var upazillaId = $(this).val();
+    $.ajax({
+        url: '/school/ajax/load-unions/',
+        data: {
+            'upazilla': upazillaId
+        },
+        success: function (data) {
+        $("#id_union").html(data);
+
+    }
+});
+});
+});
+</script>
 
