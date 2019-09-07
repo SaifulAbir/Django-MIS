@@ -2,8 +2,10 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-
+from districts.models import District
 from unions.models import Union
+from upazillas.models import Upazilla
+
 from .forms import UnionForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -71,4 +73,19 @@ def union_delete(request, pk):
             request=request,
         )
     return JsonResponse(data)
+
+def load_districts(request):
+    division_id = request.GET.get('division')
+    districts = District.objects.filter(division_id=division_id).order_by('name')
+    return render(request, 'unions/district_dropdown_list_options.html', {'districts': districts})
+
+def load_upazillas(request):
+    district_id = request.GET.get('district')
+    upazillas = Upazilla.objects.filter(district_id=district_id).order_by('name')
+    return render(request, 'unions/upazilla_dropdown_list_options.html', {'upazillas': upazillas})
+
+def load_unions(request):
+    upazilla_id = request.GET.get('upazilla')
+    unions = Union.objects.filter(upazilla_id=upazilla_id).order_by('name')
+    return render(request, 'unions/union_dropdown_list_options.html', {'unions': unions})
 

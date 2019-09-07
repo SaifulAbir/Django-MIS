@@ -7,11 +7,12 @@ from django.utils import timezone
 from districts.models import District
 from division.models import Division
 from upazillas.models import Upazilla
+
 from .forms import UnionForm
 from .models import Union
 
 
-class UpazillaTest(TestCase):
+class UnionTest(TestCase):
 
     def create_division(self, name="Dhaka"):
         return Division.objects.create(name=name, created_date=timezone.now())
@@ -29,8 +30,8 @@ class UpazillaTest(TestCase):
     # models
     def testUpazilla_whenContentIsCorrect_shouldCreateObject(self):
         division = self.create_division()
-        district = self.create_district(division = division)
-        upazilla = self.create_upazilla(division = division, district = district)
+        district = self.create_district(division=division)
+        upazilla = self.create_upazilla(division=division, district=district)
         union = self.create_union(division=division, district=district, upazilla=upazilla)
         actual = union.__str__()
         expected = union.name
@@ -42,24 +43,28 @@ class UpazillaTest(TestCase):
     def testUnion_create_View_whenValidData_shouldResponse200(self):
         division = self.create_division()
         district = self.create_district(division=division)
-        upazilla = self.create_upazilla(division=division, district=district)
+        upazilla = self.create_upazilla(division=division, district=district,)
 
-        response = self.client.post(reverse('uinons:create_union'),
+        response = self.client.post(reverse('unions:create_union'),
                                     {'division': division, 'district':district, 'upazilla': upazilla,'name': "Hazirhat", 'created_date': timezone.now()})
         actual = response.status_code
         expected = 200
         self.assertEqual(actual, expected)
 
     # Valid Form Data
-    def testUionForm_whenValidData_shouldReturnTrue(self):
+    def testUnionForm_whenValidData_shouldReturnTrue(self):
         division = self.create_division()
         district = self.create_district(division=division)
-        form = UpazillaForm(data={'division': str(division.id), 'district': str(district.id), 'name': "Lakshmipur"})
+        upazilla = self.create_upazilla(division=division, district=district)
+
+        form = UnionForm(data={'division': division, 'district':district, 'upazilla': upazilla,'name': "B-para"})
         self.assertTrue(form.is_valid())
 
     # Invalid Form Data
     def testUnionForm_whenInValidData_shouldReturnFalse(self):
         division = self.create_division()
         district = self.create_district(division=division)
-        form = UpazillaForm(data={'division': str(division.id), 'district': str(district.id), 'name': ""})
+        upazilla = self.create_upazilla(division=division, district=district)
+
+        form = UnionForm(data={'division': str(division.id), 'district': str(district.id),'upazilla': str(upazilla.id), 'name': ""})
         self.assertFalse(form.is_valid())
