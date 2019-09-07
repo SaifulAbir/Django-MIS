@@ -95,7 +95,7 @@ throw new Error('AdminLTE requires jQuery')
 
   // Plugin Definition
   // =================
-  function Plugin(option) {
+  function Plugin(option) {z``
     return this.each(function () {
       var $this = $(this);
       var data  = $this.data(DataKey);

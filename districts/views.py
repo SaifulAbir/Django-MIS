@@ -45,7 +45,7 @@ def district_update(request, pk):
 
 
 class DistrictList(LoginRequiredMixin, generic.ListView):
-
+    login_url = '/'
     model = models.District
 
 """class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
