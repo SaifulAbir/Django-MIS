@@ -2,9 +2,9 @@
 {% for upazilla in upazilla_list %}
 <tr>
     <td>{{ forloop.counter }}</td>
-    <td>{{ upazilla.division }}</td>
-    <td>{{ upazilla.district }}</td>
     <td>{{ upazilla.name }}</td>
+    <td>{{ upazilla.district }}</td>
+    <td>{{ upazilla.division }}</td>
     <td><button type="button"
                 class="btn btn-warning btn-sm js-update-upazilla"
                 data-url="{% url 'upazillas:update_upazilla' upazilla.id %}">

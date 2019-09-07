@@ -2,8 +2,8 @@
 {% for district in district_list %}
 <tr>
     <td>{{ forloop.counter }}</td>
-    <td>{{ district.division }}</td>
     <td>{{ district.name }}</td>
+    <td>{{ district.division }}</td>
     <td><button type="button"
                 class="btn btn-warning btn-sm js-update-district"
                 data-url="{% url 'districts:update_district' district.id %}">
