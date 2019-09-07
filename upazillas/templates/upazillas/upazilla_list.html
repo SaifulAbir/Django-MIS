@@ -1,0 +1,121 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+<!-- Main content -->
+<div class="box">
+    <div class="box-header">
+        <h3 style="display: inline-block;" class="box-title">Upazilla List </h3>
+        <button type="button"
+                class="btn btn-primary pull-right js-create-upazilla"
+                data-url="{% url 'upazillas:create_upazilla' %}">
+            <span class="fa fa-plus"></span>
+            New Upazilla
+        </button>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="example1" class=" upazilla-table table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Division</th>
+                <th>District</th>
+                <th>Upazilla Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% include 'upazillas/partial_upazillas_list.html' %}
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Division</th>
+                <th>District</th>
+                <th>Upazilla Name</th>
+                <th>Actions</th>
+            </tr>
+            </tfoot>
+        </table>
+        {% include 'upazillas/_modal.html' %}
+    </div>
+</div>
+<!-- /.content -->
+
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript">
+$(function () {
+
+    var loadForm = function () {
+    var btn = $(this);
+    $.ajax({
+      url: btn.attr("data-url"),
+      type: 'get',
+      dataType: 'json',
+      beforeSend: function () {
+        $("#modal-upazilla").modal("show");
+      },
+      success: function (data) {
+        $("#modal-upazilla .modal-content").html(data.html_form);
+      }
+    });
+  };
+
+  var saveForm = function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          alert("Successfully done!");  // <-- This line was executed! Means success
+          $(".upazilla-table tbody").html(data.html_upazilla_list);  // <-- Replace the table body
+          $("#modal-upazilla").modal("hide");  // <-- Close the modal
+        }
+        else {
+          $("#modal-upazilla .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  };
+
+  /* Binding */
+
+  // Create upazilla
+  $(".js-create-upazilla").click(loadForm);
+  $("#modal-upazilla").on("submit", ".js-upazilla-create-form", saveForm);
+
+  // Update upazilla
+  $(".upazilla-table").on("click", ".js-update-upazilla", loadForm);
+  $("#modal-upazilla").on("submit", ".js-upazilla-update-form", saveForm);
+
+  // Delete upazilla
+  $(".upazilla-table").on("click", ".js-delete-upazilla", loadForm);
+  $("#modal-upazilla").on("submit", ".js-upazilla-delete-form", saveForm);
+
+  $("#id_division").change(function () {
+      var url = $("#upazillaForm").attr("data-districts-url");  // get the url of the `load_cities` view
+      var divisionId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'division': divisionId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_district").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+
+});
+
+
+
+  </script>
+{% endblock %}
