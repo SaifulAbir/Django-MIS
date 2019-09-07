@@ -3,7 +3,7 @@
 
 <section class="content-header">
    <h1>
-      District
+      Union
    </h1>
 </section>
 
@@ -11,33 +11,35 @@
 <section class="content">
 <div class="box">
     <div class="box-header">
-        <h3 style="display: inline-block;" class="box-title">District List </h3>
+        <h3 style="display: inline-block;" class="box-title"> Union List </h3>
         <button type="button"
-                class="btn btn-primary pull-right js-create-district"
-                data-url="{% url 'districts:create_district' %}">
+                class="btn btn-primary pull-right js-create-union"
+                data-url="{% url 'unions:create_union' %}">
             <span class="fa fa-plus"></span>
-            New District
+            New Union 
         </button>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        <table id="example1" class=" district-table table table-bordered table-striped">
+        <table id="example1" class=" union-table table table-bordered table-striped">
             <thead>
             <tr>
                 <th class="col-sm-2">ID</th>
-                <th class="col-sm-4">Division</th>
-                <th class="col-sm-4">District Name</th>
+                <th class="col-sm-2">Division</th>
+                <th class="col-sm-2">District Name</th>
+                <th class="col-sm-2">Upazilla Name</th>
+                <th class="col-sm-2">Union Name</th>
                 <th class="col-sm-2">Actions</th>
             </tr>
             </thead>
             <tbody>
 
-            {% include 'districts/partial_districts_list.html' %}
+            {% include 'unions/partial_union_list.html' %}
 
             </tbody>
 
         </table>
-        {% include 'districts/_modal.html' %}
+        {% include 'unions/_modal.html' %}
     </div>
 </div>
 <!-- /.content -->
@@ -54,10 +56,10 @@ $(function () {
       type: 'get',
       dataType: 'json',
       beforeSend: function () {
-        $("#modal-district").modal("show");
+        $("#modal-union").modal("show");
       },
       success: function (data) {
-        $("#modal-district .modal-content").html(data.html_form);
+        $("#modal-union .modal-content").html(data.html_form);
       }
     });
   };
@@ -72,11 +74,11 @@ $(function () {
       success: function (data) {
         if (data.form_is_valid) {
           alert("Successfully done!");  // <-- This line was executed! Means success
-          $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
-          $("#modal-district").modal("hide");  // <-- Close the modal
+          $(".union-table tbody").html(data.html_union_list);  // <-- Replace the table body
+          $("#modal-union").modal("hide");  // <-- Close the modal
         }
         else {
-          $("#modal-district .modal-content").html(data.html_form);
+          $("#modal-union .modal-content").html(data.html_form);
         }
       }
     });
@@ -85,17 +87,17 @@ $(function () {
 
   /* Binding */
 
-  // Create district
-  $(".js-create-district").click(loadForm);
-  $("#modal-district").on("submit", ".js-district-create-form", saveForm);
+  // Create union
+  $(".js-create-union").click(loadForm);
+  $("#modal-union").on("submit", ".js-union-create-form", saveForm);
 
-  // Update district
-  $(".district-table").on("click", ".js-update-district", loadForm);
-  $("#modal-district").on("submit", ".js-district-update-form", saveForm);
+  // Update union
+  $(".union-table").on("click", ".js-update-union", loadForm);
+  $("#modal-union").on("submit", ".js-union-update-form", saveForm);
 
-  // Delete book
-  $(".district-table").on("click", ".js-delete-district", loadForm);
-  $("#modal-district").on("submit", ".js-district-delete-form", saveForm);
+  // Delete union
+  $(".union-table").on("click", ".js-delete-union", loadForm);
+  $("#modal-union").on("submit", ".js-union-delete-form", saveForm);
 
 });
 
