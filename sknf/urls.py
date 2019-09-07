@@ -22,10 +22,7 @@ urlpatterns = [
     path('district/', include('districts.urls')),
     path('division/', include('division.urls')),
     path('school/', include('school.urls')),
-<<<<<<< HEAD
     path('upazilla/', include('upazillas.urls')),
-=======
     path('unions/', include('unions.urls')),
 
->>>>>>> feature/06_union
 ]
