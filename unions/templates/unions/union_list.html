@@ -1,0 +1,105 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+
+<section class="content-header">
+   <h1>
+      Union
+   </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+<div class="box">
+    <div class="box-header">
+        <h3 style="display: inline-block;" class="box-title"> Union List </h3>
+        <button type="button"
+                class="btn btn-primary pull-right js-create-union"
+                data-url="{% url 'unions:create_union' %}">
+            <span class="fa fa-plus"></span>
+            New Union 
+        </button>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="example1" class=" union-table table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th class="col-sm-2">ID</th>
+                <th class="col-sm-2">Division</th>
+                <th class="col-sm-2">District Name</th>
+                <th class="col-sm-2">Upazilla Name</th>
+                <th class="col-sm-2">Union Name</th>
+                <th class="col-sm-2">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% include 'unions/partial_union_list.html' %}
+
+            </tbody>
+
+        </table>
+        {% include 'unions/_modal.html' %}
+    </div>
+</div>
+<!-- /.content -->
+</section>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript">
+$(function () {
+
+    var loadForm = function () {
+    var btn = $(this);
+    $.ajax({
+      url: btn.attr("data-url"),
+      type: 'get',
+      dataType: 'json',
+      beforeSend: function () {
+        $("#modal-union").modal("show");
+      },
+      success: function (data) {
+        $("#modal-union .modal-content").html(data.html_form);
+      }
+    });
+  };
+
+  var saveForm = function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          alert("Successfully done!");  // <-- This line was executed! Means success
+          $(".union-table tbody").html(data.html_union_list);  // <-- Replace the table body
+          $("#modal-union").modal("hide");  // <-- Close the modal
+        }
+        else {
+          $("#modal-union .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  };
+
+  /* Binding */
+
+  // Create union
+  $(".js-create-union").click(loadForm);
+  $("#modal-union").on("submit", ".js-union-create-form", saveForm);
+
+  // Update union
+  $(".union-table").on("click", ".js-update-union", loadForm);
+  $("#modal-union").on("submit", ".js-union-update-form", saveForm);
+
+  // Delete union
+  $(".union-table").on("click", ".js-delete-union", loadForm);
+  $("#modal-union").on("submit", ".js-union-delete-form", saveForm);
+
+});
+
+  </script>
+{% endblock %}

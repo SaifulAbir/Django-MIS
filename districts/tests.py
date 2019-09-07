@@ -4,9 +4,8 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from division.models import Division
-from .forms import DistrictForm
-from .models import District
+
+
 
 
 class DistrictTest(TestCase):
@@ -47,4 +46,7 @@ class DistrictTest(TestCase):
         division = self.create_division()
         form = DistrictForm(data={'division': str(division.id), 'name': ""})
         self.assertFalse(form.is_valid())
+
+
+
 
