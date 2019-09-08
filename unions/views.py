@@ -48,7 +48,7 @@ def union_update(request, pk):
 
 
 class UnionList(LoginRequiredMixin, generic.ListView):
-
+    login_url = '/'
     model = models.Union
 
 """class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):

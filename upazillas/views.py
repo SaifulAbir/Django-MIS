@@ -45,7 +45,7 @@ def upazilla_update(request, pk):
 
 
 class UpazillaList(LoginRequiredMixin, generic.ListView):
-
+    login_url = '/'
     model = models.Upazilla
 
 

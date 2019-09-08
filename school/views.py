@@ -61,7 +61,7 @@ def school_update(request, pk):
 
 
 class SchoolList(LoginRequiredMixin, generic.ListView):
-
+    login_url = '/'
     model = models.School
 
 """class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):

@@ -45,7 +45,7 @@ def division_update(request, pk):
 
 
 class DivisionList(LoginRequiredMixin, generic.ListView):
-
+    login_url = '/'
     model = models.Division
 
 """class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
