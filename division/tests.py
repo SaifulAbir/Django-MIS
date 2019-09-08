@@ -40,7 +40,7 @@ class DivisionTest(TestCase):
     # Valid Form Data
     def testDivisionForm_whenValidData_shouldReturnTrue(self):
         division = self.create_division()
-        form = DivisionForm(data={'division': str(division.id), 'name': "Dhaka"})
+        form = DivisionForm(data={'division': str(division.id), 'name': "Cumilla"})
         self.assertTrue(form.is_valid())
 
     # Invalid Form Data

@@ -1,18 +1,18 @@
 
 {% for district in district_list %}
 <tr>
-    <td>{{ forloop.counter }}</td>
+
     <td>{{ district.name }}</td>
     <td>{{ district.division }}</td>
     <td><button type="button"
                 class="btn btn-warning btn-sm js-update-district"
                 data-url="{% url 'districts:update_district' district.id %}">
-        <span class="fa fa-edit"></span> Edit
+        <span class="fa fa-edit"></span>
     </button>
         <button type="button"
                 class="btn btn-danger btn-sm js-delete-district"
                 data-url="{% url 'districts:delete_district' district.id %}">
-            <span class="fa fa-trash"></span> Delete
+            <span class="fa fa-trash"></span>
         </button>
     </td>
 </tr>
