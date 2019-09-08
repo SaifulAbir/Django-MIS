@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -15,14 +16,17 @@ from . import models
 
 
 class CreateSchool(LoginRequiredMixin, generic.CreateView):
+    login_url = '/'
     form_class = SchoolForm
     model = School
 
 class SchoolUpdate(LoginRequiredMixin, generic.UpdateView):
+    login_url = '/'
     model = models.School
     fields = ['name', 'school_id', 'division', 'district', 'upazilla', 'union', 'address']
 
-class SchoolDetail(generic.DetailView):
+class SchoolDetail(LoginRequiredMixin, generic.DetailView):
+    login_url = '/'
     context_object_name = "school_detail"
     model = models.School
     template_name = 'school/school_detail.html'

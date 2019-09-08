@@ -140,5 +140,6 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'accounts:dashboard'
+LOGOUT_REDIRECT_URL = 'accounts:login'
+PROJECT_NAME = 'SKNF'
