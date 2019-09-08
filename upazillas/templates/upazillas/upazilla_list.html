@@ -45,6 +45,9 @@
 <script type="text/javascript">
 $(function () {
 
+    $(".settings-menu").addClass("menu-open");
+    $(".settings-menu .treeview-menu").css("display", "block");
+
     var loadForm = function () {
     var btn = $(this);
     $.ajax({

@@ -7,15 +7,22 @@
 <div class="box">
     <div class="box-header">
         <h3 style="display: inline-block;" class="box-title">School List </h3>
+        <a type="button"
+                class="btn btn-primary pull-right"
+                href="{% url 'school:create_school' %}">
+            <span class="fa fa-plus"></span>
+            New School
+        </a>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
         <table id="example1" class=" school-table table table-bordered table-striped">
             <thead>
             <tr>
-                <th class="col-sm-2">ID</th>
-                <th class = "col-sm-4">School Name</th>
-                <th class ="col-sm-4">School ID</th>
+                <th class = "col-sm-4">Name</th>
+                <th class ="col-sm-2">EIIN</th>
+                <th class ="col-sm-2">Division</th>
+                <th class ="col-sm-2">District</th>
                 <th class ="col-sm-2">Actions</th>
             </tr>
             </thead>
@@ -60,7 +67,7 @@ $(function () {
       success: function (data) {
         if (data.form_is_valid) {
           alert("Successfully done!");  // <-- This line was executed! Means success
-          $(".school-table tbody").html(data.html_school_list);  // <-- Replace the table body
+          $("body").html(data.html_school_list);  // <-- Replace the table body
           $("#modal-school").modal("hide");  // <-- Close the modal
         }
         else {
@@ -76,6 +83,10 @@ $(function () {
   // Delete school
   $(".school-table").on("click", ".js-delete-school", loadForm);
   $("#modal-school").on("submit", ".js-school-delete-form", saveForm);
+
+
+   $(".school-menu").addClass("menu-open");
+   $(".school-menu .treeview-menu").css("display", "block");
 
 });
 

@@ -1,10 +1,5 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<section class="content-header">
-   <h1>
-      School Details
-   </h1>
-</section>
 
 <!-- Main content -->
 <section class="content">
@@ -13,22 +8,22 @@
         <div class="col-md-6">
           <div class="box box-info">
             <div class="box-header">
-              <h3 class="box-title">School Info</h3>
+              <h3 class="box-title">Basic Information</h3>
             </div>
             <div class="box-body">
               <!-- School Name -->
               <div class="form-group">
-                <label>School Name:</label>
+                <label>Name:</label>
                 <input disabled type="text" value="{{school_detail.name}}" class="form-control my-colorpicker1">
               </div>
               <!-- /.form group -->
                 <div class="form-group">
-                <label>School ID:</label>
+                <label>EIIN:</label>
                 <input type="text" value="{{school_detail.school_id}}" class="form-control my-colorpicker1" readonly>
               </div>
                 <div class="form-group">
-                <label>School Address:</label>
-                <input type="text" value="{{school_detail.address}}" class="form-control my-colorpicker1" readonly>
+                <label>Address:</label>
+                <input type="text" value="{{school_detail.address}}" class="form-control my-colorpicker1" readonly/>
               </div>
             </div>
           </div>
@@ -37,7 +32,7 @@
         <div class="col-md-6">
           <div class="box box-info">
             <div class="box-header">
-              <h3 class="box-title">School Location</h3>
+              <h3 class="box-title">Location</h3>
             </div>
             <div class="box-body">
               <!-- School Division -->

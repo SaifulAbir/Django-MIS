@@ -12,12 +12,12 @@ from upazillas.models import Upazilla
 
 class School(models.Model):
     name = models.CharField(max_length=264)
-    school_id = models.CharField(max_length=264)
-    division = models.ForeignKey(Division, on_delete=models.SET_NULL, null=True)
-    district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
-    upazilla = models.ForeignKey(Upazilla, on_delete=models.SET_NULL, null=True)
-    union = models.ForeignKey(Union, on_delete=models.SET_NULL, null=True)
-    address = models.TextField(max_length=200)
+    school_id = models.CharField(max_length=255, unique=True, blank=True, null=True)
+    division = models.ForeignKey(Division, on_delete=models.SET_NULL, blank=True, null=True)
+    district = models.ForeignKey(District, on_delete=models.SET_NULL, blank=True, null=True)
+    upazilla = models.ForeignKey(Upazilla, on_delete=models.SET_NULL, blank=True, null=True)
+    union = models.ForeignKey(Union, on_delete=models.SET_NULL, blank=True, null=True)
+    address = models.TextField(max_length=200, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
