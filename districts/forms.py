@@ -16,3 +16,8 @@ class DistrictForm(forms.ModelForm):
     class Meta:
         model = District
         fields = ['division', 'name']
+        widgets = {
+            'name': forms.TextInput(
+                attrs={'pattern': '[a-zA-Z\s]+', 'oninvalid': "setCustomValidity('Please enter on alphabets only. ')",
+                       'style': ''}),
+        }
