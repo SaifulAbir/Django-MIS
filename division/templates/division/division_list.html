@@ -22,7 +22,6 @@
             <tr>
 
                 <th class="col-sm-11">Division</th>
-
                 <th class="col-sm-1">Actions</th>
             </tr>
             </thead>
@@ -72,9 +71,9 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          alert("Successfully done!");  // <-- This line was executed! Means success
+          alert("Successfully done!");
           $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
-          $("#modal-division").modal("hide");  // <-- Close the modal
+          $("#modal-division").modal("hide");
         }
         else {
           $("#modal-division .modal-content").html(data.html_form);
