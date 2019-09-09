@@ -1,32 +1,26 @@
 
 {% for school in school_list %}
-<tr>
-    <td><a href="{% url 'school:school_profile' %}">{{ school.name }}</a></td>
-    <td>{{ school.school_id }}</td>
-    <td><a type="button"
-                class="btn btn-info btn-sm"
-                href="{% url 'school:detail_school' school.pk %}">
-        <span class="fa fa-eye"></span>
-    </a>
-
-    <td>{{ school.division }}</td>
-    <td>{{ school.district }}</td>
-    <td>
-        <a type="button"
-           class=""
-           href="{% url 'school:detail_school' school.pk %}">
-            <span class="fa fa-eye"></span>
-        </a>
-        <a type="button"
-           class=""
-           href="{% url 'school:update_school' school.pk %}">
-            <span class="fa fa-edit"></span>
-        </a>
-        <button type="button"
-                class="js-delete-school" style="border: none; background: no-repeat; color: #3c8dbc; padding-left: 3px;"
-                data-url="{% url 'school:delete_school' school.id %}">
-            <span class="fa fa-trash"></span>
-        </button>
-    </td>
-</tr>
+    <tr>
+        <td><a href="{% url 'school:school_profile' %}">{{ school.name }}</a></td>
+        <td>{{ school.school_id }}</td>
+        <td>{{ school.division }}</td>
+        <td>{{ school.district }}</td>
+        <td>
+            <a type="button"
+               class=""
+               href="{% url 'school:detail_school' school.pk %}">
+                <span class="fa fa-eye"></span>
+            </a>
+            <a type="button"
+               class=""
+               href="{% url 'school:update_school' school.pk %}">
+                <span class="fa fa-edit"></span>
+            </a>
+            <button type="button"
+                    class="js-delete-school" style="border: none; background: no-repeat; color: #3c8dbc; padding-left: 3px;"
+                    data-url="{% url 'school:delete_school' school.id %}">
+                <span class="fa fa-trash"></span>
+            </button>
+        </td>
+    </tr>
 {% endfor %}
