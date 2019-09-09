@@ -1,6 +1,9 @@
 from django import forms
 
+from districts.models import District
 from school.models import School
+from unions.models import Union
+from upazillas.models import Upazilla
 
 
 class SchoolForm(forms.ModelForm):
@@ -10,3 +13,9 @@ class SchoolForm(forms.ModelForm):
         widgets = {
             'address': forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.7em;'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['district'].queryset = District.objects.none()
+        self.fields['upazilla'].queryset = Upazilla.objects.none()
+        self.fields['union'].queryset = Union.objects.none()
