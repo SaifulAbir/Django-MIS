@@ -57,7 +57,7 @@ class UnionTest(TestCase):
         district = self.create_district(division=division)
         upazilla = self.create_upazilla(division=division, district=district)
 
-        form = UnionForm(data={'division': division, 'district':district, 'upazilla': upazilla,'name': "B-para"})
+        form = UnionForm(data={'division': str(division.id), 'district': str(district.id), 'upazilla': str(upazilla.id),'name': "B-para"})
         self.assertTrue(form.is_valid())
 
     # Invalid Form Data

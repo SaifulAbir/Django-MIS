@@ -1,20 +1,23 @@
 
 {% for union in union_list %}
 <tr>
-    <td>{{ forloop.counter }}</td>
-    <td>{{ union.division }}</td>
-    <td>{{ union.district }}</td>
-    <td>{{ union.upazilla }}</td>
+
     <td>{{ union.name }}</td>
+    <td>{{ union.upazilla }}</td>
+    <td>{{ union.district }}</td>
+    <td>{{ union.division }}</td>
+
+
+
     <td><button type="button"
                 class="btn btn-warning btn-sm js-update-union"
                 data-url="{% url 'unions:update_union' union.id %}">
-        <span class="fa fa-edit"></span> Edit
+        <span class="fa fa-edit"></span>
     </button>
         <button type="button"
                 class="btn btn-danger btn-sm js-delete-union"
                 data-url="{% url 'unions:delete_union' union.id %}">
-            <span class="fa fa-trash"></span> Delete
+            <span class="fa fa-trash"></span>
         </button>
     </td>
 </tr>
