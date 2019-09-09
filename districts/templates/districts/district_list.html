@@ -48,6 +48,10 @@
 <script type="text/javascript">
 $(function () {
 
+
+    $(".settings-menu").addClass("menu-open");
+    $(".settings-menu .treeview-menu").css("display", "block");
+
     var loadForm = function () {
     var btn = $(this);
     $.ajax({
@@ -97,6 +101,13 @@ $(function () {
   // Delete book
   $(".district-table").on("click", ".js-delete-district", loadForm);
   $("#modal-district").on("submit", ".js-district-delete-form", saveForm);
+
+
+  $('.name-field').validate({
+    rules : {
+        name : { greaterThanZero : true }
+    }
+});
 
 });
 

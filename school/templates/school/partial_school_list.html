@@ -1,21 +1,38 @@
 
 {% for school in school_list %}
 <tr>
-    <td>{{ forloop.counter }}</td>
-    <td>{{ school.name }}</td>
+    <td><a href="{% url 'school:school_profile' %}">{{ school.name }}</a></td>
     <td>{{ school.school_id }}</td>
+<<<<<<< HEAD
     <td><a type="button"
                 class="btn btn-info btn-sm"
                 href="{% url 'school:detail_school' school.pk %}">
         <span class="fa fa-eye"></span>
     </a>
+=======
+    <td>{{ school.division }}</td>
+    <td>{{ school.district }}</td>
+    <td>
         <a type="button"
+<<<<<<< HEAD
+           class=""
+           href="{% url 'school:detail_school' school.pk %}">
+            <span class="fa fa-eye"></span>
+        </a>
+>>>>>>> 5ad9b0b58c36292d6a6829e1e996bb6adb0593b2
+        <a type="button"
+           class=""
+           href="{% url 'school:update_school' school.pk %}">
+            <span class="fa fa-edit"></span>
+        </a>
+=======
                 class="btn btn-warning btn-sm "
                 href="{% url 'school:update_school' school.pk %}">
         <span class="fa fa-edit"></span>
     </a>
+>>>>>>> 5581e81ffe5ed77f7ae3816ec0c343230ad3edce
         <button type="button"
-                class="btn btn-danger btn-sm js-delete-school"
+                class="js-delete-school" style="border: none; background: no-repeat; color: #3c8dbc; padding-left: 3px;"
                 data-url="{% url 'school:delete_school' school.id %}">
             <span class="fa fa-trash"></span>
         </button>

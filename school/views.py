@@ -22,8 +22,9 @@ class CreateSchool(LoginRequiredMixin, generic.CreateView):
 
 class SchoolUpdate(LoginRequiredMixin, generic.UpdateView):
     login_url = '/'
+    form_class = SchoolForm
     model = models.School
-    fields = ['name', 'school_id', 'division', 'district', 'upazilla', 'union', 'address']
+
 
 class SchoolDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
@@ -106,7 +107,9 @@ def load_unions(request):
     unions = Union.objects.filter(upazilla_id=upazilla_id).order_by('name')
     return render(request, 'school/union_dropdown_list_options.html', {'unions': unions})
 
+def school_profile(request):
+    return render(request, 'school/school_profile.html')
 
 
-
-
+def Sk_leaderApproval(request):
+    return render(request, 'school/Sk_leaderApproval.html')
