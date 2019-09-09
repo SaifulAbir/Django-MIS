@@ -34,11 +34,11 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a  class="logo" href="{% url 'accounts:dashboard' %}">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini">SKNF</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">SKNF</span>
+      <span class="logo-lg" >SKNF</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -61,7 +61,7 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="vendor/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="{% static 'vendor/dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
 
                 <p>
                   Alexander Pierce - Web Developer
@@ -108,7 +108,7 @@
       <ul class="sidebar-menu" data-widget="tree">
 
         <li>
-          <a href="headmasterHome.html">
+          <a href="{% url 'accounts:dashboard' %}">
             <i class="fa fa-home"></i> <span>Home</span>
           </a>
         </li>
@@ -154,7 +154,7 @@
          <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">Rakibul Islam</a></span>
                 <span class="description">Sk Leader</span>
               </div>
@@ -171,7 +171,7 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
                   <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Discussion</a></h4>
@@ -189,7 +189,7 @@
         <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">Rakibul Islam</a></span>
                 <span class="description">Sk Leader</span>
               </div>
@@ -206,7 +206,7 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
                   <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Discussion</a></h4>
@@ -224,7 +224,7 @@
         <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">Rakibul Islam</a></span>
                 <span class="description">Sk Leader</span>
               </div>
@@ -241,10 +241,10 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Discussion</a></h4>
+                  <h4 class="attachment-heading"><a href="#">Discussion</a></h4>
 
                   <div class="attachment-text">
                     Discussion on Aweareness of Tree plantation
@@ -259,7 +259,7 @@
         <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">Rakibul Islam</a></span>
                 <span class="description">Sk Leader</span>
               </div>
@@ -276,10 +276,10 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Discussion</a></h4>
+                  <h4 class="attachment-heading"><a href="#">Discussion</a></h4>
 
                   <div class="attachment-text">
                     Discussion on Aweareness of Tree plantation
@@ -294,7 +294,7 @@
          <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">Rakibul Islam</a></span>
                 <span class="description">Sk Leader</span>
               </div>
@@ -311,10 +311,10 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Discussion</a></h4>
+                  <h4 class="attachment-heading"><a href="#">Discussion</a></h4>
 
                   <div class="attachment-text">
                     Discussion on Aweareness of Tree plantation
@@ -345,7 +345,7 @@
               <ul class="products-list product-list-in-box">
                 <li class="item">
                   <div class="product-img">
-                    <img src="vendor/dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="{% static 'vendor/dist/img/default-50x50.gif' %}" alt="Product Image">
                   </div>
                   <div class="product-info">
                     <a href="javascript:void(0)" class="product-title">News
@@ -357,7 +357,7 @@
                 <!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="vendor/dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="{% static 'vendor/dist/img/default-50x50.gif' %}" alt="Product Image">
                   </div>
                   <div class="product-info">
                     <a href="javascript:void(0)" class="product-title">News
@@ -369,7 +369,7 @@
                 <!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="vendor/dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="{% static 'vendor/dist/img/default-50x50.gif' %}" alt="Product Image">
                   </div>
                   <div class="product-info">
                     <a href="javascript:void(0)" class="product-title">News
@@ -381,7 +381,7 @@
                 <!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="vendor/dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="{% static 'vendor/dist/img/default-50x50.gif' %}" alt="Product Image">
                   </div>
                   <div class="product-info">
                     <a href="javascript:void(0)" class="product-title">News
@@ -407,21 +407,21 @@
                                     <!-- /.user-block -->
                   <div class="row margin-bottom">
                     <div class="col-sm-6">
-                      <img class="img-responsive" src="vendor/dist/img/photo1.png" alt="Photo">
+                      <img class="img-responsive" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Photo">
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                       <div class="row">
                         <div class="col-sm-6">
-                          <img class="img-responsive" src="vendor/dist/img/photo2.png" alt="Photo">
+                          <img class="img-responsive" src="{% static 'vendor/dist/img/photo2.png' %}" alt="Photo">
                           <br>
-                          <img class="img-responsive" src="vendor/dist/img/photo3.jpg" alt="Photo">
+                          <img class="img-responsive" src="{% static 'vendor/dist/img/photo3.jpg' %}" alt="Photo">
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
-                          <img class="img-responsive" src="vendor/dist/img/photo4.jpg" alt="Photo">
+                          <img class="img-responsive" src="{% static 'vendor/dist/img/photo4.jpg' %}" alt="Photo">
                           <br>
-                          <img class="img-responsive" src="vendor/dist/img/photo1.png" alt="Photo">
+                          <img class="img-responsive" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Photo">
                         </div>
                         <!-- /.col -->
                       </div>

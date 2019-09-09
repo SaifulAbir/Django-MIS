@@ -35,9 +35,9 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{% url 'accounts:dashboard' %}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini">SKNF</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">SKNF</span>
     </a>
@@ -80,7 +80,7 @@
       <ul class="sidebar-menu" data-widget="tree">
 
         <li>
-          <a href="userdefault.html">
+          <a href="{% url 'accounts:dashboard' %}">
             <i class="fa fa-home"></i> <span>Home</span>
           </a>
         </li>
@@ -108,7 +108,7 @@
         <hr width="70%">
         <li>
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User profile picture">
               <h3 class="profile-username text-center"><font color="white">B.L.Roy</font></h3>
               <p class="text-muted text-center"><font color="white">Mentor</font></p>
             </div>
@@ -139,7 +139,7 @@
          <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">School Name</a></span>
                 <span class="description"> 7:30 PM Today</span>
               </div>
@@ -157,7 +157,7 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
                   <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Event Name</a></h4>
@@ -175,7 +175,7 @@
         <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg'%}" alt="User Image">
                 <span class="username"><a href="#">School Name</a></span>
                 <span class="description"> 7:30 PM Today</span>
               </div>
@@ -193,10 +193,10 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Event Name</a></h4>
+                  <h4 class="attachment-heading"><a href="#">Event Name</a></h4>
 
                   <div class="attachment-text">
                     Description about the Event can be placed here.
@@ -211,7 +211,7 @@
         <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">School Name</a></span>
                 <span class="description"> 7:30 PM Today</span>
               </div>
@@ -229,10 +229,10 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Event Name</a></h4>
+                  <h4 class="attachment-heading"><a href="#">Event Name</a></h4>
 
                   <div class="attachment-text">
                     Description about the Event can be placed here.
@@ -247,7 +247,7 @@
         <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">School Name</a></span>
                 <span class="description"> 7:30 PM Today</span>
               </div>
@@ -265,10 +265,10 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Event Name</a></h4>
+                  <h4 class="attachment-heading"><a href="#">Event Name</a></h4>
 
                   <div class="attachment-text">
                     Description about the Event can be placed here.
@@ -283,7 +283,7 @@
          <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">School Name</a></span>
                 <span class="description"> 7:30 PM Today</span>
               </div>
@@ -301,10 +301,10 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Event Name</a></h4>
+                  <h4 class="attachment-heading"><a href="#">Event Name</a></h4>
 
                   <div class="attachment-text">
                     Description about the Event can be placed here.
@@ -319,7 +319,7 @@
          <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="vendor/dist/img/user1-128x128.jpg" alt="User Image">
+                <img class="img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User Image">
                 <span class="username"><a href="#">School Name</a></span>
                 <span class="description"> 7:30 PM Today</span>
               </div>
@@ -337,10 +337,10 @@
               <!-- post text -->
               <!-- Attachment -->
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="vendor/dist/img/photo1.png" alt="Attachment Image">
+                <img class="attachment-img" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Attachment Image">
 
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Event Name</a></h4>
+                  <h4 class="attachment-heading"><a href="#">Event Name</a></h4>
 
                   <div class="attachment-text">
                     Description about the Event can be placed here.
@@ -409,7 +409,7 @@
               <ul class="products-list product-list-in-box">
                 <li class="item">
                   <div class="product-img">
-                    <img src="vendor/dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="{% static 'vendor/dist/img/default-50x50.gif' %}" alt="Product Image">
                   </div>
                   <div class="product-info">
                     <a href="javascript:void(0)" class="product-title">News
@@ -421,7 +421,7 @@
                 <!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="vendor/dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="{% static 'vendor/dist/img/default-50x50.gif' %}" alt="Product Image">
                   </div>
                   <div class="product-info">
                     <a href="javascript:void(0)" class="product-title">News
@@ -433,7 +433,7 @@
                 <!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="vendor/dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="{% static 'vendor/dist/img/default-50x50.gif' %}" alt="Product Image">
                   </div>
                   <div class="product-info">
                     <a href="javascript:void(0)" class="product-title">News
@@ -445,7 +445,7 @@
                 <!-- /.item -->
                 <li class="item">
                   <div class="product-img">
-                    <img src="vendor/dist/img/default-50x50.gif" alt="Product Image">
+                    <img src="{% static 'vendor/dist/img/default-50x50.gif' %}" alt="Product Image">
                   </div>
                   <div class="product-info">
                     <a href="javascript:void(0)" class="product-title">News
@@ -471,21 +471,21 @@
                                     <!-- /.user-block -->
                   <div class="row margin-bottom">
                     <div class="col-sm-6">
-                      <img class="img-responsive" src="vendor/dist/img/photo1.png" alt="Photo">
+                      <img class="img-responsive" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Photo">
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                       <div class="row">
                         <div class="col-sm-6">
-                          <img class="img-responsive" src="vendor/dist/img/photo2.png" alt="Photo">
+                          <img class="img-responsive" src="{% static 'vendor/dist/img/photo2.png' %}" alt="Photo">
                           <br>
-                          <img class="img-responsive" src="vendor/dist/img/photo3.jpg" alt="Photo">
+                          <img class="img-responsive" src="{% static 'vendor/dist/img/photo3.jpg' %}" alt="Photo">
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
-                          <img class="img-responsive" src="vendor/dist/img/photo4.jpg" alt="Photo">
+                          <img class="img-responsive" src="{% static 'vendor/dist/img/photo4.jpg' %}" alt="Photo">
                           <br>
-                          <img class="img-responsive" src="vendor/dist/img/photo1.png" alt="Photo">
+                          <img class="img-responsive" src="{% static 'vendor/dist/img/photo1.png' %}" alt="Photo">
                         </div>
                         <!-- /.col -->
                       </div>
@@ -512,61 +512,61 @@
     <h2 class="text-center"></h2>
   <div class="row">
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
      <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+     <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
      <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
   </div>
   <br>
   <div class="row">
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
      <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
-      <img class="img-responsive" src="vendor/dist/img/user1-128x128.jpg" alt="Photo">
+      <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
     </div>
     <div class="col-xs-1">
       <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
