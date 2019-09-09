@@ -1,6 +1,6 @@
 
 {% for school in school_list %}
-<<<<<<< HEAD
+
 <tr>
     <td><a href="{% url 'school:school_profile' %}">{{ school.name }}</a></td>
     <td>{{ school.school_id }}</td>
@@ -27,7 +27,7 @@
         </button>
     </td>
 </tr>
-=======
+
     <tr>
         <td><a href="{% url 'school:school_profile' %}">{{ school.name }}</a></td>
         <td>{{ school.school_id }}</td>
@@ -51,5 +51,5 @@
             </button>
         </td>
     </tr>
->>>>>>> 0de0f47d543a336c318f274e92b1e25fe6e20d90
+
 {% endfor %}
