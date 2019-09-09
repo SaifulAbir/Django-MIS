@@ -11,14 +11,23 @@ app_name = 'accounts'
 urlpatterns = [
     path('dashboard/', index, name = 'dashboard'),
     path('', auth_views.LoginView.as_view(template_name = 'accounts/login.html', authentication_form = PrettyAuthenticationForm, redirect_authenticated_user=True), name = 'login'),
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0de0f47d543a336c318f274e92b1e25fe6e20d90
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
     path('profile/', profile, name='profile'),
     path('events/', events, name='events'),
     path('headmaster_home/', headmaster_home, name='headmaster_home'),
+<<<<<<< HEAD
 
 
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
 ]
 
 
+=======
+    path('logout/', auth_views.LogoutView.as_view(), name = 'logout')
+]
+
+>>>>>>> 0de0f47d543a336c318f274e92b1e25fe6e20d90

@@ -2,14 +2,16 @@
 {% block body_block %}
 {% load widget_tweaks %}
 {% load static %}
+<form method='POST'>
 <section class="content-header">
-   <h1>
-      Add New School
-   </h1>
+{% if not form.instance.pk %}
+   <h1>Add New School</h1>
+{% else %}
+    <h1>Update School Info</h1>
+{% endif %}
 </section>
 <!-- Main content -->
 <section class="content">
-<form method='POST'>
     <div class="row">
         <!-- left column -->
         <div class="col-md-6">
@@ -123,9 +125,9 @@
         </div>
         </div>
     </div>
-</form>
 
 </section>
+</form>
 {% endblock %}
 {% block extra_js%}
 <script>

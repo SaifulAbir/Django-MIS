@@ -71,9 +71,9 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          alert("Successfully done!");  // <-- This line was executed! Means success
+          alert("Successfully done!");
           $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
-          $("#modal-division").modal("hide");  // <-- Close the modal
+          $("#modal-division").modal("hide");
         }
         else {
           $("#modal-division .modal-content").html(data.html_form);
@@ -87,6 +87,9 @@ $(function () {
 
   // Create division
   $(".js-create-division").click(loadForm);
+
+
+
   $("#modal-division").on("submit", ".js-division-create-form", saveForm);
 
   // Update division
