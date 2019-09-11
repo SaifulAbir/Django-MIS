@@ -47,7 +47,7 @@
 {% block extra_js %}
 <script type="text/javascript">
 $(function () {
-
+    $('.settings-menu, .district-menu').addClass('active');
 
     $(".settings-menu").addClass("menu-open");
     $(".settings-menu .treeview-menu").css("display", "block");
@@ -76,7 +76,7 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          alert("Successfully done!");  // <-- This line was executed! Means success
+          toastr.success('Successfully done!', {timeOut: 60000});
           $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
           $("#modal-district").modal("hide");  // <-- Close the modal
         }

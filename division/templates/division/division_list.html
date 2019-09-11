@@ -1,106 +1,106 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 
-<!-- Main content -->
-<section class="content">
+    <!-- Main content -->
+    <section class="content">
 
-<!-- Main content -->
-<div class="box">
-    <div class="box-header">
-        <h3 style="display: inline-block;" class="box-title">Division List </h3>
-        <button type="button"
-                class="btn btn-primary pull-right js-create-division"
-                data-url="{% url 'division:create_division' %}">
-            <span class="fa fa-plus"></span>
-            New Division
-        </button>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <table   id="example1" class=" division-table table table-bordered table-striped">
-            <thead>
-            <tr>
+        <!-- Main content -->
+        <div class="box">
+            <div class="box-header">
+                <h3 style="display: inline-block;" class="box-title">Division List </h3>
+                <button type="button"
+                        class="btn btn-primary pull-right js-create-division"
+                        data-url="{% url 'division:create_division' %}">
+                    <span class="fa fa-plus"></span>
+                    New Division
+                </button>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table   id="example1" class=" division-table table table-bordered table-striped">
+                    <thead>
+                    <tr>
 
-                <th class="col-sm-11">Division</th>
-                <th class="col-sm-1">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
+                        <th class="col-sm-11">Division</th>
+                        <th class="col-sm-1">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-            {% include 'division/partial_division_list.html' %}
+                    {% include 'division/partial_division_list.html' %}
 
-            </tbody>
-            <tfoot>
+                    </tbody>
+                    <tfoot>
 
-            </tfoot>
-        </table>
-        {% include 'division/_modal.html' %}
-    </div>
-</div>
-<!-- /.content -->
-</section>
+                    </tfoot>
+                </table>
+                {% include 'division/_modal.html' %}
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
 {% endblock %}
 {% block extra_js %}
-<script type="text/javascript">
-$(function () {
+    <script type="text/javascript">
+        $(function () {
+            $('.settings-menu, .division-menu').addClass('active');
+            $(".settings-menu").addClass("menu-open");
+            $(".settings-menu .treeview-menu").css("display", "block");
 
-    $(".settings-menu").addClass("menu-open");
-    $(".settings-menu .treeview-menu").css("display", "block");
+            var loadForm = function () {
+                var btn = $(this);
+                $.ajax({
+                    url: btn.attr("data-url"),
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#modal-division").modal("show");
+                    },
+                    success: function (data) {
+                        $("#modal-division .modal-content").html(data.html_form);
+                    }
+                });
+            };
 
-    var loadForm = function () {
-    var btn = $(this);
-    $.ajax({
-      url: btn.attr("data-url"),
-      type: 'get',
-      dataType: 'json',
-      beforeSend: function () {
-        $("#modal-division").modal("show");
-      },
-      success: function (data) {
-        $("#modal-division .modal-content").html(data.html_form);
-      }
-    });
-  };
+            var saveForm = function () {
+                var form = $(this);
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: form.attr("method"),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.form_is_valid) {
+                            toastr.success('Successfully done!', {timeOut: 60000});
+                            $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
+                            $("#modal-division").modal("hide");
+                        }
+                        else {
+                            $("#modal-division .modal-content").html(data.html_form);
+                        }
+                    }
+                });
+                return false;
+            };
 
-  var saveForm = function () {
-    var form = $(this);
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-        if (data.form_is_valid) {
-          alert("Successfully done!");
-          $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
-          $("#modal-division").modal("hide");
-        }
-        else {
-          $("#modal-division .modal-content").html(data.html_form);
-        }
-      }
-    });
-    return false;
-  };
+            /* Binding */
 
-  /* Binding */
-
-  // Create division
-  $(".js-create-division").click(loadForm);
+            // Create division
+            $(".js-create-division").click(loadForm);
 
 
 
-  $("#modal-division").on("submit", ".js-division-create-form", saveForm);
+            $("#modal-division").on("submit", ".js-division-create-form", saveForm);
 
-  // Update division
-  $(".division-table").on("click", ".js-update-division", loadForm);
-  $("#modal-division").on("submit", ".js-division-update-form", saveForm);
+            // Update division
+            $(".division-table").on("click", ".js-update-division", loadForm);
+            $("#modal-division").on("submit", ".js-division-update-form", saveForm);
 
-  // Delete division
-  $(".division-table").on("click", ".js-delete-division", loadForm);
-  $("#modal-division").on("submit", ".js-division-delete-form", saveForm);
+            // Delete division
+            $(".division-table").on("click", ".js-delete-division", loadForm);
+            $("#modal-division").on("submit", ".js-division-delete-form", saveForm);
 
-});
+        });
 
-  </script>
+    </script>
 {% endblock %}

@@ -135,6 +135,14 @@ $(function(){
 
     $(".school-menu").addClass("menu-open");
     $(".school-menu .treeview-menu").css("display", "block");
+    var titile = $(".content-header h1").html();
+
+    if (titile == 'Add New School'){
+        $("#id_district, #id_upazilla, #id_union").html('<option value="">---------</option>');
+    }
+
+
+
 
     $("#id_division").change(function () {
     var divisionId = $(this).val();
