@@ -16,13 +16,14 @@
         </div>
         {% for field in form %}
             <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {% render_field field class="form-control" placeholder=field.label %}
                 <div class="{% if field.errors %} invalid{% endif %}">
                     {% for error in field.errors %}
-                        <p class="help-block">{{ error }}</p>
+                        <p class="text-danger">{{ error }}</p>
                     {% endfor %}
                 </div>
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% render_field field class="form-control" placeholder=field.label %}
+
             </div>
         {% endfor %}
     </div>
