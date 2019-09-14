@@ -107,8 +107,9 @@ def load_unions(request):
     unions = Union.objects.filter(upazilla_id=upazilla_id).order_by('name')
     return render(request, 'school/union_dropdown_list_options.html', {'unions': unions})
 
-def school_profile(request):
-    return render(request, 'school/school_profile.html')
+def school_profile(request, pk):
+    name = School.objects.get(pk=pk)
+    return render(request, 'school/school_profile.html', { 'name' : name})
 
 
 def Sk_leaderApproval(request):
