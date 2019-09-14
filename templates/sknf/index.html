@@ -9,12 +9,19 @@
 
 <!-- Main content -->
 <section class="content">
-   <div class="row" style="padding-top: 20px; padding-right: 20px; padding-bottom: 20px; " >
+   <div class="row" style="{% comment %}padding-top: 20px; {% endcomment %}padding-right: 20px; padding-bottom: 20px; " >
       <div class="col-md-9">
          <!-- Main content -->
          <div class="box">
             <div class="box-header">
+
                <h3 style="display: inline-block;" class="box-title">School List </h3>
+                {% comment %}<a type="button"
+                   class="btn btn-primary pull-right"
+                   href="{% url 'school:create_school' %}">
+                    <span class="fa fa-plus"></span>
+                    New School
+                </a>{% endcomment %}
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -89,7 +96,11 @@
 {% block extra_js %}
 <script type="text/javascript">
 $(function () {
+<<<<<<< HEAD
    alert();
+=======
+    $('.home').addClass('active');
+>>>>>>> dabe03a21042af69702a3aa65693abab52dbbe6b
     var loadForm = function () {
     var btn = $(this);
     $.ajax({

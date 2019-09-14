@@ -42,7 +42,7 @@
 {% block extra_js %}
 <script type="text/javascript">
 $(function () {
-
+    $('.settings-menu, .union-menu').addClass('active');
     $(".settings-menu").addClass("menu-open");
     $(".settings-menu .treeview-menu").css("display", "block");
 
@@ -70,7 +70,7 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          alert("Successfully done!");  // <-- This line was executed! Means success
+          toastr.success('Successfully done!', {timeOut: 60000});
           $(".union-table tbody").html(data.html_union_list);  // <-- Replace the table body
           $("#modal-union").modal("hide");  // <-- Close the modal
         }
