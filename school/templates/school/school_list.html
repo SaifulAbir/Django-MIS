@@ -1,96 +1,94 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<section class="content-header">
-    <h1>Schools</h1>
-</section>
-<!-- Main content -->
-<section class="content">
-<!-- Main content -->
-<div class="box">
-    <div class="box-header">
-        <h3 style="display: inline-block;" class="box-title">School List </h3>
-        <a type="button"
-                class="btn btn-primary pull-right"
-                href="{% url 'school:create_school' %}">
-            <span class="fa fa-plus"></span>
-            New School
-        </a>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <table id="example1" class=" school-table table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th class = "col-sm-4">Name</th>
-                <th class ="col-sm-2">EIIN</th>
-                <th class ="col-sm-2">Division</th>
-                <th class ="col-sm-2">District</th>
-                <th class ="col-sm-2">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {% include 'school/partial_school_list.html' %}
-
-
-        </table>
-        {% include 'school/_modal.html' %}
-    </div>
-</div>
-<!-- /.content -->
-</section>
+    <section class="content-header">
+        <h1>Schools</h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Main content -->
+        <div class="box">
+            <div class="box-header">
+                <h3 style="display: inline-block;" class="box-title">School List </h3>
+                <a type="button"
+                   class="btn btn-primary pull-right"
+                   href="{% url 'school:create_school' %}">
+                    <span class="fa fa-plus"></span>
+                    New School
+                </a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class=" school-table table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class = "col-sm-4">Name</th>
+                        <th class ="col-sm-2">EIIN</th>
+                        <th class ="col-sm-2">Division</th>
+                        <th class ="col-sm-2">District</th>
+                        <th class ="col-sm-2">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% include 'school/partial_school_list.html' %}
+                </table>
+                {% include 'school/_modal.html' %}
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
 {% endblock %}
 {% block extra_js %}
-<script type="text/javascript">
-$(function () {
+    <script type="text/javascript">
+        $(function () {
+            $('.school').addClass('active');
+            var loadForm = function () {
+                var btn = $(this);
+                $.ajax({
+                    url: btn.attr("data-url"),
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#modal-school").modal("show");
+                    },
+                    success: function (data) {
+                        $("#modal-school .modal-content").html(data.html_form);
+                    }
+                });
+            };
 
-    var loadForm = function () {
-    var btn = $(this);
-    $.ajax({
-      url: btn.attr("data-url"),
-      type: 'get',
-      dataType: 'json',
-      beforeSend: function () {
-        $("#modal-school").modal("show");
-      },
-      success: function (data) {
-        $("#modal-school .modal-content").html(data.html_form);
-      }
-    });
-  };
+            var saveForm = function () {
+                var form = $(this);
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: form.attr("method"),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.form_is_valid) {
+                            alert('Successfully done!');
+                            toastr.success('Successfully done!', {timeOut: 60000});
+                            $("body").html(data.html_school_list);
+                            $("#modal-school").modal("hide");
+                        }
+                        else {
+                            $("#modal-school .modal-content").html(data.html_form);
+                        }
+                    }
+                });
+                return false;
+            };
 
-  var saveForm = function () {
-    var form = $(this);
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-        if (data.form_is_valid) {
-          alert("Successfully done!");  // <-- This line was executed! Means success
-          $("body").html(data.html_school_list);  // <-- Replace the table body
-          $("#modal-school").modal("hide");  // <-- Close the modal
-        }
-        else {
-          $("#modal-school .modal-content").html(data.html_form);
-        }
-      }
-    });
-    return false;
-  };
+            /* Binding */
 
-  /* Binding */
-
-  // Delete school
-  $(".school-table").on("click", ".js-delete-school", loadForm);
-  $("#modal-school").on("submit", ".js-school-delete-form", saveForm);
+            // Delete school
+            $(".school-table").on("click", ".js-delete-school", loadForm);
+            $("#modal-school").on("submit", ".js-school-delete-form", saveForm);
 
 
-   $(".school-menu").addClass("menu-open");
-   $(".school-menu .treeview-menu").css("display", "block");
+            $(".school-menu").addClass("menu-open");
+            $(".school-menu .treeview-menu").css("display", "block");
 
-});
+        });
 
-  </script>
+    </script>
 {% endblock %}
