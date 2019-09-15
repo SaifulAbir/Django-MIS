@@ -80,12 +80,40 @@
                             if(formClass=="js-division-create-form"){
                                 showAlert("Division Created!", "alert-success-customized")
                             }
+
                             $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
                             $("#modal-division").modal("hide");
                         }
                         else {
                             $("#modal-division .modal-content").html(data.html_form);
                         }
+
+                        if (data.form_is_valid) {
+                            if(formClass=="js-division-delete-form"){
+                                showAlert("Division Deleted!", "alert-success-customized")
+                            }
+
+                            $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
+                            $("#modal-division").modal("hide");
+                        }
+                        else {
+                            $("#modal-division .modal-content").html(data.html_form);
+                        }
+
+
+                        if (data.form_is_valid) {
+                            if(formClass=="js-division-update-form"){
+                                showAlert("Division Update!", "alert-success-customized")
+                            }
+
+                            $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
+                            $("#modal-division").modal("hide");
+                        }
+                        else {
+                            $("#modal-division .modal-content").html(data.html_form);
+                        }
+
+
                     }
                 });
                 return false;
