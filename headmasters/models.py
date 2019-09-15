@@ -15,10 +15,6 @@ class HeadmasterProfile(models.Model):
     image = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return self.user.username
+        return self.user.first_name
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-	print('****', created)
-	HeadmasterProfile.objects.get_or_create(user = instance)
 
