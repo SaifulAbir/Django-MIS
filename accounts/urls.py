@@ -16,13 +16,14 @@ urlpatterns = [
     path('events/', events, name='events'),
     path('headmaster_home/', headmaster_home, name='headmaster_home'),
 
-
+    path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
 
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
 
 
 
-
-    path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
 ]
+
+
+
 

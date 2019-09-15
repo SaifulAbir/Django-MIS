@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf.urls import handler404
+from django.conf.urls import handler500
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
@@ -26,3 +28,5 @@ urlpatterns = [
     path('unions/', include('unions.urls')),
 
 ]
+handler404 = 'accounts.views.not_found'
+handler500 = 'accounts.views.server_error'
