@@ -12,4 +12,4 @@ class UserForm(forms.ModelForm):
 class HeadmasterProfileForm(forms.ModelForm):
     class Meta:
         model = HeadmasterProfile
-        fields = ('mobile',)
+        fields = ('mobile','school')

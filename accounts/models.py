@@ -3,6 +3,8 @@ from django.db import models
 
 # Create your models here.
 
+
+
 class User(AbstractUser):
     USER_TYPE_CHOICES = (
         (1, 'student'),
@@ -13,3 +15,4 @@ class User(AbstractUser):
     )
 
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
+
