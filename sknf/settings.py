@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'division',
     'unions',
     'school',
+    'headmasters'
 ]
 
 MIDDLEWARE = [
@@ -139,6 +140,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+# Custom Django auth settings
+
+AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_REDIRECT_URL = 'accounts:dashboard'
 LOGOUT_REDIRECT_URL = 'accounts:login'

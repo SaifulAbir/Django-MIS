@@ -1,8 +1,9 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
+from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
-from .views import index, profile, events, headmaster_home
+from .views import index, profile, events, headmaster_home, custom_login
 
 app_name = 'accounts'
 
@@ -15,6 +16,8 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('events/', events, name='events'),
     path('headmaster_home/', headmaster_home, name='headmaster_home'),
+    path('login/', custom_login, name=''),
+
 
 
 

@@ -1,8 +1,12 @@
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 
 # Create your views here.
+from accounts.forms import PrettyAuthenticationForm
 from school.models import School
 
 
@@ -23,6 +27,34 @@ def events(request):
 
 def headmaster_home(request):
     return render(request, 'accounts/headmaster_home.html')
+
+def custom_login(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/dashboard/')
+    else:
+        return login_request(request)
+
+def login_request(request):
+    if request.method == 'POST':
+        form = PrettyAuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                if request.user.user_type==2:
+                    print(request.user.user_type)
+                    messages.info(request, f"You are now logged in as {username}")
+                    return redirect('/dashboard/')
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = PrettyAuthenticationForm()
+    return render(request = request,
+                    template_name = "accounts/login.html",
+                    context={"form":form})
 
 
 
