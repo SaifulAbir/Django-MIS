@@ -3,8 +3,6 @@ from .models import Union
 
 
 
-
-
 class UnionForm(forms.ModelForm):
     class Meta:
         model = Union
