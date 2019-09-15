@@ -1,6 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 
 # Create your views here.
+from django.views import generic
+
+from headmasters import models
 from headmasters.forms import UserForm, HeadmasterProfileForm
 
 
@@ -25,3 +29,7 @@ def headmaster_profile_view(request):
         'user_form': user_form,
         'profile_form': profile_form,
     })
+
+class HeadmasterList(LoginRequiredMixin, generic.ListView):
+    login_url = '/'
+    model = models.HeadmasterProfile
