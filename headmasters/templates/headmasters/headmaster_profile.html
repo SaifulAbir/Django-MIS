@@ -2,7 +2,7 @@
 {% block body_block %}
 {% load widget_tweaks %}
 {% load static %}
-<form method='POST'>
+<form method='POST' enctype="multipart/form-data">
   <section class="content-header">
     {% if not form.instance.pk %}
     <h1>Add New Headmaster/Mentor</h1>
@@ -99,6 +99,16 @@
             <div class="form-group">
               <label for="{{ user_form.user_type.id_for_label }}">{{ user_form.user_type.label }}</label>
               {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
+              <div class="{% if user_form.user_type.errors %} invalid{% endif %}">
+                {% for error in user_form.user_type.errors %}
+                <p class="help-block">{{ error }}</p>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="{{ profile_form.image.id_for_label }}">{{ profile_form.image.label }}</label>
+              {% render_field profile_form.image class="" placeholder=profile_form.image.label %}
               <div class="{% if user_form.user_type.errors %} invalid{% endif %}">
                 {% for error in user_form.user_type.errors %}
                 <p class="help-block">{{ error }}</p>
