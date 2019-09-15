@@ -4,9 +4,15 @@ from .models import HeadmasterProfile
 
 
 class UserForm(forms.ModelForm):
+    USER_TYPE_CHOICES = (
+        (2, 'headmaster'),
+        (3, 'mentor'),
+        (4, 'both'),
+    )
+
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput())
-    user_type = forms.ChoiceField(choices=User.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'inline-block'}))
+    user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'user-type-radio-button'}))
     class Meta:
         model = User
         fields = ('first_name', 'email', 'password', 'user_type')
