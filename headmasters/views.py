@@ -8,7 +8,7 @@ from django.views import generic
 
 from accounts.models import User
 from headmasters import models
-from headmasters.forms import UserForm, HeadmasterProfileForm
+from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm
 from headmasters.models import HeadmasterProfile
 
 
@@ -52,13 +52,27 @@ class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
 @login_required
 def headmaster_update(request, pk):
     headmaster_profile = get_object_or_404(HeadmasterProfile, pk=pk)
-    #user_profile = get_object_or_404(User, pk=headmaster_profile.user)
+    user_profile = get_object_or_404(User, pk=int(headmaster_profile.user.id))
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=headmaster_profile.user)
+        user_form = EditUserForm(request.POST, instance=user_profile)
         profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            old_password = headmaster_profile.user.password
+            user = user_form.save(commit=False)
+            form_password = user_form.cleaned_data["password"]
+            if form_password:
+                user.set_password(user_form.cleaned_data["password"])
+            else:
+                user.password = old_password
+            user.save()
+            profile = profile_form.save(commit = False)
+            profile.user = user
+            profile.save()
+            return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
-        user_form = UserForm(instance=headmaster_profile.user)
+        user_form = EditUserForm(instance=user_profile)
         profile_form = HeadmasterProfileForm(instance=headmaster_profile)
+
     return render(request, 'headmasters/headmaster_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
