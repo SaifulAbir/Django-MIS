@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
@@ -6,6 +7,7 @@ from django.views import generic
 
 from headmasters import models
 from headmasters.forms import UserForm, HeadmasterProfileForm
+from headmasters.models import HeadmasterProfile
 
 
 def headmaster_profile_view(request):
@@ -17,9 +19,10 @@ def headmaster_profile_view(request):
             user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data["password"])
             user.save()
-            user.headmaster_profile.mobile = profile_form.cleaned_data.get('mobile')
-            user.headmaster_profile.image = profile_form.cleaned_data.get('image')
-            user.headmaster_profile.save()
+            profile = profile_form.save(commit = False)
+            profile.user = user
+            profile.save()
+            return HttpResponseRedirect("/headmasters/headmaster_list/")
 
     else:
         user_form = UserForm(prefix='UF')
@@ -33,3 +36,7 @@ def headmaster_profile_view(request):
 class HeadmasterList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.HeadmasterProfile
+
+    def get_queryset(self):
+        queryset = HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
+        return queryset
