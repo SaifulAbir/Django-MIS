@@ -1,0 +1,20 @@
+#id_UF-user_type {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+
+#id_UF-user_type li {
+    margin-right: 10px;
+}
+
+#id_UF-user_type li label {
+    text-transform: capitalize;
+}
+
+#id_UF-user_type li label input{
+    vertical-align: middle;
+    margin-top: 0;
+}
+
