@@ -1,0 +1,50 @@
+{% load static %}
+<section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+
+
+            </div>
+            <!-- search form -->
+
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+
+                <li>
+                    <a href="{% url 'accounts:dashboard' %}">
+                        <i class="fa fa-home"></i> <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="ion ion-calendar"></i> <span>News & Events</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="ion ion-image"></i> <span>Gallery</span>
+                    </a>
+                </li>
+                <br>
+                <br>
+                <hr width="70%">
+                <li>
+                    <div class="box-body box-profile">
+                        <img class="profile-user-img img-responsive img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User profile picture">
+                        <h3 class="profile-username text-center"><font color="white">A.K. Khondoker</font></h3>
+                        <p class="text-muted text-center"><font color="white">Head Maater</font></p>
+                    </div>
+                </li>
+                <hr width="70%">
+                <hr width="70%">
+                <li>
+                    <div class="box-body box-profile">
+                        <img class="profile-user-img img-responsive img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User profile picture">
+                        <h3 class="profile-username text-center"><font color="white">B.L.Roy</font></h3>
+                        <p class="text-muted text-center"><font color="white">Mentor</font></p>
+                    </div>
+                </li>
+            </ul>
+            <hr width="70%">
+        </section>
