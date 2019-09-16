@@ -36,17 +36,15 @@ def custom_login(request):
 
 def login_request(request):
     if request.method == 'POST':
-        form = PrettyAuthenticationForm(request=request, data=request.POST)
+        form = PrettyAuthenticationForm( data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = authenticate(email=email, password=password)
             if user is not None:
                 login(request, user)
-                if request.user.user_type==2:
-                    print(request.user.user_type)
-                    messages.info(request, f"You are now logged in as {username}")
-                    return redirect('/dashboard/')
+                messages.info(request, f"You are now logged in as {email}")
+                return redirect('/dashboard/')
             else:
                 messages.error(request, "Invalid username or password.")
         else:

@@ -1,10 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.views import generic
 
+from accounts.models import User
 from headmasters import models
 from headmasters.forms import UserForm, HeadmasterProfileForm
 from headmasters.models import HeadmasterProfile
@@ -40,3 +42,24 @@ class HeadmasterList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
         return queryset
+
+class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
+    login_url = '/'
+    context_object_name = "headmaster_detail"
+    model = models.HeadmasterProfile
+    template_name = 'headmasters/headmaster_detail.html'
+
+@login_required
+def headmaster_update(request, pk):
+    headmaster_profile = get_object_or_404(HeadmasterProfile, pk=pk)
+    #user_profile = get_object_or_404(User, pk=headmaster_profile.user)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=headmaster_profile.user)
+        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile)
+    else:
+        user_form = UserForm(instance=headmaster_profile.user)
+        profile_form = HeadmasterProfileForm(instance=headmaster_profile)
+    return render(request, 'headmasters/headmaster_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    })

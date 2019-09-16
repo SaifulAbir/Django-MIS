@@ -35,12 +35,12 @@
 
                         <td><a type="button"
                                class=""
-                               href="#">
+                               href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
                             <span class="fa fa-eye"></span>
                         </a>
                             <a type="button"
                                class=""
-                               href="#">
+                               href="{% url 'headmasters:headmaster_update' headmaster.pk %}">
                                 <span class="fa fa-edit"></span>
 
                             </a>
