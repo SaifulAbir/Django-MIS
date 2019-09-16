@@ -9,16 +9,10 @@ class UnionForm(forms.ModelForm):
     class Meta:
         model = Union
         fields = ['division','district','upazilla','name']
-<<<<<<< HEAD
 
-=======
->>>>>>> feature/011_headmaster
         # widgets = {
         #     'name': forms.TextInput(
         #         attrs={'pattern': '[a-zA-Z\s]+', 'oninvalid': "setCustomValidity('Please enter on alphabets only. ')",
         #                'style': ''}),
         # }
-<<<<<<< HEAD
 
-=======
->>>>>>> feature/011_headmaster
