@@ -16,7 +16,7 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('events/', events, name='events'),
     path('headmaster_home/', headmaster_home, name='headmaster_home'),
-    path('', custom_login, name=''),
+    path('', custom_login, name='login'),
 
 
 
