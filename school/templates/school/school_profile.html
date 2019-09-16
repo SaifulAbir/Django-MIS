@@ -1,128 +1,11 @@
-<!DOCTYPE html>
+{% extends 'sknf/base.html' %}
+{% block body_block %}
 {% load static %}
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{% static 'vendor/bootstrap/dist/css/bootstrap.min.css' %}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{% static 'vendor/Ionicons/css/ionicons.min.css' %}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{% static 'vendor/dist/css/AdminLTE.min.css' %}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{% static 'vendor/dist/css/skins/_all-skins.min.css' %}">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-    <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-
-    <header class="main-header">
-        <!-- Logo -->
-        <a href="{% url 'accounts:dashboard' %}" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini">SKNF</span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">SKNF</span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- User Account: style can be found in dropdown.less -->
-
-
-                    <!-- Control Sidebar Toggle Button -->
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <!-- =============================================== -->
-
-    <!-- Left side column. contains the sidebar -->
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- Sidebar user panel -->
-            <div class="user-panel">
-
-
-            </div>
-            <!-- search form -->
-
-            <!-- /.search form -->
-            <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu" data-widget="tree">
-
-                <li>
-                    <a href="{% url 'accounts:dashboard' %}">
-                        <i class="fa fa-home"></i> <span>Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="ion ion-calendar"></i> <span>News & Events</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="ion ion-image"></i> <span>Gallery</span>
-                    </a>
-                </li>
-                <br>
-                <br>
-                <hr width="70%">
-                <li>
-                    <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User profile picture">
-                        <h3 class="profile-username text-center"><font color="white">A.K. Khondoker</font></h3>
-                        <p class="text-muted text-center"><font color="white">Head Maater</font></p>
-                    </div>
-                </li>
-                <hr width="70%">
-                <hr width="70%">
-                <li>
-                    <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User profile picture">
-                        <h3 class="profile-username text-center"><font color="white">B.L.Roy</font></h3>
-                        <p class="text-muted text-center"><font color="white">Mentor</font></p>
-                    </div>
-                </li>
-            </ul>
-            <hr width="70%">
-        </section>
-        <!-- /.sidebar -->
-    </aside>
 
     <!-- =============================================== -->
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>{{ name }}</h1>
@@ -319,45 +202,6 @@
                     </div>
                 </div>
                 <div class="col-md-4" >
-                    <div class="row">
-                        <div class="box box-info">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Login</h3>
-                            </div>
-                            <!-- /.box-header -->
-                            <!-- form start -->
-                            <form class="form-horizontal" >
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-
-
-                                        <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-10">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> Remember me
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.box-body -->
-                                <div class="box-footer">
-                                    <a type="submit" class="btn btn-info" href="{% url 'accounts:headmaster_home' %}">Login</a>
-                                </div>
-                                <!-- /.box-footer -->
-                            </form>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="box box-primary">
                             <div class="box-header with-border">
@@ -557,34 +401,7 @@
                     </div>
         </section>
 
-    </div>
-
-    <footer class="main-footer">
-        <h2 class="text-center"></h2>
 
 
-    </footer>
+ {% endblock %}
 
-
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 3 -->
-<script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{% static 'vendor/bootstrap/dist/js/bootstrap.min.js' %} "></script>
-<!-- SlimScroll -->
-<script src="{% static 'vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
-<!-- FastClick -->
-<script src="{% static 'vendor/fastclick/lib/fastclick.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{% static 'vendor/dist/js/adminlte.min.js' %}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{% static 'vendor/dist/js/demo.js' %}"></script>
-
-</body>
-</html>
