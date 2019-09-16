@@ -45,7 +45,8 @@ def login_request(request):
             user = authenticate(email=email, password=password)
             if user is not None:
                 login(request, user)
-                #messages.info(request, f"You are now logged in as {email}")
+                if next_destination:
+                    return redirect(next_destination)
                 return redirect('/dashboard/')
             else:
                 messages.error(request, "Invalid username or password.")
