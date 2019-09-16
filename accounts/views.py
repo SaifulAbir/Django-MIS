@@ -28,13 +28,15 @@ def events(request):
 def headmaster_home(request):
     return render(request, 'accounts/headmaster_home.html')
 
-def custom_login(request):
+def custom_login(request,):
     if request.user.is_authenticated:
         return HttpResponseRedirect('/dashboard/')
     else:
         return login_request(request)
 
 def login_request(request):
+
+    next_destination = request.GET.get('next')
     if request.method == 'POST':
         form = PrettyAuthenticationForm( data=request.POST)
         if form.is_valid():
@@ -50,9 +52,10 @@ def login_request(request):
         else:
             messages.error(request, "Invalid username or password.")
     form = PrettyAuthenticationForm()
+
     return render(request = request,
                     template_name = "accounts/login.html",
-                    context={"form":form})
+                    context={"form":form, 'next_destination': next_destination})
 
 
 
