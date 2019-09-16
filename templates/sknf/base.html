@@ -5,7 +5,12 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
-{% include "sknf/header.html" %}
+  {% if name %}
+{% include "sknf/header_school_profile.html" %}
+  {% else %}
+    {% include "sknf/header.html" %}
+  {% endif %}
+
 
   <!-- =============================================== -->
 
