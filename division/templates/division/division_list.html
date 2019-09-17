@@ -65,9 +65,6 @@
                     }
                 });
             };
-            var createDivision = ".js-division-create-form"
-            var updateDivision = ".js-division-update-form"
-            var deleteDivision = ".js-division-delete-form"
             var saveForm = function () {
                 var form = $(this);
                 var formClass = form.attr("class")
@@ -81,30 +78,11 @@
                             if(formClass=="js-division-create-form"){
                                 showAlert("Division Created!", "alert-success-customized")
                             }
-
-                            $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
-                            $("#modal-division").modal("hide");
-                        }
-                        else {
-                            $("#modal-division .modal-content").html(data.html_form);
-                        }
-
-                        if (data.form_is_valid) {
-                            if(formClass=="js-division-delete-form"){
-                                showAlert("Division Deleted!", "alert alert-danger")
-                            }
-
-                            $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
-                            $("#modal-division").modal("hide");
-                        }
-                        else {
-                            $("#modal-division .modal-content").html(data.html_form);
-                        }
-
-
-                        if (data.form_is_valid) {
                             if(formClass=="js-division-update-form"){
-                                showAlert("Division Update!", "aalert alert-info")
+                                showAlert("Division Updated!", "alert alert-success-customized")
+                            }
+                            if(formClass=="js-division-delete-form"){
+                                showAlert("Division Deleted!", "alert alert-danger-customized")
                             }
 
                             $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
@@ -122,8 +100,7 @@
 
         function showAlert(message,alerttype) {
 
-            $('#alert_placeholder').append('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-
+            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
 
         }
 
@@ -131,9 +108,6 @@
 
             // Create division
             $(".js-create-division").click(loadForm);
-
-
-
             $("#modal-division").on("submit", ".js-division-create-form", saveForm);
 
             // Update division

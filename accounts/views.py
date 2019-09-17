@@ -2,12 +2,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-=======
-from django.shortcuts import render, render_to_response
->>>>>>> feature/016_persistent_alert
+
+
 
 # Create your views here.
 from accounts.forms import PrettyAuthenticationForm
@@ -66,14 +64,3 @@ def login_request(request):
                     context={"form":form, 'next_destination': next_destination})
 
 
-
-
-def not_found(request, exception):
-    return render(request, 'accounts/404.html')
-
-def server_error(request):
-    return render(request, 'accounts/500.html')
-# def not_found(request, exception):
-#     response = render_to_response("accounts/404.html")
-#  response.status_code = 404
-#     return response

@@ -7,6 +7,7 @@
 <div class="box">
     <div class="box-header">
         <h3 style="display: inline-block;" class="box-title">Upazilla List </h3>
+        <span id = "alert_placeholder"></span>
         <button type="button"
                 class="btn btn-primary pull-right js-create-upazilla"
                 data-url="{% url 'upazillas:create_upazilla' %}">
@@ -64,6 +65,7 @@ $(function () {
 
   var saveForm = function () {
     var form = $(this);
+    var formClass = form.attr("class")
     $.ajax({
       url: form.attr("action"),
       data: form.serialize(),
@@ -71,7 +73,15 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          toastr.success('Successfully done!', {timeOut: 60000});
+          if(formClass=="js-upazilla-create-form"){
+              showAlert("Upazilla Created!", "alert-success-customized")
+           }
+           if(formClass=="js-upazilla-update-form"){
+              showAlert("Upazilla Updated!", "alert-success-customized")
+           }
+           if(formClass=="js-upazilla-delete-form"){
+              showAlert("Upazilla Deleted!", "alert-danger-customized")
+           }
           $(".upazilla-table tbody").html(data.html_upazilla_list);  // <-- Replace the table body
           $("#modal-upazilla").modal("hide");  // <-- Close the modal
         }
@@ -84,6 +94,12 @@ $(function () {
   };
 
   /* Binding */
+
+  function showAlert(message,alerttype) {
+
+            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+  }
 
   // Create upazilla
   $(".js-create-upazilla").click(loadForm);

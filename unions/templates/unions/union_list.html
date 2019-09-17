@@ -6,6 +6,7 @@
 <div class="box">
     <div class="box-header">
         <h3 style="display: inline-block;" class="box-title"> Union List </h3>
+        <span id = "alert_placeholder"></span>
         <button type="button"
                 class="btn btn-primary pull-right js-create-union"
                 data-url="{% url 'unions:create_union' %}">
@@ -63,6 +64,7 @@ $(function () {
 
   var saveForm = function () {
     var form = $(this);
+    var formClass = form.attr("class")
     $.ajax({
       url: form.attr("action"),
       data: form.serialize(),
@@ -70,7 +72,15 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          toastr.success('Successfully done!', {timeOut: 60000});
+          if(formClass=="js-union-create-form"){
+             showAlert("Union Created!", "alert-success-customized")
+          }
+          if(formClass=="js-union-update-form"){
+             showAlert("Union Updated!", "alert-success-customized")
+          }
+          if(formClass=="js-union-delete-form"){
+              showAlert("Union Deleted!", "alert alert-danger-customized")
+           }
           $(".union-table tbody").html(data.html_union_list);  // <-- Replace the table body
           $("#modal-union").modal("hide");  // <-- Close the modal
         }
@@ -81,6 +91,11 @@ $(function () {
     });
     return false;
   };
+  function showAlert(message,alerttype) {
+
+            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+  }
 
   /* Binding */
 

@@ -7,6 +7,7 @@
 <div class="box">
     <div class="box-header">
         <h3 style="display: inline-block;" class="box-title">District List </h3>
+        <span id = "alert_placeholder"></span>
         <button type="button"
                 class="btn btn-primary pull-right js-create-district"
                 data-url="{% url 'districts:create_district' %}">
@@ -66,9 +67,7 @@ $(function () {
       }
     });
   };
-  var createDistrict = ".js-district-create-form"
-  var updateDistrict = ".js-district-update-form"
-  var deleteDistrict = ".js-district-delete-form"
+
   var saveForm = function () {
     var form = $(this);
     var formClass = form.attr("class")
@@ -82,17 +81,11 @@ $(function () {
            if(formClass=="js-district-create-form"){
               showAlert("District Created!", "alert-success-customized")
            }
-
-          $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
-          $("#modal-district").modal("hide");  // <-- Close the modal
-        }
-        else {
-          $("#modal-district .modal-content").html(data.html_form);
-        }
-
-        if (data.form_is_valid) {
            if(formClass=="js-district-update-form"){
               showAlert("District Updated!", "alert-success-customized")
+           }
+           if(formClass=="js-district-delete-form"){
+              showAlert("District Deleted!", "alert-danger-customized")
            }
 
           $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
@@ -101,18 +94,16 @@ $(function () {
         else {
           $("#modal-district .modal-content").html(data.html_form);
         }
-
-
-      }
+        }
     });
     return false;
   };
+
   function showAlert(message,alerttype) {
 
-       $('#alert_placeholder').append('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-
-
+       $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
   }
+
   /* Binding */
 
   // Create district
