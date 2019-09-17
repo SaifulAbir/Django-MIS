@@ -115,6 +115,5 @@ def school_profile(request, pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
 #     return render(request, 'school/school_profile.html'),  {'img': img}
 
-
 def Sk_leaderApproval(request):
     return render(request, 'school/Sk_leaderApproval.html')

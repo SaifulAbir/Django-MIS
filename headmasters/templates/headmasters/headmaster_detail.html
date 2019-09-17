@@ -29,6 +29,18 @@
                 <label>Mobile:</label>
                 <input type="text" value="{{headmaster_detail.mobile}}" class="form-control my-colorpicker1" readonly>
               </div>
+              <div class="form-group">
+                <label>User Type:</label>
+                <input type="text" value="{{headmaster_detail.user.get_user_type_display}}" class="form-control my-colorpicker1" readonly>
+              </div>
+            <div class="form-group">
+                <label>School:</label>
+                <input type="text" value="{{headmaster_detail.school.name}}" class="form-control my-colorpicker1" readonly>
+              </div>
+            <div class="form-group">
+                <label>Image:</label>
+                <img src="{{ headmaster_detail.image.url }}" >
+            </div>
             </div>
           </div>
         </div>
