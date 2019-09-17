@@ -1,4 +1,5 @@
 {% load static %}
+
 <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel">
@@ -31,20 +32,13 @@
                 <hr width="70%">
                 <li>
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User profile picture">
-                        <h3 class="profile-username text-center"><font color="white">A.K. Khondoker</font></h3>
+                        <img class="profile-user-img img-responsive img-circle" src="{{school_profile.image.url }}" alt="User profile picture">
+                        <h3 class="profile-username text-center"><font color="white">{{ school_profile.user.first_name }}</font></h3>
                         <p class="text-muted text-center"><font color="white">Head Maater</font></p>
                     </div>
                 </li>
-                <hr width="70%">
-                <hr width="70%">
-                <li>
-                    <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="User profile picture">
-                        <h3 class="profile-username text-center"><font color="white">B.L.Roy</font></h3>
-                        <p class="text-muted text-center"><font color="white">Mentor</font></p>
-                    </div>
-                </li>
+
+
             </ul>
             <hr width="70%">
         </section>
