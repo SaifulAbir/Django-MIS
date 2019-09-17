@@ -5,12 +5,12 @@
     <td>{{ district.name }}</td>
     <td>{{ district.division }}</td>
     <td><button type="button"
-                class="btn btn-warning btn-sm js-update-district"
+                class="js-update-district"
                 data-url="{% url 'districts:update_district' district.id %}">
         <span class="fa fa-edit"></span>
     </button>
         <button type="button"
-                class="btn btn-danger btn-sm js-delete-district"
+                class="js-delete-district"
                 data-url="{% url 'districts:delete_district' district.id %}">
             <span class="fa fa-trash"></span>
         </button>

@@ -15,7 +15,7 @@
         </button>
     </div>
     <!-- /.box-header -->
-    <div class="box-body table-responsive">
+    <div class="box-body">
         <table id="example1" class=" district-table table table-bordered table-striped">
             <thead>
             <tr>
@@ -53,12 +53,12 @@ $(function () {
     $(".settings-menu .treeview-menu").css("display", "block");
 
     var loadForm = function () {
-    var btn = $(this);
-    $.ajax({
-      url: btn.attr("data-url"),
-      type: 'get',
-      dataType: 'json',
-      beforeSend: function () {
+        var btn = $(this);
+        $.ajax({
+             url: btn.attr("data-url"),
+             type: 'get',
+             dataType: 'json',
+             beforeSend: function () {
         $("#modal-district").modal("show");
       },
       success: function (data) {
@@ -66,9 +66,12 @@ $(function () {
       }
     });
   };
-
+  var createDistrict = ".js-district-create-form"
+  var updateDistrict = ".js-district-update-form"
+  var deleteDistrict = ".js-district-delete-form"
   var saveForm = function () {
     var form = $(this);
+    var formClass = form.attr("class")
     $.ajax({
       url: form.attr("action"),
       data: form.serialize(),
@@ -76,18 +79,40 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          toastr.success('Successfully done!', {timeOut: 60000});
+           if(formClass=="js-district-create-form"){
+              showAlert("District Created!", "alert-success-customized")
+           }
+
           $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
           $("#modal-district").modal("hide");  // <-- Close the modal
         }
         else {
           $("#modal-district .modal-content").html(data.html_form);
         }
+
+        if (data.form_is_valid) {
+           if(formClass=="js-district-update-form"){
+              showAlert("District Updated!", "alert-success-customized")
+           }
+
+          $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
+          $("#modal-district").modal("hide");  // <-- Close the modal
+        }
+        else {
+          $("#modal-district .modal-content").html(data.html_form);
+        }
+
+
       }
     });
     return false;
   };
+  function showAlert(message,alerttype) {
 
+       $('#alert_placeholder').append('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+
+  }
   /* Binding */
 
   // Create district
