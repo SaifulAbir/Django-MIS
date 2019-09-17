@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 
 from districts.models import District
+from headmasters.models import HeadmasterProfile
 from school.models import School
 from unions.models import Union
 from upazillas.models import Upazilla
@@ -108,8 +109,11 @@ def load_unions(request):
     return render(request, 'school/union_dropdown_list_options.html', {'unions': unions})
 
 def school_profile(request, pk):
-    name = School.objects.get(pk=pk)
-    return render(request, 'school/school_profile.html', { 'name' : name})
+    headmaster = HeadmasterProfile.objects.get(school__id__in=[pk,])
+    return render(request, 'school/school_profile.html', { 'school_profile' : headmaster})
+# def image(request,pk):
+#     img= HeadmasterProfile.objects.get(pk=pk)
+#     return render(request, 'school/school_profile.html'),  {'img': img}
 
 
 def Sk_leaderApproval(request):
