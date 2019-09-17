@@ -1,8 +1,16 @@
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+<<<<<<< HEAD
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+=======
+from django.shortcuts import render, render_to_response
+>>>>>>> feature/016_persistent_alert
 
 # Create your views here.
+from accounts.forms import PrettyAuthenticationForm
 from school.models import School
 
 
@@ -13,17 +21,59 @@ def index(request):
     context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list, 'school_total': school_total}
     return render(request, 'sknf/index.html', context)
 
+
 @login_required(login_url='/')
 def profile(request):
     return render(request, 'accounts/profile.html')
+
 
 @login_required(login_url='/')
 def events(request):
     return render(request, 'sknf/events.html')
 
+
 def headmaster_home(request):
     return render(request, 'accounts/headmaster_home.html')
 
+def custom_login(request,):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/dashboard/')
+    else:
+        return login_request(request)
+
+def login_request(request):
+
+    next_destination = request.GET.get('next')
+    if request.method == 'POST':
+        form = PrettyAuthenticationForm( data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                login(request, user)
+                if next_destination:
+                    return redirect(next_destination)
+                return redirect('/dashboard/')
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = PrettyAuthenticationForm()
+
+    return render(request = request,
+                    template_name = "accounts/login.html",
+                    context={"form":form, 'next_destination': next_destination})
 
 
 
+
+def not_found(request, exception):
+    return render(request, 'accounts/404.html')
+
+def server_error(request):
+    return render(request, 'accounts/500.html')
+# def not_found(request, exception):
+#     response = render_to_response("accounts/404.html")
+#  response.status_code = 404
+#     return response

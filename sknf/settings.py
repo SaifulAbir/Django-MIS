@@ -25,8 +25,8 @@ SECRET_KEY = 'hqfqlot5*at%cqbbodie7e$ea_^syj7v9+nb&67$xlri$l9$dt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['192.168.1.143','127.0.0.1']
+TEMPLATE_DEBUG = DEBUG
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'division',
     'unions',
     'school',
+    'headmasters',
+    'skleaders'
 ]
 
 MIDDLEWARE = [
@@ -91,8 +93,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sknf',
-        'USER': 'rashed',
-        'PASSWORD': '123456',
+        'USER': 'root',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '3306'
     }
@@ -139,6 +141,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Custom Django auth settings
+
+AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_REDIRECT_URL = 'accounts:dashboard'
 LOGOUT_REDIRECT_URL = 'accounts:login'

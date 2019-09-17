@@ -111,6 +111,5 @@ def school_profile(request, pk):
     name = School.objects.get(pk=pk)
     return render(request, 'school/school_profile.html', { 'name' : name})
 
-
 def Sk_leaderApproval(request):
     return render(request, 'school/Sk_leaderApproval.html')

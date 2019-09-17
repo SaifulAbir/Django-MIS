@@ -2,18 +2,21 @@
 {% for division in division_list %}
 <tr>
 
-    <td>{{ division.name }}</td>
+   <td>{{ division.name }}</td>
+   <td><button type="button"
+               class="js-update-division"
+               data-url="{% url 'division:update_division' division.id %}">
+       <span class="fa fa-edit"> </span>
+   </button>
+       <button type="button"
+               class="js-delete-division"
+               data-url="{% url 'division:delete_division' division.id %}">
+           <span class="fa fa-trash"> </span>
+       </button>
+   </td>
 
-    <td><button type="button"
-                class="btn btn-warning btn-sm js-update-division"
-                data-url="{% url 'division:update_division' division.id %}">
-        <span class="fa fa-edit"> </span>
-    </button>
-        <button type="button"
-                class="btn btn-danger btn-sm js-delete-division"
-                data-url="{% url 'division:delete_division' division.id %}">
-            <span class="fa fa-trash"> </span>
-        </button>
-    </td>
+
+
+
 </tr>
 {% endfor %}

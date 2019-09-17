@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='school',
             name='address',
-            field=models.TextField(blank=True, max_length=200, null=True),
+            field=models.TextField(blank=True, null=True),
         ),
         migrations.AlterField(
             model_name='school',
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='school',
             name='school_id',
-            field=models.CharField(blank=True, max_length=255, null=True, unique=True),
+            field=models.CharField(blank=True, max_length=200, null=True, unique=True),
         ),
         migrations.AlterField(
             model_name='school',

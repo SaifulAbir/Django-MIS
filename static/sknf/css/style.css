@@ -1,0 +1,28 @@
+<<<<<<< HEAD
+#id_UF-user_type {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+
+#id_UF-user_type li {
+    margin-right: 10px;
+}
+
+#id_UF-user_type li label {
+    text-transform: capitalize;
+}
+
+#id_UF-user_type li label input{
+    vertical-align: middle;
+    margin-top: 0;
+}
+
+=======
+.alert-success-customized {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+>>>>>>> feature/016_persistent_alert

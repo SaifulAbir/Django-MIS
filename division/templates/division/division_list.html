@@ -3,11 +3,13 @@
 
     <!-- Main content -->
     <section class="content">
-
+<div class="box">
         <!-- Main content -->
-        <div class="box">
+        <div class="box-body table-responsive">
             <div class="box-header">
                 <h3 style="display: inline-block;" class="box-title">Division List </h3>
+
+                <span id = "alert_placeholder"></span>
                 <button type="button"
                         class="btn btn-primary pull-right js-create-division"
                         data-url="{% url 'division:create_division' %}">
@@ -15,14 +17,15 @@
                     New Division
                 </button>
             </div>
+
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body table-responsive">
                 <table   id="example1" class=" division-table table table-bordered table-striped">
                     <thead>
                     <tr>
 
-                        <th class="col-sm-11">Division</th>
-                        <th class="col-sm-1">Actions</th>
+                        <th class="col-sm-10">Division</th>
+                        <th class="col-sm-2">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,6 +40,7 @@
                 {% include 'division/_modal.html' %}
             </div>
         </div>
+</div>
         <!-- /.content -->
     </section>
 {% endblock %}
@@ -61,9 +65,12 @@
                     }
                 });
             };
-
+            var createDivision = ".js-division-create-form"
+            var updateDivision = ".js-division-update-form"
+            var deleteDivision = ".js-division-delete-form"
             var saveForm = function () {
                 var form = $(this);
+                var formClass = form.attr("class")
                 $.ajax({
                     url: form.attr("action"),
                     data: form.serialize(),
@@ -71,17 +78,54 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.form_is_valid) {
-                            toastr.success('Successfully done!', {timeOut: 60000});
+                            if(formClass=="js-division-create-form"){
+                                showAlert("Division Created!", "alert-success-customized")
+                            }
+
                             $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
                             $("#modal-division").modal("hide");
                         }
                         else {
                             $("#modal-division .modal-content").html(data.html_form);
                         }
+
+                        if (data.form_is_valid) {
+                            if(formClass=="js-division-delete-form"){
+                                showAlert("Division Deleted!", "alert alert-danger")
+                            }
+
+                            $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
+                            $("#modal-division").modal("hide");
+                        }
+                        else {
+                            $("#modal-division .modal-content").html(data.html_form);
+                        }
+
+
+                        if (data.form_is_valid) {
+                            if(formClass=="js-division-update-form"){
+                                showAlert("Division Update!", "aalert alert-info")
+                            }
+
+                            $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
+                            $("#modal-division").modal("hide");
+                        }
+                        else {
+                            $("#modal-division .modal-content").html(data.html_form);
+                        }
+
+
                     }
                 });
                 return false;
             };
+
+        function showAlert(message,alerttype) {
+
+            $('#alert_placeholder').append('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+
+        }
 
             /* Binding */
 
