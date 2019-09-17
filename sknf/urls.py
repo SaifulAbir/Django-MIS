@@ -33,9 +33,3 @@ urlpatterns = [
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-<<<<<<< HEAD
-=======
-]
-handler404 = 'accounts.views.not_found'
-handler500 = 'accounts.views.server_error'
->>>>>>> feature/016_persistent_alert

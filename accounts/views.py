@@ -2,12 +2,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-=======
-from django.shortcuts import render, render_to_response
->>>>>>> feature/016_persistent_alert
+
 
 # Create your views here.
 from accounts.forms import PrettyAuthenticationForm
