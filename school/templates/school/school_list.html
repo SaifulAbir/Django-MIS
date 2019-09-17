@@ -9,6 +9,18 @@
         <div class="box">
             <div class="box-header">
                 <h3 style="display: inline-block;" class="box-title">School List </h3>
+                <span id = "alert_placeholder">
+                    {% if messages %}
+                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                        <span>
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </span>
+
                 <a type="button"
                    class="btn btn-primary pull-right"
                    href="{% url 'school:create_school' %}">
@@ -58,6 +70,7 @@
 
             var saveForm = function () {
                 var form = $(this);
+                var formClass = form.attr("class");
                 $.ajax({
                     url: form.attr("action"),
                     data: form.serialize(),
@@ -65,10 +78,11 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.form_is_valid) {
-                            alert('Successfully done!');
-                            toastr.success('Successfully done!', {timeOut: 60000});
-                            $("body").html(data.html_school_list);
-                            $("#modal-school").modal("hide");
+                            if(formClass=="js-school-delete-form"){
+                                $("body").html(data.html_school_list);
+                                showAlert("School Deleted!", "alert alert-danger-customized")
+                            }
+                           $("#modal-school").modal("hide");
                         }
                         else {
                             $("#modal-school .modal-content").html(data.html_form);
@@ -79,6 +93,12 @@
             };
 
             /* Binding */
+
+            function showAlert(message,alerttype) {
+
+                $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+            }
 
             // Delete school
             $(".school-table").on("click", ".js-delete-school", loadForm);

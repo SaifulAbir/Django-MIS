@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -15,15 +16,17 @@ from django.views import generic
 from . import models
 
 
-class CreateSchool(LoginRequiredMixin, generic.CreateView):
+class CreateSchool(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
     login_url = '/'
     form_class = SchoolForm
     model = School
+    success_message = "School Created!"
 
-class SchoolUpdate(LoginRequiredMixin, generic.UpdateView):
+class SchoolUpdate(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
     login_url = '/'
     form_class = SchoolForm
     model = models.School
+    success_message = "School Updated!"
 
 
 class SchoolDetail(LoginRequiredMixin, generic.DetailView):
