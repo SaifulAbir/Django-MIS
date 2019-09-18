@@ -117,7 +117,7 @@
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="{{ headmaster_form_details.from_date.id_for_label }}">From</label>
-                                        {% render_field headmaster_form_details.from_date class="form-control" placeholder="Name" %}
+                                        {% render_field headmaster_form_details.from_date class="" placeholder="Name" %}
                                         <div class="{% if headmaster_form_details.from_date.errors %} invalid{% endif %}">
                                             {% for error in headmaster_form_details.from_date.errors %}
                                                 <p class="help-block">{{ error }}</p>
