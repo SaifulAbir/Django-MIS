@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'unions',
     'school',
     'headmasters',
-    'skleaders'
+    'skleaders',
+    'skmembers',
 ]
 
 MIDDLEWARE = [
