@@ -10,6 +10,7 @@ class HeadmasterProfile(models.Model):
     mobile = models.CharField(max_length=11)
     school = models.ForeignKey(School, on_delete=models.SET_NULL, blank=True, null=True)
     image = models.ImageField(upload_to='images/')
+    joining_date = models.DateField(null=False, default=timezone.now)
 
     def __str__(self):
         return self.user.first_name
@@ -19,5 +20,6 @@ class HeadmasterDetails(models.Model):
     from_date = models.DateField(null=False, default=timezone.now)
     to_date = models.DateField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
 
 

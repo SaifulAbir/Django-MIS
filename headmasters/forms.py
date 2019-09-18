@@ -54,5 +54,6 @@ class HeadmasterProfileForm(forms.ModelForm):
 class HeadmasterDetailsForm(forms.ModelForm):
 
     class Meta:
+
         model = HeadmasterDetails
-        fields = ('from_date','school', 'to_date')
+        fields = ('from_date', 'school', 'to_date')
