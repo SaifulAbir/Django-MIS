@@ -49,10 +49,11 @@ class EditUserForm(forms.ModelForm):
 class HeadmasterProfileForm(forms.ModelForm):
     class Meta:
         model = HeadmasterProfile
-        fields = ('mobile','school', 'image')
+        fields = ('mobile','school', 'image','joining_date')
 
 class HeadmasterDetailsForm(forms.ModelForm):
 
     class Meta:
+
         model = HeadmasterDetails
-        fields = ('from_date','school', 'to_date')
+        fields = ('from_date', 'school', 'to_date')
