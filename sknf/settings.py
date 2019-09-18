@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'division',
     'unions',
     'school',
-    'headmasters'
+    'headmasters',
+    'skleaders'
 ]
 
 MIDDLEWARE = [
@@ -93,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sknf',
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
