@@ -18,8 +18,8 @@ def headmaster_profile_view(request):
         headmaster_form_details = HeadmasterProfileForm(request.POST, prefix='hf')
         profile_form = HeadmasterProfileForm(request.POST, files=request.FILES, prefix='PF')
 
-        if user_form.is_valid() and profile_form.is_valid() and headmaster_form_details.is_valid():
-            print("truekrjkgjfkj")
+        if user_form.is_valid() and profile_form.is_valid():
+
             # headmaster_details = headmaster_form_details.save(commit=False)
             # headmaster_details.school = profile_form.cleaned_data["school"]
             # headmaster_details.save()
