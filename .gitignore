@@ -3,4 +3,8 @@ __pycache__/
 *.pyo
 *.pyc
 venv/
+<<<<<<< HEAD
 sknf/settings.py
+=======
+media/
+>>>>>>> feature/011_headmaster

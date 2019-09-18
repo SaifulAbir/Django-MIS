@@ -10,16 +10,23 @@ from django.views import generic
 from accounts.decorators import headmaster_login_required
 from accounts.models import User
 from headmasters import models
-from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm
+from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm, HeadmasterDetailsForm
 from headmasters.models import HeadmasterProfile
 
 
 def headmaster_profile_view(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, prefix='UF')
+        headmaster_form_details = HeadmasterProfileForm(request.POST, prefix='hf')
         profile_form = HeadmasterProfileForm(request.POST, files=request.FILES, prefix='PF')
 
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid() and headmaster_form_details.is_valid():
+
+            # headmaster_details = headmaster_form_details.save(commit=False)
+            # headmaster_details.school = profile_form.cleaned_data["school"]
+            # headmaster_details.save()
+
+
             user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data["password"])
             user.save()
@@ -31,10 +38,12 @@ def headmaster_profile_view(request):
     else:
         user_form = UserForm(prefix='UF')
         profile_form = HeadmasterProfileForm(prefix='PF')
+        headmaster_form_details = HeadmasterDetailsForm(prefix='hf')
 
     return render(request, 'headmasters/headmaster_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'headmaster_form_details': headmaster_form_details,
     })
 
 @method_decorator(headmaster_login_required, name='dispatch')
