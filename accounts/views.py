@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 
 
@@ -34,8 +34,23 @@ def headmaster_home(request):
     return render(request, 'accounts/headmaster_home.html')
 
 def custom_login(request,):
-    if request.user.is_authenticated:
+    next_destination = request.GET.get('next')
+    if request.user.is_authenticated and request.user.user_type == 1:
+        if next_destination:
+            return HttpResponse("Access denied")
         return HttpResponseRedirect('/dashboard/')
+    elif request.user.is_authenticated and request.user.user_type == 2:
+        if next_destination:
+            return HttpResponse("Access denied")
+        return HttpResponseRedirect('/headmaster_home/')
+    elif request.user.is_authenticated and request.user.user_type == 3:
+        if next_destination:
+            return HttpResponse("Access denied")
+        return HttpResponseRedirect('/headmaster_home/')
+    elif request.user.is_authenticated and request.user.user_type == 5:
+        if next_destination:
+            return HttpResponse("Access denied")
+        return HttpResponseRedirect('/headmaster_home/')
     else:
         return login_request(request)
 
@@ -52,7 +67,10 @@ def login_request(request):
                 login(request, user)
                 if next_destination:
                     return redirect(next_destination)
-                return redirect('/dashboard/')
+                if user.user_type == 1:
+                    return redirect('/dashboard/')
+                elif user.user_type == 2:
+                    return redirect('/headmaster_home/')
             else:
                 messages.error(request, "Invalid username or password.")
         else:

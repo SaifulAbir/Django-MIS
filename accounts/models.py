@@ -49,7 +49,7 @@ class User(AbstractUser):
         (6, 'skMember'),
     )
 
-    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
+    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=6)
 
     username = None
     email = models.EmailField(_('email address'), unique=True )  # changes email to unique and blank to false
@@ -57,6 +57,37 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []  # removes email from REQUIRED_FIELDS
 
     objects = UserManager()
+
+
+    @property
+    def is_admin(self):
+        if self.user_type == 1:
+            return True
+        else:
+            return False
+
+    @property
+    def is_headmaster(self):
+        if self.user_type == 2:
+            return True
+        else:
+            return False
+
+    @property
+    def is_mentor(self):
+        if self.user_type == 3:
+            return True
+        else:
+            return False
+
+
+    @property
+    def is_skleader(self):
+        if self.user_type == 5:
+            return True
+        else:
+            return False
+
 
     def __str__(self):
         return self.user.first_name

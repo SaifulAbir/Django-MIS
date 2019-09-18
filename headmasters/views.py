@@ -4,8 +4,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views import generic
 
+from accounts.decorators import headmaster_login_required
 from accounts.models import User
 from headmasters import models
 from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm
@@ -35,7 +37,8 @@ def headmaster_profile_view(request):
         'profile_form': profile_form,
     })
 
-class HeadmasterList(LoginRequiredMixin, generic.ListView):
+@method_decorator(headmaster_login_required, name='dispatch')
+class HeadmasterList(generic.ListView):
     login_url = '/'
     model = models.HeadmasterProfile
 
