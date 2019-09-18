@@ -1,6 +1,6 @@
 from django import forms
 from accounts.models import User
-from .models import HeadmasterProfile
+from .models import HeadmasterProfile, HeadmasterDetails
 
 
 class UserForm(forms.ModelForm):
@@ -50,3 +50,9 @@ class HeadmasterProfileForm(forms.ModelForm):
     class Meta:
         model = HeadmasterProfile
         fields = ('mobile','school', 'image')
+
+class HeadmasterDetailsForm(forms.ModelForm):
+
+    class Meta:
+        model = HeadmasterDetails
+        fields = ('from_date','school', 'to_date')

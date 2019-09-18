@@ -1,11 +1,8 @@
 from django.db import models
 
-# Create your models here.
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
 from accounts.models import User
 from school.models import School
+from django.utils import timezone
 
 
 class HeadmasterProfile(models.Model):
@@ -16,5 +13,11 @@ class HeadmasterProfile(models.Model):
 
     def __str__(self):
         return self.user.first_name
+
+class HeadmasterDetails(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=False)
+    from_date = models.DateField(null=False, default=timezone.now)
+    to_date = models.DateField(blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
 
