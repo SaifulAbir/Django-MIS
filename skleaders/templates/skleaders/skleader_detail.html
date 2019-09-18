@@ -2,7 +2,7 @@
 {% block body_block %}
 <section class="content-header">
    <h1>
-      Headmaster Info
+      SkLeader Info
    </h1>
 </section>
 <!-- Main content -->
@@ -18,28 +18,36 @@
               <!-- School Name -->
               <div class="form-group">
                 <label>Name:</label>
-                <input disabled type="text" value="{{headmaster_detail.user.first_name}}" class="form-control my-colorpicker1">
+                <input disabled type="text" value="{{skleader_detail.user.first_name}}" class="form-control my-colorpicker1">
               </div>
               <!-- /.form group -->
                 <div class="form-group">
                 <label>Email:</label>
-                <input type="text" value="{{headmaster_detail.user.email}}" class="form-control my-colorpicker1" readonly>
+                <input type="text" value="{{skleader_detail.user.email}}" class="form-control my-colorpicker1" readonly>
               </div>
                 <div class="form-group">
                 <label>Mobile:</label>
-                <input type="text" value="{{headmaster_detail.mobile}}" class="form-control my-colorpicker1" readonly>
+                <input type="text" value="{{skleader_detail.mobile}}" class="form-control my-colorpicker1" readonly>
               </div>
               <div class="form-group">
                 <label>User Type:</label>
-                <input type="text" value="{{headmaster_detail.user.get_user_type_display}}" class="form-control my-colorpicker1" readonly>
+                <input type="text" value="{{skleader_detail.user.get_user_type_display}}" class="form-control my-colorpicker1" readonly>
               </div>
             <div class="form-group">
                 <label>School:</label>
-                <input type="text" value="{{headmaster_detail.school.name}}" class="form-control my-colorpicker1" readonly>
+                <input type="text" value="{{skleader_detail.school.name}}" class="form-control my-colorpicker1" readonly>
+              </div>
+                <div class="form-group">
+                <label>Class:</label>
+                <input type="text" value="{{skleader_detail.student_class}}" class="form-control my-colorpicker1" readonly>
+              </div>
+                <div class="form-group">
+                <label>Roll:</label>
+                <input type="text" value="{{skleader_detail.roll}}" class="form-control my-colorpicker1" readonly>
               </div>
             <div class="form-group">
                 <label>Profile Picture:</label> <br />
-                <img width="100" src="{{ headmaster_detail.image.url }}" style="border-radius: 5px; border: 2px solid #ccc;">
+                <img width="100" src="{{ skleader_detail.image.url }}" style="border-radius: 5px; border: 2px solid #ccc;">
             </div>
             </div>
           </div>
