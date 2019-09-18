@@ -3,7 +3,6 @@
 
     <!-- Main content -->
     <section class="content">
-
         <!-- Main content -->
         <div class="box">
             <div class="box-header">
@@ -28,24 +27,25 @@
                     </thead>
                     <tbody>
                     {% for headmaster in headmasterprofile_list %}
-                    <tr>
-                        <td>{{headmaster.user.first_name}}</td>
-                        <td>{{ headmaster.user.email }}</td>
-                        <td>{{ headmaster.mobile }}</td>
+                        <tr>
+                            <td>{{headmaster.user.first_name}}</td>
+                            <td>{{ headmaster.user.email }}</td>
+                            <td>{{ headmaster.mobile }}</td>
 
-                        <td><a type="button"
-                               class=""
-                               href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
-                            <span class="fa fa-eye"></span>
-                        </a>
-                            <a type="button"
-                               class=""
-                               href="{% url 'headmasters:headmaster_update' headmaster.pk %}">
-                                <span class="fa fa-edit"></span>
+                            <td>
+                                <a type="button"
+                                   class=""
+                                   href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
+                                    <span class="fa fa-eye"></span>
+                                </a>
+                                <a type="button"
+                                   class=""
+                                   href="{% url 'headmasters:headmaster_update' headmaster.pk %}">
+                                    <span class="fa fa-edit"></span>
 
-                            </a>
-                        </td>
-                    </tr>
+                                </a>
+                            </td>
+                        </tr>
                     {% endfor %}
 
                     </tbody>

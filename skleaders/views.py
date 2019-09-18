@@ -41,3 +41,9 @@ class SkleaderList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = SkLeaderProfile.objects.filter(user__user_type__in=[5,])
         return queryset
+
+class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
+    login_url = '/'
+    context_object_name = "skleader_detail"
+    model = models.SkLeaderProfile
+    template_name = 'skleaders/skleader_detail.html'
