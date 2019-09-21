@@ -95,8 +95,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sknf',
         'USER': 'root',
-        'PASSWORD': '@ish123#',
-        'HOST': '127.0.0.1',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
             'sql_mode': 'traditional',

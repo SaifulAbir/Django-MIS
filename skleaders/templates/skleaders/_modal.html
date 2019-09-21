@@ -1,54 +1,35 @@
 <div class="modal fade" id="modal-skleader">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div id="generate_password_panel" class="yui-module yui-overlay yui-panel" style="visibility: inherit; width: 380px;">
-        <input style="position: absolute; top: 1px; outline: 0px; margin: 0px; border: 0px; padding: 0px; height: 1px; width: 1px; z-index: -1; opacity: 0;"><a class="container-close" href="#">Close</a>
-        <div class="hd" style="cursor: auto;">
-          <div class="header">
-            <div class="lt"></div>
-            <span>Password Generator</span>
-            <div class="rt"></div>
-          </div>
-        </div>
-        <div class="bd">
+    <div class="modal-content" id="modal-content-container">
+<!--        <div id="modal-head-container">-->
+<!--        <input style="position: absolute; top: 1px; outline: 0px; margin: 0px; border: 0px; padding: 0px; height: 1px; width: 1px; z-index: -1; opacity: 0;"><a class="container-close pull-right" data-dismiss="modal">Close</a>-->
+<!--        <div class="hd" style="cursor: auto;">-->
+<!--          <div class="header">-->
+
+<!--            <div class="lt"></div>-->
+<!--            <span>Password Generator</span>-->
+<!--            <div class="rt"></div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--          </div>-->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Password Generator</h4>
+    </div>
+        <div class="bd" id="modal-body-container">
           <div id="generate_password_body_div">
             <table id="generate_password_table">
               <tbody>
               <tr>
-                <td><input id="generate_password_input_field" type="text" value="f_4iDU)A5,9k" size="27"></td>
+                <td><input id="generate_password_input_field" type="text" value="" size="27"></td>
               </tr>
               <tr>
-                <td><input type="button" class="input-button btn btn-primary" value="Generate Password" id="generate_password_reload"></td>
+                <td><input type="button" class="input-button btn btn-primary" value="Generate Password" onClick="generateRandomString(10)" id="generate_password_reload"></td>
               </tr>
               <tr>
-                <td>
-                  <span class="action_link" id="generate_password_toggle_advanced_options">Advanced Options »</span>
-                  <div id="generate_password_advanced_options" style="display: none">
-                    <table style="width: 100%">
-                      <tbody>
-                      <tr>
-                        <td colspan="2">Length: <input type="text" id="generate_password_length" size="2" maxlength="2" value="12"> (10-18)</td>
-                      </tr>
-                      <tr>
-                        <td width="50%">Alpha Characters:</td>
-                        <td width="50%">Non Alpha Characters:</td>
-                      </tr>
-                      <tr>
-                        <td><input type="radio" name="generate_password_alpha" id="generate_password_mixed_alpha" checked="checked"> <label for="generate_password_mixed_alpha">Both (aBcD)</label></td>
-                        <td><input type="radio" name="generate_password_nonalpha" id="generate_password_mixed_nonalpha" checked="checked"> <label for="generate_password_mixed_nonalpha">Both (1@3$)</label></td>
-                      </tr>
-                      <tr>
-                        <td><input type="radio" name="generate_password_alpha" id="generate_password_lowercase"> <label for="generate_password_lowercase">Lowercase (abc)</label></td>
-                        <td><input type="radio" name="generate_password_nonalpha" id="generate_password_numbers"> <label for="generate_password_numbers">Numbers (123)</label></td>
-                      </tr>
-                      <tr>
-                        <td><input type="radio" name="generate_password_alpha" id="generate_password_uppercase"> <label for="generate_password_uppercase">Uppercase (ABC)</label></td>
-                        <td><input type="radio" name="generate_password_nonalpha" id="generate_password_symbols"> <label for="generate_password_symbols">Symbols (@#$)</label></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </td>
+
               </tr>
               </tbody>
             </table>
@@ -56,9 +37,24 @@
           </div>
           <form name="frm_generate_password_panel"><input style="display: none;"></form>
         </div>
-        <div class="ft"><span class="button-group"><button type="button" class="input-button disabled">Use Password</button><button type="button" class="input-button">Cancel</button></span></div>
+        <div class="ft"><span class="button-group "><button type="button" id="use-password" class="input-button btn btn-primary customized" disabled="disabled">Use Password</button></span></div>
         <button tabindex="-1" style="height: 1px; width: 1px; position: absolute; left: -10000em; opacity: 0;"></button><input style="position: absolute; top: 1px; outline: 0px; margin: 0px; border: 0px; padding: 0px; height: 1px; width: 1px; z-index: -1; opacity: 0;">
       </div>
     </div>
   </div>
-</div>
+<script type="text/javascript">
+
+function generateRandomString(length) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < length; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  var input = $( "#generate_password_input_field" );
+  input.val( text );
+
+}
+
+
+
+</script>

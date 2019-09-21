@@ -95,7 +95,8 @@
 
                             <div class="form-group">
                                 <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
-                                {% render_field user_form.password class="form-control" placeholder=user_form.password.label %}
+                                {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 <div class="{% if user_form.password.errors %} invalid{% endif %}">
                                     {% for error in user_form.password.errors %}
                                         <p class="help-block">{{ error }}</p>
@@ -109,7 +110,7 @@
 
                             <div class="form-group">
                                 <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
-                                {% render_field user_form.confirm_password class="form-control" placeholder=user_form.confirm_password.label %}
+                                {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
                                 <div class="{% if user_form.confirm_password.errors %} invalid{% endif %}">
                                     {% for error in user_form.confirm_password.errors %}
                                         <p class="help-block">{{ error }}</p>
@@ -153,9 +154,54 @@
     <script>
         $(".js-genarate-password").click(function () {
             $("#modal-skleader").modal("show");
+            $("#generate_password_input_field").val('');
+            $("#generate_password_confirm"). prop("checked", false);
+
         });
 
+
+
+$('#generate_password_confirm').click(function (event) {
+
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+            if($('#generate_password_input_field').val()){
+                $('#use-password').attr('disabled', false); //enable input
+            }
+            else{
+                event.stopPropagation();
+                event.preventDefault();
+                alert('First Generate Password.');
+            }
+
+        }
+        else {
+            $('#use-password').attr('disabled', true); //disable input
+        }
+    });
+
+$('#use-password').click(function (event) {
+    $("#modal-skleader").modal("hide");
+    var generated_password = $('#generate_password_input_field').val();
+    $( "#generated-pass" ).val(generated_password)
+    $( "#confirm-generated-pass" ).val(generated_password)
+});
+$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $("#generated-pass");
+  var input2 = $('#confirm-generated-pass');
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+    input2.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+    input2.attr("type", "password");
+  }
+});
     </script>
 {% endblock %}
+
+
 
 <!-- /.form group -->
