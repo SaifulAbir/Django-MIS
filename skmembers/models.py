@@ -11,7 +11,7 @@ class SkMemberProfile(models.Model):
     student_class = models.CharField(max_length=128)
     roll = models.CharField(max_length=128)
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     def __str__(self):
         return self.user.first_name

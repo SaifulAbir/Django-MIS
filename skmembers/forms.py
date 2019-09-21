@@ -17,6 +17,7 @@ class SkMemberUserForm(forms.ModelForm):
 class EditSkMemberUserForm(forms.ModelForm):
 
     user_type = forms.ChoiceField(choices=SkMemberUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+
     class Meta:
         model = User
         fields = ('first_name', 'email', 'user_type')
@@ -24,6 +25,9 @@ class EditSkMemberUserForm(forms.ModelForm):
 
 
 class SkMemberProfileForm(forms.ModelForm):
+
+    image = forms.ImageField(required=False)
+
     class Meta:
         model = SkMemberProfile
         fields = ('mobile', 'image', 'student_class', 'roll', 'school')
