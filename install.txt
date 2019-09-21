@@ -1,0 +1,19 @@
+//Install linux in your PC first then follow the steps:
+
+//basic steps
+sudo apt install python3
+sudo apt install pip3
+sudo apt-get install python-dev python3-dev
+sudo apt-get install libmysqlclient-dev
+pip install pymysql
+pip install mysqlclient
+
+
+// project inital steps:
+pip3 install virtualenv
+virtualenv -p pythpn3 venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
