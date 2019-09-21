@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from districts.models import District
 from headmasters.models import HeadmasterProfile
 from school.models import School
+from skleaders.models import SkLeaderProfile
 from unions.models import Union
 from upazillas.models import Upazilla
 from .forms import SchoolForm
@@ -113,7 +114,10 @@ def load_unions(request):
 
 def school_profile(request, pk):
     headmaster = HeadmasterProfile.objects.get(school__id__in=[pk,])
-    return render(request, 'school/school_profile.html', { 'school_profile' : headmaster})
+    skleader = SkLeaderProfile.objects.get(school__id__in=[pk, ])
+
+    return render(request, 'school/school_profile.html', { 'school_profile' : headmaster, 'skleader_profile': skleader})
+
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
 #     return render(request, 'school/school_profile.html'),  {'img': img}
