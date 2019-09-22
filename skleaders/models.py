@@ -13,11 +13,8 @@ class SkLeaderProfile(models.Model):
     student_class = models.CharField(max_length=128)
     roll = models.CharField(max_length=128)
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
-<<<<<<< HEAD
-    image = models.ImageField(upload_to='images/', blank=True, null=True)
-=======
+
     image = models.ImageField(upload_to='images/')
->>>>>>> b97d98d596a789fede7f95f975173f81e720fcd3
 
     def __str__(self):
         return self.user.first_name

@@ -53,11 +53,8 @@ class EditSkUserForm(forms.ModelForm):
 
 
 class SkLeaderProfileForm(forms.ModelForm):
-<<<<<<< HEAD
-    image = forms.ImageField(label=_('SkLeader image'), required=False,
-=======
+
     image = forms.ImageField(label=_('Skleader image'), required=False,
->>>>>>> b97d98d596a789fede7f95f975173f81e720fcd3
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model = SkLeaderProfile
