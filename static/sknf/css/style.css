@@ -31,6 +31,9 @@
     border-color: #ebccd1;
 }
 
+.select2-container .select2-selection--single {
+    height: 34px !important;
+}
 
 .select2-container .select2-selection--single {
     height: 34px !important;
@@ -63,7 +66,7 @@ a.container-close.pull-right {
     color: red;
 }
 
-}
+
 button.input-button.btn.btn-primary {
     margin-right: 10px;
 }
@@ -108,3 +111,18 @@ div#modal-content-container {
   z-index: 2;
 }
 
+
+.select2 {
+    width: 100% !important;
+}
+.removeDoc {
+    display: block;
+    text-align: center;
+}
+.removeDoc span {
+    font-size: 30px;
+    color: #e67373;
+}
+#tb-doc tr:nth-child(2) td:last-child span {
+    display: none;
+}
