@@ -67,17 +67,22 @@
 
                                 <div class="form-group">
                                     <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
-                                    {% render_field user_form.password class="form-control" placeholder=user_form.password.label %}
+                                    {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     <div class="{% if user_form.password.errors %} invalid{% endif %}">
                                         {% for error in user_form.password.errors %}
                                         <p class="help-block">{{ error }}</p>
                                         {% endfor %}
                                     </div>
+                                    <button type="button"
+                                            class="btn btn-primary pull-right js-genarate-password">
+                                        Genarate Password
+                                    </button>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
-                                    {% render_field user_form.confirm_password class="form-control" placeholder=user_form.confirm_password.label %}
+                                    {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
                                     <div class="{% if user_form.confirm_password.errors %} invalid{% endif %}">
                                         {% for error in user_form.confirm_password.errors %}
                                         <p class="help-block">{{ error }}</p>
@@ -94,10 +99,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-
-
-
-
+                                {% include 'sknf/_password_generator_modal.html' %}
                             </div>
                         </div>
                         <div class="col-sm-6"><br />
