@@ -32,15 +32,27 @@
                 <hr width="70%">
                 <li>
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="{{school_profile.image.url }}" alt="User profile picture">
-                        <h3 class="profile-username text-center"><font color="white">{{ school_profile.user.first_name }}</font></h3>
-                        <p class="text-muted text-center"><font color="white">Head Maater</font></p>
+                        {% if headmaster_profile %}
+                        <img class="profile-user-img img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
+                        {% else %}
+                        <img class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+                        {% endif %}
+                        <h3 class="profile-username text-center">
+                            <font color="white">
+                                {{ headmaster_profile.user.first_name }}
+                            </font>
+                        </h3>
+                        <p class="text-muted text-center"><font color="white">Head Master</font></p>
                     </div>
                 </li>
 
                 <li>
                     <div class="box-body box-profile">
+                        {% if skleader_profile %}
                         <img class="profile-user-img img-responsive img-circle" src="{{skleader_profile.image.url }}" alt="User profile picture">
+                        {% else %}
+                        <img class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+                        {% endif %}
                         <h3 class="profile-username text-center"><font color="white">{{ skleader_profile.user.first_name }}</font></h3>
                         <p class="text-muted text-center"><font color="white">Sk Leader</font></p>
                     </div>
