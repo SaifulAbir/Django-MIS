@@ -31,6 +31,7 @@
     border-color: #ebccd1;
 }
 
+<<<<<<< HEAD
 .select2-container .select2-selection--single {
     height: 34px !important;
 }
@@ -49,3 +50,62 @@
 #tb-doc tr:nth-child(2) td:last-child span {
     display: none;
 }
+=======
+div#modal-body-container {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
+
+a.container-close.pull-right {
+    cursor: pointer;
+    color: red;
+}
+
+}
+button.input-button.btn.btn-primary {
+    margin-right: 10px;
+}
+
+.ft {
+    padding-right: 10px;
+    padding-left: 10px;
+    float: right;
+}
+button.input-button.btn.btn-primary.customized {
+    margin-right: 5px;
+}
+input#generate_password_input_field {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+input#generate_password_input_field {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+}
+
+div#modal-head-container {
+    background-color: #3c8dbc;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+div#modal-content-container {
+    margin-left: 60px;
+    margin-right: 60px;
+    overflow: auto;
+    padding-bottom: 10px;
+}
+
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+>>>>>>> dev
