@@ -1,14 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
-
+import time
 # Create your views here.
 from django.views import generic
 
 from accounts.models import User
 from skleaders import models
 from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm
-from skleaders.models import SkLeaderProfile
+from skleaders.models import SkLeaderProfile, SkleaderDetails
 
 
 def skleader_profile_view(request):
@@ -52,6 +52,8 @@ class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
 def skleader_update(request, pk):
     skleader_profile = get_object_or_404(SkLeaderProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skleader_profile.user.id))
+
+
     if request.method == 'POST':
         user_form = EditSkUserForm(request.POST, instance=user_profile)
         profile_form = SkLeaderProfileForm(request.POST, request.FILES, instance=skleader_profile)
@@ -72,7 +74,33 @@ def skleader_update(request, pk):
         user_form = EditSkUserForm(instance=user_profile)
         profile_form = SkLeaderProfileForm(instance=skleader_profile)
 
-    return render(request, 'skleaders/skleader_profile_add.html', {
+    return render(request, 'skleaders/skleader_profile_update.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'skleader_profile': skleader_profile,
+        'pk': pk,
     })
+
+def skleader_details_update(request):
+
+    school = request.GET.get('school')
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    headmaster_id = request.GET.get('headmaster_id')
+
+    school_list = school.split(",")
+    from_date = from_date.split(",")
+    to_date = to_date.split(",")
+
+    SkleaderDetails.objects.filter(skLeader = headmaster_id).delete()
+    for school in school_list:
+        heademasterModel = SkleaderDetails()
+        heademasterModel.headmaster_id = headmaster_id
+        heademasterModel.school_id = school
+        schoolindex = school_list.index(school)
+        heademasterModel.to_date = to_date[schoolindex]
+        heademasterModel.from_date = from_date[schoolindex]
+        heademasterModel.save()
+    time.sleep(2.5)
+    return HttpResponse('ok')
+
