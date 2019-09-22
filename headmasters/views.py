@@ -110,7 +110,7 @@ def headermaster_school_details_update(request):
     from_date = from_date.split(",")
     to_date = to_date.split(",")
 
-    HeadmasterDetails.objects.filter(headmaster = headmaster_id).delete()
+    #   HeadmasterDetails.objects.filter(headmaster = headmaster_id).delete()
 
 
 
