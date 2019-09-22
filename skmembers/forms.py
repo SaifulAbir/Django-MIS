@@ -1,6 +1,7 @@
 from django import forms
 from accounts.models import User
 from skmembers.models import SkMemberProfile
+from django.utils.translation import ugettext_lazy as _
 
 
 class SkMemberUserForm(forms.ModelForm):
@@ -25,8 +26,8 @@ class EditSkMemberUserForm(forms.ModelForm):
 
 
 class SkMemberProfileForm(forms.ModelForm):
-
-    image = forms.ImageField(required=False)
+    image = forms.ImageField(label=_('SkMember image'), required=False,
+                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
 
     class Meta:
         model = SkMemberProfile

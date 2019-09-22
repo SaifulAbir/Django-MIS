@@ -9,6 +9,7 @@ from districts.models import District
 from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
+from skmembers.models import SkMemberProfile
 from unions.models import Union
 from upazillas.models import Upazilla
 from .forms import SchoolForm
@@ -113,10 +114,21 @@ def load_unions(request):
     return render(request, 'school/union_dropdown_list_options.html', {'unions': unions})
 
 def school_profile(request, pk):
-    headmaster = HeadmasterProfile.objects.get(school__id__in=[pk,])
-    skleader = SkLeaderProfile.objects.get(school__id__in=[pk, ])
+    school_profile = get_object_or_404(School, pk=pk)
+    try:
+        headmaster_profile = HeadmasterProfile.objects.get(school__id__in=[pk,])
+    except HeadmasterProfile.DoesNotExist:
+        headmaster_profile = None
+    try:
+        skleader = SkLeaderProfile.objects.get(school__id__in=[pk, ])
+    except SkLeaderProfile.DoesNotExist:
+        skleader = None
+    try:
+        skmember_list = SkMemberProfile.objects.filter(school__id__in=[pk, ])
+    except SkMemberProfile.DoesNotExist:
+        skmember_list = None
 
-    return render(request, 'school/school_profile.html', { 'school_profile' : headmaster, 'skleader_profile': skleader})
+    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'headmaster_profile' : headmaster_profile, 'skleader_profile': skleader, 'skmember_list': skmember_list})
 
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)

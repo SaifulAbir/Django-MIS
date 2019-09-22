@@ -8,7 +8,7 @@
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>{{ school_profile.school.name }}</h1>
+            <h1>{{ school_profile.name }}</h1>
         </section>
 
         <!-- Main content -->
@@ -320,83 +320,15 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
+                                {% for skmember in skmember_list %}
                                 <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
+                                    <img class="img-responsive" style="height:60px; width:60px;" src="{{ skmember.image.url }}" alt="Photo">
                                 </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src= "{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
-                                <div class="col-xs-1">
-                                    <img class="img-responsive" src="{% static 'vendor/dist/img/user1-128x128.jpg' %}" alt="Photo">
-                                </div>
+                                {% endfor %}
+
 
                             </div>
+
                         </div>
                     </div>
         </section>
@@ -404,4 +336,6 @@
 
 
  {% endblock %}
+
+
 

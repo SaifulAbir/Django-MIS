@@ -4,6 +4,7 @@ from django.utils.safestring import mark_safe
 
 from accounts.models import User
 from skleaders.models import SkLeaderProfile
+from django.utils.translation import ugettext_lazy as _
 
 
 
@@ -51,6 +52,8 @@ class EditSkUserForm(forms.ModelForm):
 
 
 class SkLeaderProfileForm(forms.ModelForm):
+    image = forms.ImageField(label=_('SkLeader image'), required=False,
+                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model = SkLeaderProfile
         fields = ('mobile', 'image', 'student_class', 'roll', 'school')
