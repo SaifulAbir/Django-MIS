@@ -24,23 +24,49 @@
 <script src="{% static 'sknf/js/toastr.min.js' %}"></script>
 <script src="{% static 'sknf/js/select2.full.min.js' %}"></script>
 <script>
-  $(document).ready(function () {
-    $('.sidebar-menu').tree()
-  })
+    $(document).ready(function () {
+        $('.sidebar-menu').tree()
+    })
 </script>
 <script>
-  $(function () {
-      $('.select2').select2()
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
+    $(function () {
+
+        $('.select2').select2({
+            allowClear: true,
+        });
+
+
+
+        $('#example1').DataTable()
+        $('#example2').DataTable({
+            'paging'      : true,
+            'lengthChange': false,
+            'searching'   : false,
+            'ordering'    : true,
+            'info'        : true,
+            'autoWidth'   : false
+        });
+
+
+        $(function(){
+            $('#addMoreDoc').on('click', function() {
+                var data = $("#tb-doc tr:eq(1)").clone(true).appendTo("#tb-doc");
+                data.find("input").val('');
+                data.find("select").val('');
+                data.removeAttr("style");
+                $('.select2').select2();
+            });
+            $(document).on('click', '.removeDoc', function() {
+                var trIndex = $(this).closest("tr").index();
+                if(trIndex>1) {
+                    $(this).closest("tr").remove();
+                } else {
+                    alert("Sorry!! Can't remove first row!");
+                }
+            });
+        });
+
     })
-  })
 
 
 </script>

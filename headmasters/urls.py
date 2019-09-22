@@ -10,4 +10,5 @@ urlpatterns = [
     path('headmaster_list/', views.HeadmasterList.as_view(), name = 'headmaster_list'),
     path('headmaster_detail/<int:pk>/', views.HeadmasterDetail.as_view(), name = 'headmaster_detail'),
     path('headmaster_update/<int:pk>', views.headmaster_update, name='headmaster_update'),
+    path('headmaster_school_details_update/', views.headermaster_school_details_update),
 ]
