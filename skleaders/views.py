@@ -52,7 +52,7 @@ class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
 def skleader_update(request, pk):
     skleader_profile = get_object_or_404(SkLeaderProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skleader_profile.user.id))
-
+    skleader_details = SkleaderDetails.objects.filter(skLeader=pk)
 
     if request.method == 'POST':
         user_form = EditSkUserForm(request.POST, instance=user_profile)
@@ -79,6 +79,7 @@ def skleader_update(request, pk):
         'profile_form': profile_form,
         'skleader_profile': skleader_profile,
         'pk': pk,
+        'skleader_details': skleader_details,
     })
 
 def skleader_details_update(request):
