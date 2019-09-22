@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    container_name: sknf-db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'sknf'
+      # MYSQL_USER: 'root'
+      # MYSQL_ROOT_HOST: '%'
+      # MYSQL_PASSWORD: '@ish123#'
+      MYSQL_ROOT_PASSWORD: '@ish123#'
+    ports:
+      - '3306:3306'
+    volumes:
+    - ./data:/var/lib/mysql
+    expose:
+      - '3306'
+  web:
+    build: .
+    container_name: sknf-web
+    restart: always
+    command: 'bash /sknfproject/run.sh'
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/sknfproject
+    links:
+      - db
