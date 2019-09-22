@@ -68,6 +68,54 @@
 
     })
 
+    $(".js-genarate-password").click(function () {
+            $("#modal-password-generator").modal("show");
+            $("#generate_password_input_field").val('');
+            $("#generate_password_confirm"). prop("checked", false);
+
+        });
+
+
+
+$('#generate_password_confirm').click(function (event) {
+
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+            if($('#generate_password_input_field').val()){
+                $('#use-password').attr('disabled', false); //enable input
+            }
+            else{
+                event.stopPropagation();
+                event.preventDefault();
+                alert('First Generate Password.');
+            }
+
+        }
+        else {
+            $('#use-password').attr('disabled', true); //disable input
+        }
+    });
+
+$('#use-password').click(function (event) {
+    $("#modal-password-generator").modal("hide");
+    var generated_password = $('#generate_password_input_field').val();
+    $( "#generated-pass" ).val(generated_password)
+    $( "#confirm-generated-pass" ).val(generated_password)
+});
+$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $("#generated-pass");
+  var input2 = $('#confirm-generated-pass');
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+    input2.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+    input2.attr("type", "password");
+  }
+});
+
 
 </script>
 
