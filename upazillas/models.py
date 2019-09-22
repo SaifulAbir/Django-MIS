@@ -8,8 +8,8 @@ from division.models import Division
 
 
 class Upazilla(models.Model):
-    division = models.ForeignKey(Division, on_delete=models.SET_NULL, null=True)
-    district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
+    division = models.ForeignKey(Division, on_delete=models.CASCADE, null=True)
+    district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100)
     created_date = models.DateTimeField(default=timezone.now)
 
