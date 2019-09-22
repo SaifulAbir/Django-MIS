@@ -1,6 +1,7 @@
 from django import forms
 from accounts.models import User
 from .models import HeadmasterProfile, HeadmasterDetails
+from django.utils.translation import ugettext_lazy as _
 
 
 class UserForm(forms.ModelForm):
@@ -47,6 +48,8 @@ class EditUserForm(forms.ModelForm):
 
 
 class HeadmasterProfileForm(forms.ModelForm):
+    image = forms.ImageField(label=_('Headmaster image'), required=False,
+                                    error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model = HeadmasterProfile
         fields = ('mobile','school', 'image','joining_date')
