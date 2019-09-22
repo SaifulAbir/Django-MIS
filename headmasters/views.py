@@ -13,7 +13,7 @@ from headmasters import models
 from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm, HeadmasterDetailsForm
 from headmasters.models import HeadmasterProfile, HeadmasterDetails
 from school.models import School
-
+import time
 
 def headmaster_profile_view(request):
 
@@ -110,11 +110,14 @@ def headermaster_school_details_update(request):
     from_date = from_date.split(",")
     to_date = to_date.split(",")
 
-    #   HeadmasterDetails.objects.filter(headmaster = headmaster_id).delete()
-
-
-
-
-    print(school_list)
-    print(from_date)
-    print(to_date)
+    HeadmasterDetails.objects.filter(headmaster = headmaster_id).delete()
+    for school in school_list:
+        heademasterModel = HeadmasterDetails()
+        heademasterModel.headmaster_id = headmaster_id
+        heademasterModel.school_id = school
+        schoolindex = school_list.index(school)
+        heademasterModel.to_date = to_date[schoolindex]
+        heademasterModel.from_date = from_date[schoolindex]
+        heademasterModel.save()
+    time.sleep(2.5)
+    return HttpResponse('ok')
