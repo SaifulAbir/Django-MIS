@@ -6,6 +6,7 @@ import time
 from django.views import generic
 
 from accounts.models import User
+from school.models import School
 from skleaders import models
 from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm
 from skleaders.models import SkLeaderProfile, SkleaderDetails
@@ -52,7 +53,8 @@ class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
 def skleader_update(request, pk):
     skleader_profile = get_object_or_404(SkLeaderProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skleader_profile.user.id))
-    skleader_details = SkleaderDetails.objects.filter(skLeader=pk)
+    skleader_details = SkleaderDetails.objects.filter(skleader=pk)
+    school_list = School.objects.all()
 
     if request.method == 'POST':
         user_form = EditSkUserForm(request.POST, instance=user_profile)
@@ -80,6 +82,7 @@ def skleader_update(request, pk):
         'skleader_profile': skleader_profile,
         'pk': pk,
         'skleader_details': skleader_details,
+        'school_list': school_list,
     })
 
 def skleader_details_update(request):
