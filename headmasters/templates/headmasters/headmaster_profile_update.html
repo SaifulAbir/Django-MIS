@@ -300,15 +300,17 @@
                         if (!startdate) {
                             startdate = $(this).val();
                         }else {
-                            if(new Date(startdate) > new Date(dateval))
+                            if(new Date(startdate) >= new Date(dateval))
                             {
                                 $(this).css("border", "1px solid red");
                                 formvalid = false;
                             }
                         }
+                        startdate = dateval;
+                    console.log(dateval);
                     });
 
-                    if (!formvalid){
+                    if (formvalid == false){
                         return false;
                     }
 
