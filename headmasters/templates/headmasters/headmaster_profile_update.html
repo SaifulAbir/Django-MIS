@@ -172,8 +172,11 @@
                                 <h3 class="box-title">Update School Information</h3>
                             {% endif %}
                         </div>
-                        <div class="box-body">
 
+                        <div class="box-body">
+                            <span id="headmasterinfoajaxupdate">
+
+                            </span>
                             <table class="table table-bordered mb-0" id="tb-doc" style="width: 100%">
                                 <tr>
                                     <th>School</th>
@@ -206,7 +209,7 @@
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input type="date" name="to_date[]" class="form-control to-headmaster">
+                                                    <input value="{{ headmaster_detail.to_date|date:"Y-m-d" }}" type="date" name="to_date[]" class="form-control to-headmaster">
                                                 </div>
                                             </td>
                                             <td class="width-50">
@@ -253,7 +256,9 @@
                                     </button>
                                 </div>
                                 <div class="col-sm-11">
-                                    <input type="button" value="Update" class="btn btn-primary pull-right update-school"/>
+                                    <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
+                                         class="pull-right loader" >
+                                    <input type="button" value="Update" class="btn btn-primary pull-right update-school" />
                                 </div>
                             </div>
                         </div>
@@ -283,7 +288,30 @@
                     }
                 });
 
+
+
                 if (isValid){
+
+                    var startdate;
+                    var formvalid = true;
+
+                    $('#tb-doc tr td input').each(function () {
+                        dateval = $(this).val();
+                        if (!startdate) {
+                            startdate = $(this).val();
+                        }else {
+                            if(new Date(startdate) > new Date(dateval))
+                            {
+                                $(this).css("border", "1px solid red");
+                                formvalid = false;
+                            }
+                        }
+                    });
+
+                    if (!formvalid){
+                        return false;
+                    }
+
                     var school = $('#tb-doc select[name^=school]').map(function(idx, elem) {
                         return $(elem).val();
                     }).get();
@@ -300,27 +328,30 @@
                     from_date = from_date.toString();
                     to_date = to_date.toString();
                     headmaster_id = {{ pk }}
-                    $.ajax({
-                        url: '/headmasters/headmaster_school_details_update',
-                        data: {
-                            'school': school,
-                            'from_date': from_date,
-                            'to_date': to_date,
-                            'headmaster_id': headmaster_id,
-                        },
-                        success: function (data) {
-                            alert('success');
-                        }
-                    });
+                        $.ajax({
+                            url: '/headmasters/headmaster_school_details_update',
+                            data: {
+                                'school': school,
+                                'from_date': from_date,
+                                'to_date': to_date,
+                                'headmaster_id': headmaster_id,
+                            },
+                            beforeSend: function () {
+                                $('.update-school').hide()
+                                $('.loader').show()
+
+                            },
+                            success: function (data) {
+                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>School Information Successfully Updated.</span> </div>'
+                                $('#headmasterinfoajaxupdate').html(str);
+                                $('.loader').hide(1000)
+                                $('.update-school').show(1500)
+                            }
+                        });
                 }
-
-
-
-
 
             });
         });
-
 
 
     </script>
