@@ -1,0 +1,339 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+    {% load widget_tweaks %}
+    {% load static %}
+    <form method='POST' enctype="multipart/form-data">
+        <section class="content-header">
+            {% if not profile_form.instance.pk %}
+                <h1>Add New Skleader</h1>
+            {% else %}
+                <h1>Update Skleader Info</h1>
+            {% endif %}
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            {% if not profile_form.instance.pk %}
+                                <h3 class="box-title">Basic Information</h3>
+                            {% else %}
+                                <h3 class="box-title">Update Basic Information</h3>
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box-body">
+                                    {% csrf_token %}
+
+                                    <div class="form-group">
+                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                        <div class="{% if user_form.name.errors %} invalid{% endif %}">
+                                            {% for error in user_form.first_name.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="{% if user_form.email.non_field_errors %}invalid{% endif %}">
+                                        {% for error in user_form.email.non_field_errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ user_form.email.id_for_label }}">{{ user_form.email.label }}</label>
+                                        {% render_field user_form.email class="form-control" placeholder=user_form.email.label %}
+                                        <div class="{% if user_form.email.errors %} invalid{% endif %}">
+                                            {% for error in user_form.email.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.mobile.id_for_label }}">{{ profile_form.mobile.label }}</label>
+                                        {% render_field profile_form.mobile class="form-control" placeholder=profile_form.mobile.label %}
+                                        <div class="{% if profile_form.mobile.errors %} invalid{% endif %}">
+                                            {% for error in profile_form.mobile.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.student_class.id_for_label }}">Class</label>
+                                        {% render_field profile_form.student_class class="form-control" placeholder=profile_form.student_class.label %}
+                                        <div class="{% if profile_form.student_class.errors %} invalid{% endif %}">
+                                            {% for error in profile_form.student_class.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.roll.id_for_label }}">{{ profile_form.roll.label }}</label>
+                                        {% render_field profile_form.roll class="form-control" placeholder=profile_form.roll.label %}
+                                        <div class="{% if profile_form.roll.errors %} invalid{% endif %}">
+                                            {% for error in profile_form.student_class.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
+                                        {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
+                                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        <div class="{% if user_form.password.errors %} invalid{% endif %}">
+                                            {% for error in user_form.password.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                        <button type="button"
+                                                class="btn btn-primary pull-right js-genarate-password">
+                                            Genarate Password
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
+                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
+                                        <div class="{% if user_form.confirm_password.errors %} invalid{% endif %}">
+                                            {% for error in user_form.confirm_password.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6"><br />
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12">
+                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right" alt="Pic"><br />
+                                        </div>
+                                    </div>
+                                    {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    <div class="{% if profile_form.image.errors %} invalid{% endif %}">
+                                        {% for error in profile_form.image.errors %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box box-body">
+                                    <input type="submit" value="Update" class="btn btn-primary pull-right"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% include 'sknf/_password_generator_modal.html' %}
+            </div>
+
+
+        <div class="row">
+                <div class="col-sm-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            {% if not profile_form.instance.pk %}
+                                <h3 class="box-title">School Information</h3>
+                            {% else %}
+                                <h3 class="box-title">Update School Information</h3>
+                            {% endif %}
+                        </div>
+
+                        <div class="box-body">
+                            <span id="headmasterinfoajaxupdate">
+
+                            </span>
+                            <table class="table table-bordered mb-0" id="tb-doc" style="width: 100%">
+                                <tr>
+                                    <th>School</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th></th>
+                                </tr>
+                                {% if headmaster_details %}
+                                    {% for headmaster_detail in headmaster_details %}
+                                        <tr>
+                                            <td width="50%">
+                                                <div class="form-group">
+                                                    <select name="school[]" placeholder="School" class="form-control school-headmaster" id="id_school2">
+                                                        <option value="">---------</option>
+                                                        {% for school in school_list %}
+                                                            {% if headmaster_detail.school.id ==  school.id %}
+                                                                <option selected value="{{ school.id }}">{{ school.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ school.id }}">{{ school.name }}</option>
+                                                            {% endif %}
+
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td width="22%">
+                                                <div class="form-group">
+                                                    <input value="{{ headmaster_detail.from_date|date:"Y-m-d" }}" type="date" name="from_date[]" class="form-control from-headmaster" id="id_hf-from_date">
+                                                </div>
+                                            </td>
+                                            <td width="22%">
+                                                <div class="form-group">
+                                                    <input value="{{ headmaster_detail.to_date|date:"Y-m-d" }}" type="date" name="to_date[]" class="form-control to-headmaster">
+                                                </div>
+                                            </td>
+                                            <td class="width-50">
+                                                <a href="javascript:void(0);" class="removeDoc"><span class="fa fa-trash"></span></a>
+                                            </td>
+                                        </tr>
+
+                                    {% endfor %}
+
+                                {% else %}
+                                    <tr>
+                                        <td width="50%">
+                                            <div class="form-group">
+                                                <select name="school" placeholder="School" class="form-control school-headmaster" id="id_school1">
+                                                    <option value="">---------</option>
+                                                    {% for school in school_list %}
+                                                        <option value="{{ school.id }}">{{ school.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td width="22%">
+                                            <div class="form-group">
+                                                <input type="date" name="hf-from_date" class="form-control from-headmaster" id="id_hf-from_date1">
+                                            </div>
+                                        </td>
+                                        <td width="22%">
+                                            <div class="form-group">
+                                                <input type="date" name="hf-to_date" class="form-control to-headmaster" id="id_hf-to_date">
+                                            </div>
+                                        </td>
+                                        <td class="width-50">
+                                            <a href="javascript:void(0);" class="removeDoc"><span class="fa fa-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+
+                            </table>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <button id="addMoreDoc" type="button" class="btn btn-warning margin-top-4">
+                                        <i class="ft-plus"></i> Add Row
+                                    </button>
+                                </div>
+                                <div class="col-sm-11">
+                                    <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
+                                         class="pull-right loader" >
+                                    <input type="button" value="Update" class="btn btn-primary pull-right update-school" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+{% endblock %}
+{% block extra_js%}
+    <script type="text/javascript">
+
+        $(function () {
+            $(".update-school").click(function () {
+                var school_headmaster = $('.school-headmaster').val();
+                var to_headmaster = $('.to-headmaster').val();
+                var from_headmaster = $('.from-headmaster').val();
+                var isValid = true;
+
+                $('#tb-doc tr td input, #tb-doc tr td select').not('#tb-doc tr:last-child td:nth-child(3) input').each(function () {
+                    if (!$(this).val()) {
+                        $(this).css("border", "1px solid red");
+                        isValid = false;
+                    }else {
+                        $(this).css("border", "1px solid #d2d6de");
+                    }
+                });
+
+
+
+                if (isValid){
+
+                    var startdate;
+                    var formvalid = true;
+
+                    $('#tb-doc tr td input').each(function () {
+                        dateval = $(this).val();
+                        if (!startdate) {
+                            startdate = $(this).val();
+                        }else {
+                            if(new Date(startdate) >= new Date(dateval))
+                            {
+                                $(this).css("border", "1px solid red");
+                                formvalid = false;
+                            }
+                        }
+                        startdate = dateval;
+                    console.log(dateval);
+                    });
+
+                    if (formvalid == false){
+                        return false;
+                    }
+
+                    var school = $('#tb-doc select[name^=school]').map(function(idx, elem) {
+                        return $(elem).val();
+                    }).get();
+
+                    var from_date = $('#tb-doc input[name^=from_date]').map(function(idx, elem) {
+                        return $(elem).val();
+                    }).get();
+
+                    var to_date = $('#tb-doc input[name^=to_date]').map(function(idx, elem) {
+                        return $(elem).val();
+                    }).get();
+
+                    school = school.toString();
+                    from_date = from_date.toString();
+                    to_date = to_date.toString();
+                    headmaster_id = {{ pk }}
+                        $.ajax({
+                            url: '/headmasters/headmaster_school_details_update',
+                            data: {
+                                'school': school,
+                                'from_date': from_date,
+                                'to_date': to_date,
+                                'headmaster_id': headmaster_id,
+                            },
+                            beforeSend: function () {
+                                $('.update-school').hide()
+                                $('.loader').show()
+
+                            },
+                            success: function (data) {
+                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>School Information Successfully Updated.</span> </div>'
+                                $('#headmasterinfoajaxupdate').html(str);
+                                $('.loader').hide(1000)
+                                $('.update-school').show(1500)
+                            }
+                        });
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
+
+
+
+<!-- /.form group -->
