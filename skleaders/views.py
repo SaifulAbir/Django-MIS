@@ -25,6 +25,14 @@ def skleader_profile_view(request):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+
+            headmaster_details = SkleaderDetails()
+            headmaster_details.school = profile_form.cleaned_data["school"]
+            headmaster_details.skleader = profile
+            headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
+            headmaster_details.save()
+
+
             return HttpResponseRedirect("/skleaders/skleader_list/")
 
     else:
@@ -90,21 +98,24 @@ def skleader_details_update(request):
     school = request.GET.get('school')
     from_date = request.GET.get('from_date')
     to_date = request.GET.get('to_date')
-    headmaster_id = request.GET.get('headmaster_id')
+    skleader_id = request.GET.get('headmaster_id')
+
+    skobj = SkLeaderProfile.objects.get(pk=skleader_id)
+    schoolobj = School.objects.get(pk=school)
 
     school_list = school.split(",")
     from_date = from_date.split(",")
     to_date = to_date.split(",")
 
-    SkleaderDetails.objects.filter(skLeader = headmaster_id).delete()
+    SkleaderDetails.objects.filter(skleader = skleader_id).delete()
     for school in school_list:
-        heademasterModel = SkleaderDetails()
-        heademasterModel.headmaster_id = headmaster_id
-        heademasterModel.school_id = school
+        skleaderModel = SkleaderDetails()
+        skleaderModel.skleader = skobj
+        skleaderModel.school = schoolobj
         schoolindex = school_list.index(school)
-        heademasterModel.to_date = to_date[schoolindex]
-        heademasterModel.from_date = from_date[schoolindex]
-        heademasterModel.save()
+        skleaderModel.to_date = to_date[schoolindex]
+        skleaderModel.from_date = from_date[schoolindex]
+        skleaderModel.save()
     time.sleep(2.5)
     return HttpResponse('ok')
 
