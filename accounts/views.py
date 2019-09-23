@@ -4,9 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect
-
-
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -55,7 +53,7 @@ def custom_login(request,):
     elif request.user.is_authenticated and request.user.user_type == 2:
         if next_destination:
             return HttpResponse("Access denied")
-        return HttpResponseRedirect('/headmaster_home/')
+        return HttpResponseRedirect('/school/school_profile')
     elif request.user.is_authenticated and request.user.user_type == 3:
         if next_destination:
             return HttpResponse("Access denied")
@@ -83,6 +81,7 @@ def login_request(request):
                 if user.user_type == 1:
                     return redirect('/dashboard/')
                 elif user.user_type == 2:
+                    headmaster_profile = HeadmasterProfile.objects.get(user=user)
                     return redirect('/headmasters/headmaster_home/')
                 elif user.user_type == 5:
                     return redirect('/headmasters/headmaster_home/')

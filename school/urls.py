@@ -13,5 +13,6 @@ urlpatterns = [
     path('ajax/load-upazillas/', views.load_upazillas, name='ajax_load_upazillas'),
     path('ajax/load-unions/', views.load_unions, name='ajax_load_unions'),
     path('school_profile/<int:pk>', views.school_profile, name='school_profile'),
+    path('school_profile_homepage/', views.school_profile, name='school_profile'),
     path('Sk_leaderApproval/', views.Sk_leaderApproval, name='Sk_leaderApproval'),
 ]

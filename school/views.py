@@ -116,7 +116,7 @@ def load_unions(request):
 def school_profile(request, pk):
     school_profile = get_object_or_404(School, pk=pk)
     try:
-        headmaster_profile = HeadmasterProfile.objects.get(school__id__in=[pk,])
+        headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk).latest('school__id')
     except HeadmasterProfile.DoesNotExist:
         headmaster_profile = None
     try:
