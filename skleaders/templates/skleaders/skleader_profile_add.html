@@ -107,19 +107,24 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.image.id_for_label }}">{{ profile_form.image.label }}</label>
-                                        {% render_field profile_form.image class="" placeholder=profile_form.image.label %}
-                                        <div class="{% if user_form.user_type.errors %} invalid{% endif %}">
-                                            {% for error in user_form.user_type.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
-                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6">
+                                <br />
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                    </div>
+                                </div>
+                                {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                <div class="{% if profile_form.image.errors %} invalid{% endif %}">
+                                    {% for error in profile_form.image.errors %}
+                                    <p class="help-block">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>
