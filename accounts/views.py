@@ -15,14 +15,22 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from accounts.forms import PrettyAuthenticationForm
+from accounts.models import User
+from headmasters.models import HeadmasterProfile
 from school.models import School
+from skleaders.models import SkLeaderProfile
+from skmembers.models import SkMemberProfile
 
 
 @login_required(login_url='/')
 def index(request):
     school_list = School.objects.all()
     school_total = School.objects.count()
-    context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list, 'school_total': school_total}
+    headmaster_total = User.objects.filter(user_type__in=[2,]).count()
+    skleader_total = User.objects.filter(user_type__in=[5,]).count()
+    skmember_total = User.objects.filter(user_type__in=[6,]).count()
+    context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list,
+               'school_total': school_total, 'headmaster_total': headmaster_total, 'skleader_total': skleader_total, 'skmember_total': skmember_total}
     return render(request, 'sknf/index.html', context)
 
 
