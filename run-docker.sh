@@ -1,7 +1,6 @@
 cd /sknfproject
-virtualenv -p python3 venv
-source venv/bin/activate
-pip3 install -r requirements.txt
+export DJANGO_SETTINGS_MODULE="sknf.settings-docker"
+python check_db.py
 python manage.py migrate
 cat <<EOF | python manage.py shell
 from django.contrib.auth import get_user_model

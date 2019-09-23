@@ -32,7 +32,7 @@
                 <hr width="70%">
                 <li>
                     <div class="box-body box-profile">
-                        {% if headmaster_profile %}
+                        {% if headmaster_profile.image %}
                         <img class="profile-user-img img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
                         {% else %}
                         <img class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
@@ -48,7 +48,7 @@
 
                 <li>
                     <div class="box-body box-profile">
-                        {% if skleader_profile %}
+                        {% if skleader_profile.image %}
                         <img class="profile-user-img img-responsive img-circle" src="{{skleader_profile.image.url }}" alt="User profile picture">
                         {% else %}
                         <img class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">

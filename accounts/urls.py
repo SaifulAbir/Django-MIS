@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 
 from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
-from .views import index, profile, events, headmaster_home, custom_login
+from .views import index, profile, events, custom_login
 
 app_name = 'accounts'
 
@@ -15,7 +15,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
     path('profile/', profile, name='profile'),
     path('events/', events, name='events'),
-    path('headmaster_home/', headmaster_home, name='headmaster_home'),
+
     path('', custom_login, name='login'),
 
 
