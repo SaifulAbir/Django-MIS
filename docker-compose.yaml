@@ -7,9 +7,6 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: 'sknf'
-      # MYSQL_USER: 'root'
-      # MYSQL_ROOT_HOST: '%'
-      # MYSQL_PASSWORD: '@ish123#'
       MYSQL_ROOT_PASSWORD: '@ish123#'
     ports:
       - '3306:3306'
@@ -21,7 +18,7 @@ services:
     build: .
     container_name: sknf-web
     restart: always
-    command: 'bash /sknfproject/run.sh'
+    command: 'bash /sknfproject/run-docker.sh'
     ports:
       - "8000:8000"
     volumes:
