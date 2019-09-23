@@ -100,9 +100,6 @@ def skleader_details_update(request):
     to_date = request.GET.get('to_date')
     skleader_id = request.GET.get('headmaster_id')
 
-    skobj = SkLeaderProfile.objects.get(pk=skleader_id)
-    schoolobj = School.objects.get(pk=school)
-
     school_list = school.split(",")
     from_date = from_date.split(",")
     to_date = to_date.split(",")
@@ -110,11 +107,12 @@ def skleader_details_update(request):
     SkleaderDetails.objects.filter(skleader = skleader_id).delete()
     for school in school_list:
         skleaderModel = SkleaderDetails()
-        skleaderModel.skleader = skobj
-        skleaderModel.school = schoolobj
+        skleaderModel.skleader_id = skleader_id
+        skleaderModel.school_id = school
         schoolindex = school_list.index(school)
-        skleaderModel.to_date = to_date[schoolindex]
         skleaderModel.from_date = from_date[schoolindex]
+        if to_date[schoolindex]:
+            skleaderModel.to_date = to_date[schoolindex]
         skleaderModel.save()
     time.sleep(2.5)
     return HttpResponse('ok')
