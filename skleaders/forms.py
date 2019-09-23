@@ -1,7 +1,7 @@
 from django import forms
 from django.template import Template
 from django.utils.safestring import mark_safe
-
+from django.utils.translation import ugettext_lazy as _
 from accounts.models import User
 from skleaders.models import SkLeaderProfile
 from django.utils.translation import ugettext_lazy as _
@@ -33,9 +33,10 @@ class SkUserForm(forms.ModelForm):
         return cleaned_data
 
 class EditSkUserForm(forms.ModelForm):
+
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
-    user_type = forms.ChoiceField(choices=SkUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+    user_type = forms.ChoiceField(required=False, choices=SkUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     class Meta:
         model = User
         fields = ('first_name', 'email', 'password', 'user_type')
@@ -52,8 +53,9 @@ class EditSkUserForm(forms.ModelForm):
 
 
 class SkLeaderProfileForm(forms.ModelForm):
-    image = forms.ImageField(label=_('SkLeader image'), required=False,
+
+    image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll', 'school')
+        fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date')

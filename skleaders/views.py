@@ -1,14 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
-
+import time
 # Create your views here.
 from django.views import generic
 
 from accounts.models import User
+from school.models import School
 from skleaders import models
 from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm
-from skleaders.models import SkLeaderProfile
+from skleaders.models import SkLeaderProfile, SkleaderDetails
 
 
 def skleader_profile_view(request):
@@ -24,6 +25,14 @@ def skleader_profile_view(request):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+
+            headmaster_details = SkleaderDetails()
+            headmaster_details.school = profile_form.cleaned_data["school"]
+            headmaster_details.skleader = profile
+            headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
+            headmaster_details.save()
+
+
             return HttpResponseRedirect("/skleaders/skleader_list/")
 
     else:
@@ -52,6 +61,9 @@ class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
 def skleader_update(request, pk):
     skleader_profile = get_object_or_404(SkLeaderProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skleader_profile.user.id))
+    skleader_details = SkleaderDetails.objects.filter(skleader=pk)
+    school_list = School.objects.all()
+
     if request.method == 'POST':
         user_form = EditSkUserForm(request.POST, instance=user_profile)
         profile_form = SkLeaderProfileForm(request.POST, request.FILES, instance=skleader_profile)
@@ -72,7 +84,38 @@ def skleader_update(request, pk):
         user_form = EditSkUserForm(instance=user_profile)
         profile_form = SkLeaderProfileForm(instance=skleader_profile)
 
-    return render(request, 'skleaders/skleader_profile_add.html', {
+    return render(request, 'skleaders/skleader_profile_update.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'skleader_profile': skleader_profile,
+        'pk': pk,
+        'skleader_details': skleader_details,
+        'school_list': school_list,
     })
+
+def skleader_details_update(request):
+
+    school = request.GET.get('school')
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    skleader_id = request.GET.get('headmaster_id')
+
+    skobj = SkLeaderProfile.objects.get(pk=skleader_id)
+    schoolobj = School.objects.get(pk=school)
+
+    school_list = school.split(",")
+    from_date = from_date.split(",")
+    to_date = to_date.split(",")
+
+    SkleaderDetails.objects.filter(skleader = skleader_id).delete()
+    for school in school_list:
+        skleaderModel = SkleaderDetails()
+        skleaderModel.skleader = skobj
+        skleaderModel.school = schoolobj
+        schoolindex = school_list.index(school)
+        skleaderModel.to_date = to_date[schoolindex]
+        skleaderModel.from_date = from_date[schoolindex]
+        skleaderModel.save()
+    time.sleep(2.5)
+    return HttpResponse('ok')
+

@@ -1,5 +1,6 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
+{% load static %}
 <section class="content-header">
    <h1>
       SkLeader Info
@@ -47,7 +48,11 @@
               </div>
             <div class="form-group">
                 <label>Profile Picture:</label> <br />
+                {% if skleader_detail.image %}
                 <img width="100" src="{{ skleader_detail.image.url }}" style="border-radius: 5px; border: 2px solid #ccc;">
+                {% else %}
+                <img width="100" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" style="border-radius: 5px; border: 2px solid #ccc;">
+                {% endif %}
             </div>
             </div>
           </div>
