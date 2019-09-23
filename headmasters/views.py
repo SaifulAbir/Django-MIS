@@ -115,14 +115,15 @@ def headermaster_school_details_update(request):
         heademasterModel = HeadmasterDetails()
         heademasterModel.headmaster_id = headmaster_id
         heademasterModel.school_id = school
-
         schoolindex = school_list.index(school)
-        print(schoolindex)
         heademasterModel.from_date = from_date[schoolindex]
 
         if to_date[schoolindex]:
             heademasterModel.to_date = to_date[schoolindex]
-        print(to_date[schoolindex])
+        if schoolindex ==0:
+            headmaster_obj=HeadmasterProfile.objects.filter(pk=headmaster_id)
+            headmaster_obj.school_id = school;
+            headmaster_obj.save()
 
         heademasterModel.save()
     time.sleep(2.5)
