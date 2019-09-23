@@ -84,6 +84,8 @@ def login_request(request):
                     return redirect('/dashboard/')
                 elif user.user_type == 2:
                     return redirect('/headmasters/headmaster_home/')
+                elif user.user_type == 5:
+                    return redirect('/headmasters/headmaster_home/')
             else:
                 messages.error(request, "Invalid username or password.")
         else:

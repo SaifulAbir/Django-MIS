@@ -110,6 +110,7 @@ div#modal-content-container {
     position: relative;
     padding-right: 10px;
     z-index: 2;
+    right: 3px;
 }
 
 
@@ -126,4 +127,7 @@ div#modal-content-container {
 }
 #tb-doc tr:nth-child(2) td:last-child span {
     display: none;
+}
+[required] {
+    border-right: 2px solid red;
 }

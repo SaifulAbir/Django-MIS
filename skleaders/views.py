@@ -111,10 +111,10 @@ def skleader_details_update(request):
         skleaderModel.school_id = school
         schoolindex = school_list.index(school)
         skleaderModel.from_date = from_date[schoolindex]
-        if schoolindex ==0:
-            skleader_obj=SkLeaderProfile.objects.filter(pk=skleader_id)
-            skleader_obj.school_id = school;
-            skleader_obj.save()
+        # if schoolindex ==0:
+        #     skleader_obj=SkLeaderProfile.objects.filter(pk=skleader_id)
+        #     skleader_obj.school_id = school;
+        #     skleader_obj.save()
 
         if to_date[schoolindex]:
             skleaderModel.to_date = to_date[schoolindex]
