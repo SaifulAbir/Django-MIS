@@ -115,9 +115,9 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if skleader_profile.image %}
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right" alt="Pic"><br />
                                             {% else %}
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
                                             {% endif %}
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
             </div>
 
 
-        <div class="row">
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
@@ -155,9 +155,7 @@
                         </div>
 
                         <div class="box-body">
-                            <span id="headmasterinfoajaxupdate">
-
-                            </span>
+                            <span id="headmasterinfoajaxupdate"></span>
                             <table class="table table-bordered mb-0" id="tb-doc" style="width: 100%">
                                 <tr>
                                     <th>School</th>
@@ -214,12 +212,12 @@
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="date" name="hf-from_date" class="form-control from-headmaster" id="id_hf-from_date1">
+                                                <input type="date" name="from_date" class="form-control from-headmaster" id="id_hf-from_date1">
                                             </div>
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="date" name="hf-to_date" class="form-control to-headmaster" id="id_hf-to_date">
+                                                <input type="date" name="to_date" class="form-control to-headmaster" id="id_hf-to_date">
                                             </div>
                                         </td>
                                         <td class="width-50">
@@ -272,7 +270,6 @@
 
 
                 if (isValid){
-
                     var startdate;
                     var formvalid = true;
 
@@ -288,7 +285,6 @@
                             }
                         }
                         startdate = dateval;
-                    console.log(dateval);
                     });
 
                     if (formvalid == false){
@@ -310,6 +306,11 @@
                     school = school.toString();
                     from_date = from_date.toString();
                     to_date = to_date.toString();
+
+                    console.log(school);
+                    console.log(from_date);
+                    console.log(to_date);
+
                     headmaster_id = {{ pk }}
                         $.ajax({
                             url: '/skleaders/skleader_school_details_update',
