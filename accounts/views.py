@@ -44,8 +44,7 @@ def events(request):
     return render(request, 'sknf/events.html')
 
 
-def headmaster_home(request):
-    return render(request, 'accounts/headmaster_home.html')
+
 
 def custom_login(request,):
     next_destination = request.GET.get('next')
@@ -84,7 +83,7 @@ def login_request(request):
                 if user.user_type == 1:
                     return redirect('/dashboard/')
                 elif user.user_type == 2:
-                    return redirect('/headmaster_home/')
+                    return redirect('/headmasters/headmaster_home/')
             else:
                 messages.error(request, "Invalid username or password.")
         else:

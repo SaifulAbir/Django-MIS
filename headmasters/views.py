@@ -121,3 +121,6 @@ def headermaster_school_details_update(request):
         heademasterModel.save()
     time.sleep(2.5)
     return HttpResponse('ok')
+
+def headmaster_home(request):
+    return render(request, 'headmasters/headmaster_home.html')
