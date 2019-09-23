@@ -12,7 +12,7 @@ class SkLeaderProfile(models.Model):
     mobile = models.CharField(max_length=11)
     student_class = models.CharField(max_length=128)
     roll = models.CharField(max_length=128)
-    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True, unique=True)
 
     image = models.ImageField(upload_to='images/')
     joining_date = models.DateField(null=False, default=timezone.now)
