@@ -15,7 +15,7 @@ from division.models import Division
 
 
 class District(models.Model):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE, related_name='districts')
+    division = models.ForeignKey(Division, on_delete=models.CASCADE, related_name='districts',)
     name = models.CharField(max_length=128)
     created_date = models.DateTimeField(default=timezone.now)
 
