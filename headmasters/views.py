@@ -116,8 +116,12 @@ def headermaster_school_details_update(request):
         heademasterModel.headmaster_id = headmaster_id
         heademasterModel.school_id = school
         schoolindex = school_list.index(school)
-        heademasterModel.to_date = to_date[schoolindex]
         heademasterModel.from_date = from_date[schoolindex]
+
+        if to_date[schoolindex] :
+            heademasterModel.to_date = to_date[schoolindex]
+        print(to_date[schoolindex])
+
         heademasterModel.save()
     time.sleep(2.5)
     return HttpResponse('ok')

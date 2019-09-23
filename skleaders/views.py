@@ -110,8 +110,9 @@ def skleader_details_update(request):
         skleaderModel.skleader_id = skleader_id
         skleaderModel.school_id = school
         schoolindex = school_list.index(school)
-        skleaderModel.to_date = to_date[schoolindex]
         skleaderModel.from_date = from_date[schoolindex]
+        if to_date[schoolindex]:
+            skleaderModel.to_date = to_date[schoolindex]
         skleaderModel.save()
     time.sleep(2.5)
     return HttpResponse('ok')
