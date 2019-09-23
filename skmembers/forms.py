@@ -17,7 +17,7 @@ class SkMemberUserForm(forms.ModelForm):
 
 class EditSkMemberUserForm(forms.ModelForm):
 
-    user_type = forms.ChoiceField(choices=SkMemberUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+    user_type = forms.ChoiceField(required=False, choices=SkMemberUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
 
     class Meta:
         model = User
