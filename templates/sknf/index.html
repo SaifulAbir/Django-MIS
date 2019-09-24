@@ -52,6 +52,7 @@
 
       <div class="col-md-3">
          <div class="row">
+            <a href="{% url 'school:school_list' %}">
             <div class="small-box bg-aqua">
                <div class="inner">
                   <h3>{{school_total}}</h3>
@@ -61,6 +62,9 @@
                   <i class="ion ion-home"></i>
                </div>
             </div>
+            </a>
+
+            <a href="{% url 'headmasters:headmaster_list' %}">
             <div class="small-box bg-green">
                <div class="inner">
                   <h3>{{headmaster_total}}</h3>
@@ -70,6 +74,9 @@
                   <i class="ion ion-person"></i>
                </div>
             </div>
+            </a>
+
+            <a href="{% url 'skleaders:skleader_list' %}">
             <div class="small-box bg-red">
                <div class="inner">
                   <h3>{{skleader_total}}</h3>
@@ -79,6 +86,8 @@
                   <i class="fa fa-user"></i>
                </div>
             </div>
+            </a>
+
             <div class="small-box bg-yellow">
                <div class="inner">
                   <h3>0</h3>
