@@ -81,10 +81,14 @@ def login_request(request):
                 if user.user_type == 1:
                     return redirect('/dashboard/')
                 elif user.user_type == 2:
-                    headmaster_profile = HeadmasterProfile.objects.get(user=user)
-                    return redirect('/headmasters/headmaster_home/')
+                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', headmaster_profile.school.id)
+                elif user.user_type == 3:
+                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', headmaster_profile.school.id)
                 elif user.user_type == 5:
-                    return redirect('/headmasters/headmaster_home/')
+                    skleader_profile = SkLeaderProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', skleader_profile.school.id)
             else:
                 messages.error(request, "Invalid username or password.")
         else:

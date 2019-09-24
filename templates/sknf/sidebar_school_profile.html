@@ -27,7 +27,7 @@
                         <i class="ion ion-image"></i> <span>Gallery</span>
                     </a>
                 </li>
-                {% if user.is_authenticated and user.user_type == 2 %}
+                {% if user.is_authenticated and user.user_type == 2 or user.user_type == 3 %}
                 <li>
                     <a href="{% url 'school:Sk_leaderApproval' %}">
                         <i class="ion ion-checkmark"></i> <span>SK Leader Approval</span>
