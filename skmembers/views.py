@@ -62,6 +62,7 @@ def skmember_update(request, pk):
     return render(request, 'skmembers/skmember_profile_add.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'skmember_profile': skmember_profile,
     })
 
 class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
