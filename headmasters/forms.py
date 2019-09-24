@@ -1,4 +1,7 @@
 from django import forms
+from django.forms import DateField
+from sknf import settings
+
 from accounts.models import User
 from .models import HeadmasterProfile, HeadmasterDetails
 from django.utils.translation import ugettext_lazy as _
@@ -50,6 +53,8 @@ class EditUserForm(forms.ModelForm):
 class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    joining_date = DateField(input_formats=settings.DATE_INPUT_FORMATS)
+
     class Meta:
         model = HeadmasterProfile
         fields = ('mobile','school', 'image','joining_date')

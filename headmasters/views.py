@@ -19,7 +19,6 @@ def headmaster_profile_view(request):
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, prefix='UF')
-        #headmaster_form_details = HeadmasterProfileForm(request.POST, prefix='hf')
         profile_form = HeadmasterProfileForm(request.POST, files=request.FILES, prefix='PF')
 
         if user_form.is_valid() and profile_form.is_valid():
@@ -28,6 +27,7 @@ def headmaster_profile_view(request):
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
+            profile.joining_date = '2019-01-01'
             profile.save()
 
             headmaster_details = HeadmasterDetails()
