@@ -1,4 +1,4 @@
-
+{% load static %}
 {% for school in school_list %}
 
 <tr>
@@ -6,7 +6,7 @@
     <td>{{ school.school_id }}</td>
     <td>{{ school.division }}</td>
     <td>{{ school.district }}</td>
-    <td>
+    <td id="ab">
         <a type="button"
            class=""
            href="{% url 'school:detail_school' school.pk %}">
@@ -29,3 +29,4 @@
 </tr>
 
 {% endfor %}
+

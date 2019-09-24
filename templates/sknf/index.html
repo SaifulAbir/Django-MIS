@@ -33,7 +33,7 @@
                      <th class ="col-sm-2">EIIN</th>
                      <th class ="col-sm-2">Division</th>
                      <th class ="col-sm-2">District</th>
-                     <th class ="col-sm-2">Actions</th>
+                     <th class ="col-sm-2 ">Actions</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -141,6 +141,8 @@ $(function () {
   // Delete school
   $(".school-table").on("click", ".js-delete-school", loadForm);
   $("#modal-school").on("submit", ".js-school-delete-form", saveForm);
+
+  $('#ab').hide();
 
 
 });
