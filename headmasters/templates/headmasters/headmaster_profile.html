@@ -66,16 +66,16 @@
                                 <div class="form-group">
                                     <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
                                     {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
+                                    <input type="button" class="input-button btn btn-primary" value="Generate Password" onClick="generateRandomString(10)" id="generate_password_reload">
                                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
                                     <div class="{% if user_form.password.errors %} invalid{% endif %}">
                                         {% for error in user_form.password.errors %}
                                         <p class="help-block">{{ error }}</p>
                                         {% endfor %}
+
                                     </div>
-                                    <button type="button"
-                                            class="btn btn-primary pull-right js-genarate-password">
-                                        Genarate Password
-                                    </button>
+
                                 </div>
 
                                 <div class="form-group">
@@ -181,6 +181,15 @@
 {% endblock %}
 {% block extra_js%}
 <script>
+function generateRandomString(length) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+  for (var i = 0; i < length; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  var input = $( "#generate_password_input_field" );
+  input.val( text );
+
+}
 </script>
 {% endblock %}
