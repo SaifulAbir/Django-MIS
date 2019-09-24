@@ -7,11 +7,11 @@ from accounts.models import User
 from school.models import School
 
 class_choice=(
-    ('six', 'SIX'),
-    ('seven', 'SEVEN'),
-    ('eight', 'EIGHT'),
-    ('nine', 'NINE'),
-    ("ten", 'TEN'),
+    ('six', '6'),
+    ('seven', '7'),
+    ('eight', '8'),
+    ('nine', '9'),
+    ("ten", '10'),
 
 )
 class SkLeaderProfile(models.Model):
