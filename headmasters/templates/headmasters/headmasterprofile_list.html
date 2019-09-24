@@ -21,6 +21,7 @@
                     <tr>
                         <th class="col-sm-2">Name</th>
                         <th class="col-sm-4">Email</th>
+                        <th>School</th>
                         <th class="col-sm-3">Mobile</th>
                         <th class="col-sm-1">Actions</th>
                     </tr>
@@ -30,11 +31,10 @@
                         <tr>
                             <td>{{headmaster.user.first_name}}</td>
                             <td>{{ headmaster.user.email }}</td>
+                            <td>{{ headmaster.school }}</td>
                             <td>{{ headmaster.mobile }}</td>
-
                             <td>
                                 <a type="button"
-                                   class=""
                                    href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
                                     <span class="fa fa-eye"></span>
                                 </a>
