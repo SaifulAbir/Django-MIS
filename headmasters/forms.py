@@ -52,13 +52,9 @@ class EditUserForm(forms.ModelForm):
 
 class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
-<<<<<<< HEAD
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     joining_date = DateField(input_formats=settings.DATE_INPUT_FORMATS)
 
-=======
-                                 error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
->>>>>>> sk_kanban_1_13
     class Meta:
         model = HeadmasterProfile
         fields = ('mobile','school', 'image','joining_date')

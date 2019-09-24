@@ -34,6 +34,7 @@ def index(request):
 
 @login_required(login_url='/')
 def profile(request):
+
     return render(request, 'accounts/profile.html')
 
 
