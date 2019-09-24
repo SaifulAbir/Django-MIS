@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class UserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
-        (2, 'headmaster'),
+        (2, 'headmaster' ),
         (3, 'mentor'),
         (4, 'both'),
     )

@@ -84,7 +84,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-check">
                                         <label for="{{ user_form.user_type.id_for_label }}">{{ user_form.user_type.label }}</label>
                                         {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
                                         <div class="{% if user_form.user_type.errors %} invalid{% endif %}">
