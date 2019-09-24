@@ -8,7 +8,7 @@ from django.views import generic
 from accounts.models import User
 from school.models import School
 from skleaders import models
-from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm
+from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm, EditSkLeaderProfileForm
 from skleaders.models import SkLeaderProfile, SkleaderDetails
 
 
@@ -66,7 +66,7 @@ def skleader_update(request, pk):
 
     if request.method == 'POST':
         user_form = EditSkUserForm(request.POST, instance=user_profile)
-        profile_form = SkLeaderProfileForm(request.POST, request.FILES, instance=skleader_profile)
+        profile_form = EditSkLeaderProfileForm(request.POST, request.FILES, instance=skleader_profile)
         if user_form.is_valid() and profile_form.is_valid():
             old_password = skleader_profile.user.password
             user = user_form.save(commit=False)
@@ -82,7 +82,7 @@ def skleader_update(request, pk):
             return HttpResponseRedirect("/skleaders/skleader_list/")
     else:
         user_form = EditSkUserForm(instance=user_profile)
-        profile_form = SkLeaderProfileForm(instance=skleader_profile)
+        profile_form = EditSkLeaderProfileForm(instance=skleader_profile)
 
     return render(request, 'skleaders/skleader_profile_update.html', {
         'user_form': user_form,

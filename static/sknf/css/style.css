@@ -30,6 +30,13 @@
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+.alert-danger-error-message {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    font-size: 15px;
+    padding
+}
 
 .select2-container .select2-selection--single {
     height: 34px !important;
