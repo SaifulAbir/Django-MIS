@@ -50,12 +50,14 @@ def custom_login(request,):
     if request.user.is_authenticated and request.user.user_type == 1:
         if next_destination:
             return HttpResponse("Access denied")
-        return HttpResponseRedirect('/dashboard/')
+        return redirect('/dashboard/')
     elif request.user.is_authenticated and request.user.user_type == 2:
+        headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
         if next_destination:
             return HttpResponse("Access denied")
-        return HttpResponseRedirect('/school/school_profile')
+        return redirect('school:school_profile', headmaster_profile.school.id)
     elif request.user.is_authenticated and request.user.user_type == 3:
+        headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
         if next_destination:
             return HttpResponse("Access denied")
         return HttpResponseRedirect('/headmaster_home/')

@@ -1,105 +1,5 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<<<<<<< HEAD
-    {% load widget_tweaks %}
-    {% load static %}
-    <form method='POST' enctype="multipart/form-data">
-        <section class="content-header">
-            {% if not user_form.instance.pk %}
-                <h1>Add New Headmaster/Guid Teacher</h1>
-            {% else %}
-                <h1>Update Headmaster Info</h1>
-            {% endif %}
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            {% if not form.instance.pk %}
-                                <h3 class="box-title">Basic Information</h3>
-                            {% else %}
-                                <h3 class="box-title">Basic Information</h3>
-                            {% endif %}
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="box-body">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
-                                        <div class="{% if user_form.name.errors %} invalid{% endif %}">
-                                            {% for error in user_form.first_name.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="{% if user_form.email.non_field_errors %}invalid{% endif %}">
-                                        {% for error in user_form.email.non_field_errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">{{ user_form.email.label }}</label>
-                                        {% render_field user_form.email class="form-control" placeholder=user_form.email.label %}
-                                        <div class="{% if user_form.email.errors %} invalid{% endif %}">
-                                            {% for error in user_form.email.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.mobile.id_for_label }}">{{ profile_form.mobile.label }}</label>
-                                        {% render_field profile_form.mobile class="form-control" placeholder=profile_form.mobile.label %}
-                                        <div class="{% if profile_form.mobile.errors %} invalid{% endif %}">
-                                            {% for error in profile_form.mobile.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
-                                        {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
-                                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                        <div class="{% if user_form.password.errors %} invalid{% endif %}">
-                                            {% for error in user_form.password.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                        <button type="button"
-                                                class="btn btn-primary pull-right js-genarate-password">
-                                            Genarate Password
-                                        </button>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
-                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
-                                        <div class="{% if user_form.confirm_password.errors %} invalid{% endif %}">
-                                            {% for error in user_form.confirm_password.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.user_type.id_for_label }}">{{ user_form.user_type.label }}</label>
-                                        {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
-                                        <div class="{% if user_form.user_type.errors %} invalid{% endif %}">
-                                            {% for error in user_form.user_type.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                    {% include 'sknf/_password_generator_modal.html' %}
-=======
 {% load widget_tweaks %}
 {% load static %}
 <form method='POST' enctype="multipart/form-data">
@@ -171,25 +71,11 @@
                                 <div class="form-group">
                                     <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
                                     {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
->>>>>>> sk_kanban_1_13
+
                                 </div>
                             </div>
                             <div class="col-sm-6"><br />
                                 <div class="form-group">
-<<<<<<< HEAD
-                                    <div class="col-sm-12">
-                                        <div class="col-sm-12">
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
-                                        </div>
-                                    </div>
-                                    {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
-                                    <div class="{% if user_form.user_type.errors %} invalid{% endif %}">
-                                        {% for error in user_form.user_type.errors %}
-                                            <p class="help-block">{{ error }}</p>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-=======
                                     <label for="{{ user_form.user_type.id_for_label }}">{{ user_form.user_type.label }}</label>
                                     {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
                                 </div>
@@ -211,30 +97,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            {% if not profile_form.instance.pk %}
-                                <h3 class="box-title">School Information</h3>
-                            {% else %}
-                                <h3 class="box-title">Update School Information</h3>
-                            {% endif %}
-                        </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                        {% render_field profile_form.school class="form-control select2" required='true' placeholder=profile_form.school.label %}
-                                        <div class="{% if profile_form.school.errors %} invalid{% endif %}">
-                                            {% for error in profile_form.school.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-=======
         <div class="row">
             <div class="col-sm-12">
                 <div class="box box-info">
@@ -251,26 +113,13 @@
                                 <div class="form-group">
                                     <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
                                     {% render_field profile_form.school class="form-control select2" required='true' placeholder=profile_form.school.label %}
->>>>>>> sk_kanban_1_13
                                 </div>
 
-<<<<<<< HEAD
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
-                                        {% render_field profile_form.joining_date type="text" value="" class="form-control" id="datepicker" placeholder="00-00-0000" %}
-                                        <div class="{% if profile_form.joining_date.errors %} invalid{% endif %}">
-                                            {% for error in profile_form.joining_date.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-=======
+
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
                                     {% render_field profile_form.joining_date type="date" class="form-control" placeholder="Name" %}
->>>>>>> sk_kanban_1_13
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
