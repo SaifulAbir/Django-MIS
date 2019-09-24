@@ -27,7 +27,7 @@ class UserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match")
+            self.add_error('confirm_password', "Password does not match.")
 
         return cleaned_data
 
@@ -45,16 +45,20 @@ class EditUserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match")
+            self.add_error('confirm_password', "Password does not match.")
 
         return cleaned_data
 
 
 class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
+<<<<<<< HEAD
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     joining_date = DateField(input_formats=settings.DATE_INPUT_FORMATS)
 
+=======
+                                 error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+>>>>>>> sk_kanban_1_13
     class Meta:
         model = HeadmasterProfile
         fields = ('mobile','school', 'image','joining_date')

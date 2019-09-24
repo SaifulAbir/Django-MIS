@@ -22,7 +22,7 @@ class SkLeaderProfile(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
 
     image = models.ImageField(upload_to='images/')
-    joining_date = models.DateField(null=False, default=timezone.now)
+    joining_date = models.DateField(null=False, blank=False, default=timezone.now)
 
     def __str__(self):
         return self.user.first_name
