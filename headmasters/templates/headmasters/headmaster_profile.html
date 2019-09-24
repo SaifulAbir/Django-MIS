@@ -5,7 +5,7 @@
 <form method='POST' enctype="multipart/form-data">
     <section class="content-header">
         {% if not user_form.instance.pk %}
-        <h1>Add New Headmaster/Mentor</h1>
+        <h1>Add New Headmaster/Guide Teacher</h1>
         {% else %}
         <h1>Update Headmaster Info</h1>
         {% endif %}
@@ -71,10 +71,8 @@
                                 <div class="form-group">
                                     <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
                                     {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
-
                                 </div>
-                            </div>
-                            <div class="col-sm-6"><br />
+
                                 <div class="form-group">
                                     <label for="{{ user_form.user_type.id_for_label }}">{{ user_form.user_type.label }}</label>
                                     {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
@@ -90,12 +88,12 @@
                                     </div>
                                 </div>
                                 {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
->>>>>>> sk_kanban_1_13
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
         <div class="row">
             <div class="col-sm-12">
@@ -114,39 +112,40 @@
                                     <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
                                     {% render_field profile_form.school class="form-control select2" required='true' placeholder=profile_form.school.label %}
                                 </div>
-
+                            </div>
 
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
                                     {% render_field profile_form.joining_date type="date" class="form-control" placeholder="Name" %}
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="id_hf-from_date">To</label>
-                                        <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
-                                    </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="id_hf-from_date">To</label>
+                                    <input type="text" name="hf-from_date" readonly class="form-control" required="" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-body">
+                    <input type="submit" value="Save" class="btn btn-primary pull-right"/>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-body">
-                        <input type="submit" value="Save" class="btn btn-primary pull-right"/>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-    </form>
+    </section>
+</form>
 {% endblock %}
 {% block extra_js%}
-    <script>
+<script>
 
         $(function () {
             $('#datepicker').datepicker({
