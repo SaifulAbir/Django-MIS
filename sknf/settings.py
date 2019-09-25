@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'headmasters',
     'skleaders',
     'skmembers',
-    'Class_Orientation',
+    'class_oritenation',
+
 ]
 
 MIDDLEWARE = [

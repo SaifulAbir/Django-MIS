@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 
-<form action="{% url 'Class_Orientation:update_Class_Orientation' form.instance.pk %}" class="js-Class_Orientation-update-form" method='POST'>
+<form action="{% url 'class_orientation:update_class_orientation' form.instance.pk %}" class="js-class_orientation-update-form" method='POST'>
     {% csrf_token %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -31,6 +31,7 @@ urlpatterns = [
     path('headmasters/', include('headmasters.urls')),
     path('skleaders/', include('skleaders.urls')),
     path('skmembers/', include('skmembers.urls')),
-    path('Class_Orientation/',include('Class_Orientation.urls')),
+    path('class_oritenation/',include('class_oritenation.urls')),
+
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

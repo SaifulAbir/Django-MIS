@@ -1,0 +1,126 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+<section class="content-header">
+        <h1>Clas Orientation List</h1>
+ </section>
+    <!-- Main content -->
+    <section class="content">
+<div class="box">
+        <!-- Main content -->
+        <div class="box-body table-responsive">
+            <div class="box-header">
+                <h3 style="display: inline-block;" class="box-title"> </h3>
+
+                <span id = "alert_placeholder"></span>
+                <button type="button"
+                        class="btn btn-primary pull-right js-create-class_orientation"
+                        data-url="{% url 'class_orientation:create_class_orientation' %}">
+                    <span class="fa fa-plus"></span>
+                    New Class Orientation
+                </button>
+            </div>
+
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+                <table   id="example1" class=" class_orientation-table table table-bordered table-striped">
+                    <thead>
+                    <tr>
+
+                        <th class="col-sm-10"> Topic </th>
+                        <th class="col-sm-2">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% include 'class_orientation/partial_class_orientation_list.html' %}
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+                {% include 'class_orientation/_modal.html' %}
+            </div>
+        </div>
+</div>
+        <!-- /.content -->
+    </section>
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript">
+        $(function () {
+            $('.settings-menu, .class_orientation-menu').addClass('active');
+            $(".settings-menu").addClass("menu-open");
+            $(".settings-menu .treeview-menu").css("display", "block");
+
+            var loadForm = function () {
+                var btn = $(this);
+                $.ajax({
+                    url: btn.attr("data-url"),
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#modal-class_orientation").modal("show");
+                    },
+                    success: function (data) {
+                        $("#modal-class_orientation .modal-content").html(data.html_form);
+                    }
+                });
+            };
+            var saveForm = function () {
+                var form = $(this);
+                var formClass = form.attr("class")
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: form.attr("method"),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.form_is_valid) {
+                            if(formClass=="js-class_orientation-create-form"){
+                                showAlert("Class Orientation Created!", "alert-success-customized")
+                            }
+                            if(formClass=="js-class_orientation-update-form"){
+                                showAlert("Class Orientation Updated!", "alert alert-success-customized")
+                            }
+                            if(formClass=="js-class_orientation-delete-form"){
+                                showAlert("Class Orientation Deleted!", "alert alert-danger-customized")
+                            }
+
+                            $(".class_orientation-table tbody").html(data.html_class_orientation_list);  // <-- Replace the table body
+                            $("#modal-class_orientation").modal("hide");
+                        }
+                        else {
+                            $("#modal-class_orientation .modal-content").html(data.html_form);
+                        }
+
+
+                    }
+                });
+                return false;
+            };
+
+        function showAlert(message,alerttype) {
+
+            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+        }
+
+            /* Binding */
+
+            // Create class_orientation
+            $(".js-create-class_orientation").click(loadForm);
+            $("#modal-class_orientation").on("submit", ".js-class_orientation-create-form", saveForm);
+
+            // Update class_orientation
+            $(".class_orientation-table").on("click", ".js-update-class_orientation", loadForm);
+            $("#modal-class_orientation").on("submit", ".js-class_orientation-update-form", saveForm);
+
+            // Delete class_orientation
+            $(".class_orientation-table").on("click", ".js-delete-class_orientation", loadForm);
+            $("#modal-class_orientation").on("submit", ".js-class_orientation-delete-form", saveForm);
+
+        });
+
+    </script>
+{% endblock %}

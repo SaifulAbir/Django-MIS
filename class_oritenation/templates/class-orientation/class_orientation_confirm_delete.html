@@ -1,13 +1,13 @@
-<form method="post" action="{% url 'Class_Orientation:delete_Class_Orientation' Class_Orientation.id %}" class="js-Class_Orientation-delete-form">
+<form method="post" action="{% url 'class_orientation:delete_class_orientation' class_orientation.id %}" class="js-class_orientation-delete-form">
   {% csrf_token %}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title">Confirm Class Orientation deletion</h4>
+    <h4 class="modal-title">Confirm class orientation deletion</h4>
   </div>
   <div class="modal-body">
-    <p class="lead">Are you sure you want to delete the Class Orientation <strong>{{ Class_Orientation.name }}</strong>?</p>
+    <p class="lead">Are you sure you want to delete the class orientation <strong>{{ class_orientation.name }}</strong>?</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
