@@ -27,7 +27,7 @@ SECRET_KEY = 'hqfqlot5*at%cqbbodie7e$ea_^syj7v9+nb&67$xlri$l9$dt'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['192.168.1.225','192.168.1.143']
+ALLOWED_HOSTS = ['192.168.1.225','127.0.0.1']
 
 
 
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'headmasters',
     'skleaders',
     'skmembers',
+    'Class_Orientation',
 ]
 
 MIDDLEWARE = [

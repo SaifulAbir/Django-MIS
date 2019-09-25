@@ -1,0 +1,23 @@
+
+{% for Class_Orientation in Class_Orientation_list %}
+<tr>
+
+   <td>{{ Class_Orientation.name }}</td>
+   <td>{{ Class_Orientation.class_no }}</td>
+   <td><button type="button"
+               class="js-update-Class_Orientation"
+               data-url="{% url 'Class_Orientation:update_Class_Orientation' Class_Orientation.id %}">
+       <span class="fa fa-edit"> </span>
+   </button>
+       <button type="button"
+               class="js-delete-Class_Orientation"
+               data-url="{% url 'Class_Orientation:delete_Class_Orientation' Class_Orientation.id %}">
+           <span class="fa fa-trash"> </span>
+       </button>
+   </td>
+
+
+
+
+</tr>
+{% endfor %}
