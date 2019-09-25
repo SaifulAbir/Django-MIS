@@ -57,7 +57,7 @@ class EditUserForm(forms.ModelForm):
 class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    joining_date = DateField(error_messages={'required': 'From date is required.'}, input_formats=settings.DATE_INPUT_FORMATS)
+    joining_date = DateField(error_messages={'required': 'From date is required.'})
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
 
     class Meta:
