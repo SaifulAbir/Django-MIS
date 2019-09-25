@@ -8,8 +8,8 @@ from skmembers.models import SkMemberProfile
 class ClubMeetings(models.Model):
     date = models.DateField(default=timezone.now)
     class_room= models.CharField(max_length=100)
-    topics = models.ForeignKey(Topics, on_delete=models.SET_NULL, blank=True, null=True)
-    attendance= models.ForeignKey(SkMemberProfile,on_delete=models.SET_NULL, blank=True, null=True)
+    topics = models.ForeignKey(Topics, on_delete=models.CASCADE, blank=True, null=True)
+    attendance= models.ForeignKey(SkMemberProfile,on_delete=models.CASCADE(), blank=True, null=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     def __str__(self):
