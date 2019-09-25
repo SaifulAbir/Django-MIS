@@ -31,4 +31,3 @@ class PrettyAuthenticationForm(forms.Form):
             except ObjectDoesNotExist:
                 pass
             return None
-
