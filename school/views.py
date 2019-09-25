@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 
@@ -12,7 +12,7 @@ from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
 from unions.models import Union
 from upazillas.models import Upazilla
-from .forms import SchoolForm
+from .forms import SchoolForm, EditSchoolForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -115,6 +115,15 @@ def load_unions(request):
 
 def school_profile(request, pk):
     school_profile = get_object_or_404(School, pk=pk)
+    if request.method == 'POST':
+        form = EditSchoolForm(request.POST, request.FILES, instance=school_profile)
+        if form.is_valid():
+            school = form.save(commit=False)
+            school.save()
+            return redirect('school:school_profile', school.id)
+    else:
+        form = EditSchoolForm(instance=school_profile)
+
     try:
         headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk).latest('school__id')
     except HeadmasterProfile.DoesNotExist:
@@ -128,7 +137,7 @@ def school_profile(request, pk):
     except SkMemberProfile.DoesNotExist:
         skmember_list = None
 
-    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'headmaster_profile' : headmaster_profile, 'skleader_profile': skleader, 'skmember_list': skmember_list})
+    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'headmaster_profile' : headmaster_profile, 'skleader_profile': skleader, 'skmember_list': skmember_list, 'form':form})
 
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
