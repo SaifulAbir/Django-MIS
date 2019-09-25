@@ -20,7 +20,8 @@ class SkLeaderProfile(models.Model):
     student_class = models.CharField(max_length=128, choices=class_choice)
     roll = models.CharField(max_length=128)
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
-
+    emergency_contact_person = models.CharField(max_length=200, blank=True, null=True)
+    emergency_contact_number = models.CharField(max_length=20, blank=True, null=True)
     image = models.ImageField(upload_to='images/')
     joining_date = models.DateField(null=False, blank=False, default=timezone.now)
 

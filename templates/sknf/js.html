@@ -25,19 +25,38 @@
 <script src="{% static 'sknf/js/select2.full.min.js' %}"></script>
 <script src="{% static 'sknf/js/bootstrap-datepicker.min.js' %}"></script>
 <script>
+    function initDatepicker(){
+        $('.datepicker:not(".dp-inited")').datepicker({
+            'format' : 'dd-mm-yyyy'
+        }).addClass("dp-inited");
+        // $('.datepicker').datepicker('setDate', new Date());
+
+    }
+
     $(document).ready(function () {
-        $('.sidebar-menu').tree()
+        $('.sidebar-menu').tree();
+        initDatepicker();
+        initSelect2();
     })
 </script>
 <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('.preview-show').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(".img-preview").change(function() {
+        readURL(this);
+    });
+
     $(function () {
-
-        $('.select2').select2({
-            allowClear: true,
-        });
-
-
-
         $('#example1').DataTable()
         $('#example2').DataTable({
             'paging'      : true,
@@ -50,13 +69,7 @@
 
 
         $(function(){
-            $('#addMoreDoc').on('click', function() {
-                var data = $("#tb-doc tr:eq(1)").clone(true).appendTo("#tb-doc");
-                data.find("input").val('');
-                data.find("select").val('');
-                data.removeAttr("style");
-                $('.select2').select2();
-            });
+            $('#addMoreDoc').on('click', addRow);
             $(document).on('click', '.removeDoc', function() {
                 var trIndex = $(this).closest("tr").index();
                 if(trIndex>1) {
@@ -67,18 +80,26 @@
             });
         });
 
-    })
+        var copydate = $('.copydate').val();
+        $('.copydate').on('change', function() {
+            var data = this.value;
+            var arr = data.split("-");
+            arr = arr.reverse();
+            datestring = arr.join('-')
+            $('.pastedate').val(datestring);
+        });
+    });
 
     $(".js-genarate-password").click(function () {
-            $("#modal-password-generator").modal("show");
-            $("#generate_password_input_field").val('');
-            $("#generate_password_confirm"). prop("checked", false);
+        $("#modal-password-generator").modal("show");
+        $("#generate_password_input_field").val('');
+        $("#generate_password_confirm"). prop("checked", false);
 
-        });
+    });
 
 
 
-$('#generate_password_confirm').click(function (event) {
+    $('#generate_password_confirm').click(function (event) {
 
         //check if checkbox is checked
         if ($(this).is(':checked')) {
@@ -97,25 +118,25 @@ $('#generate_password_confirm').click(function (event) {
         }
     });
 
-$('#use-password').click(function (event) {
-    $("#modal-password-generator").modal("hide");
-    var generated_password = $('#generate_password_input_field').val();
-    $( "#generated-pass" ).val(generated_password)
-    $( "#confirm-generated-pass" ).val(generated_password)
-});
-$(".toggle-password").click(function() {
+    $('#use-password').click(function (event) {
+        $("#modal-password-generator").modal("hide");
+        var generated_password = $('#generate_password_input_field').val();
+        $( "#generated-pass" ).val(generated_password)
+        $( "#confirm-generated-pass" ).val(generated_password)
+    });
+    $(".toggle-password").click(function() {
 
-  $(this).toggleClass("fa-eye fa-eye-slash");
-  var input = $("#generated-pass");
-  var input2 = $('#confirm-generated-pass');
-  if (input.attr("type") == "password") {
-    input.attr("type", "text");
-    input2.attr("type", "text");
-  } else {
-    input.attr("type", "password");
-    input2.attr("type", "password");
-  }
-});
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $("#generated-pass");
+        var input2 = $('#confirm-generated-pass');
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+            input2.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+            input2.attr("type", "password");
+        }
+    });
 
 
 </script>
