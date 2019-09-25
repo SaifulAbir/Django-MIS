@@ -16,7 +16,7 @@ class UserForm(forms.ModelForm):
 
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput())
-    user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+    user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}), initial='2')
     class Meta:
         model = User
         fields = ('first_name', 'email', 'password', 'user_type')
