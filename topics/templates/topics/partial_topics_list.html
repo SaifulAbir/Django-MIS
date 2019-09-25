@@ -1,0 +1,22 @@
+
+{% for topics in topics_list %}
+<tr>
+
+   <td>{{ topics.name }}</td>
+   <td><button type="button"
+               class="js-update-topics"
+               data-url="{% url 'topics:update_topics' topics.id %}">
+       <span class="fa fa-edit"> </span>
+   </button>
+       <button type="button"
+               class="js-delete-topics"
+               data-url="{% url 'topics:delete_topics' topics.id %}">
+           <span class="fa fa-trash"> </span>
+       </button>
+   </td>
+
+
+
+
+</tr>
+{% endfor %}

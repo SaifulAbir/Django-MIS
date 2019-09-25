@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'headmasters',
     'skleaders',
     'skmembers',
+    'topics',
     # 'club_meetings',
 ]
 
