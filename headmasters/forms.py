@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import DateField
 from sknf import settings
 
@@ -13,6 +14,7 @@ class UserForm(forms.ModelForm):
         (3, 'Guide Teacher'),
         (4, 'both'),
     )
+
 
     email = forms.EmailField(error_messages={'required': 'Email is required.'})
     password = forms.CharField(error_messages={'required': 'Password is required.'}, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
@@ -61,6 +63,13 @@ class HeadmasterProfileForm(forms.ModelForm):
     class Meta:
         model = HeadmasterProfile
         fields = ('mobile','school', 'image','joining_date')
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image', False)
+        if image:
+            if image.size > 1 * 1024 * 1024:
+                raise ValidationError("Image file too large ( > 1mb )")
+            return image
 
 class HeadmasterDetailsForm(forms.ModelForm):
 

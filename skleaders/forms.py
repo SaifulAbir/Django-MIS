@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.template import Template
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -70,6 +71,13 @@ class SkLeaderProfileForm(forms.ModelForm):
         model = SkLeaderProfile
         fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date')
 
+    def clean_image(self):
+        image = self.cleaned_data.get('image', False)
+        if image:
+            if image.size > 1 * 1024 * 1024:
+                raise ValidationError("Image file too large ( > 1mb )")
+            return image
+
 class EditSkLeaderProfileForm(forms.ModelForm):
 
     image = forms.ImageField(label=_('Skleader image'), required=False,
@@ -82,3 +90,10 @@ class EditSkLeaderProfileForm(forms.ModelForm):
     class Meta:
         model = SkLeaderProfile
         fields = ('mobile', 'image', 'student_class', 'school', 'roll','joining_date')
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image', False)
+        if image:
+            if image.size > 1 * 1024 * 1024:
+                raise ValidationError("Image file too large ( > 1mb )")
+            return image
