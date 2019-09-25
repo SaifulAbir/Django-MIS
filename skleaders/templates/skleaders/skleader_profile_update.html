@@ -151,13 +151,13 @@
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.from_date|date:"Y-m-d" }}" type="text" name="from_date[]" class="form-control datepicker to-headmaster">
+                                                    <input value="{{ headmaster_detail.from_date|date:"d-m-Y" }}" type="text" name="from_date[]" class="form-control datepicker to-headmaster">
                                                     {% comment %}<input type="text" name="from_date[]" class="form-control from-headmaster" id="id_hf-from_date">{% endcomment %}
                                                 </div>
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.to_date|date:"Y-m-d" }}" type="text" name="to_date[]" class="form-control datepicker to-headmaster">
+                                                    <input value="{{ headmaster_detail.to_date|date:"d-m-Y" }}" type="text" name="to_date[]" class="form-control datepicker to-headmaster">
                                                 </div>
                                             </td>
                                             <td class="width-50">

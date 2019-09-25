@@ -171,12 +171,12 @@
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.from_date|date:"Y-m-d" }}" type="date" name="from_date[]" class="form-control from-headmaster" id="id_hf-from_date">
+                                                    <input value="{{ headmaster_detail.from_date|date:"d-m-Y" }}" type="text" name="from_date[]" class="form-control from-headmaster datepicker" id="id_hf-from_date">
                                                 </div>
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.to_date|date:"Y-m-d" }}" type="date" name="to_date[]" class="form-control to-headmaster">
+                                                    <input value="{{ headmaster_detail.to_date|date:"d-m-Y" }}" type="text" name="to_date[]" class="form-control to-headmaster datepicker">
                                                 </div>
                                             </td>
                                             <td class="width-50">
@@ -200,12 +200,12 @@
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="date" name="from_date" class="form-control from-headmaster" id="id_hf-from_date1">
+                                                <input type="text" name="from_date" class="form-control from-headmaster datepicker" id="id_hf-from_date1">
                                             </div>
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="date" name="to_date" class="form-control to-headmaster" id="id_hf-to_date">
+                                                <input type="text" name="to_date" class="form-control to-headmaster datepicker" id="id_hf-to_date">
                                             </div>
                                         </td>
                                         <td class="width-50">
@@ -258,10 +258,8 @@
 
 
                 if (isValid){
-
                     var startdate;
                     var formvalid = true;
-
                     $('#tb-doc tr td input').each(function () {
                         dateval = $(this).val();
                         if (!startdate) {
@@ -274,7 +272,6 @@
                             }
                         }
                         startdate = dateval;
-                    console.log(dateval);
                     });
 
                     if (formvalid == false){

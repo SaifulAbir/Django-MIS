@@ -4,11 +4,7 @@
     {% load static %}
     <form method='POST' enctype="multipart/form-data">
         <section class="content-header">
-            {% if not user_form.instance.pk %}
-                <h1>Add New Headmaster/Guide Teacher</h1>
-            {% else %}
-                <h1>Update Headmaster Info</h1>
-            {% endif %}
+            <h1>Add New Headmaster/Guide Teacher</h1>
         </section>
         <!-- Main content -->
         <section class="content">
