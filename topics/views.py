@@ -1,8 +1,3 @@
-from pydoc_data import topics
-
-from django.shortcuts import render
-
-# Create your views here.
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
