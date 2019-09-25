@@ -40,7 +40,21 @@
     })
 </script>
 <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
+            reader.onload = function(e) {
+                $('.preview-show').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(".img-preview").change(function() {
+        readURL(this);
+    });
 
     $(function () {
         $('#example1').DataTable()

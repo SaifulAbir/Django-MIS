@@ -4,11 +4,7 @@
     {% load static %}
     <form method='POST' enctype="multipart/form-data">
         <section class="content-header">
-            {% if not user_form.instance.pk %}
-                <h1>Add New Headmaster/Guide Teacher</h1>
-            {% else %}
-                <h1>Update Headmaster/ Guide Teacher Info</h1>
-            {% endif %}
+            <h1>Update Headmaster/ Guide Teacher Info</h1>
         </section>
         <!-- Main content -->
         <section class="content">
@@ -29,7 +25,7 @@
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                         {% if user_form.errors or profile_form.errors %}
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                                            <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                                             padding-bottom: 3px;" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
@@ -78,13 +74,14 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if headmaster_profile.image %}
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ headmaster_profile.image.url }}" class="pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ headmaster_profile.image.url }}" class="pull-right preview-show" alt="Pic"><br />
                                             {% else %}
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right preview-show" alt="Pic"><br />
                                             {% endif %}
+
                                         </div>
                                     </div>
-                                    {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
                                 </div>
                             </div>
                         </div>
@@ -223,6 +220,9 @@
                                 <div class="col-sm-11">
                                     <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
                                          class="pull-right loader" >
+
+
+
                                     <input type="button" value="Update" class="btn btn-primary pull-right update-school" />
                                 </div>
                             </div>
@@ -236,6 +236,8 @@
 {% endblock %}
 {% block extra_js%}
     <script type="text/javascript">
+
+
 
         $(function () {
             $(".update-school").click(function () {

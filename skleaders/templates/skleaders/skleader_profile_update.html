@@ -88,13 +88,13 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if skleader_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right preview-show" alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right preview-show" alt="Pic"><br />
                                             {% endif %}
                                         </div>
                                     </div>
-                                    {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
                                 </div>
                             </div>
                         </div>
