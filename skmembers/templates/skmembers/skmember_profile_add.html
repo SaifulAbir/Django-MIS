@@ -2,7 +2,7 @@
 {% block body_block %}
 {% load widget_tweaks %}
 {% load static %}
-<form method='POST' enctype="multipart/form-data">
+<form method='POST' enctype="multipart/form-data" novalidate>
     <section class="content-header">
         {% if not profile_form.instance.pk %}
         <h1>Add New SK Member</h1>

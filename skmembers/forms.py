@@ -1,5 +1,6 @@
 from django import forms
 from accounts.models import User
+from skleaders.forms import SkUserForm
 from skmembers.models import SkMemberProfile
 from django.utils.translation import ugettext_lazy as _
 
@@ -9,7 +10,7 @@ class SkMemberUserForm(forms.ModelForm):
         (5, 'skLeader'),
         (6, 'skMember'),
     )
-
+    email = forms.EmailField(error_messages={'required': 'Email is required.'})
     user_type = forms.ChoiceField(required=False, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     class Meta:
         model = User
@@ -28,7 +29,10 @@ class EditSkMemberUserForm(forms.ModelForm):
 class SkMemberProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-
+    roll = forms.CharField(error_messages={'required': 'Roll is required.'})
+    student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
+                                      choices=SkUserForm.class_choice, widget=forms.Select())
+    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
     class Meta:
         model = SkMemberProfile
         fields = ('mobile', 'image', 'student_class', 'roll', 'school')

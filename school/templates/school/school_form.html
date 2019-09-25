@@ -2,7 +2,7 @@
 {% block body_block %}
 {% load widget_tweaks %}
 {% load static %}
-<form method='POST'>
+<form method='POST' novalidate>
 <section class="content-header">
 {% if not form.instance.pk %}
    <h1>Add New School</h1>
@@ -25,36 +25,32 @@
                 </div>
                 <div class="box-body">
                     <!-- Color Picker -->
-
+                    <span id = "alert_placeholder">
+                        {% if form.errors %}
+                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                            <span>
+                                {% for field in form %}
+                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </span>
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
                         {% render_field form.name class="form-control" placeholder=form.name.label %}
-                        <div class="{% if form.name.errors %} invalid{% endif %}">
-                            {% for error in form.name.errors %}
-                            <p class="help-block">{{ error }}</p>
-                            {% endfor %}
-                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="{{ form.school_id.id_for_label }}">EIIN</label>
                         {% render_field form.school_id class="form-control" %}
-                        <div class="{% if form.school_id.errors %} invalid{% endif %}">
-                            {% for error in form.school_id.errors %}
-                            <p class="help-block">{{ error }}</p>
-                            {% endfor %}
-                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
                         {% render_field form.address class="form-control" placeholder=form.address.label %}
-                        <div class="{% if form.address.errors %} invalid{% endif %}">
-                            {% for error in form.address.errors %}
-                            <p class="help-block">{{ error }}</p>
-                            {% endfor %}
-                        </div>
                     </div>
                     <!-- /.box-footer -->
 
@@ -77,38 +73,18 @@
                     <div class="form-group">
                         <label for="{{ form.division.id_for_label }}">{{ form.division.label }}</label>
                         {% render_field form.division class="form-control" placeholder=form.division.label %}
-                        <div class="{% if form.division.errors %} invalid{% endif %}">
-                            {% for error in form.division.errors %}
-                            <p class="help-block">{{ error }}</p>
-                            {% endfor %}
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="{{ form.district.id_for_label }}">{{ form.district.label }}</label>
                         {% render_field form.district class="form-control" placeholder=form.district.label %}
-                        <div class="{% if form.district.errors %} invalid{% endif %}">
-                            {% for error in form.district.errors %}
-                            <p class="help-block">{{ error }}</p>
-                            {% endfor %}
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="{{ form.upazilla.id_for_label }}">{{ form.upazilla.label }}</label>
                         {% render_field form.upazilla class="form-control" placeholder=form.upazilla.label %}
-                        <div class="{% if form.upazilla.errors %} invalid{% endif %}">
-                            {% for error in form.upazilla.errors %}
-                            <p class="help-block">{{ error }}</p>
-                            {% endfor %}
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="{{ form.union.id_for_label }}">{{ form.union.label }}</label>
                         {% render_field form.union class="form-control" placeholder=form.union.label %}
-                        <div class="{% if form.union.errors %} invalid{% endif %}">
-                            {% for error in form.union.errors %}
-                            <p class="help-block">{{ error }}</p>
-                            {% endfor %}
-                        </div>
                     </div>
 
                     <!-- /.box-footer -->

@@ -14,9 +14,10 @@ class UserForm(forms.ModelForm):
         (4, 'both'),
     )
 
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    confirm_password = forms.CharField(widget=forms.PasswordInput())
-    user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+    email = forms.EmailField(error_messages={'required': 'Email is required.'})
+    password = forms.CharField(error_messages={'required': 'Password is required.'}, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    confirm_password = forms.CharField(error_messages={'required': 'Confirm password is required.'}, widget=forms.PasswordInput())
+    user_type = forms.ChoiceField(error_messages={'required': 'User type is required.'}, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     class Meta:
         model = User
         fields = ('first_name', 'email', 'password', 'user_type')
@@ -32,9 +33,10 @@ class UserForm(forms.ModelForm):
         return cleaned_data
 
 class EditUserForm(forms.ModelForm):
+    email = forms.EmailField(error_messages={'required': 'Email is required.'})
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
-    user_type = forms.ChoiceField(choices=UserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+    user_type = forms.ChoiceField(error_messages={'required': 'User type is required.'}, choices=UserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     class Meta:
         model = User
         fields = ('first_name', 'email', 'password', 'user_type')
@@ -53,7 +55,8 @@ class EditUserForm(forms.ModelForm):
 class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    joining_date = DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    joining_date = DateField(error_messages={'required': 'From date is required.'}, input_formats=settings.DATE_INPUT_FORMATS)
+    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
 
     class Meta:
         model = HeadmasterProfile
@@ -62,6 +65,5 @@ class HeadmasterProfileForm(forms.ModelForm):
 class HeadmasterDetailsForm(forms.ModelForm):
 
     class Meta:
-
         model = HeadmasterDetails
         fields = ('from_date', 'school', 'to_date')

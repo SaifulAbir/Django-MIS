@@ -7,6 +7,7 @@ from upazillas.models import Upazilla
 
 
 class SchoolForm(forms.ModelForm):
+    name = forms.CharField(error_messages={'required': 'Your name is required.'})
     class Meta:
         model = School
         fields = ['name', 'school_id', 'division', 'district', 'upazilla', 'union', 'address']
