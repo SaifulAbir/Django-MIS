@@ -16,7 +16,7 @@ class UserForm(forms.ModelForm):
 
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput())
-    user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+    user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}), initial='2')
     class Meta:
         model = User
         fields = ('first_name', 'email', 'password', 'user_type')
@@ -53,7 +53,7 @@ class EditUserForm(forms.ModelForm):
 class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    joining_date = DateField(input_formats=settings.DATE_INPUT_FORMATS)
+    # joining_date = DateField(input_formats=settings.DATE_INPUT_FORMATS)
 
     class Meta:
         model = HeadmasterProfile

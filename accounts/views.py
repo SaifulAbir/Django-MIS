@@ -35,7 +35,16 @@ def index(request):
 @login_required(login_url='/')
 def profile(request):
 
-    return render(request, 'accounts/profile.html')
+    if request.user.is_authenticated and request.user.user_type == 2:
+        profile = HeadmasterProfile.objects.get(user=request.user)
+    elif request.user.is_authenticated and request.user.user_type == 3:
+        profile = HeadmasterProfile.objects.get(user=request.user)
+    elif request.user.is_authenticated and request.user.user_type == 5:
+        profile = SkLeaderProfile.objects.get(user=request.user)
+    else:
+        profile = None
+
+    return render(request, 'accounts/profile.html', {'profile': profile})
 
 
 @login_required(login_url='/')
@@ -60,11 +69,12 @@ def custom_login(request,):
         headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
         if next_destination:
             return HttpResponse("Access denied")
-        return HttpResponseRedirect('/headmaster_home/')
+        return redirect('school:school_profile', headmaster_profile.school.id)
     elif request.user.is_authenticated and request.user.user_type == 5:
+        skleader_profile = SkLeaderProfile.objects.get(user=request.user)
         if next_destination:
             return HttpResponse("Access denied")
-        return HttpResponseRedirect('/headmaster_home/')
+        return redirect('school:school_profile', skleader_profile.school.id)
     else:
         return login_request(request)
 
