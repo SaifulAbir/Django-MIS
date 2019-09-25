@@ -5,4 +5,4 @@ __pycache__/
 venv/
 sknf/settings.py
 media/
-data/
+/data/
