@@ -65,3 +65,6 @@ class HeadmasterDetailsForm(forms.ModelForm):
 
         model = HeadmasterDetails
         fields = ('from_date', 'school', 'to_date')
+
+
+
