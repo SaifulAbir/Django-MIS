@@ -10,7 +10,7 @@ from school.models import School
 from skleaders import models
 from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm, EditSkLeaderProfileForm
 from skleaders.models import SkLeaderProfile, SkleaderDetails
-
+from datetime import datetime
 
 def skleader_profile_view(request):
     if request.method == 'POST':
@@ -99,7 +99,6 @@ def skleader_details_update(request):
     from_date = request.GET.get('from_date')
     to_date = request.GET.get('to_date')
     skleader_id = request.GET.get('headmaster_id')
-
     school_list = school.split(",")
     from_date = from_date.split(",")
     to_date = to_date.split(",")
@@ -110,14 +109,19 @@ def skleader_details_update(request):
         skleaderModel.skleader_id = skleader_id
         skleaderModel.school_id = school
         schoolindex = school_list.index(school)
-        skleaderModel.from_date = from_date[schoolindex]
+
+        fromdate = datetime.strptime(from_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+
+        skleaderModel.from_date = fromdate
         if schoolindex == 0:
             skleader_obj=SkLeaderProfile.objects.get(pk=skleader_id)
             skleader_obj.school_id = school
             skleader_obj.save()
 
         if to_date[schoolindex]:
-            skleaderModel.to_date = to_date[schoolindex]
+            todate = datetime.strptime(to_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+
+            skleaderModel.to_date = todate
         skleaderModel.save()
     time.sleep(1)
     return HttpResponse('ok')

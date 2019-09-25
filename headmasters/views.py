@@ -14,6 +14,8 @@ from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm, Hea
 from headmasters.models import HeadmasterProfile, HeadmasterDetails
 from school.models import School
 import time
+from datetime import datetime
+
 
 def headmaster_profile_view(request):
 
@@ -116,10 +118,14 @@ def headermaster_school_details_update(request):
         heademasterModel.headmaster_id = headmaster_id
         heademasterModel.school_id = school
         schoolindex = school_list.index(school)
-        heademasterModel.from_date = from_date[schoolindex]
+
+        fromdate = datetime.strptime(from_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+
+        heademasterModel.from_date = fromdate
 
         if to_date[schoolindex]:
-            heademasterModel.to_date = to_date[schoolindex]
+            todate = datetime.strptime(to_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+            heademasterModel.to_date = todate
 
         if schoolindex ==0:
             headmaster_obj=HeadmasterProfile.objects.get(pk=headmaster_id)
