@@ -63,6 +63,15 @@
                 }
             });
         });
+
+        var copydate = $('.copydate').val();
+        $('.copydate').on('change', function() {
+            var data = this.value;
+            var arr = data.split("-");
+            arr = arr.reverse();
+            datestring = arr.join('-')
+            $('.pastedate').val(datestring);
+        });
     });
 
     $(".js-genarate-password").click(function () {
