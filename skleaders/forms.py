@@ -56,6 +56,7 @@ class SkLeaderProfileForm(forms.ModelForm):
 
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+
     class Meta:
         model = SkLeaderProfile
         fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date')
@@ -67,4 +68,4 @@ class EditSkLeaderProfileForm(forms.ModelForm):
     joining_date = forms.DateField(required=False)
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'school', 'roll','joining_date')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date')

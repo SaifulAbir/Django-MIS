@@ -100,11 +100,7 @@
             <div class="col-sm-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        {% if not profile_form.instance.pk %}
                         <h3 class="box-title">School Information</h3>
-                        {% else %}
-                        <h3 class="box-title">Update School Information</h3>
-                        {% endif %}
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -118,7 +114,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
-                                    {% render_field profile_form.joining_date type="date" class="form-control" placeholder="Name" %}
+                                    {% render_field profile_form.joining_date class="form-control" placeholder="From" %}
                                 </div>
                             </div>
                             <div class="col-sm-4">
