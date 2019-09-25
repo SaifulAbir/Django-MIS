@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 class UserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
         (2, 'headmaster'),
-        (3, 'mentor'),
+        (3, 'Guide Teacher'),
         (4, 'both'),
     )
 
@@ -27,7 +27,7 @@ class UserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match")
+            self.add_error('confirm_password', "Password does not match.")
 
         return cleaned_data
 
@@ -45,7 +45,7 @@ class EditUserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match")
+            self.add_error('confirm_password', "Password does not match.")
 
         return cleaned_data
 

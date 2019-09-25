@@ -34,6 +34,7 @@ def index(request):
 
 @login_required(login_url='/')
 def profile(request):
+
     return render(request, 'accounts/profile.html')
 
 
@@ -49,12 +50,14 @@ def custom_login(request,):
     if request.user.is_authenticated and request.user.user_type == 1:
         if next_destination:
             return HttpResponse("Access denied")
-        return HttpResponseRedirect('/dashboard/')
+        return redirect('/dashboard/')
     elif request.user.is_authenticated and request.user.user_type == 2:
+        headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
         if next_destination:
             return HttpResponse("Access denied")
-        return HttpResponseRedirect('/school/school_profile')
+        return redirect('school:school_profile', headmaster_profile.school.id)
     elif request.user.is_authenticated and request.user.user_type == 3:
+        headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
         if next_destination:
             return HttpResponse("Access denied")
         return HttpResponseRedirect('/headmaster_home/')
@@ -81,10 +84,14 @@ def login_request(request):
                 if user.user_type == 1:
                     return redirect('/dashboard/')
                 elif user.user_type == 2:
-                    headmaster_profile = HeadmasterProfile.objects.get(user=user)
-                    return redirect('/headmasters/headmaster_home/')
+                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', headmaster_profile.school.id)
+                elif user.user_type == 3:
+                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', headmaster_profile.school.id)
                 elif user.user_type == 5:
-                    return redirect('/headmasters/headmaster_home/')
+                    skleader_profile = SkLeaderProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', skleader_profile.school.id)
             else:
                 messages.error(request, "Invalid username or password.")
         else:

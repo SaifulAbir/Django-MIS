@@ -49,7 +49,7 @@ def headmaster_profile_view(request):
     })
 
 #@method_decorator(headmaster_login_required, name='dispatch')
-class HeadmasterList(generic.ListView):
+class HeadmasterList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.HeadmasterProfile
 
