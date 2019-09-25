@@ -108,15 +108,15 @@
 
             /* Binding */
 
-            // Create division
+            // Create topics
             $(".js-create-topics").click(loadForm);
             $("#modal-topics").on("submit", ".js-topics-create-form", saveForm);
 
-            // Update division
+            // Update topics
             $(".topics-table").on("click", ".js-update-topics", loadForm);
-            $("#modal-topics").on("submit", ".js-division-topics-form", saveForm);
+            $("#modal-topics").on("submit", ".js-topics-topics-form", saveForm);
 
-            // Delete division
+            // Delete topics
             $(".topics-table").on("click", ".js-delete-topics", loadForm);
             $("#modal-topics").on("submit", ".js-topics-delete-form", saveForm);
 
