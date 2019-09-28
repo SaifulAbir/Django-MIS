@@ -1,0 +1,120 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+{% load widget_tweaks %}
+{% load static %}
+<form method='POST' enctype="multipart/form-data">
+    <section class="content-header">
+        {% if not club_meeting_form.instance.pk %}
+        <h1>Add New Club Meeting</h1>
+        {% else %}
+        <h1>Update Club Meeting Info</h1>
+        {% endif %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        {% if not club_meeting_form.instance.pk %}
+                        <h3 class="box-title">Basic Information</h3>
+                        {% else %}
+                        <h3 class="box-title">Basic Information</h3>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="box-body">
+                                <!-- Color Picker -->
+                                <span id = "alert_placeholder">
+                                        {% if club_meeting_form.errors or meeting_topic_form.errors %}
+                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                            <span>
+                                                {% for field in club_meeting_form %}
+                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                {% endfor %}
+                                                {% for field in meeting_topic_form %}
+                                                    <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                        {% endif %}
+                                    </span>
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="{{ club_meeting_form.date.id_for_label }}">{{ club_meeting_form.date.label }}</label>
+                                    {% render_field club_meeting_form.date class="form-control datepicker" placeholder=club_meeting_form.date.label %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ club_meeting_form.class_room.id_for_label }}">Class Room</label>
+                                    {% render_field club_meeting_form.class_room class="form-control" placeholder="" %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ club_meeting_form.presence_guide_teacher.id_for_label }}">Presence of Guide Teacher</label>
+                                    {% render_field club_meeting_form.presence_guide_teacher class="" placeholder=club_meeting_form.presence_guide_teacher.label %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ club_meeting_form.topics.id_for_label }}">Topics</label>
+                                    {% render_field club_meeting_form.topics class="" placeholder=club_meeting_form.topics.label %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ club_meeting_form.attendance.id_for_label }}">Attendance</label><br>
+                                    {% render_field club_meeting_form.presence_skleader class="" placeholder=club_meeting_form.presence_skleader.label %}
+                                    <label for="{{ club_meeting_form.presence_skleader.id_for_label }}">{{user.first_name}} (SkLeader)</label>
+                                    {% render_field club_meeting_form.attendance class="" placeholder=club_meeting_form.attendance.label %}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6"><br />
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        {% if club_meeting_form.instance.pk and club_meeting.image %}
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" height="350" width="585" src="{{ club_meeting.image.url }}" class="pull-right" alt="Pic"><br />
+                                        {% else %}
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" height="350" width="585" src="{% static 'sknf/images/default_picture.png' %}" class="pull-right" alt="Pic"><br />
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% render_field club_meeting_form.image class="pull-left" style="margin-top: 10px;" placeholder=club_meeting_form.image.label %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-body">
+                    <input type="submit" value="Save" class="btn btn-primary pull-right"/>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</form>
+{% endblock %}
+{% block extra_js%}
+ <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+                                dateFormat: "yy-mm-dd",
+                                defaultDate: "+1w",
+                                changeMonth: true,
+                                numberOfMonths: 2,
+                                onClose: function( selectedDate ) {
+                                        $( "#id_birth_date" ).datepicker( "option", "minDate", selectedDate );
+                                }
+
+    });
+  });
+  </script>
+{% endblock %}
+
+<!-- /.form group -->

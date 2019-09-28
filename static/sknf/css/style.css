@@ -138,3 +138,24 @@ div#modal-content-container {
 [required] {
     border-right: 2px solid red;
 }
+
+/*club meeting form css*/
+ul#id_CMF-topics {
+    list-style: NONE;
+}
+input#id_CMF-presence_guide_teacher {
+    vertical-align: text-top;
+}
+
+input#id_CMF-presence_skleader {
+    /* padding-left: 10px; */
+    margin-left: 40px;
+}
+
+ul#id_CMF-attendance {
+    list-style: NONE;
+}
+
+input#id_CMF-date {
+    border-radius: 0 !important;
+}
