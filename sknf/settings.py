@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'skmembers',
     'topics',
     'Class_Orientation',
+    'club_meetings'
 ]
 
 MIDDLEWARE = [

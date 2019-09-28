@@ -32,7 +32,7 @@ urlpatterns = [
     path('skleaders/', include('skleaders.urls')),
     path('skmembers/', include('skmembers.urls')),
     path('topics/', include('topics.urls')),
-    # path('club_meetings/', include('club_meetings.urls')),
+    path('club_meetings/', include('club_meetings.urls')),
 
     path('Class_Orientation/',include('Class_Orientation.urls')),
 
