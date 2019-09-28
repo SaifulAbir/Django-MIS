@@ -19,7 +19,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
 
      {% block sidebar_block %}
-    {% if school_profile or user.user_type == 5 %}
+    {% if school_profile %}
      {% include "sknf/sidebar_school_profile.html" %}
     {% else %}
     {% include "sknf/sidebar.html" %}

@@ -1,7 +1,5 @@
 from django.db import models
 from django.utils import timezone
-
-from accounts.models import User
 from topics.models import Topics
 from skmembers.models import SkMemberProfile
 
@@ -11,10 +9,8 @@ class ClubMeetings(models.Model):
     date = models.DateField(default=timezone.now)
     class_room= models.CharField(max_length=100)
     presence_guide_teacher = models.BooleanField(default=False)
-    presence_skleader = models.BooleanField(default=False)
-    attendance= models.ManyToManyField(User)
+    #attendance= models.ForeignKey(SkMemberProfile,on_delete=models.CASCADE(), blank=True, null=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
-    topics = models.ManyToManyField(Topics)
 
     def __str__(self):
         return self.class_room
@@ -22,9 +18,9 @@ class ClubMeetings(models.Model):
     class Meta:
         ordering = ['-date']
 
-# class MeetingTopics(models.Model):
-#     club_meeting = models.ForeignKey(ClubMeetings, on_delete=models.CASCADE)
-#     topics = models.ManyToManyField(Topics)
+class MeetingTopics(models.Model):
+    club_meeting = models.ForeignKey(ClubMeetings, on_delete=models.CASCADE)
+    topics = models.ManyToManyField(Topics)
 
 
 
