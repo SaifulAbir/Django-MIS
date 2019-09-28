@@ -2,7 +2,7 @@
 {% block body_block %}
     {% load widget_tweaks %}
     {% load static %}
-    <form method='POST' enctype="multipart/form-data" novalidate>
+    <form method='POST' enctype="multipart/form-data">
         <section class="content-header">
             {% if not profile_form.instance.pk %}
                 <h1>Add New Skleader</h1>
@@ -28,7 +28,7 @@
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                         {% if user_form.errors or profile_form.errors %}
-                                            <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                                             padding-bottom: 3px;" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
@@ -68,26 +68,6 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.emergency_contact_person.id_for_label }}">{{ profile_form.emergency_contact_person.label }}</label>
-                                        {% render_field profile_form.emergency_contact_person class="form-control" placeholder=profile_form.emergency_contact_person.label %}
-                                        <div class="{% if profile_form.emergency_contact_person.errors %} invalid{% endif %}">
-                                            {% for error in profile_form.emergency_contact_person.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.emergency_contact_number.id_for_label }}">{{ profile_form.emergency_contact_number.label }}</label>
-                                        {% render_field profile_form.emergency_contact_number class="form-control" placeholder=profile_form.emergency_contact_number.label %}
-                                        <div class="{% if profile_form.emergency_contact_number.errors %} invalid{% endif %}">
-                                            {% for error in profile_form.emergency_contact_number.errors %}
-                                                <p class="help-block">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
                                         <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
                                         {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
                                         <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -108,13 +88,13 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if skleader_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right preview-show" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right" alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right preview-show" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
                                             {% endif %}
                                         </div>
                                     </div>
-                                    {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
                                 </div>
                             </div>
                         </div>
@@ -171,13 +151,13 @@
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.from_date|date:"d-m-Y" }}" type="text" name="from_date[]" class="form-control datepicker to-headmaster">
+                                                    <input value="{{ headmaster_detail.from_date|date:"Y-m-d" }}" type="text" name="from_date[]" class="form-control datepicker to-headmaster">
                                                     {% comment %}<input type="text" name="from_date[]" class="form-control from-headmaster" id="id_hf-from_date">{% endcomment %}
                                                 </div>
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.to_date|date:"d-m-Y" }}" type="text" name="to_date[]" class="form-control datepicker to-headmaster">
+                                                    <input value="{{ headmaster_detail.to_date|date:"Y-m-d" }}" type="text" name="to_date[]" class="form-control datepicker to-headmaster">
                                                 </div>
                                             </td>
                                             <td class="width-50">
@@ -201,12 +181,12 @@
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="text" name="from_date" class="form-control from-headmaster datepicker" id="id_hf-from_date1">
+                                                <input type="date" name="from_date" class="form-control from-headmaster" id="id_hf-from_date1">
                                             </div>
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="text" name="to_date" class="form-control to-headmaster datepicker" id="id_hf-to_date">
+                                                <input type="date" name="to_date" class="form-control to-headmaster" id="id_hf-to_date">
                                             </div>
                                         </td>
                                         <td class="width-50">
@@ -326,6 +306,8 @@
             $('.datepicker:not(".dp-inited")').datepicker({
                 'format' : 'dd-mm-yyyy'
             }).addClass("dp-inited");
+           // $('.datepicker').datepicker('setDate', new Date());
+
         }
 
         function initSelect2(){
