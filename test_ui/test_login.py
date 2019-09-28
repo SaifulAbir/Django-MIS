@@ -10,7 +10,7 @@ def login(driver, data):
    admin_pass = driver.find_element_by_name('password')
    admin_pass.send_keys(data['password'])
    admin_pass.submit()
-   time.sleep(3)
+   time.sleep(1)
    try:
       driver.find_element_by_link_text(data['email'])
       return 1
