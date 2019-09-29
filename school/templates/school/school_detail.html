@@ -5,7 +5,7 @@
             School Info
         </h1>
     </section>
-    >
+
     <section class="content">
         <div class="row">
             <div class="col-md-6">
@@ -55,6 +55,24 @@
                             <input type="text" value="{{school_detail.union}}" class="form-control my-colorpicker1" readonly>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-body">
+                    {% if not profile_form.instance.pk %}
+                        <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                           class="btn btn-warning pull-left"
+                           href="javascript:void(0)">
+                            Back
+                        </a>
+                    {% endif %}
+                    <a type="button"
+                       class="btn btn-primary pull-right"
+                       href="{% url 'school:update_school' school_detail.pk %}">
+                        Update School
+                    </a>
                 </div>
             </div>
         </div>
