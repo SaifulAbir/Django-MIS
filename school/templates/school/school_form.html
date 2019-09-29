@@ -93,14 +93,24 @@
             </div>
         </div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-        <div class="box box-body">
-            <input type="submit" value="Save" class="btn btn-primary pull-right"/>
-        </div>
-        </div>
-    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-body">
+                        {% if not profile_form.instance.pk %}
+                            <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                               class="btn btn-warning pull-left"
+                               href="javascript:void(0)">
+                                Back
+                            </a>
+                        {% else %}
+
+                        {% endif %}
+
+                        <input type="submit" value="Save" class="btn btn-primary pull-right"/>
+                    </div>
+                </div>
+            </div>
 
 </section>
 </form>
