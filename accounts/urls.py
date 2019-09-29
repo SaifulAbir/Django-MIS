@@ -3,7 +3,8 @@ from django.contrib.auth import views as auth_views
 
 from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
-from .views import index, profile, events, custom_login
+from .views import index, profile, events, custom_login, admin_profile_update, headmaster_profile_update, \
+    skleader_profile_update
 
 app_name = 'accounts'
 
@@ -22,6 +23,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
 
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
+    path('admin_update/', admin_profile_update, name = 'admin_update'),
+    path('headmaster_update/', headmaster_profile_update, name = 'headmaster_update'),
+    path('skleader_update/', skleader_profile_update, name = 'skleader_update'),
 
 
 

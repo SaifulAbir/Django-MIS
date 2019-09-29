@@ -140,3 +140,5 @@ def headmaster_home(request):
     obj_head = HeadmasterProfile.objects.filter(pk=request.user.id)
 
     return render(request, 'headmasters/headmaster_home.html')
+
+

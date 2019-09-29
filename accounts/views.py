@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponseRedirect, HttpResponse
@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from accounts.forms import PrettyAuthenticationForm
+from accounts.forms import PrettyAuthenticationForm, EditUserForm, HeadmasterProfileForm, SkleaderProfileForm
 from accounts.models import User
 from headmasters.models import HeadmasterProfile
 from school.models import School
@@ -35,7 +35,9 @@ def index(request):
 @login_required(login_url='/')
 def profile(request):
 
-    if request.user.is_authenticated and request.user.user_type == 2:
+    if request.user.is_authenticated and request.user.user_type == 1:
+        profile = request.user
+    elif request.user.is_authenticated and request.user.user_type == 2:
         profile = HeadmasterProfile.objects.get(user=request.user)
     elif request.user.is_authenticated and request.user.user_type == 3:
         profile = HeadmasterProfile.objects.get(user=request.user)
@@ -112,4 +114,90 @@ def login_request(request):
                     template_name = "accounts/login.html",
                     context={"form":form, 'next_destination': next_destination})
 
+
+def admin_profile_update(request):
+    user_profile = get_object_or_404(User, pk=request.user.id)
+    old_password = user_profile.password
+    if request.method == 'POST':
+        user_form = EditUserForm(request.POST, files=request.FILES, instance=user_profile)
+
+        if user_form.is_valid():
+            user_update = user_form.save(commit=False)
+            user_update.user_type = 1
+            form_password = user_form.cleaned_data["password"]
+            if form_password:
+                user_update.set_password(user_form.cleaned_data["password"])
+            else:
+                user_update.password = old_password
+            user_update.save()
+            update_session_auth_hash(request, user_update)
+            return redirect("accounts:profile")
+
+    else:
+        user_form = EditUserForm(instance=user_profile)
+
+    return render(request, 'accounts/admin_profile_form.html', {
+        'user_form': user_form,
+        'user_profile': user_profile
+    })
+
+def headmaster_profile_update(request):
+    user_profile = get_object_or_404(User, pk=request.user.id)
+    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
+    old_password = headmaster_profile.user.password
+    if request.method == 'POST':
+        user_form = EditUserForm(request.POST, instance=user_profile)
+        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_update = user_form.save(commit=False)
+            form_password = user_form.cleaned_data["password"]
+            if form_password:
+                user_update.set_password(user_form.cleaned_data["password"])
+            else:
+                user_update.password = old_password
+            user_update.save()
+            update_session_auth_hash(request, user_update)
+            profile = profile_form.save(commit = False)
+            profile.user = user_update
+            profile.save()
+            return redirect("accounts:profile")
+    else:
+        user_form = EditUserForm(instance=user_profile)
+        profile_form = HeadmasterProfileForm(instance=headmaster_profile)
+
+    return render(request, 'accounts/headmaster_profile_update.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'headmaster_profile': headmaster_profile,
+    })
+
+def skleader_profile_update(request):
+    user_profile = get_object_or_404(User, pk=request.user.id)
+    skleader_profile = SkLeaderProfile.objects.get(user=request.user)
+    old_password = skleader_profile.user.password
+    if request.method == 'POST':
+        user_form = EditUserForm(request.POST, instance=user_profile)
+        profile_form = SkleaderProfileForm(request.POST, request.FILES, instance=skleader_profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_update = user_form.save(commit=False)
+            form_password = user_form.cleaned_data["password"]
+            if form_password:
+                user_update.set_password(user_form.cleaned_data["password"])
+            else:
+                user_update.password = old_password
+            user_update.save()
+            update_session_auth_hash(request, user_update)
+            profile = profile_form.save(commit = False)
+            profile.user = user_update
+            profile.save()
+            return redirect("accounts:profile")
+    else:
+        user_form = EditUserForm(instance=user_profile)
+        profile_form = SkleaderProfileForm(instance=skleader_profile)
+
+    return render(request, 'accounts/skleader_profile_update.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'skleader_profile': skleader_profile,
+    })
 

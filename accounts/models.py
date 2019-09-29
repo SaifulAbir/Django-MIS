@@ -50,7 +50,7 @@ class User(AbstractUser):
     )
 
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=6)
-
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
     username = None
     email = models.EmailField(_('email address'), unique=True )  # changes email to unique and blank to false
     USERNAME_FIELD = 'email'
