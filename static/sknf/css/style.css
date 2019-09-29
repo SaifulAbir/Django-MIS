@@ -159,3 +159,7 @@ ul#id_CMF-attendance {
 input#id_CMF-date {
     border-radius: 0 !important;
 }
+
+.picture-align {
+    padding-right: 10px;
+}

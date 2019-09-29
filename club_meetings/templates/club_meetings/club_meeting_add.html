@@ -45,7 +45,7 @@
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="{{ club_meeting_form.date.id_for_label }}">{{ club_meeting_form.date.label }}</label>
-                                    {% render_field club_meeting_form.date class="form-control datepicker" placeholder=club_meeting_form.date.label %}
+                                    {% render_field club_meeting_form.date class="form-control datepicker" %}
                                 </div>
 
                                 <div class="form-group">
@@ -72,18 +72,15 @@
                             </div>
                         </div>
                         <div class="col-md-6"><br />
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <div class="col-sm-12">
-                                        {% if club_meeting_form.instance.pk and club_meeting.image %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" height="350" width="585" src="{{ club_meeting.image.url }}" class="pull-right" alt="Pic"><br />
-                                        {% else %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" height="350" width="585" src="{% static 'sknf/images/default_picture.png' %}" class="pull-right" alt="Pic"><br />
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                {% render_field club_meeting_form.image class="pull-left" style="margin-top: 10px;" placeholder=club_meeting_form.image.label %}
+                            <div class="from-group picture-align">
+                                {% if club_meeting_form.instance.pk and club_meeting.image %}
+                                <img style="border-radius: 5px; border: 2px solid #ccc;;" height="auto" width="100%" src="{{ club_meeting.image.url }}" class="pull-right" alt="Pic"><br />
+                                {% else %}
+                                <img style="border-radius: 5px; border: 2px solid #ccc;" height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="pull-right" alt="Pic"><br />
+                                {% endif %}
+                                {% render_field club_meeting_form.image class="pull-left" style="padding-top: 10px;padding-bottom: 10px;" placeholder=club_meeting_form.image.label %}
                             </div>
+                            <br>
                         </div>
                     </div>
                 </div>
