@@ -45,7 +45,7 @@
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                    {% render_field profile_form.school class="form-control select2" placeholder=profile_form.school.label %}
+                                    {% render_field profile_form.school class="form-control customer-select2" placeholder=profile_form.school.label %}
                                 </div>
 
                                 <div class="form-group">
