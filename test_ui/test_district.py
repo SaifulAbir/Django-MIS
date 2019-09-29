@@ -9,9 +9,9 @@ def addDistrict(driver, data):
    lnk_new_district.click()
    time.sleep(0.5)
    division_name = driver.find_element_by_name('division')
-   division_name.send_keys(data['division'])
+   division_name.send_keys(data['DIVISION'])
    district_name = driver.find_element_by_name('name')
-   district_name.send_keys(data['district'])
+   district_name.send_keys(data['DISTRICT'])
    save_button = driver.find_element_by_id('id_username')
    save_button.click()
    # check that saved

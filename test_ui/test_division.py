@@ -8,7 +8,7 @@ def addDivision(driver, data):
    lnk_new_division.click()
    time.sleep(0.5)
    division_name = driver.find_element_by_name('name')
-   division_name.send_keys(data['name'])
+   division_name.send_keys(data['DIVISION'])
    save_button = driver.find_element_by_id('id_username')
    save_button.click()
    # check that saved
