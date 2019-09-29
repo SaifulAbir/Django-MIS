@@ -12,7 +12,7 @@ from upazillas.models import Upazilla
 
 class School(models.Model):
     name = models.CharField(max_length=264)
-    school_id = models.CharField(max_length=255, unique=True, blank=True, null=True)
+    school_id = models.CharField(max_length=255, unique=True, blank=False, null=False)
     division = models.ForeignKey(Division, on_delete=models.SET_NULL, blank=True, null=True)
     district = models.ForeignKey(District, on_delete=models.SET_NULL, blank=True, null=True)
     upazilla = models.ForeignKey(Upazilla, on_delete=models.SET_NULL, blank=True, null=True)
