@@ -1,33 +1,29 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-{% load widget_tweaks %}
-{% load static %}
-<form method='POST' novalidate>
-<section class="content-header">
-{% if not form.instance.pk %}
-   <h1>Add New School</h1>
-{% else %}
-    <h1>Update School Info</h1>
-{% endif %}
-</section>
-<!-- Main content -->
-<section class="content">
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    {% if not form.instance.pk %}
-                    <h3 class="box-title">Basic Information</h3>
-                    {% else %}
-                    <h3 class="box-title">Basic Information</h3>
-                    {% endif %}
-                </div>
-                <div class="box-body">
-                    <!-- Color Picker -->
-                    <span id = "alert_placeholder">
+    {% load widget_tweaks %}
+    {% load static %}
+    <form method='POST' novalidate>
+        <section class="content-header">
+            {% if not form.instance.pk %}
+                <h1>Add New School</h1>
+            {% else %}
+                <h1>Update School Info</h1>
+            {% endif %}
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Basic Information</h3>
+                        </div>
+                        <div class="box-body">
+                            <!-- Color Picker -->
+                            <span id = "alert_placeholder">
                         {% if form.errors %}
-                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                            <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                             padding-bottom: 3px;" class="alert alert-danger-error-message">
                             <span>
                                 {% for field in form %}
@@ -37,132 +33,133 @@
                         </div>
                         {% endif %}
                     </span>
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-                        {% render_field form.name class="form-control" placeholder=form.name.label %}
-                    </div>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                                {% render_field form.name class="form-control" placeholder=form.name.label %}
+                            </div>
 
-                    <div class="form-group">
-                        <label for="{{ form.school_id.id_for_label }}">EIIN</label>
-                        {% render_field form.school_id class="form-control" %}
-                    </div>
+                            <div class="form-group">
+                                <label for="{{ form.school_id.id_for_label }}">EIIN</label>
+                                {% render_field form.school_id class="form-control" %}
+                            </div>
 
-                    <div class="form-group">
-                        <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
-                        {% render_field form.address class="form-control" placeholder=form.address.label %}
-                    </div>
-                    <!-- /.box-footer -->
+                            <div class="form-group">
+                                <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+                                {% render_field form.address class="form-control" placeholder=form.address.label %}
+                            </div>
+                            <!-- /.box-footer -->
 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.box-body -->
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Location</h3>
+                        </div>
+                        <div class="box-body">
+                            <!-- Color Picker -->
+                            <div class="form-group">
+                                <label for="{{ form.division.id_for_label }}">{{ form.division.label }}</label>
+                                {% render_field form.division class="form-control" placeholder=form.division.label %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.district.id_for_label }}">{{ form.district.label }}</label>
+                                {% render_field form.district class="form-control" placeholder=form.district.label %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.upazilla.id_for_label }}">{{ form.upazilla.label }}</label>
+                                {% render_field form.upazilla class="form-control" placeholder=form.upazilla.label %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.union.id_for_label }}">{{ form.union.label }}</label>
+                                {% render_field form.union class="form-control" placeholder=form.union.label %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-body">
+                        {% if not profile_form.instance.pk %}
+                            <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                               class="btn btn-warning pull-left"
+                               href="javascript:void(0)">
+                                Back
+                            </a>
+                        {% endif %}
+
+                        <input type="submit" value="Save" class="btn btn-primary pull-right"/>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- /.box-body -->
-        <div class="col-md-6">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    {% if not form.instance.pk %}
-                    <h3 class="box-title">Location</h3>
-                    {% else %}
-                    <h3 class="box-title">Location</h3>
-                    {% endif %}
-                </div>
-                <div class="box-body">
-                    <!-- Color Picker -->
-                    <div class="form-group">
-                        <label for="{{ form.division.id_for_label }}">{{ form.division.label }}</label>
-                        {% render_field form.division class="form-control" placeholder=form.division.label %}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.district.id_for_label }}">{{ form.district.label }}</label>
-                        {% render_field form.district class="form-control" placeholder=form.district.label %}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.upazilla.id_for_label }}">{{ form.upazilla.label }}</label>
-                        {% render_field form.upazilla class="form-control" placeholder=form.upazilla.label %}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.union.id_for_label }}">{{ form.union.label }}</label>
-                        {% render_field form.union class="form-control" placeholder=form.union.label %}
-                    </div>
-
-                    <!-- /.box-footer -->
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-        <div class="box box-body">
-            <input type="submit" value="Save" class="btn btn-primary pull-right"/>
-        </div>
-        </div>
-    </div>
-
-</section>
-</form>
+        </section>
+    </form>
 {% endblock %}
 {% block extra_js%}
-<script>
-$(function(){
+    <script>
+        $(function(){
 
-    $(".school-menu").addClass("menu-open");
-    $(".school-menu .treeview-menu").css("display", "block");
-    var titile = $(".content-header h1").html();
-
-
-    $("#id_district, #id_upazilla, #id_union").html('<option value="">---------</option>');
+            $(".school-menu").addClass("menu-open");
+            $(".school-menu .treeview-menu").css("display", "block");
+            var titile = $(".content-header h1").html();
 
 
+            $("#id_district, #id_upazilla, #id_union").html('<option value="">---------</option>');
 
 
 
-    $("#id_division").change(function () {
-    var divisionId = $(this).val();
-    $.ajax({
-        url: '/ajax/load-districts/',
-        data: {
-            'division': divisionId
-        },
-        success: function (data) {
-        $("#id_district").html(data);
 
-    }
-});
-});
 
-   $("#id_district").change(function () {
-    var districtId = $(this).val();
-    $.ajax({
-        url: '/ajax/load-upazillas/',
-        data: {
-            'district': districtId
-        },
-        success: function (data) {
-        $("#id_upazilla").html(data);
+            $("#id_division").change(function () {
+                var divisionId = $(this).val();
+                $.ajax({
+                    url: '/ajax/load-districts/',
+                    data: {
+                        'division': divisionId
+                    },
+                    success: function (data) {
+                        $("#id_district").html(data);
 
-    }
-});
-});
+                    }
+                });
+            });
 
-$("#id_upazilla").change(function () {
-    var upazillaId = $(this).val();
-    $.ajax({
-        url: '/ajax/load-unions/',
-        data: {
-            'upazilla': upazillaId
-        },
-        success: function (data) {
-        $("#id_union").html(data);
+            $("#id_district").change(function () {
+                var districtId = $(this).val();
+                $.ajax({
+                    url: '/ajax/load-upazillas/',
+                    data: {
+                        'district': districtId
+                    },
+                    success: function (data) {
+                        $("#id_upazilla").html(data);
 
-    }
-});
-});
-});
-</script>
+                    }
+                });
+            });
+
+            $("#id_upazilla").change(function () {
+                var upazillaId = $(this).val();
+                $.ajax({
+                    url: '/ajax/load-unions/',
+                    data: {
+                        'upazilla': upazillaId
+                    },
+                    success: function (data) {
+                        $("#id_union").html(data);
+
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 
 <!-- /.form group -->
