@@ -113,8 +113,9 @@ $(function(){
     $(".school-menu .treeview-menu").css("display", "block");
     var titile = $(".content-header h1").html();
 
-
-    //$("#id_district, #id_upazilla, #id_union").text('<option value="">---------</option>');
+    if("Add New School"){
+        $("#id_district, #id_upazilla, #id_union").text('<option value="">---------</option>');
+    }
 
 
 

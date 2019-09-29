@@ -1,0 +1,108 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+{% load widget_tweaks %}
+{% load static %}
+<form method='POST' enctype="multipart/form-data" novalidate>
+    <section class="content-header">
+        {% if not user_form.instance.pk %}
+        <h1>Add Admin</h1>
+        {% else %}
+        <h1>Edit SkLeader Profile</h1>
+        {% endif %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        {% if not user_form.instance.pk %}
+                        <h3 class="box-title">Basic Information</h3>
+                        {% else %}
+                        <h3 class="box-title">Basic Information</h3>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="box-body">
+                                <!-- Color Picker -->
+                                <span id = "alert_placeholder">
+                                        {% if user_form.errors %}
+                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                            <span>
+                                                {% for field in user_form %}
+                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                        {% endif %}
+                                    </span>
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                    {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.email.id_for_label }}">Email Address</label>
+                                    {% render_field user_form.email class="form-control" placeholder=user_form.email.label %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
+                                    {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    <button type="button"
+                                            class="btn btn-primary pull-right js-genarate-password">
+                                        Genarate Password
+                                    </button>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
+                                    {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-6"><br />
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        {% if profile_form.instance.pk and skleader_profile.image %}
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right" alt="Pic"><br />
+                                        {% else %}
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% render_field profile_form.image class="pull-right" style="margin-top: 10px;padding-bottom:10px;" placeholder=profile_form.image.label %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'sknf/_password_generator_modal.html' %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-body">
+                    <input type="submit" value="Save" class="btn btn-primary pull-right"/>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</form>
+{% endblock %}
+{% block extra_js%}
+<script>
+
+</script>
+{% endblock %}
+
+<!-- /.form group -->
