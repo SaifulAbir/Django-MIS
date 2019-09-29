@@ -115,20 +115,34 @@ def load_unions(request):
 
 def school_profile(request, pk):
     school_profile = get_object_or_404(School, pk=pk)
-    try:
-        headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk).latest('school__id')
-    except HeadmasterProfile.DoesNotExist:
-        headmaster_profile = None
-    try:
-        skleader = SkLeaderProfile.objects.get(school__id__in=[pk, ])
-    except SkLeaderProfile.DoesNotExist:
-        skleader = None
+    headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2).latest('school__id')
+    skleader_profile = SkLeaderProfile.objects.filter(school__id=pk, user__user_type=5).latest('school__id')
+    if request.user.is_authenticated and request.user.user_type == 2:
+        try:
+            profile = HeadmasterProfile.objects.filter(school__id=pk, user=request.user).latest('school__id')
+        except HeadmasterProfile.DoesNotExist:
+            profile = None
+    elif request.user.is_authenticated and request.user.user_type == 3:
+        try:
+            profile = HeadmasterProfile.objects.filter(school__id=pk, user=request.user).latest('school__id')
+        except HeadmasterProfile.DoesNotExist:
+            profile = None
+    elif request.user.is_authenticated and request.user.user_type == 4:
+        try:
+            profile = HeadmasterProfile.objects.filter(school__id=pk, user=request.user).latest('school__id')
+        except HeadmasterProfile.DoesNotExist:
+            profile = None
+    elif request.user.is_authenticated and request.user.user_type == 5:
+        try:
+            profile = SkLeaderProfile.objects.get(school__id=pk, user=request.user)
+        except SkLeaderProfile.DoesNotExist:
+            profile = None
     try:
         skmember_list = SkMemberProfile.objects.filter(school__id__in=[pk, ])
     except SkMemberProfile.DoesNotExist:
         skmember_list = None
 
-    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'headmaster_profile' : headmaster_profile, 'skleader_profile': skleader, 'skmember_list': skmember_list})
+    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_profile':skleader_profile, 'profile' : profile, 'headmaster_profile':headmaster_profile, 'skmember_list': skmember_list})
 
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)

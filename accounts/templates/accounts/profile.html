@@ -69,6 +69,10 @@
                         <a type="button" class="btn btn-primary" style="float:right;"
                            href="{% url 'accounts:headmaster_update' %}">Edit Profile
                         </a>
+                        {% elif user.is_authenticated and user.user_type == 4 %}
+                        <a type="button" class="btn btn-primary" style="float:right;"
+                           href="{% url 'accounts:headmaster_update' %}">Edit Profile
+                        </a>
                         {% elif user.is_authenticated and user.user_type == 5 %}
                         <a type="button" class="btn btn-primary" style="float:right;"
                            href="{% url 'accounts:skleader_update' %}">Edit Profile

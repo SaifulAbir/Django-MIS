@@ -23,18 +23,24 @@
 
           <!-- Notifications: style can be found in dropdown.less -->
 
+
+
+
+
           <!-- Tasks: style can be found in dropdown.less -->
 
           <!-- User Account: style can be found in dropdown.less -->
-            {% if user.is_authenticated and user.user_type == 2 or user.user_type == 3 or user.user_type == 5 %}
+            {% if user.is_authenticated and user.user_type == 2 or user.user_type == 3 or user.user_type == 4 or user.user_type == 5 %}
             <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              {% if user.is_authenticated and user.user_type == 2 and headmaster_profile.image %}
-              <img src="{{ headmaster_profile.image.url }}" class="user-image" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 3 and headmaster_profile.image %}
-              <img src="{{ headmaster_profile.image.url }}" class="user-image" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 5 and skleader_profile.image %}
-              <img src="{{ skleader_profile.image.url }}" class="user-image" alt="User Image">
+              {% if user.is_authenticated and user.user_type == 2 and profile.image %}
+              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
+              {% elif user.is_authenticated and user.user_type == 3 and profile.image %}
+              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
+              {% elif user.is_authenticated and user.user_type == 4 and profile.image %}
+              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
+              {% elif user.is_authenticated and user.user_type == 5 and profile.image %}
+              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
               {% else %}
               <img src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="user-image" alt="User Image">
               {% endif %}
@@ -43,12 +49,14 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                {% if user.is_authenticated and user.user_type == 2 and headmaster_profile.image %}
-              <img src="{{ headmaster_profile.image.url }}" class="img-circle" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 3 and headmaster_profile.image %}
-              <img src="{{ headmaster_profile.image.url }}" class="img-circle" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 5 and skleader_profile.image %}
-              <img src="{{ skleader_profile.image.url }}" class="img-circle" alt="User Image">
+                {% if user.is_authenticated and user.user_type == 2 and profile.image %}
+              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
+              {% elif user.is_authenticated and user.user_type == 3 and profile.image %}
+              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
+                {% elif user.is_authenticated and user.user_type == 4 and profile.image %}
+              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
+              {% elif user.is_authenticated and user.user_type == 5 and profile.image %}
+              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
               {% else %}
               <img src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="img-circle" alt="User Image">
               {% endif %}
