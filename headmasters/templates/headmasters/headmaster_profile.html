@@ -85,10 +85,10 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <div class="col-sm-12">
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right preview-show" alt="Pic"><br />
                                     </div>
                                 </div>
-                                {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                        {% render_field profile_form.school class="form-control select2" required='true' placeholder=profile_form.school.label %}
+                                        {% render_field profile_form.school class="form-control customer-select2" required='true' placeholder=profile_form.school.label %}
                                     </div>
                                 </div>
 

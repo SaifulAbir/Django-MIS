@@ -21,7 +21,7 @@ class School(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.name
+        return  self.name + ' (' +self.school_id + ')'
 
     def get_absolute_url(self):
         return reverse('school:school_list')
