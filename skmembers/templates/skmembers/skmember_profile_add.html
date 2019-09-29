@@ -81,13 +81,13 @@
                                 <div class="col-sm-12">
                                     <div class="col-sm-12">
                                         {% if profile_form.instance.pk and skmember_profile.image %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skmember_profile.image.url }}" class="pull-right" alt="Pic"><br />
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skmember_profile.image.url }}" class="preview-show pull-right" alt="Pic"><br />
                                         {% else %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="preview-show pull-right" alt="Pic"><br />
                                         {% endif %}
                                     </div>
                                 </div>
-                                {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                {% render_field profile_form.image class="img-preview pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
                             </div>
                         </div>
                     </div>

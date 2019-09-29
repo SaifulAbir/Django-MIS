@@ -74,11 +74,11 @@
                         <div class="col-md-6"><br />
                             <div class="from-group picture-align">
                                 {% if club_meeting_form.instance.pk and club_meeting.image %}
-                                <img style="border-radius: 5px; border: 2px solid #ccc;;" height="auto" width="100%" src="{{ club_meeting.image.url }}" class="pull-right" alt="Pic"><br />
+                                <img style="border-radius: 5px; border: 2px solid #ccc;;" height="auto" width="100%" src="{{ club_meeting.image.url }}" class="preview-show pull-right" alt="Pic"><br />
                                 {% else %}
-                                <img style="border-radius: 5px; border: 2px solid #ccc;" height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="pull-right" alt="Pic"><br />
+                                <img style="border-radius: 5px; border: 2px solid #ccc;" height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="preview-show pull-right" alt="Pic"><br />
                                 {% endif %}
-                                {% render_field club_meeting_form.image class="pull-left" style="padding-top: 10px;padding-bottom: 10px;" placeholder=club_meeting_form.image.label %}
+                                {% render_field club_meeting_form.image class="img-preview pull-left" style="padding-top: 10px;padding-bottom: 10px;" placeholder=club_meeting_form.image.label %}
                             </div>
                             <br>
                         </div>
