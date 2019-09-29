@@ -1,6 +1,7 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 {% load static %}
+{% load widget_tweaks %}
 
 <!-- =============================================== -->
 
@@ -8,12 +9,27 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>{{ school_profile.name }}</h1>
+    <h1 style ="display:inline-block;">{{ school_profile.name }}</h1>
+    <form method='POST' style =" display:inline-block;float:right;" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div style =" display:inline-block;">
+            {% render_field form.image style="display: inline-block;margin-right: -50px;" placeholder=form.image.label %}
+            <input type="submit" style="display: inline-block;" value="Upload" class="btn btn-primary"/>
+        </div>
+
+    </form>
 </section>
 
 <!-- Main content -->
 <section class="content">
+    {% if school_profile.image %}
+    <img src="{{ school_profile.image.url }}" width="100%" height="400px"><br />
+    {% else %}
     <img  src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" width="100%" height="400px">
+    {% endif %}
+
+
+
 
 </section>
 <section class="content" >

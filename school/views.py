@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 
@@ -12,7 +12,7 @@ from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
 from unions.models import Union
 from upazillas.models import Upazilla
-from .forms import SchoolForm
+from .forms import SchoolForm, EditSchoolForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -139,10 +139,16 @@ def school_profile(request, pk):
             profile = SkLeaderProfile.objects.get(school__id=pk, user=request.user)
         except SkLeaderProfile.DoesNotExist:
             profile = None
-    try:
-        skmember_list = SkMemberProfile.objects.filter(school__id__in=[pk, ])
-    except SkMemberProfile.DoesNotExist:
-        skmember_list = None
+    if request.method == 'POST':
+        form = EditSchoolForm(request.POST, request.FILES, instance=school_profile)
+        if form.is_valid():
+            school = form.save(commit=False)
+            school.save()
+            return redirect('school:school_profile', school.id)
+    else:
+        form = EditSchoolForm(instance=school_profile)
+
+
 
     return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_profile':skleader_profile, 'profile' : profile, 'headmaster_profile':headmaster_profile, 'skmember_list': skmember_list})
 
