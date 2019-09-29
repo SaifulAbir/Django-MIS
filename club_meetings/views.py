@@ -5,7 +5,7 @@ from django.views import generic
 
 from club_meetings import models
 from club_meetings.models import ClubMeetings
-from .forms import ClubMeetingForm
+from .forms import ClubMeetingForm, EditClubMeetingForm
 
 
 # Create your views here.
@@ -42,14 +42,14 @@ def club_meeting_update(request, pk):
 
     club_meeting = get_object_or_404(ClubMeetings, pk=pk)
     if request.method == 'POST':
-        club_meeting_form = ClubMeetingForm(request.POST, request.FILES, instance=club_meeting, prefix='CMF')
+        club_meeting_form = EditClubMeetingForm(request.POST, request.FILES, instance=club_meeting, prefix='CMF')
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
             club_meeting.save()
             club_meeting_form.save_m2m()
             return HttpResponseRedirect("/club_meetings/club_meeting_list/")
     else:
-        club_meeting_form = ClubMeetingForm(instance=club_meeting, prefix='CMF')
+        club_meeting_form = EditClubMeetingForm(instance=club_meeting, prefix='CMF')
 
     return render(request, 'club_meetings/club_meeting_add.html', {
         'club_meeting_form': club_meeting_form,
