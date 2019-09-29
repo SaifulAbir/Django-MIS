@@ -34,11 +34,22 @@ def index(request):
 
 @login_required(login_url='/')
 def profile(request):
-    h_profile = HeadmasterProfile.objects.get(user=request.user)
-    school_profile = get_object_or_404(School, pk=h_profile.school.id)
-
-    headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id, user__user_type=2).latest('school__id')
-    skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5).latest('school__id')
+    try:
+        h_profile = HeadmasterProfile.objects.get(user=request.user)
+    except HeadmasterProfile.DoesNotExist:
+        h_profile=None
+    if h_profile is not None:
+        school_profile = get_object_or_404(School, pk=h_profile.school.id)
+    else:
+        school_profile=None
+    if school_profile is not None:
+        headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id, user__user_type=2).latest('school__id')
+    else:
+        headmaster_profile=None
+    if school_profile is not None:
+        skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5).latest('school__id')
+    else:
+        skleader_profile=None
     if request.user.is_authenticated and request.user.user_type == 1:
         profile = request.user
     elif request.user.is_authenticated and request.user.user_type == 2:

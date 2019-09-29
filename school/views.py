@@ -117,7 +117,9 @@ def school_profile(request, pk):
     school_profile = get_object_or_404(School, pk=pk)
     headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2).latest('school__id')
     skleader_profile = SkLeaderProfile.objects.filter(school__id=pk, user__user_type=5).latest('school__id')
-    if request.user.is_authenticated and request.user.user_type == 2:
+    if request.user.is_authenticated and request.user.user_type == 1:
+        profile=request.user
+    elif request.user.is_authenticated and request.user.user_type == 2:
         try:
             profile = HeadmasterProfile.objects.filter(school__id=pk, user=request.user).latest('school__id')
         except HeadmasterProfile.DoesNotExist:
