@@ -18,7 +18,7 @@
                 <p class="text-muted text-center"><font color="white">Head Master</font></p>
             </div>
         </li>
-<<<<<<< HEAD
+
         <li>
             <div class="box-body box-profile">
                 {% if skleader_profile.image %}
@@ -29,12 +29,8 @@
                 <h3 class="profile-username text-center"><font color="white">{{ skleader_profile.user.first_name }}</font></h3>
                 <p class="text-muted text-center"><font color="white">Sk Leader</font></p>
             </div>
-=======
-        <li class="skmembers">
-          <a href="{% url 'skmembers:skmember_list_for_sk_leader' %}">
-            <i class="fa fa-users"></i> <span>SK Members</span>
-          </a>
->>>>>>> hotfix/design
+
+
         </li>
     </ul>
     <hr width="70%">
@@ -47,9 +43,9 @@
                 </a>
             </li>
             <li class="skmembers">
-                <a href="{% url 'skmembers:skmember_list' %}">
-                    <i class="fa fa-users"></i> <span>SK Members</span>
-                </a>
+              <a href="{% url 'skmembers:skmember_list_for_sk_leader' %}">
+                <i class="fa fa-users"></i> <span>SK Members</span>
+              </a>
             </li>
         {% endif %}
         {% if user.is_authenticated and user.user_type == 2 %}
