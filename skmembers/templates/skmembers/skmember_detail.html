@@ -68,10 +68,25 @@
                 </div>
             </div>
         </div>
-        <!-- right column -->
-        <div class="col-md-6">
 
-        </div>
     </div>
+
+    <div class="row">
+            <div class="col-md-12">
+                <div class="box box-body">
+                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                       class="btn btn-warning pull-left"
+                       href="javascript:void(0)">
+                        Back
+                    </a>
+                    <a type="button"
+                       class="btn btn-primary pull-right"
+                       href="{% url 'skmembers:skmember_update' skmember_detail.pk %}">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+
 </section>
 {% endblock %}

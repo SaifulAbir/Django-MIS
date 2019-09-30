@@ -111,19 +111,19 @@
                             </div>
                             <div class="col-sm-6">
                                 <br />
-                            <div class="form-group">
-                                <div class="col-sm-12">
+                                <div class="form-group">
                                     <div class="col-sm-12">
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="preview-show pull-right" alt="Pic"><br />
+                                        <div class="col-sm-12">
+                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="preview-show pull-right" alt="Pic"><br />
+                                        </div>
+                                    </div>
+                                    {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    <div class="{% if profile_form.image.errors %} invalid{% endif %}">
+                                        {% for error in profile_form.image.errors %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
                                     </div>
                                 </div>
-                                {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
-                                <div class="{% if profile_form.image.errors %} invalid{% endif %}">
-                                    {% for error in profile_form.image.errors %}
-                                    <p class="help-block">{{ error }}</p>
-                                    {% endfor %}
-                                </div>
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="box box-body">
+                            <div class="">
+                                <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                   class="btn btn-warning pull-left"
+                                   href="javascript:void(0)">
+                                    Back
+                                </a>
+
                                 <input type="submit" value="Save" class="btn btn-primary pull-right"/>
                             </div>
                         </div>

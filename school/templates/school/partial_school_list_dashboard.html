@@ -1,0 +1,12 @@
+{% load static %}
+{% for school in school_list %}
+
+<tr>
+    <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>
+    <td>{{ school.school_id }}</td>
+    <td>{{ school.division }}</td>
+    <td>{{ school.district }}</td> 
+</tr>
+
+{% endfor %}
+
