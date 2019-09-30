@@ -42,6 +42,12 @@
                                     <span class="fa fa-edit"></span>
 
                                 </a>
+                                <a type="button"
+                                   class=""
+                                   href="{% url 'club_meetings:club_meeting_detail' club_meeting.pk %}">
+                                    <span class="fa fa-eye"></span>
+
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
