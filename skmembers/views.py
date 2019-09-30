@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 
 from accounts.models import User
+from skleaders.models import SkLeaderProfile
 from skmembers import models
 from skmembers.forms import SkMemberUserForm, SkMemberProfileForm, EditSkMemberUserForm
 from skmembers.models import SkMemberProfile
@@ -37,11 +38,33 @@ def skmember_profile_view(request):
 class SkmemberList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.SkMemberProfile
-
     def get_queryset(self):
         queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,])
         return queryset
     
+class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
+    login_url = '/'
+    model = models.SkMemberProfile
+    template_name = 'skmembers/skmemberprofile_list_for_skleader.html'
+
+
+    def get_queryset(self):
+        loggedinuser = self.request.user.id
+        objSkLeader = SkLeaderProfile.objects.get(user_id=loggedinuser)
+        print(objSkLeader.school_id)
+
+        queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,],school_id=objSkLeader.school_id)
+
+        return queryset
+
+class SkmemberListForSkmber(LoginRequiredMixin, generic.ListView):
+    login_url = '/'
+    model = models.SkMemberProfile
+
+    def get_queryset(self):
+        queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,])
+        return queryset
+
 def skmember_update(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))

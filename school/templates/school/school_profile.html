@@ -23,9 +23,9 @@
     <!-- Main content -->
     <section class="content">
         {% if school_profile.image %}
-            <img src="{{ school_profile.image.url }}" width="100%" height="400px" class="preview-show"><br />
+            <img src="{{ school_profile.image.url }}" width="100%" class="preview-show"><br />
         {% else %}
-            <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" width="100%" height="400px" class="preview-show">
+            <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" width="100%" class="preview-show">
         {% endif %}
 
 
