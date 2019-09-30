@@ -49,7 +49,7 @@ $(function(){
     $("#id_division").change(function () {
     var divisionId = $(this).val();
     $.ajax({
-        url: '/school/ajax/load-districts/',
+        url: '/ajax/load-districts/',
         data: {
             'division': divisionId
         },
@@ -63,7 +63,7 @@ $(function(){
    $("#id_district").change(function () {
     var districtId = $(this).val();
     $.ajax({
-        url: '/school/ajax/load-upazillas/',
+        url: '/ajax/load-upazillas/',
         data: {
             'district': districtId
         },
@@ -77,7 +77,7 @@ $(function(){
 $("#id_upazilla").change(function () {
     var upazillaId = $(this).val();
     $.ajax({
-        url: '/school/ajax/load-unions/',
+        url: '/ajax/load-unions/',
         data: {
             'upazilla': upazillaId
         },
