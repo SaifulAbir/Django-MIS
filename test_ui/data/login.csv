@@ -1,2 +1,2 @@
-email,password
-admin,123
+email,password,name
+admin,123,Admin
