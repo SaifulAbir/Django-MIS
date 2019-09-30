@@ -1,6 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import DateField
+
+from school.models import School
 from sknf import settings
 
 from accounts.models import User
@@ -59,6 +61,7 @@ class HeadmasterProfileForm(forms.ModelForm):
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     joining_date = DateField(error_messages={'required': 'From date is required.'})
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    school = forms.ModelChoiceField(error_messages={'required': 'School is required.'}, queryset=School.objects.all())
 
     class Meta:
         model = HeadmasterProfile
