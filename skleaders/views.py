@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -31,7 +32,7 @@ def skleader_profile_view(request):
             headmaster_details.skleader = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
-
+            messages.success(request, 'SkLeader Created!')
 
             return HttpResponseRedirect("/skleaders/skleader_list/")
 
@@ -79,6 +80,7 @@ def skleader_update(request, pk):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+            messages.success(request, 'SkLeader Updated!')
             return HttpResponseRedirect("/skleaders/skleader_list/")
     else:
         user_form = EditSkUserForm(instance=user_profile)

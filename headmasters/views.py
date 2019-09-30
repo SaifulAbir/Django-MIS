@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
@@ -37,6 +38,7 @@ def headmaster_profile_view(request):
             headmaster_details.headmaster = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
+            messages.success(request, 'Headmaster Created!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
 
     else:
@@ -87,6 +89,7 @@ def headmaster_update(request, pk):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+            messages.success(request, 'Headmaster Updated!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
         user_form = EditUserForm(instance=user_profile)
