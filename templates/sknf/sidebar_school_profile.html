@@ -57,12 +57,12 @@
             </li>
         {% endif %}
         {% if user.is_authenticated and user.user_type == 2 %}
-            <li>
+            {% comment %}<li>
                 <a href="{% url 'school:Sk_leaderApproval' %}">
                     <i class="ion ion-checkmark"></i> <span>SK Leader Approval</span>
 
                 </a>
-            </li>
+            </li>{% endcomment %}
         {% endif %}
     </ul>
 </section>
