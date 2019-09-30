@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -24,6 +25,7 @@ def skmember_profile_view(request):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+            messages.success(request, 'SkMember Created!')
             return HttpResponseRedirect("/skmembers/skmember_list/")
 
     else:
@@ -126,6 +128,7 @@ def skmember_update(request, pk):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+            messages.success(request, 'SkMember Updated!')
             return HttpResponseRedirect("/skmembers/skmember_list/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)
