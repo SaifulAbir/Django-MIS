@@ -116,6 +116,22 @@ def load_unions(request):
 def school_profile(request, pk):
     school_profile = get_object_or_404(School, pk=pk)
     try:
+        upload_head_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2, user=request.user).latest('school__id')
+    except HeadmasterProfile.DoesNotExist:
+        upload_head_user = None
+    try:
+        upload_guide_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=3, user=request.user).latest('school__id')
+    except HeadmasterProfile.DoesNotExist:
+        upload_guide_user = None
+    try:
+        upload_both_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=4, user=request.user).latest('school__id')
+    except HeadmasterProfile.DoesNotExist:
+        upload_both_user = None
+    try:
+        upload_skleader_user = SkLeaderProfile.objects.filter(school__id=pk, user__user_type=5, user=request.user).latest('school__id')
+    except SkLeaderProfile.DoesNotExist:
+        upload_skleader_user = None
+    try:
         headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2).latest('school__id')
     except HeadmasterProfile.DoesNotExist:
         headmaster_profile = None
@@ -141,11 +157,14 @@ def school_profile(request, pk):
             profile = HeadmasterProfile.objects.filter(school__id=pk, user=request.user).latest('school__id')
         except HeadmasterProfile.DoesNotExist:
             profile = None
+
     elif request.user.is_authenticated and request.user.user_type == 5:
         try:
             profile = SkLeaderProfile.objects.get(school__id=pk, user=request.user)
         except SkLeaderProfile.DoesNotExist:
             profile = None
+    else:
+        profile = None
             
     if request.method == 'POST':
         form = EditSchoolForm(request.POST, request.FILES, instance=school_profile)
@@ -163,7 +182,9 @@ def school_profile(request, pk):
 
 
 
-    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_profile':skleader_profile, 'profile' : profile, 'headmaster_profile':headmaster_profile, 'skmember_list': skmember_list, 'form':form})
+    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_profile':skleader_profile, 'profile' : profile, 'headmaster_profile':headmaster_profile,
+                                                           'skmember_list': skmember_list, 'form':form, 'upload_head_user':upload_head_user,
+                                                           'upload_guide_user':upload_guide_user, 'upload_both_user':upload_both_user, 'upload_skleader_user':upload_skleader_user})
 
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)

@@ -56,3 +56,9 @@ def club_meeting_update(request, pk):
         'club_meeting': club_meeting,
     })
 
+class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
+    login_url = '/'
+    context_object_name = "club_meeting_detail"
+    model = models.ClubMeetings
+    template_name = 'club_meetings/club_meeting_detail.html'
+
