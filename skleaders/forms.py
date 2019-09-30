@@ -117,7 +117,7 @@ class EditSkLeaderProfileForm(forms.ModelForm):
     joining_date = forms.DateField(required=False)
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'school', 'emergency_contact_person','emergency_contact_number')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -125,4 +125,3 @@ class EditSkLeaderProfileForm(forms.ModelForm):
             if image.size > 1 * 1024 * 1024:
                 raise ValidationError("Image file too large ( > 1mb )")
             return image
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date','emergency_contact_person','emergency_contact_number')
