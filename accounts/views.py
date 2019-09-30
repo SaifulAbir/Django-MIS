@@ -35,7 +35,10 @@ def index(request):
 @login_required(login_url='/')
 def profile(request):
     try:
-        h_profile = HeadmasterProfile.objects.get(user=request.user)
+        if request.user.is_authenticated and request.user.user_type == 2:
+            h_profile = HeadmasterProfile.objects.get(user=request.user)
+        elif request.user.is_authenticated and request.user.user_type == 5:
+            h_profile = SkLeaderProfile.objects.get(user=request.user)
     except HeadmasterProfile.DoesNotExist:
         h_profile=None
     if h_profile is not None:
