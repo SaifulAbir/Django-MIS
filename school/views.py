@@ -115,8 +115,15 @@ def load_unions(request):
 
 def school_profile(request, pk):
     school_profile = get_object_or_404(School, pk=pk)
-    headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2).latest('school__id')
-    skleader_profile = SkLeaderProfile.objects.filter(school__id=pk, user__user_type=5).latest('school__id')
+    try:
+        headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2).latest('school__id')
+    except HeadmasterProfile.DoesNotExist:
+        headmaster_profile = None
+    try:
+        skleader_profile = SkLeaderProfile.objects.filter(school__id=pk, user__user_type=5).latest('school__id')
+    except SkLeaderProfile.DoesNotExist:
+        skleader_profile = None
+
     if request.user.is_authenticated and request.user.user_type == 1:
         profile=request.user
     elif request.user.is_authenticated and request.user.user_type == 2:
@@ -139,6 +146,7 @@ def school_profile(request, pk):
             profile = SkLeaderProfile.objects.get(school__id=pk, user=request.user)
         except SkLeaderProfile.DoesNotExist:
             profile = None
+            
     if request.method == 'POST':
         form = EditSchoolForm(request.POST, request.FILES, instance=school_profile)
         if form.is_valid():
@@ -148,9 +156,14 @@ def school_profile(request, pk):
     else:
         form = EditSchoolForm(instance=school_profile)
 
+    try:
+        skmember_list = SkMemberProfile.objects.filter(school__id__in=[pk, ])
+    except SkMemberProfile.DoesNotExist:
+        skmember_list = None
 
 
-    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_profile':skleader_profile, 'profile' : profile, 'headmaster_profile':headmaster_profile, 'skmember_list': skmember_list})
+
+    return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_profile':skleader_profile, 'profile' : profile, 'headmaster_profile':headmaster_profile, 'skmember_list': skmember_list, 'form':form})
 
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
