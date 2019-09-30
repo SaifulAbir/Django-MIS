@@ -67,6 +67,26 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="{{ profile_form.emergency_contact_person.id_for_label }}">{{ profile_form.emergency_contact_person.label }}</label>
+                                        {% render_field profile_form.emergency_contact_person class="form-control" placeholder=profile_form.emergency_contact_person.label %}
+                                        <div class="{% if profile_form.emergency_contact_person.errors %} invalid{% endif %}">
+                                            {% for error in profile_form.emergency_contact_person.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.emergency_contact_number.id_for_label }}">{{ profile_form.emergency_contact_number.label }}</label>
+                                        {% render_field profile_form.emergency_contact_number class="form-control" placeholder=profile_form.emergency_contact_number.label %}
+                                        <div class="{% if profile_form.emergency_contact_number.errors %} invalid{% endif %}">
+                                            {% for error in profile_form.emergency_contact_number.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
                                         {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
                                         <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -93,6 +113,19 @@
                                 </div>
                                 {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
                             </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12">
+                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="preview-show pull-right" alt="Pic"><br />
+                                        </div>
+                                    </div>
+                                    {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    <div class="{% if profile_form.image.errors %} invalid{% endif %}">
+                                        {% for error in profile_form.image.errors %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,7 +165,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="box box-body">
+                            <div class="">
+                                <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                   class="btn btn-warning pull-left"
+                                   href="javascript:void(0)">
+                                    Back
+                                </a>
+
                                 <input type="submit" value="Save" class="btn btn-primary pull-right"/>
                             </div>
                         </div>

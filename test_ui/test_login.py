@@ -12,7 +12,7 @@ def login(driver, data):
    admin_pass.submit()
    time.sleep(1)
    try:
-      driver.find_element_by_link_text(data['email'])
+      driver.find_element_by_link_text(data['name'])
       return 1
    except NoSuchElementException:
       return 0
