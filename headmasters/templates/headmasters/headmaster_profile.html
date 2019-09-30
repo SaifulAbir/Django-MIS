@@ -152,12 +152,12 @@
 {% endblock %}
 {% block extra_js%}
 <script>
-
         $(function () {
             $('#datepicker').datepicker({
                 autoclose: true,
                 format: "dd-mm-yyyy"{% comment %}"mm/dd/yyyy"{% endcomment %}
-        })
+        });
+            $('#id_UF-user_type_0').prop("checked", true);
         })
     </script>
 {% endblock %}
