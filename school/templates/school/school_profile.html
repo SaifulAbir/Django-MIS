@@ -1,59 +1,61 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-{% load static %}
-{% load widget_tweaks %}
+    {% load static %}
+    {% load widget_tweaks %}
 
-<!-- =============================================== -->
+    <!-- =============================================== -->
 
-<!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper. Contains page content -->
 
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1 style ="display:inline-block;">{{ school_profile.name }}</h1>
-    <form method='POST' style =" display:inline-block;float:right;" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-        <div style =" display:inline-block;">
-            {% render_field form.image style="display: inline-block;margin-right: -50px;" placeholder=form.image.label %}
-            <input type="submit" style="display: inline-block;" value="Upload" class="btn btn-primary"/>
-        </div>
-
-    </form>
-</section>
-
-<!-- Main content -->
-<section class="content">
-    {% if school_profile.image %}
-    <img src="{{ school_profile.image.url }}" width="100%" height="400px"><br />
-    {% else %}
-    <img  src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" width="100%" height="400px">
-    {% endif %}
-
-
-
-
-</section>
-<section class="content" >
-    <div class="box box-widget">
-        <div class="box-header with-border">
-            <div class="user-block">
-                <h4>Members</h4>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1 style ="display:inline-block;">{{ school_profile.name }}</h1>
+        <form method='POST' style =" display:inline-block;float:right;" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div style =" display:inline-block;">
+                {% render_field form.image style="display: inline-block; margin-right: -50px;" class="img-preview" placeholder=form.image.label %}
+                <input type="submit" style="display: inline-block;" value="Upload" class="btn btn-primary"/>
             </div>
 
-        </div>
-        <div class="box-body">
-            <div class="row">
-                {% for skmember in skmember_list %}
-                <div class="col-xs-1">
-                    <img class="img-responsive" style="height:60px; width:60px;" src="{{ skmember.image.url }}" alt="Photo">
+        </form>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        {% if school_profile.image %}
+            <img src="{{ school_profile.image.url }}" width="100%" height="400px" class="preview-show"><br />
+        {% else %}
+            <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" width="100%" height="400px" class="preview-show">
+        {% endif %}
+
+
+    </section>
+    <section class="content" >
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <div class="user-block">
+                    <h4>Members</h4>
                 </div>
-                {% endfor %}
-
 
             </div>
+            <div class="box-body">
+                <div class="row">
 
+                    {% for skmember in skmember_list %}
+                        {% if skmember.image %}
+                            <div class="col-xs-1">
+                                <img class="img-responsive" style="height:60px; width:60px;" src="{{ skmember.image.url }}" alt="Photo">
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+
+
+                </div>
+
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 

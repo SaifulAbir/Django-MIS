@@ -113,11 +113,11 @@ class EditSkLeaderProfileForm(forms.ModelForm):
 
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    school = forms.ModelChoiceField(error_messages={'required': 'School is required.'}, queryset=School.objects.all())
+
     joining_date = forms.DateField(required=False)
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'school', 'emergency_contact_person','emergency_contact_number')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'emergency_contact_person','emergency_contact_number')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)

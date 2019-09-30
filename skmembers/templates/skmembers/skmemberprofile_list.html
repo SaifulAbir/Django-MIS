@@ -25,10 +25,11 @@
                 <table   id="example1" class=" division-table table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="col-sm-2">Name</th>
+                        <th class="col-sm-3">Name</th>
                         <th class="col-sm-2">Email</th>
-                        <th class="col-sm-3">Mobile</th>
-                        <th class="col-sm-3">Class</th>
+                        <th class="col-sm-2">Mobile</th>
+                        <th class="col-sm-2">School</th>
+                        <th class="col-sm-2">Class</th>
                         <th class="col-sm-1">Actions</th>
                     </tr>
                     </thead>
@@ -38,6 +39,7 @@
                         <td>{{skmember.user.first_name}}</td>
                         <td>{{ skmember.user.email }}</td>
                         <td>{{ skmember.mobile }}</td>
+                        <td>{{ skmember.school }}</td>
                         <td>{{ skmember.student_class }}</td>
                         <td><a type="button"
                                class=""
