@@ -60,6 +60,12 @@
     });
 
     $(function () {
+        var submitval = $('input[type="submit"]').val();
+        submitval = submitval.toLowerCase()
+        if (submitval == 'save' ){
+            $('input[type="submit"]').attr('id', 'save-btn');
+        }
+
         $('#example1').DataTable()
         $('#example2').DataTable({
             'paging'      : true,
