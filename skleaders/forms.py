@@ -59,7 +59,7 @@ class SkLeaderProfileForm(forms.ModelForm):
 
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date')
+        fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date','emergency_contact_person','emergency_contact_number')
 
 class EditSkLeaderProfileForm(forms.ModelForm):
 
@@ -68,4 +68,4 @@ class EditSkLeaderProfileForm(forms.ModelForm):
     joining_date = forms.DateField(required=False)
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date','emergency_contact_person','emergency_contact_number')
