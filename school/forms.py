@@ -8,7 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class SchoolForm(forms.ModelForm):
-    name = forms.CharField(error_messages={'required': 'Your name is required.'})
+    name = forms.CharField(error_messages={'required': 'School name is required.'})
+    school_id = forms.CharField(error_messages={'required': 'EIIN is required.', 'unique': 'School with this EIIN already exists.'})
     class Meta:
         model = School
         fields = ['name', 'school_id', 'division', 'district', 'upazilla', 'union', 'address']

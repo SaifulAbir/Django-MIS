@@ -22,7 +22,7 @@ class TestUI(unittest.TestCase):
             if actual == 1: logout(self.driver)
 
     def testSchool(self):
-        login(self.driver, {'email':'admin', 'password': '123'})
+        login(self.driver, {'email':'admin', 'password': '123', 'name': 'Admin'})
         data = pd.read_csv("test_ui/testdata/school.csv", dtype=str)
         for idx, row in data.iterrows():
             actual = addSchool(self.driver, row)

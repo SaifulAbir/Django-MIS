@@ -48,12 +48,19 @@
             </ul>
             <hr width="70%">
     <ul class="sidebar-menu" data-widget="tree">
+        {% if user.is_authenticated and user.user_type == 5 %}
         <li>
             <a href="{% url 'club_meetings:club_meeting_list' %}">
                 <i class="ion ion-checkmark"></i> <span>Club Meetings</span>
 
             </a>
         </li>
+        <li class="skmembers">
+          <a href="{% url 'skmembers:skmember_list' %}">
+            <i class="fa fa-users"></i> <span>SK Members</span>
+          </a>
+        </li>
+        {% endif %}
         {% if user.is_authenticated and user.user_type == 2 %}
         <li>
             <a href="{% url 'school:Sk_leaderApproval' %}">
