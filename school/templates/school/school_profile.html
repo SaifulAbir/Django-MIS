@@ -10,24 +10,27 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1 style ="display:inline-block;">{{ school_profile.name }}</h1>
-        <form method='POST' style =" display:inline-block;float:right;" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
-            <div style =" display:inline-block;">
-                {% render_field form.image style="display: inline-block; margin-right: -50px;" class="img-preview" placeholder=form.image.label %}
-                <input type="submit" style="display: inline-block;" value="Upload" class="btn btn-primary"/>
-            </div>
-
-        </form>
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="position:relative">
         {% if school_profile.image %}
             <img src="{{ school_profile.image.url }}" width="100%" height="400px" class="preview-show"><br />
         {% else %}
             <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" width="100%" height="400px" class="preview-show">
         {% endif %}
-
+        {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
+        <div class="img-ctrl" style="position:absolute;z-index:99;bottom:25px;right:25px;">
+            <form method='POST' style =" display:inline-block;float:right;" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div style =" display:inline-block;">
+                    {% render_field form.image style="display:none" class="img-preview" placeholder=form.image.label %}
+                    <input type="button" style="display: inline-block;" value="Change" class="btn btn-primary" id="btn_change" onclick="changePic();">
+                    <input type="submit" style="display: none;" value="Upload" id="btn_upload" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+        {% endif %}
 
     </section>
     <section class="content" >
@@ -61,5 +64,16 @@
 
 {% endblock %}
 
-
-
+{% block extra_js %}
+<script>
+function changePic(){
+    $('#id_image').click();
+    $("#id_image").on("change", function(){
+        if($("#id_image").val()){
+            $('#btn_change').hide();
+            $('#btn_upload').show();
+        }
+    });
+}
+</script>
+{% endblock %}
