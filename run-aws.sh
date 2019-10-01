@@ -3,9 +3,9 @@ cd /sknfproject
 virtualenv -p python3 venv
 source venv/bin/activate
 pip3 install -r requirements.txt
+export DJANGO_SETTINGS_MODULE="sknf.settings-aws"
 python manage.py migrate
 cat <<EOF | python manage.py shell
-export DJANGO_SETTINGS_MODULE="sknf.settings-aws"
 from django.contrib.auth import get_user_model
 User = get_user_model()
 if not User.objects.filter(email='admin').exists():

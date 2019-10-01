@@ -6,7 +6,7 @@ DATABASES = {
         'NAME': 'sknf',
         'USER': 'root',
         'PASSWORD': 'Ish1234#',
-        'HOST': 'db',
+        'HOST': 'sknf-db.cae55b7vy4vo.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
         'OPTIONS': {
             'sql_mode': 'traditional',
