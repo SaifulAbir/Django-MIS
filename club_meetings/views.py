@@ -13,37 +13,6 @@ from .forms import ClubMeetingForm, EditClubMeetingForm
 
 # Create your views here.
 def club_meeting_add(request):
-    try:
-        if request.user.is_authenticated and request.user.user_type == 2:
-            h_profile = HeadmasterProfile.objects.get(user=request.user)
-        elif request.user.is_authenticated and request.user.user_type == 5:
-            h_profile = SkLeaderProfile.objects.get(user=request.user)
-    except HeadmasterProfile.DoesNotExist:
-        h_profile=None
-    if h_profile is not None:
-        school_profile = get_object_or_404(School, pk=h_profile.school.id)
-    else:
-        school_profile=None
-    if school_profile is not None:
-        headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id, user__user_type=2).latest('school__id')
-    else:
-        headmaster_profile=None
-    if school_profile is not None:
-        skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5).latest('school__id')
-    else:
-        skleader_profile=None
-    if request.user.is_authenticated and request.user.user_type == 1:
-        profile = request.user
-    elif request.user.is_authenticated and request.user.user_type == 2:
-        profile = HeadmasterProfile.objects.get(user=request.user)
-    elif request.user.is_authenticated and request.user.user_type == 3:
-        profile = HeadmasterProfile.objects.get(user=request.user)
-    elif request.user.is_authenticated and request.user.user_type == 4:
-        profile = HeadmasterProfile.objects.get(user=request.user)
-    elif request.user.is_authenticated and request.user.user_type == 5:
-        profile = SkLeaderProfile.objects.get(user=request.user)
-    else:
-        profile = None
 
     if request.method == 'POST':
         club_meeting_form = ClubMeetingForm(request.POST, files=request.FILES, prefix='CMF', user=request.user)
@@ -65,7 +34,6 @@ def club_meeting_add(request):
 
     return render(request, 'club_meetings/club_meeting_add.html', {
         'club_meeting_form': club_meeting_form,
-        'profile': profile, 'headmaster_profile': headmaster_profile, 'skleader_profile': skleader_profile
         #'headmaster_form_details': headmaster_form_details,
     })
 
@@ -74,37 +42,7 @@ class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
     model = models.ClubMeetings
 
 def club_meeting_update(request, pk):
-    try:
-        if request.user.is_authenticated and request.user.user_type == 2:
-            h_profile = HeadmasterProfile.objects.get(user=request.user)
-        elif request.user.is_authenticated and request.user.user_type == 5:
-            h_profile = SkLeaderProfile.objects.get(user=request.user)
-    except HeadmasterProfile.DoesNotExist:
-        h_profile=None
-    if h_profile is not None:
-        school_profile = get_object_or_404(School, pk=h_profile.school.id)
-    else:
-        school_profile=None
-    if school_profile is not None:
-        headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id, user__user_type=2).latest('school__id')
-    else:
-        headmaster_profile=None
-    if school_profile is not None:
-        skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5).latest('school__id')
-    else:
-        skleader_profile=None
-    if request.user.is_authenticated and request.user.user_type == 1:
-        profile = request.user
-    elif request.user.is_authenticated and request.user.user_type == 2:
-        profile = HeadmasterProfile.objects.get(user=request.user)
-    elif request.user.is_authenticated and request.user.user_type == 3:
-        profile = HeadmasterProfile.objects.get(user=request.user)
-    elif request.user.is_authenticated and request.user.user_type == 4:
-        profile = HeadmasterProfile.objects.get(user=request.user)
-    elif request.user.is_authenticated and request.user.user_type == 5:
-        profile = SkLeaderProfile.objects.get(user=request.user)
-    else:
-        profile = None
+
 
     club_meeting = get_object_or_404(ClubMeetings, pk=pk)
     if request.method == 'POST':
@@ -120,7 +58,6 @@ def club_meeting_update(request, pk):
     return render(request, 'club_meetings/club_meeting_add.html', {
         'club_meeting_form': club_meeting_form,
         'club_meeting': club_meeting,
-        'profile': profile, 'headmaster_profile': headmaster_profile, 'skleader_profile': skleader_profile
     })
 
 class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
@@ -129,44 +66,5 @@ class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
     model = models.ClubMeetings
     template_name = 'club_meetings/club_meeting_detail.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ClubMeetingDetail, self).get_context_data(**kwargs)
-        try:
-            if self.request.user.is_authenticated and self.request.user.user_type == 2:
-                h_profile = HeadmasterProfile.objects.get(user=self.request.user)
-            elif self.request.user.is_authenticated and self.request.user.user_type == 5:
-                h_profile = SkLeaderProfile.objects.get(user=self.request.user)
-        except HeadmasterProfile.DoesNotExist:
-            h_profile = None
-        if h_profile is not None:
-            school_profile = get_object_or_404(School, pk=h_profile.school.id)
-        else:
-            school_profile = None
-        if school_profile is not None:
-            headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id,
-                                                                  user__user_type=2).latest('school__id')
-        else:
-            headmaster_profile = None
-        if school_profile is not None:
-            skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5).latest(
-                'school__id')
-        else:
-            skleader_profile = None
-        if self.request.user.is_authenticated and self.request.user.user_type == 1:
-            profile = self.request.user
-        elif self.request.user.is_authenticated and self.request.user.user_type == 2:
-            profile = HeadmasterProfile.objects.get(user=self.request.user)
-        elif self.request.user.is_authenticated and self.request.user.user_type == 3:
-            profile = HeadmasterProfile.objects.get(user=self.request.user)
-        elif self.request.user.is_authenticated and self.request.user.user_type == 4:
-            profile = HeadmasterProfile.objects.get(user=self.request.user)
-        elif self.request.user.is_authenticated and self.request.user.user_type == 5:
-            profile = SkLeaderProfile.objects.get(user=self.request.user)
-        else:
-            profile = None
-        context['profile'] = profile
-        context['headmaster_profile'] = headmaster_profile
-        context['skleader_profile'] = skleader_profile
-        # And so on for more models
-        return context
+
 
