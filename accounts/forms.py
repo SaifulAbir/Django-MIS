@@ -9,7 +9,7 @@ from skleaders.models import SkLeaderProfile
 class PrettyAuthenticationForm(forms.Form):
 
     email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
-    password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
 
     def clean(self):
         user = self.authenticate_via_email()
