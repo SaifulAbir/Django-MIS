@@ -1,5 +1,7 @@
 from sknf.settings import *
 
+ALLOWED_HOSTS = ['mis.shornokishoree.org']
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
