@@ -35,7 +35,7 @@ def index(request):
 @login_required(login_url='/')
 def profile(request):
     try:
-        if request.user.is_authenticated and request.user.user_type == 2:
+        if request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
             h_profile = HeadmasterProfile.objects.get(user=request.user)
         elif request.user.is_authenticated and request.user.user_type == 5:
             h_profile = SkLeaderProfile.objects.get(user=request.user)

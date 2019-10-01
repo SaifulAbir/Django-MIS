@@ -46,7 +46,7 @@ def club_meeting_add(request):
         profile = None
 
     if request.method == 'POST':
-        club_meeting_form = ClubMeetingForm(request.POST, files=request.FILES, prefix='CMF')
+        club_meeting_form = ClubMeetingForm(request.POST, files=request.FILES, prefix='CMF', user=request.user)
         # meeting_topic_form = MeetingTopicsForm(request.POST, prefix='MTF')
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
@@ -59,7 +59,7 @@ def club_meeting_add(request):
             return HttpResponseRedirect("/club_meetings/club_meeting_list/")
 
     else:
-        club_meeting_form = ClubMeetingForm(prefix='CMF')
+        club_meeting_form = ClubMeetingForm(prefix='CMF', user=request.user)
         # meeting_topic_form = MeetingTopicsForm(prefix='MTF')
         #headmaster_form_details = HeadmasterDetailsForm(prefix='hf')
 
