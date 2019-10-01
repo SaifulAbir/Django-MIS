@@ -25,7 +25,7 @@ def skmember_profile_view(request):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
-            messages.success(request, 'SkMember Created!')
+            messages.success(request, 'SK Member Created!')
             return HttpResponseRedirect("/skmembers/skmember_list/")
 
     else:
@@ -128,7 +128,7 @@ def skmember_update(request, pk):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
-            messages.success(request, 'SkMember Updated!')
+            messages.success(request, 'SK Member Updated!')
             return HttpResponseRedirect("/skmembers/skmember_list/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)
