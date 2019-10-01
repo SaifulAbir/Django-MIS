@@ -32,7 +32,7 @@ def skleader_profile_view(request):
             headmaster_details.skleader = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
-            messages.success(request, 'SkLeader Created!')
+            messages.success(request, 'SK Leader Created!')
 
             return HttpResponseRedirect("/skleaders/skleader_list/")
 
@@ -80,7 +80,7 @@ def skleader_update(request, pk):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
-            messages.success(request, 'SkLeader Updated!')
+            messages.success(request, 'SK Leader Updated!')
             return HttpResponseRedirect("/skleaders/skleader_list/")
     else:
         user_form = EditSkUserForm(instance=user_profile)
