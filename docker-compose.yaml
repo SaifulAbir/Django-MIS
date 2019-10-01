@@ -18,7 +18,7 @@ services:
     build: .
     container_name: sknf-web
     restart: always
-    command: 'bash /sknfproject/run-docker.sh'
+    command: 'bash /sknfproject/start-docker.sh'
     ports:
       - "8000:8000"
     volumes:

@@ -5,7 +5,7 @@ ALLOWED_HOSTS = ['mis.shornokishoree.org']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sknfdb',
+        'NAME': 'sknf',
         'USER': 'root',
         'PASSWORD': 'Ish1234#',
         'HOST': 'sknf-db.cae55b7vy4vo.us-east-1.rds.amazonaws.com',
