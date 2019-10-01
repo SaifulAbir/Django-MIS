@@ -5,6 +5,9 @@ from django.views import generic
 
 from club_meetings import models
 from club_meetings.models import ClubMeetings
+from headmasters.models import HeadmasterProfile
+from school.models import School
+from skleaders.models import SkLeaderProfile
 from .forms import ClubMeetingForm, EditClubMeetingForm
 
 
@@ -12,7 +15,7 @@ from .forms import ClubMeetingForm, EditClubMeetingForm
 def club_meeting_add(request):
 
     if request.method == 'POST':
-        club_meeting_form = ClubMeetingForm(request.POST, files=request.FILES, prefix='CMF')
+        club_meeting_form = ClubMeetingForm(request.POST, files=request.FILES, prefix='CMF', user=request.user)
         # meeting_topic_form = MeetingTopicsForm(request.POST, prefix='MTF')
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
@@ -25,7 +28,7 @@ def club_meeting_add(request):
             return HttpResponseRedirect("/club_meetings/club_meeting_list/")
 
     else:
-        club_meeting_form = ClubMeetingForm(prefix='CMF')
+        club_meeting_form = ClubMeetingForm(prefix='CMF', user=request.user)
         # meeting_topic_form = MeetingTopicsForm(prefix='MTF')
         #headmaster_form_details = HeadmasterDetailsForm(prefix='hf')
 
@@ -39,6 +42,7 @@ class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
     model = models.ClubMeetings
 
 def club_meeting_update(request, pk):
+
 
     club_meeting = get_object_or_404(ClubMeetings, pk=pk)
     if request.method == 'POST':
@@ -61,4 +65,6 @@ class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "club_meeting_detail"
     model = models.ClubMeetings
     template_name = 'club_meetings/club_meeting_detail.html'
+
+
 

@@ -39,11 +39,6 @@
 <!--                                <input type="text" value="{{topic}}" class="form-control my-colorpicker1" readonly>-->
 <!--                                {% endfor %}-->
                                 <ul>
-                                    {% if club_meeting_detail.presence_skleader %}
-                                    <li>
-                                        {{user.first_name}}&nbsp;(SkLeader)
-                                    </li>
-                                    {% endif %}
                                     {% for topic in club_meeting_detail.topics.all %}
                                     <li>{{topic}}</li>
                                     {% endfor %}
@@ -55,6 +50,11 @@
 <!--                                <input type="text" value="{{attendance}}" class="form-control my-colorpicker1" readonly>-->
 <!--                                {% endfor %}-->
                                 <ul>
+                                    {% if club_meeting_detail.presence_skleader %}
+                                    <li>
+                                        {{user.first_name}}&nbsp;(SkLeader)
+                                    </li>
+                                    {% endif %}
                                     {% for attendance in club_meeting_detail.attendance.all %}
                                     <li>{{attendance}}</li>
                                     {% endfor %}
