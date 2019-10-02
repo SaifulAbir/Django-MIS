@@ -115,21 +115,27 @@ def load_unions(request):
 
 def school_profile(request, pk):
     school_profile = get_object_or_404(School, pk=pk)
-    try:
-        upload_head_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2, user=request.user).latest('school__id')
-    except HeadmasterProfile.DoesNotExist:
+    if request.user.is_authenticated:
+        try:
+            upload_head_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2, user=request.user).latest('school__id')
+        except HeadmasterProfile.DoesNotExist:
+            upload_head_user = None
+        try:
+            upload_guide_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=3, user=request.user).latest('school__id')
+        except HeadmasterProfile.DoesNotExist:
+            upload_guide_user = None
+        try:
+            upload_both_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=4, user=request.user).latest('school__id')
+        except HeadmasterProfile.DoesNotExist:
+            upload_both_user = None
+        try:
+            upload_skleader_user = SkLeaderProfile.objects.filter(school__id=pk, user__user_type=5, user=request.user).latest('school__id')
+        except SkLeaderProfile.DoesNotExist:
+            upload_skleader_user = None
+    else:
         upload_head_user = None
-    try:
-        upload_guide_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=3, user=request.user).latest('school__id')
-    except HeadmasterProfile.DoesNotExist:
         upload_guide_user = None
-    try:
-        upload_both_user = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=4, user=request.user).latest('school__id')
-    except HeadmasterProfile.DoesNotExist:
         upload_both_user = None
-    try:
-        upload_skleader_user = SkLeaderProfile.objects.filter(school__id=pk, user__user_type=5, user=request.user).latest('school__id')
-    except SkLeaderProfile.DoesNotExist:
         upload_skleader_user = None
     try:
         headmaster_profile = HeadmasterProfile.objects.filter(school__id=pk, user__user_type=2).latest('school__id')

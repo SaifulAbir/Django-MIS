@@ -6,7 +6,7 @@ from django.utils import timezone
 
 
 class Division(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+    name = models.CharField(max_length=128, unique=True, null=False)
     created_date = models.DateTimeField(default=timezone.now)
 
     objects = models.Manager
