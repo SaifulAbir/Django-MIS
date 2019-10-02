@@ -1,8 +1,11 @@
-MAIN_URL= 'http://localhost:8000'
+MAIN_URL= 'http://mis.shornokishoree.org'
 DIVISION_URL= '/division/division_list'
 SCHOOL_URL= '/school_list/'
 DISTRICT_URL= '/district/district_list/'
 UPAZILLA_URL= '/upazilla/upazilla_list/'
 HEADMASTER_URL= '/headmasters/headmaster_list/'
 SKLEADER_URL= '/skleaders/skleader_list/'
+SKMEMBER_URL= '/skmembers/skmember_list/'
 CHROME_DRIVER_LOCATION= 'test_ui/driver/chromedriver'
+DELAY_SHORT=2
+DELAY_LONG=5

@@ -3,16 +3,16 @@ import unittest
 import pandas as pd
 from selenium import webdriver
 
-from test_ui.config import CHROME_DRIVER_LOCATION, MAIN_URL
-from test_ui.test_login import login, logout
-from test_ui.test_school import addSchool
+from.config import *
+from.test_login import login, logout
+from.test_school import addSchool
 
 
 class TestUI(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome(CHROME_DRIVER_LOCATION)
         self.driver.get(MAIN_URL)
-        time.sleep(2)
+        time.sleep(DELAY_LONG)
 
     def testLogin(self):
         data = pd.read_csv("test_ui/testdata/login.csv", dtype=str)

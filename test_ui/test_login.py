@@ -2,6 +2,8 @@ import time
 
 from selenium.common.exceptions import NoSuchElementException
 
+from .config import *
+
 
 def login(driver, data):
    admin_name = driver.find_element_by_name('email')
@@ -10,7 +12,7 @@ def login(driver, data):
    admin_pass = driver.find_element_by_name('password')
    admin_pass.send_keys(data['password'])
    admin_pass.submit()
-   time.sleep(1)
+   time.sleep(DELAY_LONG)
    try:
       driver.find_element_by_link_text(data['name'])
       return 1
