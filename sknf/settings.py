@@ -24,10 +24,10 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 SECRET_KEY = 'hqfqlot5*at%cqbbodie7e$ea_^syj7v9+nb&67$xlri$l9$dt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
-ALLOWED_HOSTS = ['192.168.1.225']
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'skleaders',
     'skmembers',
     'topics',
-    'Class_Orientation',
+    'class_orientation',
     'club_meetings'
 ]
 

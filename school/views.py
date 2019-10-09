@@ -4,7 +4,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
+from accounts.decorators import admin_login_required
 from districts.models import District
 from headmasters.models import HeadmasterProfile
 from school.models import School
@@ -18,20 +20,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from . import models
 
-
+@method_decorator(admin_login_required, name='dispatch')
 class CreateSchool(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
     login_url = '/'
     form_class = SchoolForm
     model = School
     success_message = "School Created!"
 
+@method_decorator(admin_login_required, name='dispatch')
 class SchoolUpdate(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
     login_url = '/'
     form_class = SchoolForm
     model = models.School
     success_message = "School Updated!"
 
-
+@method_decorator(admin_login_required, name='dispatch')
 class SchoolDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "school_detail"
@@ -53,15 +56,6 @@ def save_school_form(request, form, template_name):
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
-"""def school_create(request):
-    data = dict()
-
-    if request.method == 'POST':
-        form = SchoolForm(request.POST)
-    else:
-        form = SchoolForm()
-    return save_school_form(request, form, 'school/school_form.html')"""
-
 def school_update(request, pk):
     school = get_object_or_404(School, pk=pk)
     if request.method == 'POST':
@@ -70,15 +64,10 @@ def school_update(request, pk):
         form = SchoolForm(instance=school)
     return save_school_form(request, form, 'school/school_update_form.html')
 
-
+@method_decorator(admin_login_required, name='dispatch')
 class SchoolList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.School
-
-"""class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
-
-    model = models.District
-    success_url = reverse_lazy('districts:district_list')"""
 
 def school_delete(request, pk):
     school = get_object_or_404(School, pk=pk)

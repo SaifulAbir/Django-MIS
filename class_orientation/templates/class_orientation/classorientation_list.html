@@ -1,0 +1,76 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+
+    <!-- Main content -->
+<section class="content-header">
+    <h1>
+        Class Orientations
+    </h1>
+</section>
+    <section class="content">
+
+        <!-- Main content -->
+        <div class="box">
+            <div class="box-header">
+                <span id = "alert_placeholder">
+                    {% if messages %}
+                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                        <span>
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </span>
+                <a type="button"
+                   class="btn btn-primary pull-right"
+                   href="{% url 'class_orientation:create_class_orientation' %}">
+                    <span class="fa fa-plus"></span>
+                    New Class Orientation
+                </a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+                <table   id="example1" class=" division-table table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-3">Date</th>
+                        <th class="col-sm-2">Class</th>
+                        <th class="col-sm-5">Topic</th>
+                        <th class="col-sm-1">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for class_orientation in classorientation_list %}
+                        <tr>
+                            <td>{{class_orientation.created_date}}</td>
+                            <td>{{ class_orientation.student_class }}</td>
+                            <td>{{ class_orientation.topic }}</td>
+                            <td>
+                                <a type="button"
+                                   class=""
+                                   href="#">
+                                    <span class="fa fa-eye"></span>
+
+                                </a>
+                                <a type="button"
+                                   class=""
+                                   href="#">
+                                    <span class="fa fa-edit"></span>
+
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
+{% endblock %}

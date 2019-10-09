@@ -86,22 +86,22 @@ def custom_login(request,):
     next_destination = request.GET.get('next')
     if request.user.is_authenticated and request.user.user_type == 1:
         if next_destination:
-            return HttpResponse("Access denied")
+            raise PermissionDenied
         return redirect('/dashboard/')
     elif request.user.is_authenticated and request.user.user_type == 2:
         headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
         if next_destination:
-            return HttpResponse("Access denied")
+            raise PermissionDenied
         return redirect('school:school_profile', headmaster_profile.school.id)
     elif request.user.is_authenticated and request.user.user_type == 3:
         headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
         if next_destination:
-            return HttpResponse("Access denied")
+            raise PermissionDenied
         return redirect('school:school_profile', headmaster_profile.school.id)
     elif request.user.is_authenticated and request.user.user_type == 4:
         headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
         if next_destination:
-            return HttpResponse("Access denied")
+            raise PermissionDenied
         return redirect('school:school_profile', headmaster_profile.school.id)
     elif request.user.is_authenticated and request.user.user_type == 5:
         skleader_profile = SkLeaderProfile.objects.get(user=request.user)
@@ -148,7 +148,7 @@ def login_request(request):
                     template_name = "accounts/login.html",
                     context={"form":form, 'next_destination': next_destination})
 
-
+@admin_login_required
 def admin_profile_update(request):
     user_profile = get_object_or_404(User, pk=request.user.id)
     old_password = user_profile.password
@@ -236,8 +236,6 @@ def skleader_profile_update(request):
     })
 
 
-def handler403(request, exception, template_name="accounts/403.html"):
-    response = render_to_response("accounts/403.html")
-    response.status_code = 403
-    return response
+def handler403(request, exception):
+    return render(request, 'accounts/403.html', status=403)
 
