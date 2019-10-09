@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import generic
 
-from accounts.decorators import headmaster_login_required
+from accounts.decorators import admin_login_required
 from accounts.models import User
 from headmasters import models
 from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm, HeadmasterDetailsForm
@@ -17,7 +17,7 @@ from school.models import School
 import time
 from datetime import datetime
 
-
+@admin_login_required
 def headmaster_profile_view(request):
 
     if request.method == 'POST':
@@ -52,7 +52,7 @@ def headmaster_profile_view(request):
         #'headmaster_form_details': headmaster_form_details,
     })
 
-#@method_decorator(headmaster_login_required, name='dispatch')
+@method_decorator(admin_login_required, name='dispatch')
 class HeadmasterList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.HeadmasterProfile
@@ -61,13 +61,14 @@ class HeadmasterList(LoginRequiredMixin, generic.ListView):
         queryset = HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
         return queryset
 
+@method_decorator(admin_login_required, name='dispatch')
 class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "headmaster_detail"
     model = models.HeadmasterProfile
     template_name = 'headmasters/headmaster_detail.html'
 
-@login_required
+@admin_login_required
 def headmaster_update(request, pk):
     headmaster_details = HeadmasterDetails.objects.filter(headmaster=pk)
     school_list = School.objects.all()
@@ -104,6 +105,7 @@ def headmaster_update(request, pk):
         'pk': pk,
     })
 
+@admin_login_required
 def headermaster_school_details_update(request):
 
     school = request.GET.get('school')

@@ -4,15 +4,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views import generic
 
+from accounts.decorators import admin_login_required
 from accounts.models import User
 from skleaders.models import SkLeaderProfile
 from skmembers import models
 from skmembers.forms import SkMemberUserForm, SkMemberProfileForm, EditSkMemberUserForm, SkMemberProfileFormForSkleader
 from skmembers.models import SkMemberProfile
 
-
+@admin_login_required
 def skmember_profile_view(request):
     if request.method == 'POST':
         user_form = SkMemberUserForm(request.POST, prefix='UF')
@@ -88,6 +90,7 @@ def skmember_update_for_skleader(request, pk):
         'skmember_profile': skmember_profile,
     })
 
+@method_decorator(admin_login_required, name='dispatch')
 class SkmemberList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.SkMemberProfile
@@ -116,6 +119,7 @@ class SkmemberListForSkmber(LoginRequiredMixin, generic.ListView):
         queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,])
         return queryset
 
+@admin_login_required
 def skmember_update(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
@@ -140,6 +144,7 @@ def skmember_update(request, pk):
         'skmember_profile': skmember_profile,
     })
 
+@method_decorator(admin_login_required, name='dispatch')
 class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "skmember_detail"

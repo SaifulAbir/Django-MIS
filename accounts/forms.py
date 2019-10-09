@@ -42,11 +42,11 @@ class EditUserForm(forms.ModelForm):
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
-    image = forms.ImageField(label=_('Headmaster image'), required=False,
+    image = forms.ImageField(label=_('User image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model = User
-        fields = ('first_name', 'email', 'password', 'user_type', 'image')
+        fields = ('first_name', 'email', 'password', 'user_type', 'image',)
 
     def clean(self):
         cleaned_data = super(EditUserForm, self).clean()

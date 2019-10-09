@@ -52,7 +52,10 @@ def profile(request):
     else:
         school_profile=None
     if school_profile is not None:
-        headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id, user__user_type=2).latest('school__id')
+        try:
+            headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id, user__user_type=2).latest('school__id')
+        except HeadmasterProfile.DoesNotExist:
+            headmaster_profile = None
     else:
         headmaster_profile=None
     if school_profile is not None:
@@ -151,6 +154,7 @@ def login_request(request):
 @admin_login_required
 def admin_profile_update(request):
     user_profile = get_object_or_404(User, pk=request.user.id)
+    old_user_profile = user_profile.image
     old_password = user_profile.password
     if request.method == 'POST':
         user_form = EditUserForm(request.POST, files=request.FILES, instance=user_profile)
@@ -172,7 +176,8 @@ def admin_profile_update(request):
 
     return render(request, 'accounts/admin_profile_form.html', {
         'user_form': user_form,
-        'user_profile': user_profile
+        'user_profile': user_profile,
+        'old_user_profile': old_user_profile
     })
 
 def headmaster_profile_update(request):

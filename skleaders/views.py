@@ -4,8 +4,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 import time
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views import generic
 
+from accounts.decorators import admin_login_required
 from accounts.models import User
 from school.models import School
 from skleaders import models
@@ -13,6 +15,7 @@ from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm, Edi
 from skleaders.models import SkLeaderProfile, SkleaderDetails
 from datetime import datetime
 
+@admin_login_required
 def skleader_profile_view(request):
     if request.method == 'POST':
         user_form = SkUserForm(request.POST, prefix='UF')
@@ -45,6 +48,7 @@ def skleader_profile_view(request):
         'profile_form': profile_form,
     })
 
+@method_decorator(admin_login_required, name='dispatch')
 class SkleaderList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.SkLeaderProfile
@@ -53,12 +57,14 @@ class SkleaderList(LoginRequiredMixin, generic.ListView):
         queryset = SkLeaderProfile.objects.filter(user__user_type__in=[5,])
         return queryset
 
+@method_decorator(admin_login_required, name='dispatch')
 class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "skleader_detail"
     model = models.SkLeaderProfile
     template_name = 'skleaders/skleader_detail.html'
 
+@admin_login_required
 def skleader_update(request, pk):
     skleader_profile = get_object_or_404(SkLeaderProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skleader_profile.user.id))
@@ -95,6 +101,7 @@ def skleader_update(request, pk):
         'school_list': school_list,
     })
 
+@admin_login_required
 def skleader_details_update(request):
 
     school = request.GET.get('school')

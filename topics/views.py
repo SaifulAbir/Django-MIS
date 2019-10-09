@@ -2,7 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
+from accounts.decorators import admin_login_required
 from topics.models import Topics
 from .forms import TopicsForm
 # Create your views here.
@@ -43,7 +45,7 @@ def topics_update(request, pk):
         form = TopicsForm(instance=topics)
     return save_topics_form(request, form, 'topics/topics_update_form.html')
 
-
+@method_decorator(admin_login_required, name='dispatch')
 class TopicsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.Topics
