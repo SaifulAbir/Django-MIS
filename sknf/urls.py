@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from django.conf.urls import handler404
+from django.conf.urls import handler403
 from django.conf.urls import handler500
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,3 +37,5 @@ urlpatterns = [
     path('Class_Orientation/',include('Class_Orientation.urls')),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler403 = 'accounts.views.handler403'

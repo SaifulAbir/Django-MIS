@@ -24,7 +24,10 @@ def sidebar_context(request):
         else:
             school_profile=None
         if school_profile is not None:
-            headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id, user__user_type=2).latest('school__id')
+            try:
+                headmaster_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id, user__user_type=2).latest('school__id')
+            except HeadmasterProfile.DoesNotExist:
+                headmaster_profile = None
         else:
             headmaster_profile=None
         if school_profile is not None:

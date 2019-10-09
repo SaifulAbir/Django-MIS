@@ -13,12 +13,13 @@ from .forms import ClubMeetingForm, EditClubMeetingForm
 
 # Create your views here.
 def club_meeting_add(request):
-
+    profile = SkLeaderProfile.objects.get(user=request.user)
     if request.method == 'POST':
         club_meeting_form = ClubMeetingForm(request.POST, files=request.FILES, prefix='CMF', user=request.user)
         # meeting_topic_form = MeetingTopicsForm(request.POST, prefix='MTF')
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
+            club_meeting.school = profile.school
             club_meeting.save()
             club_meeting_form.save_m2m()
             # meeting_topic = meeting_topic_form.save(commit = False)
@@ -40,6 +41,11 @@ def club_meeting_add(request):
 class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.ClubMeetings
+
+    # def get_queryset(self):
+    #
+    #
+    #     return queryset
 
 def club_meeting_update(request, pk):
 

@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test, login_required
-
+from django.http import Http404
 
 adm_login_required = user_passes_test(lambda u: True if u.is_admin else False, login_url='/')
 head_login_required = user_passes_test(lambda u: True if u.is_headmaster else False, login_url='/')

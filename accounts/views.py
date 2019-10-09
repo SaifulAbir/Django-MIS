@@ -2,9 +2,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -12,6 +13,9 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from django.template import RequestContext
+
+from accounts.decorators import admin_login_required
 from accounts.forms import PrettyAuthenticationForm, EditUserForm, HeadmasterProfileForm, SkleaderProfileForm
 from accounts.models import User
 from headmasters.models import HeadmasterProfile
@@ -20,7 +24,7 @@ from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
 
 
-@login_required(login_url='/')
+@admin_login_required
 def index(request):
     school_list = School.objects.all()
     school_total = School.objects.count()
@@ -102,7 +106,7 @@ def custom_login(request,):
     elif request.user.is_authenticated and request.user.user_type == 5:
         skleader_profile = SkLeaderProfile.objects.get(user=request.user)
         if next_destination:
-            return HttpResponse("Access denied")
+            raise PermissionDenied
         return redirect('school:school_profile', skleader_profile.school.id)
     else:
         return login_request(request)
@@ -230,4 +234,10 @@ def skleader_profile_update(request):
         'profile_form': profile_form,
         'skleader_profile': skleader_profile,
     })
+
+
+def handler403(request, exception, template_name="accounts/403.html"):
+    response = render_to_response("accounts/403.html")
+    response.status_code = 403
+    return response
 
