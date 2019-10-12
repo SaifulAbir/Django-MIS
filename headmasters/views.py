@@ -1,11 +1,16 @@
+
+
+from PIL import Image
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.utils.decorators import method_decorator
+from django.utils.six import StringIO
 from django.views import generic
 
 from accounts.decorators import admin_login_required
@@ -17,6 +22,8 @@ from school.models import School
 import time
 from datetime import datetime
 
+
+
 @admin_login_required
 def headmaster_profile_view(request):
 
@@ -25,10 +32,27 @@ def headmaster_profile_view(request):
         profile_form = HeadmasterProfileForm(request.POST, files=request.FILES, prefix='PF')
 
         if user_form.is_valid() and profile_form.is_valid():
+
+            x = profile_form.cleaned_data.get('x')
+            y = profile_form.cleaned_data.get('y')
+            w = profile_form.cleaned_data.get('width')
+            h = profile_form.cleaned_data.get('height')
             user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data["password"])
             user.save()
             profile = profile_form.save(commit = False)
+            # print(profile.image)
+            # image = Image.open(profile.image)
+            # cropped_image = image.crop((x, y, w + x, h + y))
+            # cropped_image.thumbnail((220, 130), Image.ANTIALIAS)
+            # cropped_image.save(thumb_io, cropped_image.format, quality=60)
+            # profile.image.save(cropped_image.filename, save=False)
+            # resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+            # resized_image.save(profile.image)
+            # profile.image.save()
+            # print(resized_image.path)
+            # profile.image.save(resized_image.filename)
+            # profile.image = cropper(profile.image)
             profile.user = user
             profile.joining_date = '2019-01-01'
             profile.save()

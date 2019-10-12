@@ -1,3 +1,4 @@
+from PIL import Image
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import DateField
@@ -57,6 +58,10 @@ class EditUserForm(forms.ModelForm):
 
 
 class HeadmasterProfileForm(forms.ModelForm):
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    width = forms.FloatField(widget=forms.HiddenInput())
+    height = forms.FloatField(widget=forms.HiddenInput())
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     joining_date = DateField(error_messages={'required': 'From date is required.'})
@@ -65,7 +70,7 @@ class HeadmasterProfileForm(forms.ModelForm):
 
     class Meta:
         model = HeadmasterProfile
-        fields = ('mobile','school', 'image','joining_date')
+        fields = ('mobile','school', 'image','joining_date', 'x', 'y', 'width', 'height',)
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -73,6 +78,21 @@ class HeadmasterProfileForm(forms.ModelForm):
             if image.size > 1 * 1024 * 1024:
                 raise ValidationError("Image file too large ( > 1mb )")
             return image
+
+    # def save(self, commit=True):
+    #     new_image = super(HeadmasterProfileForm, self).save(commit=False)
+    #
+    #     x = self.cleaned_data.get('x')
+    #     y = self.cleaned_data.get('y')
+    #     w = self.cleaned_data.get('width')
+    #     h = self.cleaned_data.get('height')
+    #
+    #     image = Image.open(new_image.image)
+    #     cropped_image = iimage.crop((x, y, w + x, h + y))
+    #     resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+    #     resized_image.save(new_image.image.path)
+    #
+    #     return new_image
 
 class HeadmasterDetailsForm(forms.ModelForm):
 
