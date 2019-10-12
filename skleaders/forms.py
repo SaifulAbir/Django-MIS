@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from accounts.models import User
 from school.models import School
-from skleaders.models import SkLeaderProfile
+from skleaders.models import SkLeaderProfile, GENDER_CHOICES
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -85,10 +85,11 @@ class SkLeaderProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     school = forms.ModelChoiceField(error_messages={'required': 'School is required.'}, queryset=School.objects.all())
+    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
 
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date','emergency_contact_person','emergency_contact_number')
+        fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date','emergency_contact_person','emergency_contact_number', 'gender')
 
     def clean_image(self):
 
@@ -110,14 +111,14 @@ class EditSkLeaderProfileForm(forms.ModelForm):
 
     student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
                                       choices=SkUserForm.class_choice, widget=forms.Select())
-
+    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
 
     joining_date = forms.DateField(required=False)
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'emergency_contact_person','emergency_contact_number')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'emergency_contact_person','emergency_contact_number', 'gender')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)

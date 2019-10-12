@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from accounts.models import User
 from school.models import School
+from skleaders.models import GENDER_CHOICES
 
 class_choice=(
     ('6', '6'),
@@ -19,6 +20,7 @@ class SkMemberProfile(models.Model):
     student_class = models.CharField(max_length=10, choices=class_choice)
     roll = models.CharField(max_length=128)
     school = models.ForeignKey(School, on_delete=models.CASCADE, blank=True, null=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     def __str__(self):

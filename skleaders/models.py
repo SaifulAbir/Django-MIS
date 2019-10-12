@@ -12,8 +12,12 @@ class_choice=(
     ('8', '8'),
     ('9', '9'),
     ("10", '10'),
-
 )
+GENDER_CHOICES = (
+        ('', '--Select--'),
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
 class SkLeaderProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='skleader_profile')
     mobile = models.CharField(max_length=11)
@@ -23,6 +27,7 @@ class SkLeaderProfile(models.Model):
     emergency_contact_person = models.CharField(max_length=200, blank=True, null=True)
     emergency_contact_number = models.CharField(max_length=20, blank=True, null=True)
     image = models.ImageField(upload_to='images/')
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     joining_date = models.DateField(null=False, blank=False, default=timezone.now)
 
     def __str__(self):

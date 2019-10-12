@@ -42,10 +42,10 @@ class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.ClubMeetings
 
-    # def get_queryset(self):
-    #
-    #
-    #     return queryset
+    def get_queryset(self):
+        profile = SkLeaderProfile.objects.get(user=self.request.user)
+        queryset = ClubMeetings.objects.filter(school=profile.school)
+        return queryset
 
 def club_meeting_update(request, pk):
 

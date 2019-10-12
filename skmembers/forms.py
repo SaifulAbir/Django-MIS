@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 
 from accounts.models import User
 from skleaders.forms import SkUserForm
+from skleaders.models import GENDER_CHOICES
 from skmembers.models import SkMemberProfile
 from django.utils.translation import ugettext_lazy as _
 
@@ -42,9 +43,10 @@ class SkMemberProfileForm(forms.ModelForm):
     student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll', 'school')
+        fields = ('mobile', 'image', 'student_class', 'roll', 'school', 'gender')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -60,9 +62,10 @@ class SkMemberProfileFormSkleader(forms.ModelForm):
     student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll')
+        fields = ('mobile', 'image', 'student_class', 'roll', 'gender')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -78,9 +81,10 @@ class SkMemberProfileFormForSkleader(forms.ModelForm):
     student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll')
+        fields = ('mobile', 'image', 'student_class', 'roll', 'gender')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
