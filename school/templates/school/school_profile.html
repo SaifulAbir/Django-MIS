@@ -78,10 +78,11 @@
                         <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
                     </div>
                     <div class="box-body">
+                        {% if school_post.post_image %}
                         <div class="form-group">
                             <img src="{{ school_post.post_image.url }}" alt="">
                         </div>
-
+                        {% endif %}
                         <div class="form-group">
                             {{school_post.text}}
                         </div>
