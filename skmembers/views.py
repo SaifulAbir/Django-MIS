@@ -9,10 +9,11 @@ from django.views import generic
 
 from accounts.decorators import admin_login_required
 from accounts.models import User
+from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers import models
 from skmembers.forms import SkMemberUserForm, SkMemberProfileForm, EditSkMemberUserForm, SkMemberProfileFormForSkleader
-from skmembers.models import SkMemberProfile
+from skmembers.models import SkMemberProfile,SkmemberDetails
 
 @admin_login_required
 def skmember_profile_view(request):
@@ -44,7 +45,6 @@ def skmember_profile_view_skleader(request):
     if request.method == 'POST':
         user_form = SkMemberUserForm(request.POST, prefix='UF')
         profile_form = SkMemberProfileFormForSkleader(request.POST, files=request.FILES, prefix='PF')
-
         if user_form.is_valid() and profile_form.is_valid():
             id = request.user.id
             objSkLeader = SkLeaderProfile.objects.get(user_id=id)
@@ -70,6 +70,8 @@ def skmember_profile_view_skleader(request):
 def skmember_update_for_skleader(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
+    skmember_details = SkmemberDetails.objects.filter(skmember=pk)
+    school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
         profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
@@ -88,6 +90,9 @@ def skmember_update_for_skleader(request, pk):
         'user_form': user_form,
         'profile_form': profile_form,
         'skmember_profile': skmember_profile,
+        'pk': pk,
+        'sklmember_details': skmember_details,
+        'school_list': school_list,
     })
 
 @method_decorator(admin_login_required, name='dispatch')
@@ -123,6 +128,8 @@ class SkmemberListForSkmber(LoginRequiredMixin, generic.ListView):
 def skmember_update(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
+    skmember_details = SkmemberDetails.objects.filter(skmember=pk)
+    school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
         profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
@@ -142,9 +149,12 @@ def skmember_update(request, pk):
         'user_form': user_form,
         'profile_form': profile_form,
         'skmember_profile': skmember_profile,
+        'pk': pk,
+        'sklmember_details': skmember_details,
+        'school_list': school_list,
     })
 
-@method_decorator(admin_login_required, name='dispatch')
+
 class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "skmember_detail"

@@ -43,10 +43,11 @@ class SkMemberProfileForm(forms.ModelForm):
     student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
     gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll', 'school', 'gender')
+        fields = ('mobile', 'image', 'student_class','joining_date', 'roll', 'school', 'gender')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -63,9 +64,10 @@ class SkMemberProfileFormSkleader(forms.ModelForm):
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
     gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
+    joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll', 'gender')
+        fields = ('mobile', 'image', 'student_class','joining_date','roll', 'gender')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -82,9 +84,10 @@ class SkMemberProfileFormForSkleader(forms.ModelForm):
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
     gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
+    joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll', 'gender')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'gender')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)

@@ -98,20 +98,39 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-body">
-                        <a type="button" style="margin-right: 5px;" onclick="goBack()"
-                           class="btn btn-warning pull-left"
-                           href="javascript:void(0)">
-                            Back
-                        </a>
-                        {% if not profile_form.instance.pk %}
-                            <input type="submit" id="save-btn" value="Save" class="btn btn-primary pull-right"/>
-                        {% else %}
-                            <input type="submit" id="save-btn" value="Update" class="btn btn-primary pull-right"/>
-                        {% endif %}
+                <div class="col-sm-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">School Information</h3>
+                        </div>
+                        <div class="box-body required">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
+                                        <input type="text" class="datepicker copydate form-control"  />
+                                        <div style="display: none">
+                                            {% render_field profile_form.joining_date class="form-control pastedate" placeholder="Name" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="id_hf-from_date">To</label>
+                                        <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                   class="btn btn-warning pull-left"
+                                   href="javascript:void(0)">
+                                    Back
+                                </a>
 
-
+                                <input type="submit" id="save-btn" value="Save" class="btn btn-primary pull-right"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
