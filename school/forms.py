@@ -1,7 +1,7 @@
 from django import forms
 
 from districts.models import District
-from school.models import School
+from school.models import School, SchoolPost
 from unions.models import Union
 from upazillas.models import Upazilla
 from django.utils.translation import ugettext_lazy as _
@@ -30,4 +30,11 @@ class EditSchoolForm(forms.ModelForm):
     class Meta:
         model = School
         fields = ['image']
+
+class SchoolPostForm(forms.ModelForm):
+    post_image = forms.ImageField(label=_('SkMember image'), required=False,
+                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    class Meta:
+        model = SchoolPost
+        fields = ['text','post_image']
 
