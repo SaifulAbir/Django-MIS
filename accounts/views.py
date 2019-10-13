@@ -2,12 +2,12 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordResetView
 from django.core.exceptions import PermissionDenied
 
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 
@@ -243,4 +243,11 @@ def skleader_profile_update(request):
 
 def handler403(request, exception):
     return render(request, 'accounts/403.html', status=403)
+
+class CustomPasswordReset(PasswordResetView):
+    email_template_name = 'accounts/password_reset_email.html'
+    subject_template_name = 'accounts/password_reset_subject.txt'
+    template_name = 'accounts/password_reset_form.html'
+
+
 

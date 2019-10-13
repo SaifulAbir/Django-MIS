@@ -39,3 +39,20 @@ class ClubOrientationsList(LoginRequiredMixin, generic.ListView):
         profile = SkLeaderProfile.objects.get(user=self.request.user)
         queryset = ClassOrientation.objects.filter(school=profile.school)
         return queryset
+
+def class_orientation_update(request, pk):
+    class_orientation = get_object_or_404(ClassOrientation, pk=pk)
+    if request.method == 'POST':
+        class_orientation_form = ClassOrientationForm(request.POST, instance=class_orientation, prefix='COF')
+        if class_orientation_form.is_valid():
+            class_orientation = class_orientation_form.save(commit=False)
+            class_orientation.save()
+            messages.success(request, 'Class Orientation Updated!')
+            return HttpResponseRedirect("/class_orientation/class_orientation_list/")
+
+    else:
+        class_orientation_form = ClassOrientationForm(instance=class_orientation, prefix='COF')
+
+    return render(request, 'class_orientation/classorientation_form.html', {
+        'class_orientation_form': class_orientation_form,
+    })

@@ -1,10 +1,11 @@
-from django.urls import path
+from django.conf.urls import url
+from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 
 from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
 from .views import index, profile, events, custom_login, admin_profile_update, headmaster_profile_update, \
-    skleader_profile_update
+    skleader_profile_update, CustomPasswordReset
 
 app_name = 'accounts'
 
@@ -18,8 +19,9 @@ urlpatterns = [
     path('events/', events, name='events'),
 
     path('', custom_login, name='login'),
-
-
+    path('password_reset/', CustomPasswordReset.as_view(), name='password_reset'),
+    url(r'^reset/',
+        auth_views.PasswordResetConfirmView.as_view(), { 'uidb64': r'([0-9A-Za-z_\-]+)', 'token': r'[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20}'}, name='password_reset_confirm'),
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
 
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
