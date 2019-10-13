@@ -9,12 +9,12 @@ from django.utils.decorators import method_decorator
 from accounts.decorators import admin_login_required
 from districts.models import District
 from headmasters.models import HeadmasterProfile
-from school.models import School
+from school.models import School, SchoolPost
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
 from unions.models import Union
 from upazillas.models import Upazilla
-from .forms import SchoolForm, EditSchoolForm
+from .forms import SchoolForm, EditSchoolForm, SchoolPostForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -162,24 +162,42 @@ def school_profile(request, pk):
         profile = None
             
     if request.method == 'POST':
-        form = EditSchoolForm(request.POST, request.FILES, instance=school_profile)
-        if form.is_valid():
-            school = form.save(commit=False)
-            school.save()
-            return redirect('school:school_profile', school.id)
+        form = EditSchoolForm(instance=school_profile)
+        post_form = SchoolPostForm()
+        if 'one_picture' in request.POST:
+            form = EditSchoolForm(request.POST, request.FILES, instance=school_profile)
+            if form.is_valid():
+                school = form.save(commit=False)
+                school.save()
+                return redirect('school:school_profile', school.id)
+            form = EditSchoolForm(instance=school_profile)
+        elif 'school_post' in request.POST:
+            post_form = SchoolPostForm(request.POST, request.FILES)
+            if post_form.is_valid():
+                post_school = post_form.save(commit=False)
+                post_school.school = school_profile
+                post_school.save()
+                return redirect('school:school_profile', school_profile.id)
+            post_form = SchoolPostForm()
     else:
         form = EditSchoolForm(instance=school_profile)
+        post_form = SchoolPostForm()
 
     try:
         skmember_list = SkMemberProfile.objects.filter(school__id__in=[pk, ])
     except SkMemberProfile.DoesNotExist:
         skmember_list = None
 
+    try:
+        school_post_list = SchoolPost.objects.all()
+    except SchoolPost.DoesNotExist:
+        school_post_list = None
+
 
 
     return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_profile':skleader_profile, 'profile' : profile, 'headmaster_profile':headmaster_profile,
-                                                           'skmember_list': skmember_list, 'form':form, 'upload_head_user':upload_head_user,
-                                                           'upload_guide_user':upload_guide_user, 'upload_both_user':upload_both_user, 'upload_skleader_user':upload_skleader_user})
+                                                           'skmember_list': skmember_list, 'form':form, 'upload_head_user':upload_head_user, 'school_post_list':school_post_list,
+                                                           'upload_guide_user':upload_guide_user, 'upload_both_user':upload_both_user, 'upload_skleader_user':upload_skleader_user, 'post_form':post_form})
 
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
@@ -187,3 +205,5 @@ def school_profile(request, pk):
 
 def Sk_leaderApproval(request):
     return render(request, 'school/Sk_leaderApproval.html')
+
+

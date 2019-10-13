@@ -30,3 +30,9 @@ class School(models.Model):
     class Meta:
         ordering = ['-created_date']
 
+class SchoolPost(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, blank=False, null=False)
+    text = models.TextField(max_length=264)
+    post_image = models.ImageField(upload_to='images/', blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+
