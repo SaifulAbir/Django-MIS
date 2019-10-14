@@ -43,10 +43,7 @@
                                         {% endif %}
                                     </span>
                                     {% csrf_token %}
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                        {% render_field profile_form.school class="form-control customer-select2" placeholder=profile_form.school.label %}
-                                    </div>
+
 
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">Name</label>
@@ -105,7 +102,13 @@
                         </div>
                         <div class="box-body required">
                             <div class="row">
-                                <div class="col-sm-6">
+                                 <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
+                                        {% render_field profile_form.school required='true' class="form-control customer-select2" placeholder=profile_form.school.label %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
                                         <input type="text" class="datepicker copydate form-control"  />
@@ -114,7 +117,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="id_hf-from_date">To</label>
                                         <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">

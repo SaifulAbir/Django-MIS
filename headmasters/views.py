@@ -87,7 +87,10 @@ class HeadmasterList(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(HeadmasterList, self).get_context_data(**kwargs)
-        context['school_name'] =HeadmasterDetails.objects.latest('from_date')
+        try:
+            context['school_name'] =HeadmasterDetails.objects.latest('from_date')
+        except HeadmasterDetails.DoesNotExist :
+            context['current_schoxol_name'] = None
 
         return context
 

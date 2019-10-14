@@ -60,8 +60,10 @@ class SkleaderList(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(SkleaderList, self).get_context_data(**kwargs)
-        context['current_school_name'] =SkleaderDetails.objects.latest('from_date')
-
+        try:
+            context['current_schoxol_name'] =SkleaderDetails.objects.latest('from_date')
+        except SkleaderDetails.DoesNotExist :
+            context['current_schoxol_name']=None
         return context
 
 @method_decorator(admin_login_required, name='dispatch')
