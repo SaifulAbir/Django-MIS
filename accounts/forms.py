@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import PasswordResetForm
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.translation import ugettext_lazy as _
 from accounts.models import User
@@ -94,3 +95,6 @@ class SkleaderProfileForm(forms.ModelForm):
             if image.size > 1 * 1024 * 1024:
                 raise ValidationError("Image file too large ( > 1mb )")
             return image
+
+class CustomPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(label=_("Email"), max_length=254, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
