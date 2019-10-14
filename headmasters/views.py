@@ -85,6 +85,16 @@ class HeadmasterList(LoginRequiredMixin, generic.ListView):
         queryset = HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super(HeadmasterList, self).get_context_data(**kwargs)
+        try:
+            context['school_name'] =HeadmasterDetails.objects.latest('from_date')
+        except HeadmasterDetails.DoesNotExist :
+            context['current_schoxol_name'] = None
+
+        return context
+
+
 @method_decorator(admin_login_required, name='dispatch')
 class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'

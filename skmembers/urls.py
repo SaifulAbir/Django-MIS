@@ -12,4 +12,5 @@ urlpatterns = [
     path('skmember_detail/<int:pk>/', views.SkMemberDetail.as_view(), name = 'skmember_detail'),
     path('skmember_update/<int:pk>', views.skmember_update, name='skmember_update'),
     path('skmember_update_for_skleader/<int:pk>', views.skmember_update_for_skleader, name='skmember_update_for_skleader'),
+    path('skmember_school_details_update/', views.skmember_details_update),
 ]

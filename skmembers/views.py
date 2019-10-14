@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
@@ -12,8 +12,12 @@ from accounts.models import User
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers import models
-from skmembers.forms import SkMemberUserForm, SkMemberProfileForm, EditSkMemberUserForm, SkMemberProfileFormForSkleader
+from skmembers.forms import SkMemberUserForm, SkMemberProfileForm, EditSkMemberUserForm, SkMemberProfileFormForSkleader, \
+    EditSkMemberProfileForm
 from skmembers.models import SkMemberProfile,SkmemberDetails
+from datetime import datetime
+from django.core.exceptions import ObjectDoesNotExist
+
 
 @admin_login_required
 def skmember_profile_view(request):
@@ -28,6 +32,12 @@ def skmember_profile_view(request):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+
+            headmaster_details = SkmemberDetails()
+            headmaster_details.school = profile_form.cleaned_data["school"]
+            headmaster_details.skmember = profile
+            headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
+            headmaster_details.save()
             messages.success(request, 'SK Member Created!')
             return HttpResponseRedirect("/skmembers/skmember_list/")
 
@@ -102,6 +112,14 @@ class SkmemberList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,])
         return queryset
+    def get_context_data(self, **kwargs):
+        context = super(SkmemberList, self).get_context_data(**kwargs)
+        try:
+            context['school_name'] =SkmemberDetails.objects.latest('from_date')
+        except SkmemberDetails.DoesNotExist :
+            context['current_schoxol_name'] = None
+
+        return context
     
 class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
     login_url = '/'
@@ -143,14 +161,14 @@ def skmember_update(request, pk):
             return HttpResponseRedirect("/skmembers/skmember_list/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)
-        profile_form = SkMemberProfileForm(instance=skmember_profile)
+        profile_form = EditSkMemberProfileForm(instance=skmember_profile)
 
-    return render(request, 'skmembers/skmember_profile_add.html', {
+    return render(request, 'skmembers/skmember_profile_update.html', {
         'user_form': user_form,
         'profile_form': profile_form,
         'skmember_profile': skmember_profile,
         'pk': pk,
-        'sklmember_details': skmember_details,
+        'skmember_details': skmember_details,
         'school_list': school_list,
     })
 
@@ -160,3 +178,34 @@ class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "skmember_detail"
     model = models.SkMemberProfile
     template_name = 'skmembers/skmember_detail.html'
+@admin_login_required
+def skmember_details_update(request):
+
+    school = request.GET.get('school')
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    skmember_id = request.GET.get('headmaster_id')
+
+    school_list = school.split(",")
+    from_date = from_date.split(",")
+    to_date = to_date.split(",")
+
+    SkmemberDetails.objects.filter(skmember = skmember_id).delete()
+    for school in school_list:
+        skmemberModel = SkmemberDetails()
+        skmemberModel.skmember_id = skmember_id
+        skmemberModel.school_id = school
+        schoolindex = school_list.index(school)
+        fromdate = datetime.strptime(from_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+
+        skmemberModel.from_date = fromdate
+        if schoolindex == 0:
+            skmember_obj=SkMemberProfile.objects.get(pk=skmember_id)
+            skmember_obj.school_id = school
+            skmember_obj.save()
+
+        if to_date[schoolindex]:
+            todate = datetime.strptime(to_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+            skmemberModel.to_date = todate
+        skmemberModel.save()
+    return HttpResponse('ok')
