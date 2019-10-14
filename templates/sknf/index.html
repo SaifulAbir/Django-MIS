@@ -15,14 +15,7 @@
          <!-- Main content -->
          <div class="box">
             <div class="box-header">
-
                <h3 style="display: inline-block;" class="box-title"></h3>
-                {% comment %}<a type="button"
-                   class="btn btn-primary pull-right"
-                   href="{% url 'school:create_school' %}">
-                    <span class="fa fa-plus"></span>
-                    New School
-                </a>{% endcomment %}
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -33,12 +26,11 @@
                      <th class ="col-sm-2">EIIN</th>
                      <th class ="col-sm-2">Division</th>
                      <th class ="col-sm-2">District</th>
-                     <th class ="col-sm-2 ">Actions</th>
                   </tr>
                   </thead>
                   <tbody>
 
-                  {% include 'school/partial_school_list.html' %}
+                  {% include 'school/partial_school_list_dashboard.html' %}
 
 
                </table>
@@ -80,7 +72,7 @@
             <div class="small-box bg-red">
                <div class="inner">
                   <h3>{{skleader_total}}</h3>
-                  <p>SkLeaders</p>
+                  <p>SK Leaders</p>
                </div>
                <div class="icon">
                   <i class="fa fa-user"></i>
@@ -90,8 +82,8 @@
 
             <div class="small-box bg-yellow">
                <div class="inner">
-                  <h3>0</h3>
-                  <p>Events</p>
+                  <h3>{{skmember_total}}</h3>
+                  <p>SK Members</p>
                   <br>
                </div>
                <div class="icon">

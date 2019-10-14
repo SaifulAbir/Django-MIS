@@ -25,9 +25,9 @@
                 <table   id="example1" class=" division-table table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="col-sm-4">Date</th>
-                        <th class="col-sm-4">Class Room</th>
-                        <th class="col-sm-4">Actions</th>
+                        <th class="col-sm-6">Date</th>
+                        <th class="col-sm-5">Class Room</th>
+                        <th class="col-sm-1">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,8 +37,10 @@
                             <td>{{ club_meeting.class_room }}</td>
                             <td>
                                 <a type="button"
-                                   href="#">
+                                   class=""
+                                   href="{% url 'club_meetings:club_meeting_detail' club_meeting.pk %}">
                                     <span class="fa fa-eye"></span>
+
                                 </a>
                                 <a type="button"
                                    class=""

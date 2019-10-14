@@ -2,6 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+
+from accounts.decorators import admin_login_required
 from districts.models import District
 from unions.models import Union
 from upazillas.models import Upazilla
@@ -46,7 +49,7 @@ def union_update(request, pk):
     return save_union_form(request, form, 'unions/union_update_form.html')
 
 
-
+@method_decorator(admin_login_required, name='dispatch')
 class UnionList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.Union

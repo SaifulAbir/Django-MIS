@@ -27,7 +27,7 @@ SECRET_KEY = 'hqfqlot5*at%cqbbodie7e$ea_^syj7v9+nb&67$xlri$l9$dt'
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'skleaders',
     'skmembers',
     'topics',
-    'Class_Orientation',
+    'class_orientation',
     'club_meetings'
 ]
 
@@ -78,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.context_processors.sidebar_context',
             ],
         },
     },
@@ -162,3 +163,11 @@ LOGIN_REDIRECT_URL = 'accounts:dashboard'
 LOGOUT_REDIRECT_URL = 'accounts:login'
 PROJECT_NAME = 'SKNF'
 DATE_INPUT_FORMATS = ('%d-%m-%Y')
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'saiful.abir20@gmail.com'
+EMAIL_HOST_PASSWORD = 'saiful002528'
+EMAIL_USE_TLS = True
+SESSION_COOKIE_AGE = 600

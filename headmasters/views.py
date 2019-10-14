@@ -1,13 +1,19 @@
+
+
+from PIL import Image
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.utils.decorators import method_decorator
+from django.utils.six import StringIO
 from django.views import generic
 
-from accounts.decorators import headmaster_login_required
+from accounts.decorators import admin_login_required
 from accounts.models import User
 from headmasters import models
 from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm, HeadmasterDetailsForm
@@ -17,6 +23,8 @@ import time
 from datetime import datetime
 
 
+
+@admin_login_required
 def headmaster_profile_view(request):
 
     if request.method == 'POST':
@@ -24,10 +32,27 @@ def headmaster_profile_view(request):
         profile_form = HeadmasterProfileForm(request.POST, files=request.FILES, prefix='PF')
 
         if user_form.is_valid() and profile_form.is_valid():
+
+            x = profile_form.cleaned_data.get('x')
+            y = profile_form.cleaned_data.get('y')
+            w = profile_form.cleaned_data.get('width')
+            h = profile_form.cleaned_data.get('height')
             user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data["password"])
             user.save()
             profile = profile_form.save(commit = False)
+            # print(profile.image)
+            # image = Image.open(profile.image)
+            # cropped_image = image.crop((x, y, w + x, h + y))
+            # cropped_image.thumbnail((220, 130), Image.ANTIALIAS)
+            # cropped_image.save(thumb_io, cropped_image.format, quality=60)
+            # profile.image.save(cropped_image.filename, save=False)
+            # resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+            # resized_image.save(profile.image)
+            # profile.image.save()
+            # print(resized_image.path)
+            # profile.image.save(resized_image.filename)
+            # profile.image = cropper(profile.image)
             profile.user = user
             profile.joining_date = '2019-01-01'
             profile.save()
@@ -37,6 +62,7 @@ def headmaster_profile_view(request):
             headmaster_details.headmaster = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
+            messages.success(request, 'Headmaster Created!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
 
     else:
@@ -50,7 +76,7 @@ def headmaster_profile_view(request):
         #'headmaster_form_details': headmaster_form_details,
     })
 
-#@method_decorator(headmaster_login_required, name='dispatch')
+@method_decorator(admin_login_required, name='dispatch')
 class HeadmasterList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.HeadmasterProfile
@@ -59,13 +85,24 @@ class HeadmasterList(LoginRequiredMixin, generic.ListView):
         queryset = HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super(HeadmasterList, self).get_context_data(**kwargs)
+        try:
+            context['school_name'] =HeadmasterDetails.objects.latest('from_date')
+        except HeadmasterDetails.DoesNotExist :
+            context['current_schoxol_name'] = None
+
+        return context
+
+
+@method_decorator(admin_login_required, name='dispatch')
 class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "headmaster_detail"
     model = models.HeadmasterProfile
     template_name = 'headmasters/headmaster_detail.html'
 
-@login_required
+@admin_login_required
 def headmaster_update(request, pk):
     headmaster_details = HeadmasterDetails.objects.filter(headmaster=pk)
     school_list = School.objects.all()
@@ -87,6 +124,7 @@ def headmaster_update(request, pk):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+            messages.success(request, 'Headmaster Updated!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
         user_form = EditUserForm(instance=user_profile)
@@ -101,6 +139,7 @@ def headmaster_update(request, pk):
         'pk': pk,
     })
 
+@admin_login_required
 def headermaster_school_details_update(request):
 
     school = request.GET.get('school')
@@ -140,3 +179,5 @@ def headmaster_home(request):
     obj_head = HeadmasterProfile.objects.filter(pk=request.user.id)
 
     return render(request, 'headmasters/headmaster_home.html')
+
+

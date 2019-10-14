@@ -68,6 +68,31 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="{{ profile_form.gender.id_for_label }}">{{ profile_form.gender.label }}</label>
+                                        {% render_field profile_form.gender class="form-control" placeholder=profile_form.gender.label %}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.emergency_contact_person.id_for_label }}">{{ profile_form.emergency_contact_person.label }}</label>
+                                        {% render_field profile_form.emergency_contact_person class="form-control" placeholder=profile_form.emergency_contact_person.label %}
+                                        <div class="{% if profile_form.emergency_contact_person.errors %} invalid{% endif %}">
+                                            {% for error in profile_form.emergency_contact_person.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.emergency_contact_number.id_for_label }}">{{ profile_form.emergency_contact_number.label }}</label>
+                                        {% render_field profile_form.emergency_contact_number class="form-control" placeholder=profile_form.emergency_contact_number.label %}
+                                        <div class="{% if profile_form.emergency_contact_number.errors %} invalid{% endif %}">
+                                            {% for error in profile_form.emergency_contact_number.errors %}
+                                                <p class="help-block">{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
                                         {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
                                         <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -88,19 +113,25 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if skleader_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right preview-show " alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right preview-show " alt="Pic"><br />
                                             {% endif %}
                                         </div>
                                     </div>
-                                    {% render_field profile_form.image class="pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    {% render_field profile_form.image class="img-preview pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="box box-body">
+                                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                       class="btn btn-warning pull-left"
+                                       href="javascript:void(0)">
+                                        Back
+                                    </a>
+
                                     <input type="submit" value="Update" class="btn btn-primary pull-right"/>
                                 </div>
                             </div>
@@ -115,14 +146,10 @@
                 <div class="col-sm-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            {% if not profile_form.instance.pk %}
-                                <h3 class="box-title">School Information</h3>
-                            {% else %}
-                                <h3 class="box-title">Update School Information</h3>
-                            {% endif %}
+                            <h3 class="box-title">Update School Information</h3>
                         </div>
 
-                        <div class="box-body">
+                        <div class="box-body required">
                             <span id="headmasterinfoajaxupdate"></span>
                             <table class="table table-bordered mb-0" id="tb-doc" style="width: 100%">
                                 <tr>
@@ -151,13 +178,13 @@
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.from_date|date:"Y-m-d" }}" type="text" name="from_date[]" class="form-control datepicker to-headmaster">
+                                                    <input value="{{ headmaster_detail.from_date|date:"d-m-Y" }}" type="text" name="from_date[]" class="form-control datepicker to-headmaster">
                                                     {% comment %}<input type="text" name="from_date[]" class="form-control from-headmaster" id="id_hf-from_date">{% endcomment %}
                                                 </div>
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.to_date|date:"Y-m-d" }}" type="text" name="to_date[]" class="form-control datepicker to-headmaster">
+                                                    <input value="{{ headmaster_detail.to_date|date:"d-m-Y" }}" type="text" name="to_date[]" class="form-control datepicker to-headmaster">
                                                 </div>
                                             </td>
                                             <td class="width-50">
@@ -181,12 +208,12 @@
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="date" name="from_date" class="form-control from-headmaster" id="id_hf-from_date1">
+                                                <input type="text" name="from_date" class="form-control from-headmaster datepicker" id="id_hf-from_date1">
                                             </div>
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="date" name="to_date" class="form-control to-headmaster" id="id_hf-to_date">
+                                                <input type="text" name="to_date" class="form-control to-headmaster datepicker" id="id_hf-to_date">
                                             </div>
                                         </td>
                                         <td class="width-50">
@@ -199,7 +226,7 @@
                             <br />
                             <div class="row">
                                 <div class="col-sm-1">
-                                    <button id="addMoreDoc" type="button" class="btn btn-warning margin-top-4">
+                                    <button id="addMoreDoc" type="button" class="btn btn-info margin-top-4">
                                         <i class="ft-plus"></i> Add Row
                                     </button>
                                 </div>

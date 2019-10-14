@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from accounts.models import User
+from school.models import School
 from topics.models import Topics
 from skmembers.models import SkMemberProfile
 
@@ -10,6 +11,7 @@ from skmembers.models import SkMemberProfile
 class ClubMeetings(models.Model):
     date = models.DateField(default=timezone.now)
     class_room= models.CharField(max_length=100)
+    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
     presence_guide_teacher = models.BooleanField(default=False)
     presence_skleader = models.BooleanField(default=False)
     attendance= models.ManyToManyField(User)

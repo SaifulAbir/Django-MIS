@@ -28,16 +28,27 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{% static 'vendor/dist/img/user2-160x160.jpg' %}" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{ user.get_username }}</span>
+              {% if user.image %}
+
+              <img class=" user-image " src="{{ user.image.url }}" alt="User Image">
+              {% else %}
+              <img class="user-image" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User Image">
+              {% endif %}
+              <span class="hidden-xs">{{ user.first_name }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{% static 'vendor/dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+                {% if user.image %}
+
+              <img class=" img-circle " src="{{ user.image.url }}" alt="User Image">
+              {% else %}
+              <img class="img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User Image">
+              {% endif %}
+
 
                 <p>
-                  {{ user.get_username }}
+                  {{ user.first_name }}
                 </p>
               </li>
               <!-- Menu Body -->
@@ -49,10 +60,10 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>-->
                 <div class="pull-left">
-                  <a href="{% url 'accounts:profile' %}" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{% url 'accounts:profile' %}" class="btn btn-primary btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{% url 'accounts:logout' %}" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{% url 'accounts:logout' %}" class="btn btn-primary btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>

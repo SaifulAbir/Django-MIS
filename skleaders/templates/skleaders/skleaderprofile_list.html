@@ -10,6 +10,17 @@
         <!-- Main content -->
         <div class="box">
             <div class="box-header">
+                <span id = "alert_placeholder">
+                    {% if messages %}
+                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                        <span>
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </span>
 
                 <a type="button"
                    class="btn btn-primary pull-right"
@@ -36,7 +47,7 @@
                     <tr>
                         <td>{{skleader.user.first_name}}</td>
                         <td>{{ skleader.user.email }}</td>
-                        <td>{{ skleader.school }}</td>
+                        <td>{{ school_name.school }}</td>
                         <td>{{ skleader.mobile }}</td>
                         <td>{{ skleader.student_class }}</td>
                         <td><a type="button"

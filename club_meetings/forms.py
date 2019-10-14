@@ -1,14 +1,55 @@
 from django import forms
 from django.conf import settings
 from django.forms import CheckboxInput
+from django.shortcuts import get_object_or_404
 
 from accounts.models import User
+from headmasters.models import HeadmasterProfile
+from school.models import School
+from skleaders.models import SkLeaderProfile
+from skmembers.models import SkMemberProfile
 from topics.models import Topics
 from .models import ClubMeetings
 from django.utils.translation import ugettext_lazy as _
 
 
 class ClubMeetingForm(forms.ModelForm):
+    presence_guide_teacher = forms.BooleanField()
+    presence_skleader = forms.BooleanField(widget=forms.CheckboxInput(attrs={'checked': True}))
+    topics = forms.ModelMultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        queryset=Topics.objects.all(),
+        required=True)
+    attendance = forms.ModelMultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple(attrs={'checked': 'checked'}),
+        queryset=None,
+        required=True)
+    date = forms.DateField(widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',))
+    image = forms.ImageField(label=_('Headmaster image'), required=False,
+                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    class Meta:
+        model= ClubMeetings
+        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "attendance"]
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super(ClubMeetingForm, self).__init__(*args, **kwargs)
+        try:
+            if user.is_authenticated and user.user_type == 5:
+                h_profile = SkLeaderProfile.objects.get(user=user)
+        except HeadmasterProfile.DoesNotExist:
+            h_profile = None
+
+        if h_profile is not None:
+            school_profile = get_object_or_404(School, pk=h_profile.school.id)
+        else:
+            school_profile = None
+
+        sk_profile = SkMemberProfile.objects.filter(school__id=school_profile.id, user__user_type=6)
+        u_profile = User.objects.filter(skmember_profile__in=sk_profile)
+        self.fields['attendance'].queryset = u_profile
+
+class EditClubMeetingForm(forms.ModelForm):
     presence_guide_teacher = forms.BooleanField()
     presence_skleader = forms.BooleanField()
     topics = forms.ModelMultipleChoiceField(

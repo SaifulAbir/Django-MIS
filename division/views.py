@@ -2,7 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
+from accounts.decorators import admin_login_required
 from division.models import Division
 from .forms import DivisionForm
 # Create your views here.
@@ -43,7 +45,7 @@ def division_update(request, pk):
         form = DivisionForm(instance=division)
     return save_division_form(request, form, 'division/division_update_form.html')
 
-
+@method_decorator(admin_login_required, name='dispatch')
 class DivisionList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.Division

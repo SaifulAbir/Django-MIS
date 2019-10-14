@@ -19,9 +19,9 @@
                     <div class="box-body box-profile">
                         {% if profile.image %}
 
-                        <img class="profile-user-img img-responsive img-circle" src="{{ profile.image.url }}" alt="User profile picture">
+                        <img class="profile-user-img img-responsive img-circle" style="height:100px;" src="{{ profile.image.url }}" alt="User profile picture">
                         {% else %}
-                        <img class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+                        <img class="profile-user-img img-responsive img-circle" style="height:100px;" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
                         {% endif %}
                         <h3 class="profile-username text-center">{{user.first_name}}</h3>
 
@@ -50,24 +50,32 @@
                         <strong><i class="fa fa-envelope margin-r-5"></i> E-mail</strong>
 
                         <p class="text-muted">{{user.get_username}}</p>
-                        {% if user.is_authenticated and user.user_type == 2 or user.user_type == 3 or user.user_type == 5 %}
-                        <hr>
+<!--                        {% if user.is_authenticated and user.user_type == 2 or user.user_type == 3 or user.user_type == 5 %}-->
+<!--                        <hr>-->
 
-                        <strong><i class="fa fa-map-marker margin-r-5"></i> Mobile No.</strong>
+<!--                        <strong><i class="fa fa-map-marker margin-r-5"></i> Mobile No.</strong>-->
 
-                        <p class="text-muted">{{profile.mobile}}</p>
-                        {% endif %}
-                        {% if user.is_authenticated and user.user_type == 2 %}
+<!--                        <p class="text-muted">{{profile.mobile}}</p>-->
+<!--                        {% endif %}-->
+                        {% if user.is_authenticated and user.user_type == 1 %}
                         <a type="button" class="btn btn-primary" style="float:right;"
-                           href="{% url 'headmasters:headmaster_update' profile.pk %}">Update
+                           href="{% url 'accounts:admin_update' %}">Edit Profile
+                        </a>
+                        {% elif user.is_authenticated and user.user_type == 2 %}
+                        <a type="button" class="btn btn-primary" style="float:right;"
+                           href="{% url 'accounts:headmaster_update' %}">Edit Profile
                         </a>
                         {% elif user.is_authenticated and user.user_type == 3 %}
                         <a type="button" class="btn btn-primary" style="float:right;"
-                           href="{% url 'headmasters:headmaster_update' profile.pk %}">Update
+                           href="{% url 'accounts:headmaster_update' %}">Edit Profile
+                        </a>
+                        {% elif user.is_authenticated and user.user_type == 4 %}
+                        <a type="button" class="btn btn-primary" style="float:right;"
+                           href="{% url 'accounts:headmaster_update' %}">Edit Profile
                         </a>
                         {% elif user.is_authenticated and user.user_type == 5 %}
                         <a type="button" class="btn btn-primary" style="float:right;"
-                           href="{% url 'skleaders:skleader_update' profile.pk %}">Update
+                           href="{% url 'accounts:skleader_update' %}">Edit Profile
                         </a>
                         {% endif %}
                     </div>

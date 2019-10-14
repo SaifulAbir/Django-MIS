@@ -1,0 +1,99 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+{% load static %}
+<section class="content-header">
+    <h1>
+        Club Meeting Info
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">Basic Information</h3>
+                </div>
+                <div class="row" style="padding-bottom:10px;">
+                    <div class="col-md-6">
+                        <div class="box-body">
+                            <!-- School Name -->
+                            <div class="form-group">
+                                <span>Date: </span><label>{{club_meeting_detail.date}}</label>
+                            </div>
+                            <div class="form-group">
+                                <span>Class:</span><label>{{club_meeting_detail.class_room}}</label>
+                            </div>
+                            <div class="form-group">
+                                <span>Presence of Guide Teacher: </span>
+                                {% if club_meeting_detail.presence_guide_teacher %}
+                                <label>Yes</label>
+                                {% else %}
+                                <label>No</label>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label>Topics:</label>
+<!--                                {% for topic in club_meeting_detail.topics.all %}-->
+<!--                                <input type="text" value="{{topic}}" class="form-control my-colorpicker1" readonly>-->
+<!--                                {% endfor %}-->
+                                <ul>
+                                    {% for topic in club_meeting_detail.topics.all %}
+                                    <li>{{topic}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="form-group">
+                                <label>Attendance:</label>
+<!--                                {% for attendance in club_meeting_detail.attendance.all %}-->
+<!--                                <input type="text" value="{{attendance}}" class="form-control my-colorpicker1" readonly>-->
+<!--                                {% endfor %}-->
+                                <ul>
+                                    {% if club_meeting_detail.presence_skleader %}
+                                    <li>
+                                        {{user.first_name}}&nbsp;(SK Leader)
+                                    </li>
+                                    {% endif %}
+                                    {% for attendance in club_meeting_detail.attendance.all %}
+                                    <li>{{attendance}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group picture-align">
+                            {% if club_meeting_detail.image %}
+                            <img style="border-radius: 5px; border: 2px solid #ccc;" height="auto" width="100%" src="{{ club_meeting_detail.image.url }}" class="pull-right" alt="Pic"><br />
+                            {% else %}
+                            <img style="border-radius: 5px; border: 2px solid #ccc;" height="auto" width="100%" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+            <div class="col-md-12">
+                <div class="box box-body">
+                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                       class="btn btn-warning pull-left"
+                       href="javascript:void(0)">
+                        Back
+                    </a>
+                    <a type="button"
+                       class="btn btn-primary pull-right"
+                       href="{% url 'club_meetings:club_meeting_update' club_meeting_detail.pk %}">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+
+</section>
+{% endblock %}

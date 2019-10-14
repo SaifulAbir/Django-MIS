@@ -2,7 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
+from accounts.decorators import admin_login_required
 from districts.models import District
 from upazillas.models import Upazilla
 from .forms import UpazillaForm
@@ -43,7 +45,7 @@ def upazilla_update(request, pk):
         form = UpazillaForm(instance=upazilla)
     return save_upazilla_form(request, form, 'upazillas/upazilla_update_form.html')
 
-
+@method_decorator(admin_login_required, name='dispatch')
 class UpazillaList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.Upazilla

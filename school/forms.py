@@ -1,13 +1,15 @@
 from django import forms
 
 from districts.models import District
-from school.models import School
+from school.models import School, SchoolPost
 from unions.models import Union
 from upazillas.models import Upazilla
+from django.utils.translation import ugettext_lazy as _
 
 
 class SchoolForm(forms.ModelForm):
-    name = forms.CharField(error_messages={'required': 'Your name is required.'})
+    name = forms.CharField(error_messages={'required': 'School name is required.'})
+    school_id = forms.CharField(error_messages={'required': 'EIIN is required.', 'unique': 'School with this EIIN already exists.'})
     class Meta:
         model = School
         fields = ['name', 'school_id', 'division', 'district', 'upazilla', 'union', 'address']
@@ -21,4 +23,18 @@ class SchoolForm(forms.ModelForm):
     #     self.fields['district'].queryset = District.objects.none()
     #     self.fields['upazilla'].queryset = Upazilla.objects.none()
     #     self.fields['union'].queryset = Union.objects.none()
+
+class EditSchoolForm(forms.ModelForm):
+    image = forms.ImageField(label=_('SkMember image'), required=False,
+                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    class Meta:
+        model = School
+        fields = ['image']
+
+class SchoolPostForm(forms.ModelForm):
+    post_image = forms.ImageField(label=_('SkMember image'), required=False,
+                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    class Meta:
+        model = SchoolPost
+        fields = ['text','post_image']
 

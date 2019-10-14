@@ -93,14 +93,24 @@
             </div>
         </div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-        <div class="box box-body">
-            <input type="submit" value="Save" class="btn btn-primary pull-right"/>
-        </div>
-        </div>
-    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-body">
+                        {% if not profile_form.instance.pk %}
+                            <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                               class="btn btn-warning pull-left"
+                               href="javascript:void(0)">
+                                Back
+                            </a>
+                        {% else %}
+
+                        {% endif %}
+
+                        <input type="submit" value="Save" id="save-btn" class="btn btn-primary pull-right"/>
+                    </div>
+                </div>
+            </div>
 
 </section>
 </form>
@@ -113,8 +123,9 @@ $(function(){
     $(".school-menu .treeview-menu").css("display", "block");
     var titile = $(".content-header h1").html();
 
-
-    //$("#id_district, #id_upazilla, #id_union").text('<option value="">---------</option>');
+    if("Add New School"){
+        $("#id_district, #id_upazilla, #id_union").text('<option value="">---------</option>');
+    }
 
 
 
@@ -123,7 +134,7 @@ $(function(){
     $("#id_division").change(function () {
     var divisionId = $(this).val();
     $.ajax({
-        url: '/school/ajax/load-districts/',
+        url: '/ajax/load-districts/',
         data: {
             'division': divisionId
         },
@@ -137,7 +148,7 @@ $(function(){
    $("#id_district").change(function () {
     var districtId = $(this).val();
     $.ajax({
-        url: '/school/ajax/load-upazillas/',
+        url: '/ajax/load-upazillas/',
         data: {
             'district': districtId
         },
@@ -151,7 +162,7 @@ $(function(){
 $("#id_upazilla").change(function () {
     var upazillaId = $(this).val();
     $.ajax({
-        url: '/school/ajax/load-unions/',
+        url: '/ajax/load-unions/',
         data: {
             'upazilla': upazillaId
         },

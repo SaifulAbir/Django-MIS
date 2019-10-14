@@ -1,17 +1,21 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 import time
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views import generic
 
+from accounts.decorators import admin_login_required
 from accounts.models import User
 from school.models import School
 from skleaders import models
 from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm, EditSkLeaderProfileForm
 from skleaders.models import SkLeaderProfile, SkleaderDetails
+from datetime import datetime
 
-
+@admin_login_required
 def skleader_profile_view(request):
     if request.method == 'POST':
         user_form = SkUserForm(request.POST, prefix='UF')
@@ -31,7 +35,7 @@ def skleader_profile_view(request):
             headmaster_details.skleader = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
-
+            messages.success(request, 'SK Leader Created!')
 
             return HttpResponseRedirect("/skleaders/skleader_list/")
 
@@ -44,20 +48,32 @@ def skleader_profile_view(request):
         'profile_form': profile_form,
     })
 
+@method_decorator(admin_login_required, name='dispatch')
 class SkleaderList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.SkLeaderProfile
+
 
     def get_queryset(self):
         queryset = SkLeaderProfile.objects.filter(user__user_type__in=[5,])
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super(SkleaderList, self).get_context_data(**kwargs)
+        try:
+            context['current_schoxol_name'] =SkleaderDetails.objects.latest('from_date')
+        except SkleaderDetails.DoesNotExist :
+            context['current_schoxol_name']=None
+        return context
+
+@method_decorator(admin_login_required, name='dispatch')
 class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "skleader_detail"
     model = models.SkLeaderProfile
     template_name = 'skleaders/skleader_detail.html'
 
+@admin_login_required
 def skleader_update(request, pk):
     skleader_profile = get_object_or_404(SkLeaderProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skleader_profile.user.id))
@@ -79,6 +95,7 @@ def skleader_update(request, pk):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+            messages.success(request, 'SK Leader Updated!')
             return HttpResponseRedirect("/skleaders/skleader_list/")
     else:
         user_form = EditSkUserForm(instance=user_profile)
@@ -93,6 +110,7 @@ def skleader_update(request, pk):
         'school_list': school_list,
     })
 
+@admin_login_required
 def skleader_details_update(request):
 
     school = request.GET.get('school')
@@ -110,14 +128,17 @@ def skleader_details_update(request):
         skleaderModel.skleader_id = skleader_id
         skleaderModel.school_id = school
         schoolindex = school_list.index(school)
-        skleaderModel.from_date = from_date[schoolindex]
+        fromdate = datetime.strptime(from_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+
+        skleaderModel.from_date = fromdate
         if schoolindex == 0:
             skleader_obj=SkLeaderProfile.objects.get(pk=skleader_id)
             skleader_obj.school_id = school
             skleader_obj.save()
 
         if to_date[schoolindex]:
-            skleaderModel.to_date = to_date[schoolindex]
+            todate = datetime.strptime(to_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+            skleaderModel.to_date = todate
         skleaderModel.save()
     time.sleep(1)
     return HttpResponse('ok')

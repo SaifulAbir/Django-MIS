@@ -50,7 +50,7 @@ class User(AbstractUser):
     )
 
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=6)
-
+    image = models.ImageField(upload_to='images/', default='')
     username = None
     email = models.EmailField(_('email address'), unique=True )  # changes email to unique and blank to false
     USERNAME_FIELD = 'email'
@@ -80,10 +80,16 @@ class User(AbstractUser):
         else:
             return False
 
-
     @property
     def is_skleader(self):
         if self.user_type == 5:
+            return True
+        else:
+            return False
+
+    @property
+    def is_admin_or_headmaster_or_mentor_or_skleader_or_both(self):
+        if self.user_type == 1 or self.user_type == 2 or self.user_type == 3 or self.user_type == 4 or self.user_type == 5:
             return True
         else:
             return False

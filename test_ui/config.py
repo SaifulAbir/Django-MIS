@@ -1,0 +1,8 @@
+MAIN_URL= 'http://localhost:8000'
+DIVISION_URL= '/division/division_list'
+SCHOOL_URL= '/school_list/'
+DISTRICT_URL= '/district/district_list/'
+UPAZILLA_URL= '/upazilla/upazilla_list/'
+HEADMASTER_URL= '/headmasters/headmaster_list/'
+SKLEADER_URL= '/skleaders/skleader_list/'
+CHROME_DRIVER_LOCATION= 'test_ui/driver/chromedriver'
