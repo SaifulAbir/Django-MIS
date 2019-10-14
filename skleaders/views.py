@@ -53,9 +53,16 @@ class SkleaderList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.SkLeaderProfile
 
+
     def get_queryset(self):
         queryset = SkLeaderProfile.objects.filter(user__user_type__in=[5,])
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(SkleaderList, self).get_context_data(**kwargs)
+        context['current_school_name'] =SkleaderDetails.objects.latest('from_date')
+
+        return context
 
 @method_decorator(admin_login_required, name='dispatch')
 class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
@@ -119,7 +126,6 @@ def skleader_details_update(request):
         skleaderModel.skleader_id = skleader_id
         skleaderModel.school_id = school
         schoolindex = school_list.index(school)
-
         fromdate = datetime.strptime(from_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
 
         skleaderModel.from_date = fromdate
