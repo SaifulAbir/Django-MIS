@@ -40,9 +40,6 @@
     }
     $(document).ready(function () {
         $('.sidebar-menu').tree();
-        function initSelect2(){
-            $(".select2").select2().addClass("s2-inited")
-        }
         initDatepicker();
         initSelect2();
     })
@@ -76,7 +73,17 @@
         });
 
 
-
+        $(function(){
+            $('#addMoreDoc').on('click', addRow);
+            $(document).on('click', '.removeDoc', function() {
+                var trIndex = $(this).closest("tr").index();
+                if(trIndex>1) {
+                    $(this).closest("tr").remove();
+                } else {
+                    alert("Sorry!! Can't remove first row!");
+                }
+            });
+        });
 
         var copydate = $('.copydate').val();
         $('.copydate').on('change', function() {

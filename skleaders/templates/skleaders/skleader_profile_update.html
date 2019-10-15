@@ -372,18 +372,6 @@
             initDatepicker();
             initSelect2();
         }
-
-        $(function(){
-            $('#addMoreDoc').on('click', addRow);
-            $(document).on('click', '.removeDoc', function() {
-                var trIndex = $(this).closest("tr").index();
-                if(trIndex>1) {
-                    $(this).closest("tr").remove();
-                } else {
-                    alert("Sorry!! Can't remove first row!");
-                }
-            });
-        });
     </script>
 {% endblock %}
 
