@@ -33,7 +33,7 @@ urlpatterns = [
     path('skmembers/', include('skmembers.urls')),
     path('topics/', include('topics.urls')),
     path('club_meetings/', include('club_meetings.urls')),
-
+    path('events/', include('events.urls')),
     path('class_orientation/',include('class_orientation.urls')),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

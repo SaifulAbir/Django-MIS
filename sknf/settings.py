@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'skmembers',
     'topics',
     'class_orientation',
-    'club_meetings'
+    'club_meetings',
+    'events'
 ]
 
 MIDDLEWARE = [
@@ -168,6 +169,6 @@ DATE_INPUT_FORMATS = ('%d-%m-%Y')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'saiful.abir20@gmail.com'
-EMAIL_HOST_PASSWORD = 'saiful002528'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 SESSION_COOKIE_AGE = 600
