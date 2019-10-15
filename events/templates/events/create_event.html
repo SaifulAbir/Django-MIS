@@ -43,11 +43,11 @@
         </div>
         <div class="form-group">
           <label for="">Start</label>
-          <input type="text" name="start" class="form-control" id="id_start">
+          <input type="text" name="start" class="datepicker form-control" id="id_start">
         </div>
         <div class="form-group">
           <label for="">End</label>
-          <input type="text" name="end" class="form-control" id="id_end">
+          <input type="text" name="end" class="datepicker form-control" id="id_end">
         </div>
       </div>
       <div class="modal-footer">
@@ -60,9 +60,7 @@
 {% endblock %}
 {% block extra_js %}
 <script>
-  var events = [];
   $(function () {
-
     $('#calendar').fullCalendar({
       header    : {
         left  : 'prev,next today',
@@ -75,22 +73,35 @@
         week : 'week',
         day  : 'day'
       },
-<!--      events : [-->
-<!--        {% for l in event_list %}-->
-<!--          {-->
-<!--              title: '{{ l.title }}',-->
-<!--              start: '{{ l.start_date }}',-->
-<!--              end: '{{ l.end_date }}',-->
-<!--          },-->
-<!--        {% endfor %}-->
-<!--      ],-->
+      events: [
+        {% for i in event_list %}
+        {
+            title: "{{ i.title}}",
+            start: '{{ i.start_date|date:"Y-m-d" }}',
+            end: '{{ i.end_date|date:"Y-m-d" }}',
+        },
+        {% endfor %}
+      ],
       selectable  : true,
+      eventAfterRender: function (event, element, view) {
+        var today = new Date();
+        if (event.start < today && event.end > today) {
+            //event.color = "#FFB347";
+            element.css('background-color', '#FFB347');
+        } else if (event.start < today && event.end < today) {
+            //event.color = "#77DD77";
+            element.css('background-color', '#77DD77');
+        } else if (event.start > today && event.end > today) {
+            //event.color = "#AEC6CF";
+            element.css('background-color', '#AEC6CF');
+        }
+    },
       select: dateSelected
     });
   });
   function dateSelected(start, end, ev, vw){
-    start=moment(start).format('DD/MM/YYYY');
-    end=moment(end).format('DD/MM/YYYY');
+    start=moment(start).format('DD-MM-YYYY');
+    end=moment(end).format('DD-MM-YYYY');
     $('#id_start').val(start);
     $('#id_end').val(end);
     $("#modal-event").modal("show");
@@ -124,7 +135,7 @@
         },
         success: function (data) {
             $("#modal-event").modal('hide');
-            saveEvent(start, end, title);
+            $("body").load(location.href);
         }
     });
   }

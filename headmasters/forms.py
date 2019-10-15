@@ -17,8 +17,6 @@ class UserForm(forms.ModelForm):
         (3, 'Guide Teacher'),
         (4, 'both'),
     )
-
-
     email = forms.EmailField(error_messages={'required': 'Email is required.'})
     password = forms.CharField(error_messages={'required': 'Password is required.'}, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(error_messages={'required': 'Confirm password is required.'}, widget=forms.PasswordInput())
@@ -58,10 +56,10 @@ class EditUserForm(forms.ModelForm):
 
 
 class HeadmasterProfileForm(forms.ModelForm):
-    x = forms.FloatField(widget=forms.HiddenInput())
-    y = forms.FloatField(widget=forms.HiddenInput())
-    width = forms.FloatField(widget=forms.HiddenInput())
-    height = forms.FloatField(widget=forms.HiddenInput())
+    x = forms.FloatField(required=False, widget=forms.HiddenInput())
+    y = forms.FloatField(required=False, widget=forms.HiddenInput())
+    width = forms.FloatField(required=False, widget=forms.HiddenInput())
+    height = forms.FloatField(required=False, widget=forms.HiddenInput())
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     joining_date = DateField(error_messages={'required': 'From date is required.'})
