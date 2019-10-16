@@ -55,7 +55,7 @@
                         {% endif %}
                     </span>
                     <div class="form-group">
-                        {% render_field post_form.text class="form-control" placeholder='Whats on your mind?????' %}
+                        {% render_field post_form.text class="form-control" placeholder='What is on your mind?' %}
                     </div>
                     <div class="form-group" style="left:25px;display: inline-block;">
                         {% render_field post_form.post_image class="" style="display:none" placeholder=profile_form.image.label %}
@@ -69,7 +69,9 @@
         </div>
         </div>
     </section>
+    {% if school_post_list %}
     <section class="content">
+
         {% for school_post in school_post_list %}
         <div class="row">
             <div class="col-md-12">
@@ -91,7 +93,9 @@
             </div>
         </div>
         {% endfor %}
+
     </section>
+    {% endif %}
     <section class="content" >
         <div class="box box-widget">
             <div class="box-header with-border">

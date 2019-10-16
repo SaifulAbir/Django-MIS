@@ -37,6 +37,7 @@
       </div>
       <div class="modal-body">
         {% csrf_token %}
+        <div id="event-error"></div>
         <div class="form-group">
           <label for="">Title</label>
           <input type="text" name="title" class="form-control" id="id_title">
@@ -61,6 +62,7 @@
 {% block extra_js %}
 <script>
   $(function () {
+    $('#id_title').prop('required',true);
     $('#calendar').fullCalendar({
       header    : {
         left  : 'prev,next today',
@@ -104,6 +106,8 @@
     end=moment(end).format('DD-MM-YYYY');
     $('#id_start').val(start);
     $('#id_end').val(end);
+    $('#event-error').html('');
+    $('#event-error').removeClass('alert alert-danger-error-message');
     $("#modal-event").modal("show");
 
   }
@@ -124,7 +128,8 @@
     title = $('#id_title').val();
     start = $('#id_start').val();
     end = $('#id_end').val();
-    $.ajax({
+    if(title){
+      $.ajax({
         type: 'POST',
         url: '/events/api/add_event/',
         data: {
@@ -137,7 +142,12 @@
             $("#modal-event").modal('hide');
             $("body").load(location.href);
         }
-    });
+      });
+    }
+    else{
+      $('#event-error').addClass('alert alert-danger-error-message');
+      $('#event-error').html('Title is required');
+    }
   }
 
 </script>

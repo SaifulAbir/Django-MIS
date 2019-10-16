@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, update_session_auth_hash, urls, forms
+from django.contrib.auth import authenticate, login, update_session_auth_hash, urls, forms, views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView
@@ -19,7 +19,7 @@ from django.urls import reverse_lazy
 
 from accounts.decorators import admin_login_required
 from accounts.forms import PrettyAuthenticationForm, EditUserForm, HeadmasterProfileForm, SkleaderProfileForm, \
-    CustomPasswordResetForm
+    CustomPasswordResetForm, CustomSetPasswordForm
 from accounts.models import User
 from headmasters.models import HeadmasterProfile
 from school.models import School
@@ -258,6 +258,7 @@ class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = 'accounts/password_reset_done.html'
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    form_class = CustomSetPasswordForm
     template_name = 'accounts/password_reset_confirm.html'
     success_url = reverse_lazy('accounts:password_reset_complete')
 
