@@ -150,6 +150,7 @@ def headermaster_school_details_update(request):
     school_list = school.split(",")
     from_date = from_date.split(",")
     to_date = to_date.split(",")
+    current_school_index = len(school_list)
 
     HeadmasterDetails.objects.filter(headmaster = headmaster_id).delete()
     for school in school_list:
@@ -166,7 +167,7 @@ def headermaster_school_details_update(request):
             todate = datetime.strptime(to_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
             heademasterModel.to_date = todate
 
-        if schoolindex ==0:
+        if schoolindex ==current_school_index-1:
             headmaster_obj=HeadmasterProfile.objects.get(pk=headmaster_id)
             headmaster_obj.school_id = school;
             headmaster_obj.save()

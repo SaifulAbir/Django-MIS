@@ -191,6 +191,7 @@ def skmember_details_update(request):
     to_date = to_date.split(",")
 
     SkmemberDetails.objects.filter(skmember = skmember_id).delete()
+    current_school_index = len(school_list)
     for school in school_list:
         skmemberModel = SkmemberDetails()
         skmemberModel.skmember_id = skmember_id
@@ -199,7 +200,7 @@ def skmember_details_update(request):
         fromdate = datetime.strptime(from_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
 
         skmemberModel.from_date = fromdate
-        if schoolindex == 0:
+        if schoolindex == current_school_index-1:
             skmember_obj=SkMemberProfile.objects.get(pk=skmember_id)
             skmember_obj.school_id = school
             skmember_obj.save()
