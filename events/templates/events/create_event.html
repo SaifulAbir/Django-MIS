@@ -1,0 +1,144 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+<section class="content-header">
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="">
+      <!-- /. box -->
+
+    </div>
+    <!-- /.col -->
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-body no-padding">
+          <!-- THE CALENDAR -->
+          <div id="calendar"></div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /. box -->
+    </div>
+    <!-- /.col -->
+  </div>
+</section>
+<form method="POST" id="submitForm">
+<div class="modal fade" id="modal-event">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Create a new event</h4>
+      </div>
+      <div class="modal-body">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="">Title</label>
+          <input type="text" name="title" class="form-control" id="id_title">
+        </div>
+        <div class="form-group">
+          <label for="">Start</label>
+          <input type="text" name="start" class="datepicker form-control" id="id_start">
+        </div>
+        <div class="form-group">
+          <label for="">End</label>
+          <input type="text" name="end" class="datepicker form-control" id="id_end">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input type="button" value="Create" id="btnSaveEvent" onclick="clickSaveEvent()" class="btn btn-primary form-submit"/>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+{% endblock %}
+{% block extra_js %}
+<script>
+  $(function () {
+    $('#calendar').fullCalendar({
+      header    : {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'month,agendaWeek,agendaDay'
+      },
+      buttonText: {
+        today: 'today',
+        month: 'month',
+        week : 'week',
+        day  : 'day'
+      },
+      events: [
+        {% for i in event_list %}
+        {
+            title: "{{ i.title}}",
+            start: '{{ i.start_date|date:"Y-m-d" }}',
+            end: '{{ i.end_date|date:"Y-m-d" }}',
+        },
+        {% endfor %}
+      ],
+      selectable  : true,
+      eventAfterRender: function (event, element, view) {
+        var today = new Date();
+        if (event.start < today && event.end > today) {
+            //event.color = "#FFB347";
+            element.css('background-color', '#FFB347');
+        } else if (event.start < today && event.end < today) {
+            //event.color = "#77DD77";
+            element.css('background-color', '#77DD77');
+        } else if (event.start > today && event.end > today) {
+            //event.color = "#AEC6CF";
+            element.css('background-color', '#AEC6CF');
+        }
+    },
+      select: dateSelected
+    });
+  });
+  function dateSelected(start, end, ev, vw){
+    start=moment(start).format('DD-MM-YYYY');
+    end=moment(end).format('DD-MM-YYYY');
+    $('#id_start').val(start);
+    $('#id_end').val(end);
+    $("#modal-event").modal("show");
+
+  }
+  function saveEvent(start, end, title){
+    console.log(start)
+    console.log(end)
+    event = {
+        id : 1,
+        title: title,
+        start :start,
+        end: end
+    };
+    $('#calendar').fullCalendar('renderEvent', event);
+  }
+
+
+  function clickSaveEvent() {
+    title = $('#id_title').val();
+    start = $('#id_start').val();
+    end = $('#id_end').val();
+    $.ajax({
+        type: 'POST',
+        url: '/events/api/add_event/',
+        data: {
+          'title': title,
+          'start': start,
+          'end': end,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function (data) {
+            $("#modal-event").modal('hide');
+            $("body").load(location.href);
+        }
+    });
+  }
+
+</script>
+{% endblock %}
