@@ -1,53 +1,58 @@
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.test import TestCase
-
-# Create your tests here.
-from django.urls import reverse
 from django.utils import timezone
+from.models import School, Division, District , Upazilla, Union
 
-from districts.models import District
-from division.models import Division
-from school.views import CreateSchool
-from unions.models import Union
-from upazillas.models import Upazilla
-from .models import School
+class SchoolTest(TestCase):
+    def setUp(self):
+        s1 = Division(name='Dhaka')
+        s1.save()
+        self.division = s1
+
+        s2 = District(division=self.division, name='Gazipur')
+        s2.save()
+        self.district = s2
+
+        s3 = Upazilla(division=self.division, district=self.district, name='Sripur')
+        s3.save()
+        self.upazilla = s3
+
+        s4 = Union(division=self.division, district=self.district,upazilla=self.upazilla, name= 'Dholapur')
+        s4.save()
+        self.union = s4
+
+    def test__when_school_name_is_null__should_raise_error(self):
+        s = School(school_id = 123)
+        with self.assertRaises(ValidationError):
+            s.full_clean()
+
+    def test__when_school_name_is_empty__should_raise_error(self):
+        s = School( name='', school_id = 123)
+        with self.assertRaises(ValidationError):
+            s.full_clean()
+
+    def test__when_school_id_is_null__should_raise_error(self):
+        s = School(name = 'Mirpur School')
+        with self.assertRaises(ValidationError):
+            s.full_clean()
+
+    def test__when_school_id_is_empty__should_raise_error(self):
+        s = School( name='Mirpur School', school_id = '')
+        with self.assertRaises(ValidationError):
+            s.full_clean()
+
+    def test__when_school_name_is_duplicate__should_raise_error(self):
+        sl1 = School( name='Mirpur School', school_id = 123)
+        sl2 = School( name='Mirpur School', school_id = 12)
+        with self.assertRaises(IntegrityError):
+            sl1.save()
+            sl2.save()
 
 
-class DistrictTest(TestCase):
 
-    def create_division(self, name="Dhaka"):
-        return Division.objects.create(name=name, created_date=timezone.now())
 
-    def create_district(self, division, name="Lakshmipur"):
-        return District.objects.create(division=division, name=name, created_date=timezone.now())
 
-    def create_upazilla(self, division, district, name="Kamalnagar"):
-        return Upazilla.objects.create(division=division, district=district, name=name, created_date=timezone.now())
-
-    def create_union(self, division, district, upazilla, name="Hazirhat"):
-        return Union.objects.create(division=division, district=district, upazilla=upazilla, name=name, created_date=timezone.now())
-
-    def create_school(self, division, district, upazilla, union, name = "New School", school_id = "45465676", address = "Dhaka, Bangladesh"):
-        return School.objects.create(name=name, school_id=school_id, division=division, district=district, upazilla=upazilla, union=union, address=address)
-
-    # models
-    def testSchool_whenContentIsCorrect_shouldCreateObject(self):
-        division = self.create_division()
-        district = self.create_district(division = division)
-        upazilla = self.create_upazilla(division = division, district = district)
-        union = self.create_union(division = division, district = district, upazilla=upazilla)
-        school = self.create_school(division = division, district = district, upazilla=upazilla, union = union)
-        actual = school.__str__()
-        expected = school.name
-        self.assertTrue(isinstance(school, School))
-        self.assertEqual(actual, expected)
-
-    # views
-    # Valid Data
-    def testSchoolCreate_whenValidData_shouldCreateCorrect_object(self):
-        school = School.objects.create()
-        view = CreateSchool()
-        view.kwargs = dict(pk=school.id)
-        self.assertEqual(view.get_object(), school)
 
 
 

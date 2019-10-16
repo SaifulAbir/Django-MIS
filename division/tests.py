@@ -7,12 +7,12 @@ from sknf.validators import check_valid_chars
 
 class DivisionTest(TestCase):
 
-    def test__null_name__should_raise_error(self):
+    def test__when_name_is_null__should_raise_error(self):
         s = Division(created_date=timezone.now())
         with self.assertRaises(ValidationError):
             s.full_clean()
 
-    def test__empty_code__should_raise_error(self):
+    def test__when_name_is_empty__should_raise_error(self):
         s = Division(name='', created_date=timezone.now())
         with self.assertRaises(ValidationError):
             s.full_clean()
