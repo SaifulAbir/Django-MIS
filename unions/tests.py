@@ -56,8 +56,8 @@ class UnionTest(TestCase):
         self.assertEquals(max_length, 100)
 
     def test__name_is_greater_then_100_character__should_raise_error(self):
-        s = Upazilla(
-            division=self.division,district=self.district,
+        s = Union(
+            division=self.division,district=self.district,upazilla=self.upazilla,
             name="tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft"
                  " tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg"
                  " sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg"
