@@ -107,7 +107,7 @@ DATABASES = {
         'PORT': '3306',
         'OPTIONS': {
             'sql_mode': 'traditional',
-        }
+        },
     }
 }
 

@@ -1,59 +1,60 @@
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.test import TestCase
-
-# Create your tests here.
-from django.urls import reverse
 from django.utils import timezone
-
-from districts.models import District
-from division.models import Division
-from .forms import UpazillaForm
-from .models import Upazilla
-
+from .models import Division,District,Upazilla
+from sknf.validators import check_valid_chars
 
 class UpazillaTest(TestCase):
 
-    def create_division(self, name="Dhaka"):
-        return Division.objects.create(name=name, created_date=timezone.now())
+    def setUp(self):
+        s1 = Division(name='Dhaka')
+        s1.save()
+        self.division = s1
 
-    def create_district(self, division, name="Lakshmipur"):
-        return District.objects.create(division=division, name=name, created_date=timezone.now())
+        s2 = District(division=self.division, name='Gazipur')
+        s2.save()
+        self.district = s2
 
-    def create_upazilla(self, division, district, name="Kamalnagar"):
-        return Upazilla.objects.create(division=division, district = district, name=name, created_date=timezone.now())
+    def test__when_name_is_null__should_raise_error(self):
+        s = Upazilla(division=self.division,district=self.district, created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-    # models
-    def testUpazilla_whenContentIsCorrect_shouldCreateObject(self):
-        division = self.create_division()
-        district = self.create_district(division = division)
-        upazilla = self.create_upazilla(division = division, district = district)
-        actual = upazilla.__str__()
-        expected = upazilla.name
-        self.assertTrue(isinstance(upazilla, Upazilla))
-        self.assertEqual(actual, expected)
+    def test__when_Division_is_null__should_raise_error(self):
+        s = Upazilla(district=self.district, name='Doulotpur', created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-    # views
-    # Valid Data
-    def testUpazilla_create_View_whenValidData_shouldResponse200(self):
-        division = self.create_division()
-        district = self.create_district(division=division)
-        response = self.client.post(reverse('upazillas:create_upazilla'),
-                                    {'division': division, 'district':district, 'name': "Kamalnagar", 'created_date': timezone.now()})
-        actual = response.status_code
-        expected = 200
-        self.assertEqual(actual, expected)
+    def test__when_District_is_null__should_raise_error(self):
+        s = Upazilla(division=self.division, name='Doulotpur', created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-    # Valid Form Data
-    def testUpazillaForm_whenValidData_shouldReturnTrue(self):
-        division = self.create_division()
-        district = self.create_district(division=division)
-        form = UpazillaForm(data={'division': str(division.id), 'district': str(district.id), 'name': "Lakshmipur"})
-        self.assertTrue(form.is_valid())
+    def test__when_name_is_empty__should_raise_error(self):
+        s = Upazilla(division=self.division,district=self.district, name='', created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-    # Invalid Form Data
-    def testUpazillaForm_whenInValidData_shouldReturnFalse(self):
-        division = self.create_division()
-        district = self.create_district(division=division)
-        form = UpazillaForm(data={'division': str(division.id), 'district': str(district.id), 'name': ""})
-        self.assertFalse(form.is_valid())
+    def test__when_name_is_duplicate__should_raise_error(self):
+        s = Upazilla(division=self.division,district=self.district, name='Doulotpur',created_date=timezone.now())
+        s1 = Upazilla(division=self.division,district=self.district, name='Dulotpur',created_date=timezone.now())
+        with self.assertRaises(IntegrityError):
+            s.save()
+            s1.save()
 
+    def test__max_length_validation_is__added(self):
+        max_length = Upazilla._meta.get_field('name').max_length
+        self.assertEquals(max_length, 100)
 
+    def test__name_is_greater_then_100_character__should_raise_error(self):
+        s = Upazilla(
+            division=self.division,district=self.district,
+            name="tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft"
+                 " tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg"
+                 " sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg"
+                 " sdfgsdg sgddft sdfgsdg sgddft tesg"
+                 " sdfgsdg sgddft sdfgsdg sgddft tesg"
+                 " sdfgsdg sgddft ", created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
