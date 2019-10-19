@@ -36,3 +36,6 @@ class SchoolPost(models.Model):
     post_image = models.ImageField(upload_to='images/', blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_date']
+

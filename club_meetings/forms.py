@@ -67,6 +67,24 @@ class EditClubMeetingForm(forms.ModelForm):
         model= ClubMeetings
         fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "attendance"]
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super(EditClubMeetingForm, self).__init__(*args, **kwargs)
+        try:
+            if user.is_authenticated and user.user_type == 5:
+                h_profile = SkLeaderProfile.objects.get(user=user)
+        except HeadmasterProfile.DoesNotExist:
+            h_profile = None
+
+        if h_profile is not None:
+            school_profile = get_object_or_404(School, pk=h_profile.school.id)
+        else:
+            school_profile = None
+
+        sk_profile = SkMemberProfile.objects.filter(school__id=school_profile.id, user__user_type=6)
+        u_profile = User.objects.filter(skmember_profile__in=sk_profile)
+        self.fields['attendance'].queryset = u_profile
+
 # class MeetingTopicsForm(forms.ModelForm):
 #     topics = forms.ModelMultipleChoiceField(
 #         widget=forms.CheckboxSelectMultiple,

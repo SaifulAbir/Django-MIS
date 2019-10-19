@@ -48,18 +48,16 @@ class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
         return queryset
 
 def club_meeting_update(request, pk):
-
-
     club_meeting = get_object_or_404(ClubMeetings, pk=pk)
     if request.method == 'POST':
-        club_meeting_form = EditClubMeetingForm(request.POST, request.FILES, instance=club_meeting, prefix='CMF')
+        club_meeting_form = EditClubMeetingForm(request.POST, request.FILES, instance=club_meeting, prefix='CMF', user=request.user)
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
             club_meeting.save()
             club_meeting_form.save_m2m()
             return HttpResponseRedirect("/club_meetings/club_meeting_list/")
     else:
-        club_meeting_form = EditClubMeetingForm(instance=club_meeting, prefix='CMF')
+        club_meeting_form = EditClubMeetingForm(instance=club_meeting, prefix='CMF', user=request.user)
 
     return render(request, 'club_meetings/club_meeting_add.html', {
         'club_meeting_form': club_meeting_form,
