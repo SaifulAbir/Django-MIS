@@ -9,6 +9,7 @@
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
+
         <h1 style ="display:inline-block;">{{ school_profile.name }}</h1>
     </section>
 
@@ -31,7 +32,7 @@
             </form>
         </div>
         {% endif %}
-
+    {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
     </section>
     <section class="content">
         <div class="row">
@@ -69,6 +70,7 @@
         </div>
         </div>
     </section>
+{% endif %}
     {% if school_post_list %}
     <section class="content">
 
@@ -122,8 +124,6 @@
             </div>
         </div>
     </section>
-
-
 
 {% endblock %}
 
