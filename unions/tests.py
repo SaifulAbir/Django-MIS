@@ -35,7 +35,7 @@ class UnionTest(TestCase):
             s.full_clean()
 
     def test__when_Upazilla_is_null__should_raise_error(self):
-        s = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur', created_date=timezone.now())
+        s = Union(division=self.division,district=self.district, name='Dholapur', created_date=timezone.now())
         with self.assertRaises(ValidationError):
             s.full_clean()
 
@@ -44,12 +44,9 @@ class UnionTest(TestCase):
         with self.assertRaises(ValidationError):
             s.full_clean()
 
-    def test__when_name_is_duplicate__should_raise_error(self):
-        s = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur',created_date=timezone.now())
-        s.save()
-        s1 = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur',created_date=timezone.now())
-        with self.assertRaises(ValidationError):
-            s1.save()
+    def test__Unique_together_validation_is__added(self):
+        unique_together = Union._meta.unique_together
+        self.assertEquals(unique_together, (('division', 'district', 'upazilla', 'name'),))
 
     def test__max_length_validation_is__added(self):
         max_length = Union._meta.get_field('name').max_length

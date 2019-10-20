@@ -36,12 +36,9 @@ class UpazillaTest(TestCase):
         with self.assertRaises(ValidationError):
             s.full_clean()
 
-    def test__when_name_is_duplicate__should_raise_error(self):
-        s = Upazilla(division=self.division,district=self.district, name='Doulotpur',created_date=timezone.now())
-        s1 = Upazilla(division=self.division,district=self.district, name='Dulotpur',created_date=timezone.now())
-        with self.assertRaises(IntegrityError):
-            s.save()
-            s1.save()
+    def test__Unique_together_validation_is__added(self):
+        unique_together = Upazilla._meta.unique_together
+        self.assertEquals(unique_together, (('division', 'district', 'name'),))
 
     def test__max_length_validation_is__added(self):
         max_length = Upazilla._meta.get_field('name').max_length
