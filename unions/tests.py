@@ -1,70 +1,68 @@
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.test import TestCase
-
-# Create your tests here.
-from django.urls import reverse
 from django.utils import timezone
-
-from districts.models import District
-from division.models import Division
-from upazillas.models import Upazilla
-
-from .forms import UnionForm
-from .models import Union
-
+from .models import Division,District,Upazilla,Union
 
 class UnionTest(TestCase):
+    def setUp(self):
+        s1 = Division(name='Dhaka')
+        s1.save()
+        self.division = s1
 
-    def create_division(self, name="Dhaka"):
-        return Division.objects.create(name=name, created_date=timezone.now())
+        s2 = District(division=self.division, name='Gazipur')
+        s2.save()
+        self.district = s2
 
-    def create_district(self, division, name="Lakshmipur"):
-        return District.objects.create(division=division, name=name, created_date=timezone.now())
+        s3=Upazilla(division=self.division, district=self.district, name='Doulotpur')
+        s3.save()
+        self.upazilla = s3
 
-    def create_upazilla(self, division, district, name="Kamalnagar"):
-        return Upazilla.objects.create(division=division, district = district, name=name, created_date=timezone.now())
 
-    def create_union(self, division, district, upazilla, name="Hazirhat"):
-        return Union.objects.create(division=division, district=district, upazilla=upazilla, name=name,
-                                    created_date=timezone.now())
+    def test__when_name_is_null__should_raise_error(self):
+        s = Union(division=self.division,district=self.district,upazilla=self.upazilla, created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-    # models
-    def testUpazilla_whenContentIsCorrect_shouldCreateObject(self):
-        division = self.create_division()
-        district = self.create_district(division=division)
-        upazilla = self.create_upazilla(division=division, district=district)
-        union = self.create_union(division=division, district=district, upazilla=upazilla)
-        actual = union.__str__()
-        expected = union.name
-        self.assertTrue(isinstance(union, Union))
-        self.assertEqual(actual, expected)
+    def test__when_Division_is_null__should_raise_error(self):
+        s = Union(district=self.district,upazilla=self.upazilla, name='Dholapur', created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-    # views
-    # Valid Data
-    def testUnion_create_View_whenValidData_shouldResponse200(self):
-        division = self.create_division()
-        district = self.create_district(division=division)
-        upazilla = self.create_upazilla(division=division, district=district,)
+    def test__when_District_is_null__should_raise_error(self):
+        s = Union(division=self.division,upazilla=self.upazilla, name='Dholapur', created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-        response = self.client.post(reverse('unions:create_union'),
-                                    {'division': division, 'district':district, 'upazilla': upazilla,'name': "Hazirhat", 'created_date': timezone.now()})
-        actual = response.status_code
-        expected = 200
-        self.assertEqual(actual, expected)
+    def test__when_Upazilla_is_null__should_raise_error(self):
+        s = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur', created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-    # Valid Form Data
-    def testUnionForm_whenValidData_shouldReturnTrue(self):
-        division = self.create_division()
-        district = self.create_district(division=division)
-        upazilla = self.create_upazilla(division=division, district=district)
+    def test__when_name_is_empty__should_raise_error(self):
+        s = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='', created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
 
-        form = UnionForm(data={'division': str(division.id), 'district': str(district.id), 'upazilla': str(upazilla.id),'name': "B-para"})
-        self.assertTrue(form.is_valid())
+    def test__when_name_is_duplicate__should_raise_error(self):
+        s = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur',created_date=timezone.now())
+        s1 = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur',created_date=timezone.now())
+        with self.assertRaises(IntegrityError):
+            s.save()
+            s1.save()
 
-    # Invalid Form Data
-    def testUnionForm_whenInValidData_shouldReturnFalse(self):
-        division = self.create_division()
-        district = self.create_district(division=division)
-        upazilla = self.create_upazilla(division=division, district=district)
+    def test__max_length_validation_is__added(self):
+        max_length = Union._meta.get_field('name').max_length
+        self.assertEquals(max_length, 100)
 
-        form = UnionForm(data={'division': str(division.id), 'district': str(district.id),'upazilla': str(upazilla.id), 'name': ""})
-        self.assertFalse(form.is_valid())
+    def test__name_is_greater_then_100_character__should_raise_error(self):
+        s = Union(
+            division=self.division,district=self.district,upazilla=self.upazilla,
+            name="tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft"
+                 " tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg"
+                 " sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg"
+                 " sdfgsdg sgddft sdfgsdg sgddft tesg"
+                 " sdfgsdg sgddft sdfgsdg sgddft tesg"
+                 " sdfgsdg sgddft ", created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
