@@ -37,6 +37,8 @@ class ClubMeetingForm(forms.ModelForm):
         try:
             if user.is_authenticated and user.user_type == 5:
                 h_profile = SkLeaderProfile.objects.get(user=user)
+            elif user.is_authenticated and user.user_type == 2 or user.user_type == 3 or user.user_type == 4:
+                h_profile = HeadmasterProfile.objects.get(user=user)
         except HeadmasterProfile.DoesNotExist:
             h_profile = None
 
@@ -73,6 +75,8 @@ class EditClubMeetingForm(forms.ModelForm):
         try:
             if user.is_authenticated and user.user_type == 5:
                 h_profile = SkLeaderProfile.objects.get(user=user)
+            elif user.is_authenticated and user.user_type == 2 or user.user_type == 3 or user.user_type == 4:
+                h_profile = HeadmasterProfile.objects.get(user=user)
         except HeadmasterProfile.DoesNotExist:
             h_profile = None
 

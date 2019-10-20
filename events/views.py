@@ -5,14 +5,16 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from accounts.decorators import admin_login_required
 from events.models import Event
 
-
+@admin_login_required
 def create_event(request):
     event_list = Event.objects.all()
     context = {'event_list': event_list}
     return render(request, 'events/create_event.html', context)
 
+@admin_login_required
 def add_event(request):
     title = request.POST.get('title')
     start = request.POST.get('start')

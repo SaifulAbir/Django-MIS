@@ -7,8 +7,9 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import generic
 
-from accounts.decorators import admin_login_required
+from accounts.decorators import admin_login_required, headmaster_mentor_skleader_login_required
 from accounts.models import User
+from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers import models
@@ -50,14 +51,17 @@ def skmember_profile_view(request):
         'profile_form': profile_form,
     })
 
-
+@headmaster_mentor_skleader_login_required
 def skmember_profile_view_skleader(request):
     if request.method == 'POST':
         user_form = SkMemberUserForm(request.POST, prefix='UF')
         profile_form = SkMemberProfileFormForSkleader(request.POST, files=request.FILES, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             id = request.user.id
-            objSkLeader = SkLeaderProfile.objects.get(user_id=id)
+            if request.user.is_authenticated and request.user.user_type == 5:
+                objSkLeader = SkLeaderProfile.objects.get(user_id=id)
+            elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
+                objSkLeader = HeadmasterProfile.objects.get(user_id=id)
             school_id = objSkLeader.school_id
 
             user = user_form.save(commit=False)
@@ -77,6 +81,7 @@ def skmember_profile_view_skleader(request):
         'profile_form': profile_form,
     })
 
+@headmaster_mentor_skleader_login_required
 def skmember_update_for_skleader(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
@@ -116,11 +121,12 @@ class SkmemberList(LoginRequiredMixin, generic.ListView):
         context = super(SkmemberList, self).get_context_data(**kwargs)
         try:
             context['school_name'] =SkmemberDetails.objects.latest('from_date')
-        except SkmemberDetails.DoesNotExist :
+        except SkmemberDetails.DoesNotExist:
             context['current_schoxol_name'] = None
 
         return context
-    
+
+@method_decorator(headmaster_mentor_skleader_login_required, name='dispatch')
 class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.SkMemberProfile
@@ -129,7 +135,10 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         loggedinuser = self.request.user.id
-        objSkLeader = SkLeaderProfile.objects.get(user_id=loggedinuser)
+        if self.request.user.is_authenticated and self.request.user.user_type == 5:
+            objSkLeader = SkLeaderProfile.objects.get(user_id=loggedinuser)
+        elif self.request.user.is_authenticated and self.request.user.user_type == 2 or self.request.user.user_type == 3 or self.request.user.user_type == 4:
+            objSkLeader = HeadmasterProfile.objects.get(user_id=loggedinuser)
         queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,],school_id=objSkLeader.school_id)
 
         return queryset
@@ -178,6 +187,7 @@ class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "skmember_detail"
     model = models.SkMemberProfile
     template_name = 'skmembers/skmember_detail.html'
+
 @admin_login_required
 def skmember_details_update(request):
 

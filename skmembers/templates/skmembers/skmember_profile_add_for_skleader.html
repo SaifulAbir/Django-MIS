@@ -107,8 +107,8 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                        {% render_field profile_form.school required='true' class="form-control customer-select2" placeholder=profile_form.school.label %}
+                                        <label for="{{ profile_form.school.id_for_label }}">School</label>
+                                        <input type="text" class="form-control" value="{{profile.school}}" readonly>
                                     </div>
                                 </div>
 

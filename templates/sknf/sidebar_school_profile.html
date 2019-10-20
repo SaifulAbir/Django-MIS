@@ -43,7 +43,7 @@
     </ul>
     <hr width="70%">
     <ul class="sidebar-menu" data-widget="tree">
-        {% if user.is_authenticated and user.user_type == 5 %}
+        {% if user.is_authenticated and user.user_type == 5 or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 %}
             <li>
                 <a href="{% url 'club_meetings:club_meeting_list' %}">
                     <i class="ion ion-checkmark"></i> <span>Club Meetings</span>
