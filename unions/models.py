@@ -22,3 +22,4 @@ class Union(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+        unique_together = ['division', 'district','upazilla', 'name']

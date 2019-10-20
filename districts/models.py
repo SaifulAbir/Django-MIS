@@ -27,5 +27,6 @@ class District(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+        unique_together = ['division', 'name']
 
 
