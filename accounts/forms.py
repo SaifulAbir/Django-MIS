@@ -105,10 +105,20 @@ class CustomSetPasswordForm(SetPasswordForm):
         label=_("New password"),
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'New password'}),
         strip=False,
-        help_text=password_validation.password_validators_help_text_html(),
     )
     new_password2 = forms.CharField(
         label=_("New password confirmation"),
         strip=False,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'New password confirmation'}),
     )
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError(
+                    self.error_messages['password_mismatch'],
+                    code='password_mismatch',
+                )
+        return password2
