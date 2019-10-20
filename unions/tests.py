@@ -46,9 +46,9 @@ class UnionTest(TestCase):
 
     def test__when_name_is_duplicate__should_raise_error(self):
         s = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur',created_date=timezone.now())
+        s.save()
         s1 = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur',created_date=timezone.now())
-        with self.assertRaises(IntegrityError):
-            s.save()
+        with self.assertRaises(ValidationError):
             s1.save()
 
     def test__max_length_validation_is__added(self):

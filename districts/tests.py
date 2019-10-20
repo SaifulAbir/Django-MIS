@@ -30,7 +30,7 @@ class DistrictTest(TestCase):
     def test__when_name_is_duplicate__should_raise_error(self):
         s = District(division=self.division, name='Dhaka',created_date=timezone.now())
         s1 = District(division=self.division, name='Dhaka',created_date=timezone.now())
-        with self.assertRaises(IntegrityError):
+        with self.assertRaises(ValidationError):
             s.save()
             s1.save()
 
