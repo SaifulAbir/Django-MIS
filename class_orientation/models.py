@@ -6,16 +6,17 @@ from django.utils import timezone
 
 from school.models import School
 from skleaders.models import class_choice
+from topics.models import Topics
 
 
 class ClassOrientation(models.Model):
     created_date = models.DateField(default=timezone.now)
     student_class = models.CharField(max_length=10,choices=class_choice)
-    topic = models.CharField(max_length=128)
+    topic = models.ForeignKey(Topics, on_delete=models.CASCADE, null=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.topic
+        return self.topic.name
 
     def get_absolute_url(self):
         return reverse('class_orientation:class_orientation_list')
