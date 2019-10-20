@@ -88,8 +88,8 @@ class User(AbstractUser):
             return False
 
     @property
-    def is_admin_or_headmaster_or_mentor_or_skleader_or_both(self):
-        if self.user_type == 1 or self.user_type == 2 or self.user_type == 3 or self.user_type == 4 or self.user_type == 5:
+    def is_headmaster_or_mentor_or_skleader_or_both(self):
+        if self.user_type == 2 or self.user_type == 3 or self.user_type == 4 or self.user_type == 5:
             return True
         else:
             return False

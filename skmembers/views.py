@@ -6,7 +6,6 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 from django.utils.decorators import method_decorator
 from django.views import generic
-
 from accounts.decorators import admin_login_required, headmaster_mentor_skleader_login_required
 from accounts.models import User
 from headmasters.models import HeadmasterProfile

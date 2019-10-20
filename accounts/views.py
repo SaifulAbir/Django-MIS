@@ -183,6 +183,7 @@ def admin_profile_update(request):
         'old_user_profile': old_user_profile
     })
 
+@login_required(login_url='/')
 def headmaster_profile_update(request):
     user_profile = get_object_or_404(User, pk=request.user.id)
     headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
@@ -213,6 +214,7 @@ def headmaster_profile_update(request):
         'headmaster_profile': headmaster_profile,
     })
 
+@login_required(login_url='/')
 def skleader_profile_update(request):
     user_profile = get_object_or_404(User, pk=request.user.id)
     skleader_profile = SkLeaderProfile.objects.get(user=request.user)
