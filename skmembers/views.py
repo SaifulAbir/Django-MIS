@@ -70,6 +70,12 @@ def skmember_profile_view_skleader(request):
             profile.user = user
             profile.school_id = school_id
             profile.save()
+
+            headmaster_details = SkmemberDetails()
+            headmaster_details.school_id = school_id
+            headmaster_details.skmember = profile
+            headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
+            headmaster_details.save()
             return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
         user_form = SkMemberUserForm(prefix='UF')
@@ -92,20 +98,21 @@ def skmember_update_for_skleader(request, pk):
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
-            profile = profile_form.save(commit = False)
+            profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
+            messages.success(request, 'SK Member Updated!')
+            return HttpResponseRedirect("/skmembers/skmember_list/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)
-        profile_form = SkMemberProfileForm(instance=skmember_profile)
+        profile_form = EditSkMemberProfileForm(instance=skmember_profile)
 
-    return render(request, 'skmembers/skmember_profile_add_for_skleader.html', {
+    return render(request, 'skmembers/skmember_profile_update.html', {
         'user_form': user_form,
         'profile_form': profile_form,
         'skmember_profile': skmember_profile,
         'pk': pk,
-        'sklmember_details': skmember_details,
+        'skmember_details': skmember_details,
         'school_list': school_list,
     })
 
