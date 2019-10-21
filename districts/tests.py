@@ -26,6 +26,14 @@ class DistrictTest(TestCase):
         with self.assertRaises(ValidationError):
             s.full_clean()
 
+    def test__when_district_is_duplicate__should_raise_error(self):
+        s1 = District(division=self.division, name='Dholapur')
+        s2 = District(division=self.division, name='Dholapur')
+        with self.assertRaises(ValidationError):
+            s1.save()
+            s2.save()
+            s2.full_clean()
+
     def test__Unique_together_validation_is__added(self):
         unique_together = District._meta.unique_together
         self.assertEquals(unique_together, (('division', 'name'),))

@@ -44,6 +44,14 @@ class UnionTest(TestCase):
         with self.assertRaises(ValidationError):
             s.full_clean()
 
+    def test__when_union_is_duplicate__should_raise_error(self):
+        s1 = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur')
+        s2 = Union(division=self.division,district=self.district,upazilla=self.upazilla, name='Dholapur')
+        with self.assertRaises(ValidationError):
+            s1.save()
+            s2.save()
+            s2.full_clean()
+
     def test__Unique_together_validation_is__added(self):
         unique_together = Union._meta.unique_together
         self.assertEquals(unique_together, (('division', 'district', 'upazilla', 'name'),))

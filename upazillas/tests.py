@@ -36,6 +36,14 @@ class UpazillaTest(TestCase):
         with self.assertRaises(ValidationError):
             s.full_clean()
 
+    def test__when_upazilla_is_duplicate__should_raise_error(self):
+        s1 = Upazilla(division=self.division,district=self.district, name='Mirpur School')
+        s2 = Upazilla(division=self.division,district=self.district, name='Mirpur School')
+        with self.assertRaises(ValidationError):
+            s1.save()
+            s2.save()
+            s2.full_clean()
+
     def test__Unique_together_validation_is__added(self):
         unique_together = Upazilla._meta.unique_together
         self.assertEquals(unique_together, (('division', 'district', 'name'),))
