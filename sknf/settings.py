@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'topics',
     'class_orientation',
     'club_meetings',
-    'events'
+    'events',
+    'import_export'
 ]
 
 MIDDLEWARE = [
@@ -172,3 +173,4 @@ EMAIL_HOST_USER = 'saiful.abir20@gmail.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 SESSION_COOKIE_AGE = 6000
+IMPORT_EXPORT_USE_TRANSACTIONS = True
