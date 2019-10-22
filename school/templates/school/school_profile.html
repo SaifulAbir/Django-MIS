@@ -34,6 +34,8 @@
         {% endif %}
     {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
     </section>
+<div class="row">
+<div class="col-md-9" >
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -98,6 +100,8 @@
 
     </section>
     {% endif %}
+</div>
+<div class="col-md-3">
     <section class="content" >
         <div class="box box-widget">
             <div class="box-header with-border">
@@ -111,12 +115,13 @@
 
                     {% for skmember in skmember_list %}
                         {% if skmember.image %}
-                            <div class="col-xs-1">
-                                <img class="img-responsive" style="height:60px; width:60px;" src="{{ skmember.image.url }}" alt="Photo">
+                            <div class="col-xs-6"align="center">
+                                <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
+                                <p><strong>{{skmember.user}}</strong></p>
                             </div>
                         {% else %}
-                            <div class="col-xs-1">
-                                <img class="img-responsive" style="height:60px; width:60px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
+                            <div class="col-xs-6" align="center">
+                                <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
                                 <p><strong>{{skmember.user}}</strong></p>
                             </div>
                         {% endif %}
@@ -129,6 +134,8 @@
             </div>
         </div>
     </section>
+</div>
+</div>
 
 {% endblock %}
 
