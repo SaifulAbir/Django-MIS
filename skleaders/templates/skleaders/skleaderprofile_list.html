@@ -36,10 +36,10 @@
                     <tr>
                         <th class="col-sm-2">Name</th>
                         <th class="col-sm-2">Email</th>
-                        <th class="col-sm-2">School</th>
-                        <th class="col-sm-3">Mobile</th>
-                        <th class="col-sm-3">Class</th>
-                        <th class="col-sm-1">Actions</th>
+                        <th class="col-sm-3">School</th>
+                        <th class="col-sm-2">Mobile</th>
+                        <th class="col-sm-1">Class</th>
+                        <th class="col-sm-2">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -50,7 +50,7 @@
                         <td>{{ skleader.school }}</td>
                         <td>{{ skleader.mobile }}</td>
                         <td>{{ skleader.student_class }}</td>
-                        <td><a type="button"
+                        <td align="center"><a type="button" style="margin-right:10px"
                                class=""
                                href="{% url 'skleaders:skleader_detail' skleader.pk %}">
                             <span class="fa fa-eye"></span>

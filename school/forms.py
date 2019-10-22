@@ -12,7 +12,7 @@ class SchoolForm(forms.ModelForm):
     school_id = forms.CharField(error_messages={'required': 'EIIN is required.', 'unique': 'School with this EIIN already exists.'})
     class Meta:
         model = School
-        fields = ['name', 'school_id', 'division', 'district', 'upazilla', 'union', 'address']
+        fields = ['name', 'school_id','club_establishment_date', 'division', 'district', 'upazilla', 'union', 'address']
         widgets = {
             'address': forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}),
 

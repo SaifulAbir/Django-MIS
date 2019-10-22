@@ -36,10 +36,10 @@
                     <thead>
                     <tr>
                         <th class="col-sm-2">Name</th>
-                        <th class="col-sm-4">Email</th>
-                        <th>School</th>
-                        <th class="col-sm-3">Mobile</th>
-                        <th class="col-sm-1">Actions</th>
+                        <th class="col-sm-2">Email</th>
+                        <th class="col-sm-4">School</th>
+                        <th class="col-sm-2">Mobile</th>
+                        <th class="col-sm-2">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,8 +49,8 @@
                             <td>{{ headmaster.user.email }}</td>
                             <td>{{ headmaster.school }}</td>
                             <td>{{ headmaster.mobile }}</td>
-                            <td>
-                                <a type="button"
+                            <td align="center">
+                                <a type="button" style="margin-right:10px"
                                    href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
                                     <span class="fa fa-eye"></span>
                                 </a>
