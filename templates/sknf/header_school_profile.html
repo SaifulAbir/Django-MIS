@@ -1,7 +1,14 @@
 {% load static %}
 <header class="main-header">
     <!-- Logo -->
-  {% if not user.is_authenticated or user.is_authenticated and user.user_type == 1 %}
+  {% if post_detail %}
+    <a href="{% url 'school:school_profile' post_detail.school.id %}" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>SK</b>NF</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b></b>SKNF</span>
+    </a>
+  {% elif not user.is_authenticated or user.is_authenticated and user.user_type == 1 %}
     <a href="" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>SK</b>NF</span>

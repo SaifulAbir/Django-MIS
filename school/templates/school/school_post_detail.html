@@ -1,0 +1,30 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+{% load static %}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Posted on {{post_detail.created_date}}</h3>
+                </div>
+                <div class="box-body">
+                    {% if post_detail.post_image %}
+                    <div class="form-group">
+                        <img src="{{ post_detail.post_image.url }}" alt="">
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        {{post_detail.text}}
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button class="btn btn-primary pull-right"><a style="color:#fff;" href="http://www.facebook.com/sharer/sharer.php?u=http://{{request.get_host}}{{ request.get_full_path|urlencode }}">Share To Facebook</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
