@@ -6,15 +6,15 @@
     <td>{{ school.school_id }}</td>
     <td>{{ school.division }}</td>
     <td>{{ school.district }}</td>
-    <td id="ab">
+    <td id="ab" align="center">
         <a type="button"
-           class=""
+           class=""style="margin-right:10px"
            href="{% url 'school:detail_school' school.pk %}">
             <span class="fa fa-eye"></span>
         </a>
 
         <a type="button"
-           class=""
+           class="" style="margin-right:10px"
            href="{% url 'school:update_school' school.pk %}">
             <span class="fa fa-edit"></span>
 

@@ -256,5 +256,13 @@ body{
 .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side,
 .btn-primary,
 .pagination>.active>a{
-  background-color: #2a2a86 !important;
+    background-color: #2a2a86 !important;
+}
+
+.sidebar-collapse .sidebar .box-profile {
+    display:none !important;
+}
+.skin-blue .main-header .logo,
+.sidebar a{
+    color: #cd911f !important;
 }
