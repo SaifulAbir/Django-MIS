@@ -14,5 +14,6 @@ urlpatterns = [
     path('ajax/load-unions/', views.load_unions, name='ajax_load_unions'),
     path('<int:pk>/', views.school_profile, name='school_profile'),
     path('school_profile_homepage/', views.school_profile, name='school_profile'),
+    path('school_post_detail/<int:pk>', views.school_post_detail_view, name='school_post_detail_view'),
     path('Sk_leaderApproval/', views.Sk_leaderApproval, name='Sk_leaderApproval'),
 ]

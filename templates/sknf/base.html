@@ -5,7 +5,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
-  {% if school_profile or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 or user.user_type == 5 %}
+  {% if school_profile or post_detail or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 or user.user_type == 5 %}
 {% include "sknf/header_school_profile.html" %}
   {% else %}
     {% include "sknf/header.html" %}
@@ -19,7 +19,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
 
      {% block sidebar_block %}
-    {% if school_profile or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 or user.user_type == 5 %}
+    {% if school_profile or post_detail or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 or user.user_type == 5 %}
      {% include "sknf/sidebar_school_profile.html" %}
     {% else %}
     {% include "sknf/sidebar.html" %}

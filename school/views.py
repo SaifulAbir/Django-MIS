@@ -205,6 +205,19 @@ def school_profile(request, pk):
                                                            'upload_guide_user':upload_guide_user, 'upload_both_user':upload_both_user, 'upload_skleader_user':upload_skleader_user,
                                                            'skleader_list':skleader_list,'post_form':post_form})
 
+
+def school_post_detail_view(request, pk):
+    post_detail = get_object_or_404(SchoolPost, pk=pk)
+    try:
+        headmaster_profile = HeadmasterProfile.objects.filter(school__id=post_detail.school.id, user__user_type=2).latest('school__id')
+    except HeadmasterProfile.DoesNotExist:
+        headmaster_profile = None
+    try:
+        skleader_profile = SkLeaderProfile.objects.filter(school__id=post_detail.school.id, user__user_type=5).latest('school__id')
+    except SkLeaderProfile.DoesNotExist:
+        skleader_profile = None
+    return render(request, "school/school_post_detail.html", {'post_detail': post_detail, 'headmaster_profile': headmaster_profile, 'skleader_profile':skleader_profile})
+
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
 #     return render(request, 'school/school_profile.html'),  {'img': img}

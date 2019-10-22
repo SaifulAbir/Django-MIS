@@ -149,27 +149,30 @@
         {% if school_post_list %}
         <section class="content">
 
-            {% for school_post in school_post_list %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
+        {% for school_post in school_post_list %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
+                        <a type="button" class="btn btn-primary pull-right" href="{% url 'school:school_post_detail_view' school_post.id %}">
+                            <span class="fa fa-share"></span>
+                        </a>
+                    </div>
+                    <div class="box-body">
+                        {% if school_post.post_image %}
+                        <div class="form-group">
+                            <img src="{{ school_post.post_image.url }}" alt="">
                         </div>
-                        <div class="box-body">
-                            {% if school_post.post_image %}
-                            <div class="form-group">
-                                <img src="{{ school_post.post_image.url }}" alt="">
-                            </div>
-                            {% endif %}
-                            <div class="form-group">
-                                {{school_post.text}}
-                            </div>
+                        {% endif %}
+                        <div class="form-group">
+                            {{school_post.text}}
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
 
         </section>
         {% endif %}

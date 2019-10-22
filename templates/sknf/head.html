@@ -3,6 +3,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{{PROJECT_NAME}}</title>
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="{{post_detail.text}}" />
+  <meta property="og:type" content="article">
+  <meta name="og:url" content="http://{{request.get_host}}">
+  <meta property="og:image" itemprop="image" content="https://{{request.get_host}}{{ post_detail.post_image.url }}" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -23,11 +28,11 @@
   <link rel="stylesheet" href="{% static 'sknf/css/select2.min.css' %}">
   <link rel="stylesheet" href="{% static 'sknf/css/bootstrap-datepicker.min.css' %}">
   <link rel="stylesheet" href="{% static 'sknf/css/cropper.min.css' %}">
-
+  <link rel="stylesheet" href="{% static 'sknf/css/tempusdominus-bootstrap-3.css' %}">
   <!-- fullCalendar -->
   <link rel="stylesheet" href="{% static 'vendor/fullcalendar/dist/fullcalendar.min.css' %}">
   <link rel="stylesheet" href="{% static 'vendor/fullcalendar/dist/fullcalendar.print.min.css' %}" media="print">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
