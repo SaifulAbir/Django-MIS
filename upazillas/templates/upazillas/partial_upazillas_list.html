@@ -5,8 +5,8 @@
     <td>{{ upazilla.name }}</td>
     <td>{{ upazilla.district }}</td>
     <td>{{ upazilla.division }}</td>
-    <td>
-        <button type="button"
+    <td align="center">
+        <button type="button" style="margin-right:10px"
                 class="js-update-upazilla"
                 data-url="{% url 'upazillas:update_upazilla' upazilla.id %}">
             <span class="fa fa-edit"></span>

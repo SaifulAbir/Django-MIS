@@ -4,7 +4,7 @@
 
     <td>{{ district.name }}</td>
     <td>{{ district.division }}</td>
-    <td><button type="button"
+    <td align="center"> <button type="button" style="margin-right:10px"
                 class="js-update-district"
                 data-url="{% url 'districts:update_district' district.id %}">
         <span class="fa fa-edit"></span>
