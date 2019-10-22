@@ -21,8 +21,8 @@ from headmasters.models import HeadmasterProfile, HeadmasterDetails
 from school.models import School
 import time
 from datetime import datetime
-
-
+import base64
+from django.core.files.base import ContentFile
 
 @admin_login_required
 def headmaster_profile_view(request):
@@ -32,11 +32,13 @@ def headmaster_profile_view(request):
         profile_form = HeadmasterProfileForm(request.POST, files=request.FILES, prefix='PF')
 
         if user_form.is_valid() and profile_form.is_valid():
+            img_base64 = profile_form.cleaned_data.get('x')
+            print(img_base64)
+            format, imgstr = img_base64.split(';base64,')
+            ext = format.split('/')[-1]
+            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
 
-            x = profile_form.cleaned_data.get('x')
-            y = profile_form.cleaned_data.get('y')
-            w = profile_form.cleaned_data.get('width')
-            h = profile_form.cleaned_data.get('height')
+
             user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data["password"])
             user.save()

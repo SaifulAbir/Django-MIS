@@ -10,7 +10,6 @@ class HeadmasterProfile(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='images/')
     joining_date = models.DateField(null=False, default=timezone.now)
-    crop_url = models.TextField(blank=True, null=True, default='')
 
     def __str__(self):
         return self.user.first_name

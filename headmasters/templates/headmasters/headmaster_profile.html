@@ -89,6 +89,7 @@
                                         </div>
                                     </div>
                                     {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+
                                 </div>
                             </div>
                         </div>
@@ -238,12 +239,13 @@ $(".js-zoom-out").click(function () {
   /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
   $(".js-crop-and-upload").click(function () {
     var cropData = $image.cropper("getData");
-    $("#id_PF-x").val(cropData["x"]);
+
     $("#id_PF-y").val(cropData["y"]);
     $("#id_PF-height").val(cropData["height"]);
     $("#id_PF-width").val(cropData["width"]);
     var imageData = $('#image').cropper('getCroppedCanvas').toDataURL() ;
     $('.jcrop-holder').attr('src', imageData);
+    $("#id_PF-x").val(imageData);
     $("#modalCrop").modal('hide');
   });
 });
