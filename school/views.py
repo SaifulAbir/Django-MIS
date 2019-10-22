@@ -189,6 +189,11 @@ def school_profile(request, pk):
         skmember_list = None
 
     try:
+        skleader_list = SkLeaderProfile.objects.filter(school__id__in=[pk, ])
+    except SkMemberProfile.DoesNotExist:
+        skleader_list = None
+
+    try:
         school_post_list = SchoolPost.objects.all()
     except SchoolPost.DoesNotExist:
         school_post_list = None
@@ -197,7 +202,8 @@ def school_profile(request, pk):
 
     return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_profile':skleader_profile, 'profile' : profile, 'headmaster_profile':headmaster_profile,
                                                            'skmember_list': skmember_list, 'form':form, 'upload_head_user':upload_head_user, 'school_post_list':school_post_list,
-                                                           'upload_guide_user':upload_guide_user, 'upload_both_user':upload_both_user, 'upload_skleader_user':upload_skleader_user, 'post_form':post_form})
+                                                           'upload_guide_user':upload_guide_user, 'upload_both_user':upload_both_user, 'upload_skleader_user':upload_skleader_user,
+                                                           'skleader_list':skleader_list,'post_form':post_form})
 
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
