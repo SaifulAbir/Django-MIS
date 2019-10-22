@@ -1,5 +1,3 @@
-
-
 from PIL import Image
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -21,8 +19,9 @@ from headmasters.models import HeadmasterProfile, HeadmasterDetails
 from school.models import School
 import time
 from datetime import datetime
-import base64
+import base64, uuid
 from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
 
 @admin_login_required
 def headmaster_profile_view(request):
@@ -32,33 +31,24 @@ def headmaster_profile_view(request):
         profile_form = HeadmasterProfileForm(request.POST, files=request.FILES, prefix='PF')
 
         if user_form.is_valid() and profile_form.is_valid():
-            img_base64 = profile_form.cleaned_data.get('x')
-            print(img_base64)
-            format, imgstr = img_base64.split(';base64,')
-            ext = format.split('/')[-1]
-            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
-
-
             user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data["password"])
             user.save()
             profile = profile_form.save(commit = False)
-            # print(profile.image)
-            # image = Image.open(profile.image)
-            # cropped_image = image.crop((x, y, w + x, h + y))
-            # cropped_image.thumbnail((220, 130), Image.ANTIALIAS)
-            # cropped_image.save(thumb_io, cropped_image.format, quality=60)
-            # profile.image.save(cropped_image.filename, save=False)
-            # resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
-            # resized_image.save(profile.image)
-            # profile.image.save()
-            # print(resized_image.path)
-            # profile.image.save(resized_image.filename)
-            # profile.image = cropper(profile.image)
             profile.user = user
-            profile.joining_date = '2019-01-01'
-            profile.save()
 
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-headmaster.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/'+filename
+            # end of image cropping code
+
+            profile.save()
             headmaster_details = HeadmasterDetails()
             headmaster_details.school = profile_form.cleaned_data["school"]
             headmaster_details.headmaster = profile

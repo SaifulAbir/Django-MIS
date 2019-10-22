@@ -11,12 +11,11 @@
         <div class="row">
             <!-- left column -->
             <div class="col-md-12">
-
                 <div class="box box-info">
                     <div class="box-header">
                         <h3 class="box-title">Basic Information</h3>
                     </div>
-                    <div class="row">
+                    <div>
                         <div class="col-md-6">
                             <div class="box-body">
                                 <!-- School Name -->
@@ -45,15 +44,17 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="row-sm-12">
+                            <div class="box-body">
+                                <div class="form-group">
                                     <div class="row-sm-12">
-                                        <label style="padding-left: 223px;">Profile Picture:</label>
-                                        {% if headmaster_detail.image %}
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ headmaster_detail.image.url }}" class="pull-right" alt="Pic"><br />
-                                        {% else %}
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
-                                        {% endif %}
+                                        <div class="row-sm-12">
+                                            <label style="padding-left: 223px;">Profile Picture:</label>
+                                            {% if headmaster_detail.image %}
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ headmaster_detail.image.url }}" class="pull-right" alt="Pic"><br />
+                                            {% else %}
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -56,10 +56,7 @@ class EditUserForm(forms.ModelForm):
 
 
 class HeadmasterProfileForm(forms.ModelForm):
-    x = forms.FloatField(required=False, widget=forms.HiddenInput())
-    y = forms.FloatField(required=False, widget=forms.HiddenInput())
-    width = forms.FloatField(required=False, widget=forms.HiddenInput())
-    height = forms.FloatField(required=False, widget=forms.HiddenInput())
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
 
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
@@ -69,7 +66,7 @@ class HeadmasterProfileForm(forms.ModelForm):
 
     class Meta:
         model = HeadmasterProfile
-        fields = ('mobile','school', 'image','joining_date', 'x', 'y', 'width', 'height',)
+        fields = ('mobile','school', 'image','joining_date', 'image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
