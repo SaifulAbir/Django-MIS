@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('school', '0010_auto_20191019_1124'),
+        ('school', '0001_initial'),
         ('topics', '0001_initial'),
     ]
 
