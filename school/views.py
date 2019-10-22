@@ -5,11 +5,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.http import HttpResponse
 
 from accounts.decorators import admin_login_required
 from districts.models import District
 from headmasters.models import HeadmasterProfile
 from school.models import School, SchoolPost
+from school.resources import SchoolResource
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
 from unions.models import Union
@@ -226,3 +228,9 @@ def Sk_leaderApproval(request):
     return render(request, 'school/Sk_leaderApproval.html')
 
 
+def export(request):
+    person_resource = SchoolResource()
+    dataset = person_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="persons.csv"'
+    return response

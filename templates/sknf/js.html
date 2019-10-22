@@ -74,6 +74,17 @@
         });
 
 
+            $(".shop-search").hide();
+            $("#advancedButton").click(function(event){
+                $(".shop-search").toggle('slow');
+                event.preventDefault();
+            });
+
+            $(".close-search").click(function(event){
+                $(".shop-search").hide('slow');
+                event.preventDefault();
+            });
+
         $(function(){
             $('#addMoreDoc').on('click', addRow);
             $(document).on('click', '.removeDoc', function() {
