@@ -1,81 +1,117 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    {% load static %}
-    {% load widget_tweaks %}
+{% load static %}
+{% load widget_tweaks %}
 
-    <!-- =============================================== -->
+<!-- =============================================== -->
 
-    <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
 
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
+<!-- Content Header (Page header) -->
+<section class="content-header">
 
-        <h1 style ="display:inline-block;">{{ school_profile.name }}</h1>
-    </section>
+    <h1 style ="display:inline-block;">{{ school_profile.name }}</h1>
+</section>
 
-    <!-- Main content -->
-    <section class="content" style="position:relative">
-        {% if school_profile.image %}
-            <img src="{{ school_profile.image.url }}" width="100%" class="preview-show"><br />
-        {% else %}
-            <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" width="100%" class="preview-show">
-        {% endif %}
-        {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
-        <div class="img-ctrl" style="position:absolute;z-index:99;bottom:25px;right:25px;">
-            <form method='POST' style =" display:inline-block;float:right;" enctype="multipart/form-data" novalidate>
-                {% csrf_token %}
-                <div style =" display:inline-block;">
-                    {% render_field form.image style="display:none" class="img-preview" placeholder=form.image.label %}
-                    <input type="button" style="display: inline-block;" value="Change" class="btn btn-primary" id="btn_change" onclick="changePic();">
-                    <input type="submit" style="display: none;" name="one_picture" value="Upload" id="btn_upload" class="btn btn-primary"/>
-                </div>
-            </form>
-        </div>
-        {% endif %}
+<!-- Main content -->
+<section class="content" style="position:relative">
+    {% if school_profile.image %}
+    <img src="{{ school_profile.image.url }}" width="100%" class="preview-show"><br />
+    {% else %}
+    <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" width="100%" class="preview-show">
+    {% endif %}
     {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
-    </section>
+    <div class="img-ctrl" style="position:absolute;z-index:99;bottom:25px;right:25px;">
+        <form method='POST' style =" display:inline-block;float:right;" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div style =" display:inline-block;">
+                {% render_field form.image style="display:none" class="img-preview" placeholder=form.image.label %}
+                <input type="button" style="display: inline-block;" value="Change" class="btn btn-primary" id="btn_change" onclick="changePic();">
+                <input type="submit" style="display: none;" name="one_picture" value="Upload" id="btn_upload" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+    {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
+</section>
 
-    <div class="row">
-        <div class="col-sm-6">
-    <div class="box-body box-profile">
-                {% if headmaster_profile.image %}
-                    <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
-                {% else %}
-                    <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
-                {% endif %}
-                <h3 class="profile-username text-center">
-                    <font color="black">
-                        {{ headmaster_profile.user.first_name }}
-                    </font>
-                </h3>
-                <p class="text-muted text-center"><font color="black">Head Master</font></p>
-            </div>
-        </div>
-        <div class="col-sm-6">
+<div class="row visible-xs">
+    <div class="col-sm">
         <div class="box-body box-profile">
-                {% if skleader_profile.image %}
-                    <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{skleader_profile.image.url }}" alt="User profile picture">
-                {% else %}
-                    <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
-                {% endif %}
-                <h3 class="profile-username text-center"><font color="black">{{ skleader_profile.user.first_name }}</font></h3>
-                <p class="text-muted text-center"><font color="black">Sk Leader</font></p>
-            </div>
+            {% if headmaster_profile.image %}
+            <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
+            {% else %}
+            <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+            {% endif %}
+            <h3 class="profile-username text-center">
+                <font color="black">
+                    {{ headmaster_profile.user.first_name }}
+                </font>
+            </h3>
+            <p class="text-muted text-center"><font color="black">Head Master</font></p>
         </div>
     </div>
+    <div class="col-sm">
+        <div class="box-body box-profile">
+            {% if skleader_profile.image %}
+            <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{skleader_profile.image.url }}" alt="User profile picture">
+            {% else %}
+            <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+            {% endif %}
+            <h3 class="profile-username text-center"><font color="black">{{ skleader_profile.user.first_name }}</font></h3>
+            <p class="text-muted text-center"><font color="black">Sk Leader</font></p>
+        </div>
+    </div>
+</div>
+<div class="row visible-xs">
+     <div class="col-md-3">
+        <section class="content" >
+            <div class="box box-widget">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                        <h4>Members</h4>
+                    </div>
+
+                </div>
+                <div class="box-body">
+                    <div class="row">
+
+                        {% for skmember in skmember_list %}
+                        {% if skmember.image %}
+                        <div class="col-xs-6"align="center">
+                            <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
+                            <p><strong>{{skmember.user}}</strong></p>
+                        </div>
+                        {% else %}
+                        <div class="col-xs-6" align="center">
+                            <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
+                            <p><strong>{{skmember.user}}</strong></p>
+                        </div>
+                        {% endif %}
+
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 
 <div class="row">
-<div class="col-md-9" >
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-            <div class="box box-info">
-                <div id="image_preview"></div>
-                <form method='POST' enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="box-body">
-                    <!-- Color Picker -->
-                    <span id = "alert_placeholder">
+    <div class="col-md-9" >
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div id="image_preview"></div>
+                        <form method='POST' enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="box-body">
+                                <!-- Color Picker -->
+                                <span id = "alert_placeholder">
                         {% if post_form.errors %}
                         <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                             padding-bottom: 3px;" class="alert alert-danger-error-message">
@@ -87,84 +123,84 @@
                         </div>
                         {% endif %}
                     </span>
-                    <div class="form-group">
-                        {% render_field post_form.text class="form-control" placeholder='What is on your mind?' %}
+                                <div class="form-group">
+                                    {% render_field post_form.text class="form-control" placeholder='What is on your mind?' %}
+                                </div>
+                                <div class="form-group" style="left:25px;display: inline-block;">
+                                    {% render_field post_form.post_image class="" style="display:none" placeholder=profile_form.image.label %}
+                                    <input type="button" style="display: inline-block;position:relative;width:40px;" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image" onclick="choosePic();" style="position:absolute;z-index:99;bottom:35px;left:22px;cursor: pointer;color:#fff;"></span>
+                                </div>
+                                <!-- /.box-footer -->
+                                <input type="submit" value="Post" style="display: inline-block;position:relative;" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group" style="left:25px;display: inline-block;">
-                        {% render_field post_form.post_image class="" style="display:none" placeholder=profile_form.image.label %}
-                        <input type="button" style="display: inline-block;position:relative;width:40px;" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image" onclick="choosePic();" style="position:absolute;z-index:99;bottom:35px;left:22px;cursor: pointer;color:#fff;"></span>
-                    </div>
-                    <!-- /.box-footer -->
-                    <input type="submit" value="Post" style="display: inline-block;position:relative;" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
                 </div>
-                </form>
             </div>
-        </div>
-        </div>
-    </section>
-{% endif %}
-    {% if school_post_list %}
-    <section class="content">
+        </section>
+        {% endif %}
+        {% if school_post_list %}
+        <section class="content">
 
-        {% for school_post in school_post_list %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
-                    </div>
-                    <div class="box-body">
-                        {% if school_post.post_image %}
-                        <div class="form-group">
-                            <img src="{{ school_post.post_image.url }}" alt="">
+            {% for school_post in school_post_list %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
                         </div>
-                        {% endif %}
-                        <div class="form-group">
-                            {{school_post.text}}
+                        <div class="box-body">
+                            {% if school_post.post_image %}
+                            <div class="form-group">
+                                <img src="{{ school_post.post_image.url }}" alt="">
+                            </div>
+                            {% endif %}
+                            <div class="form-group">
+                                {{school_post.text}}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
 
-    </section>
-    {% endif %}
-</div>
-<div class="col-md-3">
-    <section class="content" >
-        <div class="box box-widget">
-            <div class="box-header with-border">
-                <div class="user-block">
-                    <h4>Members</h4>
+        </section>
+        {% endif %}
+    </div>
+    <div class="col-md-3 hidden-xs">
+        <section class="content" >
+            <div class="box box-widget">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                        <h4>Members</h4>
+                    </div>
+
                 </div>
+                <div class="box-body">
+                    <div class="row">
 
-            </div>
-            <div class="box-body">
-                <div class="row">
-
-                    {% for skmember in skmember_list %}
+                        {% for skmember in skmember_list %}
                         {% if skmember.image %}
-                            <div class="col-xs-6"align="center">
-                                <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
-                                <p><strong>{{skmember.user}}</strong></p>
-                            </div>
+                        <div class="col-xs-6"align="center">
+                            <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
+                            <p><strong>{{skmember.user}}</strong></p>
+                        </div>
                         {% else %}
-                            <div class="col-xs-6" align="center">
-                                <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
-                                <p><strong>{{skmember.user}}</strong></p>
-                            </div>
+                        <div class="col-xs-6" align="center">
+                            <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
+                            <p><strong>{{skmember.user}}</strong></p>
+                        </div>
                         {% endif %}
 
-                    {% endfor %}
+                        {% endfor %}
 
+
+                    </div>
 
                 </div>
-
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 </div>
 
 {% endblock %}
