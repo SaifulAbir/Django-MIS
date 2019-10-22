@@ -266,3 +266,7 @@ body{
 .sidebar a{
     color: #cd911f !important;
 }
+
+/* event page */
+.fc-event{border: 1px solid #fff !important;}
+.fc-title{font-size: 1.3em !important;}
