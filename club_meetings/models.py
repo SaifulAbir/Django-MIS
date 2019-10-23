@@ -14,7 +14,7 @@ class ClubMeetings(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
     presence_guide_teacher = models.BooleanField(default=False)
     presence_skleader = models.BooleanField(default=False)
-    attendance= models.ManyToManyField(User)
+    attendance= models.ManyToManyField(User, related_name='a_profile')
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     topics = models.ManyToManyField(Topics)
 
