@@ -1,5 +1,5 @@
 {% load static %}
-{% for school in school_list %}
+{% for school in queryset %}
 
 <tr>
     <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>

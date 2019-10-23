@@ -66,10 +66,35 @@ def school_update(request, pk):
         form = SchoolForm(instance=school)
     return save_school_form(request, form, 'school/school_update_form.html')
 
-@method_decorator(admin_login_required, name='dispatch')
-class SchoolList(LoginRequiredMixin, generic.ListView):
-    login_url = '/'
-    model = models.School
+
+@admin_login_required
+def school_list(request):
+    qs=School.objects.all()
+    name= request.GET.get('name_contains')
+    school_id= request.GET.get('school_id_contains')
+    division= request.GET.get('division_contains')
+    district= request.GET.get('district_contains')
+    upazilla=  request.GET.get('upazilla_contains')
+    union =  request.GET.get('union_contains')
+    if name !='' and name is not None:
+        qs = qs.filter(name__icontains=name)
+    if school_id != '' and school_id is not None:
+        qs = qs.filter(school_id__icontains=school_id)
+    if division !='' and division is not None:
+        qs = qs.filter(division__name__icontains=division)
+    if district !='' and district is not None:
+        qs = qs.filter(district__name__icontains=district)
+    if upazilla != '' and upazilla is not None:
+        qs = qs.filter(upazilla__name__icontains=upazilla)
+    if union !='' and union is not None:
+        qs = qs.filter(union__name__icontains=union)
+
+    return render(request, 'school/school_list.html', {'queryset': qs})
+
+
+
+
+
 
 def school_delete(request, pk):
     school = get_object_or_404(School, pk=pk)
@@ -234,3 +259,6 @@ def export(request):
     response = HttpResponse(dataset.csv, content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="persons.csv"'
     return response
+
+def school_search(request):
+    filter = SchoolFilter(request.GET, queryset=School)

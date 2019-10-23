@@ -1,8 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.utils import timezone
 from.models import School, Division, District , Upazilla, Union,SchoolPost
+from.views import school_list
 
 class SchoolTest(TestCase):
     def setUp(self):
@@ -21,6 +22,9 @@ class SchoolTest(TestCase):
         s4 = Union(division=self.division, district=self.district,upazilla=self.upazilla, name= 'Dholapur')
         s4.save()
         self.union = s4
+
+        self.client = Client()
+
 
     def test__when_school_name_is_null__should_raise_error(self):
         s = School(school_id = 123)
@@ -112,6 +116,24 @@ class SchoolTest(TestCase):
             s.full_clean()
         except:
             self.fail()
+
+    def test__when_Establishment_date_is_null___should_pass(self):
+        time = timezone.now()
+        s = School( name='Mirpur School',school_id='123', division=self.division,
+                    district=self.district, upazilla = self.upazilla, union=self.union, created_date=time,)
+        try:
+            s.full_clean()
+        except:
+            self.fail()
+
+    # def test__when_name_is_searched__should_give_result_accordingly(self):
+    #     s = School(name='Mirpur School', school_id='123', division=self.division,
+    #                district=self.district, upazilla=self.upazilla, union=self.union, )
+    #
+    #     s1=client.request()school_list(name_contains='mirpur')
+    #     self.assertEqual(len(s1),1)
+
+
 
 
 class SchoolPostTest(TestCase):
