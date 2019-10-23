@@ -47,7 +47,7 @@
           <div class="form-group">
             <label for="id_start">Start</label>
             <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
-              <input type="text" class="form-control datetimepicker-input" id="id_start" data-target="#datetimepicker7"/>
+              <input type="text" class="form-control datetimepicker-input" id="id_start" data-target="#datetimepicker7" readonly/>
               <span class="input-group-addon" data-target="#datetimepicker7" data-toggle="datetimepicker">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -58,7 +58,7 @@
           <div class="form-group">
           <label for="id_end">End</label>
           <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
-            <input type="text" class="form-control datetimepicker-input" id="id_end" data-target="#datetimepicker8"/>
+            <input type="text" class="form-control datetimepicker-input" id="id_end" data-target="#datetimepicker8" readonly/>
             <span class="input-group-addon" data-target="#datetimepicker8" data-toggle="datetimepicker">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -122,8 +122,9 @@
     });
   });
   function dateSelected(start, end, ev, vw){
-    start=moment(start).format('DD-MM-YYYY h:mm:ss a');
-    end=moment(end).format('DD-MM-YYYY h:mm:ss a');
+    $('#id_title').val('');
+    start=moment(start).format('DD-MM-YYYY h:mm A');
+    end=moment(end).format('DD-MM-YYYY h:mm A');
     $('#id_start').val(start);
     $('#id_end').val(end);
     $('#event-error').html('');
@@ -170,16 +171,20 @@
     }
   }
   $(function () {
-        $('#id_start').datetimepicker();
-        $('#id_end').datetimepicker({
-            useCurrent: false //Important! See issue #1075
+        $('#datetimepicker7,#datetimepicker8').datetimepicker({
+          useCurrent: false,
+          ignoreReadonly: true,
+          format: 'DD-M-YYYY hh:mm A',
+          minDate: moment()
         });
-        $("#id_start").on("dp.change", function (e) {
-            $('#id_end').data("DateTimePicker").minDate(e.date);
+
+        $('#datetimepicker7').datetimepicker().on('dp.change', function (e) {
+            $('#datetimepicker8').data("DateTimePicker").minDate(e.date);
         });
-        $("#id_end").on("dp.change", function (e) {
-            $('#id_start').data("DateTimePicker").maxDate(e.date);
+        $('#datetimepicker8').on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").maxDate(e.date);
         });
+
     });
 
 </script>
