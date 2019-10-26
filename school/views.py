@@ -89,7 +89,8 @@ def school_list(request):
     if union !='' and union is not None:
         qs = qs.filter(union__name__icontains=union)
 
-    return render(request, 'school/school_list.html', {'queryset': qs})
+    return render(request, 'school/school_list.html', {'queryset': qs,'name':name,'school_id':school_id,'division':division,
+                                                       'district':district,'upazilla':upazilla,'union':union})
 
 
 
