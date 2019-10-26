@@ -30,14 +30,15 @@ class SchoolResource(resources.ModelResource):
             column_name='Union',
             attribute='union',
             widget=ForeignKeyWidget(Union, 'name'))
-    club_establishment_date = fields.Field(column_name='Establishment Date')
+    #club_establishment_date = fields.Field(column_name='Establishment Date')
 
     def dehydrate_club_establishment_date(self,school):
         date_string = str(school.club_establishment_date)
-        return datetime.strptime(date_string, '%Y-%m-%d').strftime('%d-%m-%Y')
+        if date_string :
+            return datetime.strptime(date_string, '%Y-%m-%d').strftime('%d-%m-%Y')
 
 
     class Meta:
         model = School
-        fields = ('school_id', 'club_establishment_date','division','district','upazilla','union','address')
+        fields = ('school_id','division','district','upazilla','union','address')
 

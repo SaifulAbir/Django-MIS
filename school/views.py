@@ -68,7 +68,7 @@ def school_update(request, pk):
 
 
 @admin_login_required
-def school_list(request):
+def school_list(request, action = None):
     qs=School.objects.all()
     name= request.GET.get('name_contains')
     school_id= request.GET.get('school_id_contains')
@@ -88,8 +88,15 @@ def school_list(request):
         qs = qs.filter(upazilla__name__icontains=upazilla)
     if union !='' and union is not None:
         qs = qs.filter(union__name__icontains=union)
+    if action == None:
+        return render(request, 'school/school_list.html', {'queryset': qs})
+    else:
+        resource = SchoolResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="school_list.csv"'
+        return response
 
-    return render(request, 'school/school_list.html', {'queryset': qs})
 
 
 
