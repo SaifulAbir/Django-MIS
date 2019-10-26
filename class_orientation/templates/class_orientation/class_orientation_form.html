@@ -1,0 +1,47 @@
+{% load widget_tweaks %}
+{% load static %}
+<form action="{% url 'class_orientation:create_class_orientation' %}" class="js-class-orientation-create-form" method='POST'>
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Create a new Class Orientation</h4>
+    </div>
+    <div class="modal-body">
+        <div class="{% if form.non_field_errors %}text-danger{% endif %}">
+            {% for error in form.non_field_errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+
+        {% for field in form %}
+        <div class="form-group">
+            <div class="{% if field.errors %} invalid{% endif %}">
+                {% for error in field.errors %}
+                <p class="text-danger">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% if field.label == 'Created date' %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% render_field field placeholder=field.label class="form-control datepicker" %}
+            {% elif field.label == 'Student class' %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% render_field field class="form-control" placeholder=field.label %}
+            {% else %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% render_field field class="" placeholder=field.label %}
+            {% endif %}
+        </div>
+        {% endfor %}
+
+    </div>
+    <div class="modal-footer">
+
+        <input type="submit" value="Create" id="id_username" class="btn btn-primary"/>
+
+    </div>
+</form>
+<script>initDatepicker();</script>
+<!-- /.form group -->
+
