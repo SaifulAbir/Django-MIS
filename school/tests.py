@@ -130,8 +130,9 @@ class SchoolTest(TestCase):
     #     s = School(name='Mirpur School', school_id='123', division=self.division,
     #                district=self.district, upazilla=self.upazilla, union=self.union, )
     #
-    #     s1=client.request()school_list(name_contains='mirpur')
-    #     self.assertEqual(len(s1),1)
+    #     s1=self.client.login(username='admin', password='123')
+    #     response = self.client.get('/school_list/')
+    #     self.assertEqual(response,200)
 
 
 
