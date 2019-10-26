@@ -131,7 +131,7 @@ class SchoolTest(TestCase):
     #                district=self.district, upazilla=self.upazilla, union=self.union, )
     #
     #     s1=self.client.login(username='admin', password='123')
-    #     response = self.client.get('/school_list/')
+    #     response = self.client.get('school:school_list',{})
     #     self.assertEqual(response,200)
 
 

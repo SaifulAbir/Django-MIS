@@ -95,7 +95,6 @@ def school_list(request):
 
 
 
-
 def school_delete(request, pk):
     school = get_object_or_404(School, pk=pk)
     data = dict()

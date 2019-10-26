@@ -68,24 +68,6 @@ def headmaster_profile_view(request):
         #'headmaster_form_details': headmaster_form_details,
     })
 
-@method_decorator(admin_login_required, name='dispatch')
-class HeadmasterList(LoginRequiredMixin, generic.ListView):
-    login_url = '/'
-    model = models.HeadmasterProfile
-
-    def get_queryset(self):
-        queryset = HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(HeadmasterList, self).get_context_data(**kwargs)
-        try:
-            context['school_name'] =HeadmasterDetails.objects.latest('from_date')
-        except HeadmasterDetails.DoesNotExist :
-            context['current_schoxol_name'] = None
-
-        return context
-
 
 @method_decorator(admin_login_required, name='dispatch')
 class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
@@ -93,6 +75,20 @@ class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "headmaster_detail"
     model = models.HeadmasterProfile
     template_name = 'headmasters/headmaster_detail.html'
+
+
+
+def headmaster_list(request):
+    qs=HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
+    name= request.GET.get('name_contains')
+    school= request.GET.get('school_contains')
+
+    if name !='' and name is not None:
+        qs = qs.filter(user__first_name__icontains=name)
+    if school != '' and school is not None:
+        qs = qs.filter(school__name__icontains=school)
+    return render(request, 'headmasters/headmasterprofile_list.html', {'queryset': qs})
+
 
 @admin_login_required
 def headmaster_update(request, pk):
