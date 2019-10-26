@@ -68,7 +68,7 @@ def school_update(request, pk):
 
 
 @admin_login_required
-def school_list(request):
+def school_list(request, export='null'):
     qs=School.objects.all()
     name= request.GET.get('name_contains')
     school_id= request.GET.get('school_id_contains')
