@@ -15,6 +15,19 @@ class HeadMasterProfileTest(TestCase):
         s2.save()
         self.school=s2
 
+        user = User.objects.create(email='a@g.com')
+        user.set_password('12345')
+        user.user_type = 1
+        user.save()
+
+    def test__when_Every_field_is_valid___should_pass(self):
+        time = timezone.now()
+        s = HeadmasterProfile(user=self.user,school=self.school,joining_date=timezone.now(),image='1.png',mobile='0181543421')
+        try:
+            s.full_clean()
+        except:
+            self.fail()
+
     def test__when_Username_is_null__should_raise_error(self):
         s = HeadmasterProfile(school=self.school,joining_date=timezone.now())
         with self.assertRaises(ValidationError):
@@ -38,6 +51,15 @@ class HeadMasterProfileTest(TestCase):
     def test__if_max_leangth_is_added__in_mobile_number(self):
         max_length = HeadmasterProfile._meta.get_field('mobile').max_length
         self.assertEquals(max_length, 11)
+
+
+    def test__when_school_name_is_searched__should_give_result_accordingly(self):
+        s = HeadmasterProfile(user=self.user,school=self.school,joining_date=timezone.now(),image='1.png',mobile='0181543421')
+        s.save()
+
+        s1=self.client.login(email='a@g.com', password='12345')
+        response = self.client.get('/headmasters/headmaster_list/',{'school_contains':'mirpur'},follow=True)
+        self.assertContains(response = response, status_code=200,  text='<td>Mirpur School (123)</td>', html=True)
 
 class HeadmasterDetailsTest(TestCase):
     def setUp(self):
