@@ -259,5 +259,3 @@ def export(request):
     response['Content-Disposition'] = 'attachment; filename="school_list.csv"'
     return response
 
-def school_search(request):
-    filter = SchoolFilter(request.GET, queryset=School)
