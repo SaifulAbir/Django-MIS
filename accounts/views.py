@@ -1,3 +1,5 @@
+import random
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash, urls, forms, views
@@ -5,8 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView
 from django.core.exceptions import PermissionDenied
+from django.template import loader
+from django.core.mail import send_mail
 
-from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 
 from django.shortcuts import render, redirect
@@ -268,3 +272,38 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'accounts/password_reset_complete.html'
 
 
+def verifyemail(request):
+    email = request.GET.get('email')
+    print(email)
+    num_results = User.objects.all().filter(email=email)
+    number_of_record = num_results.count()
+    if number_of_record > 0:
+        return JsonResponse({
+            'exist': True,
+            'msg': 'This email already exist'
+        })
+
+    data = ''
+    unique_id = random.randint(100000, 999999)
+    html_message = loader.render_to_string(
+        'accounts/email/email_context.html',
+        {
+            'activation_email_link': unique_id,
+            'subject': 'Thank you from' + data,
+        }
+    )
+    subject_text = loader.render_to_string(
+        'accounts/email/email_subject.txt',
+        {
+            'user_name': 'name',
+            'subject': 'Thank you from' + data,
+        }
+    )
+    message = ' it  means a world to us '
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+    send_mail(subject_text, message, email_from, recipient_list, html_message=html_message)
+    return JsonResponse({
+        'exist': False,
+        'msg': 'Please check your email and confirm your email address'
+    })
