@@ -57,11 +57,11 @@ class EditClubMeetingForm(forms.ModelForm):
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
-        required=True)
+        required=False)
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=User.objects.filter(user_type=6),
-        required=True)
+        required=False)
     date = forms.DateField(widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',))
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)

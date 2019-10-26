@@ -1,0 +1,14 @@
+
+{% for class_orientation in classorientation_list %}
+<tr>
+
+    <td>{{ class_orientation.created_date }}</td>
+    <td>{{ class_orientation.student_class }}</td>
+    <td align="center"> <button type="button" style="margin-right:10px"
+                class="js-update-class_orientation"
+                data-url="{% url 'class_orientation:class_orientation_update' class_orientation.id %}">
+        <span class="fa fa-edit"></span>
+    </button>
+    </td>
+</tr>
+{% endfor %}
