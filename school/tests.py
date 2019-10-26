@@ -26,7 +26,7 @@ class SchoolTest(TestCase):
 
         user = User.objects.create(email='a@g.com')
         user.set_password('12345')
-        user.is_superuser = 1
+        user.user_type = 1
         user.save()
 
 
@@ -140,7 +140,7 @@ class SchoolTest(TestCase):
         s1=self.client.login(email='a@g.com', password='12345')
         response = self.client.get('/school_list/',{'name_contains':'mirpur'},follow=True)
         print(response.content)
-        self.assertEqual(response.status_code,200)
+        self.assertContains(response = response, status_code=200,  text='<td><a href="/5/">Mirpur School</a></td>', html=True)
 
 
 
