@@ -210,8 +210,8 @@ def Sk_leaderApproval(request):
 
 
 def export(request):
-    person_resource = SchoolResource()
-    dataset = person_resource.export()
+    resource = SchoolResource()
+    dataset = resource.export()
     response = HttpResponse(dataset.csv, content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="persons.csv"'
+    response['Content-Disposition'] = 'attachment; filename="school_list.csv"'
     return response
