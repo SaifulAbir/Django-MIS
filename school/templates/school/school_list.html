@@ -1,165 +1,71 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    <section class="content-header">
-        <h1>Schools</h1>
-    </section>
+<section class="content-header" style="padding-top:60px">
+    <h1>Schools</h1>
+</section>
+<!-- Main content -->
+<section class="content">
     <!-- Main content -->
-    <section class="content">
-        <!-- Main content -->
-        <div class="box">
-            <div class="box-header">
-                <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
-                    <form id="w0" action="/backend/web/shop/index" method="get">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="form-group field-shopsearch-approval_status_id">
-                                    <label class="control-label" for="shopsearch-approval_status_id">Approval Status</label>
-                                    <select id="shopsearch-approval_status_id" class="form-control" name="ShopSearch[approval_status_id]">
-                                        <option value="">Select Approval</option>
-                                        <option value="1">Approved</option>
-                                        <option value="2">Under Approval</option>
-                                        <option value="3">Rejected</option>
-                                        <option value="4">Application Submitted</option>
-                                        <option value="5">Application in Process</option>
-                                        <option value="6">Pending </option>
-                                    </select>
-
-                                    <div class="help-block"></div>
-                                </div>        </div>
-                            <div class="col-sm-3">
-                                <div class="form-group field-shopsearch-station_status">
-                                    <label class="control-label" for="shopsearch-station_status">Order Status</label>
-                                    <select id="shopsearch-station_status" class="form-control" name="ShopSearch[station_status]">
-                                        <option value="">Select Status</option>
-                                        <option value="1">Information Received</option>
-                                        <option value="2">Offer Negotiation</option>
-                                        <option value="3">Order in Final Stage</option>
-                                        <option value="4">Booked for Machinery </option>
-                                        <option value="5">Machine Supply in Process</option>
-                                        <option value="6">Erection Going on </option>
-                                        <option value="7">Final License in Process</option>
-                                        <option value="8">Project Running</option>
-                                        <option value="9">Nil/ None/ Unknown</option>
-                                        <option value="10">Primary approval in Process</option>
-                                        <option value="11">Recommended </option>
-                                        <option value="12">Own Project </option>
-                                        <option value="13">Project for BM Energy Ltd</option>
-                                    </select>
-
-                                    <div class="help-block"></div>
-                                </div>
+    <div class="box">
+        <div class="box-header">
+            <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <h3>School Search</h3>
+                <form method="GET" action=".">
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <div class="input-group">
+                                <strong>Name</strong>
+                                <input class="form-control" type="search" name="name_contains" />
                             </div>
-                            <div class="col-sm-3">
-                                <div class="form-group field-shopsearch-project_status">
-                                    <label class="control-label" for="shopsearch-project_status">Project Status</label>
-                                    <select id="shopsearch-project_status" class="form-control" name="ShopSearch[project_status]">
-                                        <option value="">Select Project Status</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="On Going">On Going</option>
-                                        <option value="Upcoming">Upcoming</option>
-                                        <option value="not set">Not set</option>
-                                    </select>
-
-                                    <div class="help-block"></div>
-                                </div>        </div>
-                            <div class="col-sm-3">
-                                <div class="form-group field-shopsearch-fuel_delivery_supplier">
-                                    <label class="control-label" for="shopsearch-fuel_delivery_supplier">Fuel Delivery</label>
-                                    <select id="shopsearch-fuel_delivery_supplier" class="form-control" name="ShopSearch[fuel_delivery_supplier]">
-                                        <option value="">Select</option>
-                                        <option value="2">SMET Services</option>
-                                        <option value="3">Navana LPG</option>
-                                        <option value="4">Bashundhara LPG</option>
-                                        <option value="5">Omera LPG</option>
-                                        <option value="6">Intraco LPG</option>
-                                        <option value="11">JMI</option>
-                                        <option value="13">BM Energy (BD) Ltd.</option>
-                                        <option value="14">Total Gas</option>
-                                        <option value="15">Asiacom Engineering</option>
-                                        <option value="16">Advance Engineering</option>
-                                        <option value="17">Unicorn LPG</option>
-                                        <option value="18">Beximco LPG</option>
-                                        <option value="19">Lough Gas</option>
-                                        <option value="20">Unigas </option>
-                                        <option value="21">Petromax </option>
-                                        <option value="22">Jamuna LPG Ltd</option>
-                                        <option value="23">Gas One </option>
-                                        <option value="24">MRCL, Besto</option>
-                                    </select>
-
-                                    <div class="help-block"></div>
-                                </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <div class="input-group">
+                                <strong>School ID</strong>
+                                <input class="form-control " type="search" name="school_id_contains" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-3">
+                            <div class="input-group">
+                                <strong>Division</strong>
+                                <input class="form-control " type="search" name="division_contains" />
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <div class="form-group field-shopsearch-fuel_supply_agreement_supplier">
-                                    <label class="control-label" for="shopsearch-fuel_supply_agreement_supplier">Fuel Supply Agreement</label>
-                                    <select id="shopsearch-fuel_supply_agreement_supplier" class="form-control" name="ShopSearch[fuel_supply_agreement_supplier]">
-                                        <option value="">Select</option>
-                                        <option value="2">SMET Services</option>
-                                        <option value="3">Navana LPG</option>
-                                        <option value="4">Bashundhara LPG</option>
-                                        <option value="5">Omera LPG</option>
-                                        <option value="6">Intraco LPG</option>
-                                        <option value="11">JMI</option>
-                                        <option value="13">BM Energy (BD) Ltd.</option>
-                                        <option value="14">Total Gas</option>
-                                        <option value="15">Asiacom Engineering</option>
-                                        <option value="16">Advance Engineering</option>
-                                        <option value="18">Beximco LPG</option>
-                                        <option value="19">Lough Gas</option>
-                                        <option value="20">Unigas </option>
-                                        <option value="21">Petromax </option>
-                                        <option value="22">Jamuna LPG Ltd</option>
-                                        <option value="24">MRCL, Besto</option>
-                                    </select>
-
-                                    <div class="help-block"></div>
-                                </div>        </div>
-                            <div class="col-sm-3">
-                                <div class="form-group field-shopsearch-local_machine_supplier">
-                                    <label class="control-label" for="shopsearch-local_machine_supplier">Local Machine Supplier</label>
-                                    <select id="shopsearch-local_machine_supplier" class="form-control" name="ShopSearch[local_machine_supplier]">
-                                        <option value="">Select</option>
-                                        <option value="2">SMET Services</option>
-                                        <option value="3">Navana LPG</option>
-                                        <option value="4">Bashundhara LPG</option>
-                                        <option value="5">Omera LPG</option>
-                                        <option value="6">Intraco LPG</option>
-                                        <option value="11">JMI</option>
-                                        <option value="13">BM Energy (BD) Ltd.</option>
-                                        <option value="14">Total Gas</option>
-                                        <option value="15">Asiacom Engineering</option>
-                                        <option value="16">Advance Engineering</option>
-                                        <option value="17">Unicorn LPG</option>
-                                        <option value="18">Beximco LPG</option>
-                                        <option value="19">Lough Gas</option>
-                                        <option value="22">Jamuna LPG Ltd</option>
-                                        <option value="23">Gas One </option>
-                                        <option value="24">MRCL, Besto</option>
-                                        <option value="25">Quality Power</option>
-                                    </select>
-
-                                    <div class="help-block"></div>
-                                </div>        </div>
+                        <div class="form-group col-sm-3">
+                            <div class="input-group">
+                                <strong>District</strong>
+                                <input class="form-control " type="search" name="district_contains" />
+                            </div>
                         </div>
-
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Search</button>
-
-                            <button type="reset" class="btn btn-default close-search pull-right">Close</button>
+                        <div class="form-group col-sm-3">
+                            <div class="input-group">
+                                <strong>Upazilla</strong>
+                                <input class="form-control" type="search" name="upazila_contains" />
+                            </div>
                         </div>
+                        <div class="form-group col-sm-3">
+                            <div class="input-group">
+                                <strong>Union</strong>
+                                <input class="form-control py-2 border-right-0 border" type="search" name="union_contains" />
+                            </div>
+                        </div>
+                    </div>
 
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Search</button>
+
+                        <button type="reset" class="btn btn-default close-search pull-right">Close</button>
+                    </div>
+
+                </form>
             </div>
+        </div>
 
-            <div class="box-header">
-                <h3 style="display: inline-block;" class="box-title"> </h3>
-                <span id = "alert_placeholder">
+        <div class="box-header">
+            <h3 style="display: inline-block;" class="box-title"> </h3>
+            <span id = "alert_placeholder">
                     {% if messages %}
                         <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
                         <span>
@@ -171,51 +77,51 @@
                     {% endif %}
                 </span>
 
-                <a type="button"
-                   class="btn btn-primary pull-right"
-                   href="{% url 'school:create_school' %}">
-                    <span class="fa fa-plus"></span>
-                    New School
-                </a>
+            <a type="button"
+               class="btn btn-primary pull-right"
+               href="{% url 'school:create_school' %}">
+                <span class="fa fa-plus"></span>
+                New School
+            </a>
 
-                <a type="button" style="margin-right: 5px"
-                   class="btn btn-primary pull-right"
-                   href="{% url 'school:export_school' %}">
-                    <span class="fa file-export"></span>
-                    Export CSV
-                </a>
+            <a type="button" style="margin-right: 5px"
+               class="btn btn-primary pull-right"
+               href="{% url 'school:export_school' %}">
+                <span class="fa file-export"></span>
+                Export CSV
+            </a>
 
-                <a type="button" style="margin-right: 5px"
-                   class="btn btn-primary pull-right" id="advancedButton"
-                   href="javascript:void(0)">
-                    <span class="fa fa-excel"></span>
-                    Search
-                </a>
+            <a type="button" style="margin-right: 5px"
+               class="btn btn-primary pull-right" id="advancedButton"
+               href="javascript:void(0)">
+                <span class="fa fa-excel"></span>
+                Search
+            </a>
 
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive">
-                <table id="example1" class=" school-table table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th class = "col-sm-4">Name</th>
-                        <th class ="col-sm-2">EIIN</th>
-                        <th class ="col-sm-2">Division</th>
-                        <th class ="col-sm-2">District</th>
-                        <th class ="col-sm-2">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% include 'school/partial_school_list.html' %}
-                </table>
-                {% include 'school/_modal.html' %}
-            </div>
         </div>
-        <!-- /.content -->
-    </section>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+            <table id="example1" class=" data-table table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class = "col-sm-4">Name</th>
+                    <th class ="col-sm-2">EIIN</th>
+                    <th class ="col-sm-2">Division</th>
+                    <th class ="col-sm-2">District</th>
+                    <th class ="col-sm-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% include 'school/partial_school_list.html' %}
+            </table>
+            {% include 'school/_modal.html' %}
+        </div>
+    </div>
+    <!-- /.content -->
+</section>
 {% endblock %}
 {% block extra_js %}
-    <script type="text/javascript">
+<script type="text/javascript">
         $(function () {
             var loadForm = function () {
                 var btn = $(this);

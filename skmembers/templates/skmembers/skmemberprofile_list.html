@@ -2,12 +2,42 @@
 {% block body_block %}
 
     <!-- Main content -->
-<section class="content-header">
+<section class="content-header" style="padding-top:60px">
     <h1>
         SK Members
     </h1>
 </section>
     <section class="content">
+
+         <div class="box">
+        <div class="box-header">
+            <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <h3>Head Master Search</h3>
+                <form method="GET" action=".">
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <div class="input-group">
+                                <strong>Name</strong>
+                                <input class="form-control" type="search" name="name_contains" />
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <div class="input-group">
+                                <strong>School</strong>
+                                <input class="form-control " type="search" name="school_contains" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Search</button>
+
+                        <button type="reset" class="btn btn-default close-search pull-right">Close</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
 
         <!-- Main content -->
         <div class="box">
@@ -30,10 +60,22 @@
                     <span class="fa fa-plus"></span>
                     New SK Member
                 </a>
+                <a type="button" style="margin-right: 5px"
+                   class="btn btn-primary pull-right"
+                   href="{% url 'school:export_school' %}">
+                    <span class="fa file-export"></span>
+                    Export CSV
+                </a>
+                <a type="button" style="margin-right: 5px"
+                   class="btn btn-primary pull-right" id="advancedButton"
+                   href="javascript:void(0)">
+                    <span class="fa fa-excel"></span>
+                    Search
+                </a>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-                <table   id="example1" class=" division-table table table-bordered table-striped">
+                <table   id="example1" class=" data-table table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th class="col-sm-3">Name</th>
@@ -45,7 +87,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for skmember in skmemberprofile_list %}
+                    {% for skmember in queryset %}
                     <tr>
                         <td>{{skmember.user.first_name}}</td>
                         <td>{{ skmember.user.email }}</td>

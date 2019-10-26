@@ -149,13 +149,16 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
 
         return queryset
 
-class SkmemberListForSkmber(LoginRequiredMixin, generic.ListView):
-    login_url = '/'
-    model = models.SkMemberProfile
+def skmember_list(request):
+    qs=SkMemberProfile.objects.filter(user__user_type__in=[6])
+    name= request.GET.get('name_contains')
+    school= request.GET.get('school_contains')
 
-    def get_queryset(self):
-        queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,])
-        return queryset
+    if name !='' and name is not None:
+        qs = qs.filter(user__first_name__icontains=name)
+    if school != '' and school is not None:
+        qs = qs.filter(school__name__icontains=school)
+    return render(request, 'skmembers/skmemberprofile_list.html', {'queryset': qs})
 
 @admin_login_required
 def skmember_update(request, pk):

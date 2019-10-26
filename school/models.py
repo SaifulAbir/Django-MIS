@@ -19,7 +19,7 @@ class School(models.Model):
     union = models.ForeignKey(Union, on_delete=models.SET_NULL, blank=True, null=True)
     address = models.TextField(max_length=200, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
-    club_establishment_date = models.DateField(blank=True, null=True, default=timezone.now)
+    club_establishment_date = models.DateField(blank=True, null=True, )
     image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     def __str__(self):
