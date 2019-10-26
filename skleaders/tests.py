@@ -4,15 +4,20 @@ from django.test import TestCase
 from django.utils import timezone
 from .models import School,User,SkLeaderProfile,SkleaderDetails
 
-class HeadMasterProfileTest(TestCase):
+class SkleaderProfileTest(TestCase):
     def setUp(self):
-        s1= User(user_type=5, email='head@gmail.com',)
+        s1= User(user_type=5, email='skleader@gmail.com',)
         s1.save()
         self.user=s1
 
         s2= School(name='Mirpur School', school_id=123)
         s2.save()
         self.school=s2
+
+        user = User.objects.create(email='a@g.com')
+        user.set_password('12345')
+        user.user_type = 1
+        user.save()
 
     def test__when_Every_field_is_valid___should_pass(self):
         time = timezone.now()
@@ -82,6 +87,17 @@ class HeadMasterProfileTest(TestCase):
                             roll='',mobile='018152045',image='a.png',joining_date=timezone.now())
         with self.assertRaises(ValidationError):
             s.full_clean()
+
+
+    def test__when_name_is_searched__should_give_result_accordingly(self):
+        s = SkLeaderProfile(school=self.school,user=self.user,gender='M',student_class='6',
+                            roll=10,mobile='018152045',image='a.png',joining_date=timezone.now())
+        s.save()
+
+        s1=self.client.login(email='a@g.com', password='12345')
+        response = self.client.get('/skleaders/skleader_list/',{'school_contains':'mirpur'},follow=True)
+        self.assertContains(response = response, status_code=200,  text='<td>Mirpur School (123)</td>', html=True)
+
 
 class SkleaderDetailsTest(TestCase):
     def setUp(self):

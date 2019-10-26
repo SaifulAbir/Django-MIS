@@ -136,10 +136,8 @@ class SchoolTest(TestCase):
                    district=self.district, upazilla=self.upazilla, union=self.union, )
         s.save()
 
-
         s1=self.client.login(email='a@g.com', password='12345')
         response = self.client.get('/school_list/',{'name_contains':'mirpur'},follow=True)
-        print(response.content)
         self.assertContains(response = response, status_code=200,  text='<td><a href="/5/">Mirpur School</a></td>', html=True)
 
 
