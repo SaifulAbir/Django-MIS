@@ -41,9 +41,6 @@ class SchoolResource(resources.ModelResource):
 
     class Meta:
         model = School
-<<<<<<< HEAD
-        fields = ('school_id','division','district','upazilla','union','address')
-=======
+
         fields = ('name','school_id', 'club_establishment_date','division','district','upazilla','union','address')
->>>>>>> dev
 
