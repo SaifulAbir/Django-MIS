@@ -48,23 +48,16 @@ def skleader_profile_view(request):
         'profile_form': profile_form,
     })
 
-@method_decorator(admin_login_required, name='dispatch')
-class SkleaderList(LoginRequiredMixin, generic.ListView):
-    login_url = '/'
-    model = models.SkLeaderProfile
+def skleader_list(request):
+    qs=SkLeaderProfile.objects.filter(user__user_type__in=[5])
+    name= request.GET.get('name_contains')
+    school= request.GET.get('school_contains')
 
-
-    def get_queryset(self):
-        queryset = SkLeaderProfile.objects.filter(user__user_type__in=[5,])
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(SkleaderList, self).get_context_data(**kwargs)
-        try:
-            context['current_schoxol_name'] =SkleaderDetails.objects.latest('from_date')
-        except SkleaderDetails.DoesNotExist :
-            context['current_schoxol_name']=None
-        return context
+    if name !='' and name is not None:
+        qs = qs.filter(user__first_name__icontains=name)
+    if school != '' and school is not None:
+        qs = qs.filter(school__name__icontains=school)
+    return render(request, 'skleaders/skleaderprofile_list.html', {'queryset': qs})
 
 @method_decorator(admin_login_required, name='dispatch')
 class SkleaderDetail(LoginRequiredMixin, generic.DetailView):

@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.test import TestCase, Client
 from django.utils import timezone
 from.models import School, Division, District , Upazilla, Union,SchoolPost
+from accounts.models import User
 from.views import school_list
 
 class SchoolTest(TestCase):
@@ -23,7 +24,11 @@ class SchoolTest(TestCase):
         s4.save()
         self.union = s4
 
-        self.client = Client()
+        user = User.objects.create(email='a@g.com')
+        user.set_password('12345')
+        user.is_superuser = 1
+        user.save()
+
 
 
     def test__when_school_name_is_null__should_raise_error(self):
@@ -126,13 +131,16 @@ class SchoolTest(TestCase):
         except:
             self.fail()
 
-    # def test__when_name_is_searched__should_give_result_accordingly(self):
-    #     s = School(name='Mirpur School', school_id='123', division=self.division,
-    #                district=self.district, upazilla=self.upazilla, union=self.union, )
-    #
-    #     s1=self.client.login(username='admin', password='123')
-    #     response = self.client.get('school:school_list',{})
-    #     self.assertEqual(response,200)
+    def test__when_name_is_searched__should_give_result_accordingly(self):
+        s = School(name='Mirpur School', school_id='123', division=self.division,
+                   district=self.district, upazilla=self.upazilla, union=self.union, )
+        s.save()
+
+
+        s1=self.client.login(email='a@g.com', password='12345')
+        response = self.client.get('/school_list/',{'name_contains':'mirpur'},follow=True)
+        print(response.content)
+        self.assertEqual(response.status_code,200)
 
 
 
