@@ -57,11 +57,11 @@ class EditClubMeetingForm(forms.ModelForm):
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
-        required=True)
+        required=False)
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=User.objects.filter(user_type=6),
-        required=True)
+        required=False)
     date = forms.DateField(widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',))
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
@@ -79,16 +79,16 @@ class EditClubMeetingForm(forms.ModelForm):
                 h_profile = HeadmasterProfile.objects.get(user=user)
         except HeadmasterProfile.DoesNotExist:
             h_profile = None
-
         if h_profile is not None:
             school_profile = get_object_or_404(School, pk=h_profile.school.id)
         else:
             school_profile = None
-
+        prev_member = ClubMeetings.attendance.through.objects.filter(clubmeetings_id=self.instance)
         sk_profile = SkMemberProfile.objects.filter(school__id=school_profile.id, user__user_type=6)
+        # prev_sk = (prev_member | sk_profile).distinct()
         u_profile = User.objects.filter(skmember_profile__in=sk_profile)
-        self.fields['attendance'].queryset = u_profile
-
+        # self.fields['attendance'].queryset = prev_member
+        # self.fields['attendance'].queryset = u_profile
 # class MeetingTopicsForm(forms.ModelForm):
 #     topics = forms.ModelMultipleChoiceField(
 #         widget=forms.CheckboxSelectMultiple,

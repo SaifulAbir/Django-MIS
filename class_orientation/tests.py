@@ -1,15 +1,32 @@
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
+from django.urls import reverse
 from django.utils import timezone
+
+from accounts.models import User
+from skleaders.models import SkLeaderProfile
+from topics.models import Topics
 from.models import ClassOrientation,School
 
 class ClassOrientationTest(TestCase):
 
     def setUp(self):
+        user = User.objects.create(email='test@example.com')
+        user.set_password('12345')
+        user.user_type = 5
+        user.save()
+        self.user = user
         s1 = School(name='Mirpur School', school_id=123)
         s1.save()
         self.school = s1
+        skleader = SkLeaderProfile(school=self.school, user=self.user, gender='M', student_class='6',
+                                   roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
+        skleader.save()
+        to = Topics.objects.all()
+        co = ClassOrientation.objects.create(created_date=timezone.now(), student_class='7', school=self.school )
+        co.topic.set(to)
+        self.class_orientation = co
 
     def test__when_school_is_null__should_raise_error(self):
         s = ClassOrientation(created_date=timezone.now(),student_class='7', topic='asd', )
@@ -41,6 +58,23 @@ class ClassOrientationTest(TestCase):
                  " sdfgsdg sgddft ", created_date=timezone.now(),student_class='7', school=self.school,)
         with self.assertRaises(ValidationError):
             s.full_clean()
+
+    # view test
+    def test_class_orientation_add_page_status_code_content_type(self):
+        logged_in = self.client.login(email='test@example.com', password='12345')
+        self.assertTrue(logged_in)
+        orientation_add_response = self.client.get('/class_orientation/add/', follow=True)
+        self.assertEquals(orientation_add_response.status_code, 200)
+        self.assertEquals(orientation_add_response['Content-Type'], 'application/json')
+
+    def test_class_orientation_update_page_status_code_content_type(self):
+        logged_in = self.client.login(email='test@example.com', password='12345')
+        self.assertTrue(logged_in)
+        orientation_update_response = self.client.get(reverse('class_orientation:class_orientation_update',
+                                                              args=(self.class_orientation.id,)), follow=True)
+        self.assertEquals(orientation_update_response.status_code, 200)
+        self.assertEquals(orientation_update_response['Content-Type'], 'application/json')
+
 
 
 

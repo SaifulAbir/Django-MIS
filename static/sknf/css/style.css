@@ -202,3 +202,9 @@ input#id_CMF-date {
 /* event page */
 .fc-event{border: 1px solid #fff !important;}
 .fc-title{font-size: 1.3em !important;}
+
+/* class orientation page */
+ul#id_topic {
+    list-style: none;
+    padding-left: 20px;
+}
