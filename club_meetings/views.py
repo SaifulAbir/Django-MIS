@@ -6,11 +6,13 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 
 from accounts.decorators import headmaster_mentor_skleader_login_required
+from accounts.models import User
 from club_meetings import models
 from club_meetings.models import ClubMeetings
 from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
+from skmembers.models import SkMemberProfile
 from .forms import ClubMeetingForm, EditClubMeetingForm
 
 
@@ -62,8 +64,11 @@ class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
 @headmaster_mentor_skleader_login_required
 def club_meeting_update(request, pk):
     club_meeting = get_object_or_404(ClubMeetings, pk=pk)
+    # prev_member = ClubMeetings.attendance.through.objects.filter(clubmeetings_id=club_meeting)
+    sk_profile = SkMemberProfile.objects.filter(school__id=club_meeting.school.id, user__user_type=6)
+    all_member = User.objects.filter(skmember_profile__in=sk_profile)
     if request.method == 'POST':
-        club_meeting_form = EditClubMeetingForm(request.POST, request.FILES, instance=club_meeting, prefix='CMF', user=request.user)
+        club_meeting_form = EditClubMeetingForm(request.POST, request.FILES, instance=club_meeting, prefix='CMF', user=request.user )
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
             club_meeting.save()
@@ -76,6 +81,7 @@ def club_meeting_update(request, pk):
     return render(request, 'club_meetings/club_meeting_add.html', {
         'club_meeting_form': club_meeting_form,
         'club_meeting': club_meeting,
+        'all_member': all_member
     })
 
 @method_decorator(headmaster_mentor_skleader_login_required, name='dispatch')
