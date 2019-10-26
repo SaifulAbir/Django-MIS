@@ -89,7 +89,7 @@ class SkleaderProfileTest(TestCase):
             s.full_clean()
 
 
-    def test__when_name_is_searched__should_give_result_accordingly(self):
+    def test__when_school_name_is_searched__should_give_result_accordingly(self):
         s = SkLeaderProfile(school=self.school,user=self.user,gender='M',student_class='6',
                             roll=10,mobile='018152045',image='a.png',joining_date=timezone.now())
         s.save()
