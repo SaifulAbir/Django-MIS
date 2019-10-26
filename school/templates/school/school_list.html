@@ -11,44 +11,56 @@
             <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
                 <h3>School Search</h3>
                 <form method="GET" action=".">
-                    <div class="form-row">
-                        <div class="form-group col-sm-6">
-                            <div class="input-group">
-                                <strong>Name</strong>
-                                <input class="form-control" type="search" name="name_contains" />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group ">
+                                <div class="input-group">
+                                    <strong>Name</strong>
+                                    <input class="form-control" style="box-sizing:content-box;" type="search" name="name_contains" value="{{name}}" />
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group col-sm-6">
-                            <div class="input-group">
-                                <strong>School ID</strong>
-                                <input class="form-control " type="search" name="school_id_contains" />
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <strong>School ID</strong>
+                                    <input class="form-control " style="box-sizing:content-box;", type="search" name="school_id_contains" value="{{school_id}}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <strong>Division</strong>
+                                    <input class="form-control " style="box-sizing:content-box;",type="search" name="division_contains" value="{{division}}"/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-sm-3">
-                            <div class="input-group">
-                                <strong>Division</strong>
-                                <input class="form-control " type="search" name="division_contains" />
-                            </div>
-                        </div>
 
-                        <div class="form-group col-sm-3">
-                            <div class="input-group">
-                                <strong>District</strong>
-                                <input class="form-control " type="search" name="district_contains" />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <strong>District</strong>
+                                    <input class="form-control "style="box-sizing:content-box;", type="search" name="district_contains" value="{{district}}" />
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group col-sm-3">
-                            <div class="input-group">
-                                <strong>Upazilla</strong>
-                                <input class="form-control" type="search" name="upazila_contains" />
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <strong>Upazilla</strong>
+                                    <input class="form-control"style="box-sizing:content-box;", type="search" name="upazilla_contains" value="{{upazilla}}"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group col-sm-3">
-                            <div class="input-group">
-                                <strong>Union</strong>
-                                <input class="form-control py-2 border-right-0 border" type="search" name="union_contains" />
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <strong>Union</strong>
+                                    <input class="form-control"style="box-sizing:content-box;", type="search" name="union_contains" value="{{union}}"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,7 +68,6 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Search</button>
 
-                        <button type="reset" class="btn btn-default close-search pull-right">Close</button>
                     </div>
 
                 </form>
@@ -91,12 +102,7 @@
                 Export CSV
             </a>
 
-            <a type="button" style="margin-right: 5px"
-               class="btn btn-primary pull-right" id="advancedButton"
-               href="javascript:void(0)">
-                <span class="fa fa-excel"></span>
-                Search
-            </a>
+
 
         </div>
         <!-- /.box-header -->
