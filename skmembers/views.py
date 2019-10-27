@@ -20,6 +20,7 @@ from skmembers.forms import SkMemberUserForm, SkMemberProfileForm, EditSkMemberU
     EditSkMemberProfileForm
 from skmembers.models import SkMemberProfile,SkmemberDetails
 from datetime import datetime
+from .resources import SkmemberResource
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -163,7 +164,7 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
 
         return queryset
 
-def skmember_list(request):
+def skmember_list(request,export='null'):
     qs=SkMemberProfile.objects.filter(user__user_type__in=[6])
     name= request.GET.get('name_contains')
     school= request.GET.get('school_contains')
@@ -172,7 +173,15 @@ def skmember_list(request):
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
-    return render(request, 'skmembers/skmemberprofile_list.html', {'queryset': qs, 'name':name, 'school': school})
+    if export != 'export':
+        return render(request, 'skmembers/skmemberprofile_list.html',
+                      {'queryset': qs, 'name': name, 'school': school, })
+    else:
+        resource = SkmemberResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="skmember_list.csv"'
+        return response
 
 @admin_login_required
 def skmember_update(request, pk):

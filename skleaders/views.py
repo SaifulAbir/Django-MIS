@@ -18,6 +18,7 @@ from skleaders import models
 from skleaders.forms import SkUserForm, SkLeaderProfileForm, EditSkUserForm, EditSkLeaderProfileForm
 from skleaders.models import SkLeaderProfile, SkleaderDetails
 from datetime import datetime
+from skleaders.resources import SkleaderResource
 
 @admin_login_required
 def skleader_profile_view(request):
@@ -63,7 +64,7 @@ def skleader_profile_view(request):
         'profile_form': profile_form,
     })
 
-def skleader_list(request):
+def skleader_list(request, export='null'):
     qs=SkLeaderProfile.objects.filter(user__user_type__in=[5])
     name= request.GET.get('name_contains')
     school= request.GET.get('school_contains')
@@ -72,7 +73,16 @@ def skleader_list(request):
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
-    return render(request, 'skleaders/skleaderprofile_list.html', {'queryset': qs, 'name': name, 'school':school})
+    if export != 'export':
+        return render(request, 'skleaders/skleaderprofile_list.html',
+                      {'queryset': qs, 'name': name, 'school': school,})
+    else:
+        resource = SkleaderResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="skleader_list.csv"'
+        return response
+
 
 @method_decorator(admin_login_required, name='dispatch')
 class SkleaderDetail(LoginRequiredMixin, generic.DetailView):

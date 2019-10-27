@@ -8,7 +8,6 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.utils.decorators import method_decorator
-from django.utils.six import StringIO
 from django.views import generic
 
 from accounts.decorators import admin_login_required
@@ -21,6 +20,7 @@ import time
 from datetime import datetime
 import base64, uuid
 from django.core.files.base import ContentFile
+from headmasters.resources import HeadmasterResource
 from django.core.files.storage import FileSystemStorage
 
 @admin_login_required
@@ -77,8 +77,8 @@ class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
     template_name = 'headmasters/headmaster_detail.html'
 
 
-
-def headmaster_list(request):
+@admin_login_required
+def headmaster_list(request, export='null'):
     qs=HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
     name= request.GET.get('name_contains')
     school= request.GET.get('school_contains')
@@ -87,7 +87,15 @@ def headmaster_list(request):
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
-    return render(request, 'headmasters/headmasterprofile_list.html', {'queryset': qs, 'name': name, 'school':school})
+    if export != 'export':
+        return render(request, 'headmasters/headmasterprofile_list.html',
+                      {'queryset': qs, 'name': name, 'school': school,})
+    else:
+        resource = HeadmasterResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="headmaster_list.csv"'
+        return response
 
 
 @admin_login_required
