@@ -32,46 +32,44 @@
         </form>
     </div>
     {% endif %}
-    {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
 </section>
-
 <div class="row visible-xs">
 
-        <div class="box-body box-profile">
-            {% if headmaster_profile.image %}
-            <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
-            {% else %}
-            <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
-            {% endif %}
-            <h3 class="profile-username text-center">
-                <font color="black">
-                    {{ headmaster_profile.user.first_name }}
-                </font>
-            </h3>
-            <p class="text-muted text-center"><font color="black">Head Master</font></p>
-        </div>
-        <div class="box-body box-profile">
-            {% for skleader in skleader_list%}
-            {% if skleader.image %}
-            <div class="col-xs-6"align="center">
+    <div class="box-body box-profile">
+        {% if headmaster_profile.image %}
+        <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
+        {% else %}
+        <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+        {% endif %}
+        <h3 class="profile-username text-center">
+            <font color="black">
+                {{ headmaster_profile.user.first_name }}
+            </font>
+        </h3>
+        <p class="text-muted text-center"><font color="black">Head Master</font></p>
+    </div>
+    <div class="box-body box-profile">
+        {% for skleader in skleader_list%}
+        {% if skleader.image %}
+        <div class="col-xs-6"align="center">
             <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{skleader.image.url }}" alt="User profile picture">
             <h3 class="profile-username text-center"><font color="black">{{ skleader.user.first_name }}</font></h3>
             <p class="text-muted text-center"><font color="black">Sk Leader</font></p>
-            </div>
-            {% else %}
-            <div class="col-xs-6"align="center">
+        </div>
+        {% else %}
+        <div class="col-xs-6"align="center">
             <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
             <h3 class="profile-username text-center"><font color="black">{{ skleader.user.first_name }}</font></h3>
             <p class="text-muted text-center"><font color="black">Sk Leader</font></p>
-            </div>
-            {% endif %}
-            {% endfor %}
         </div>
+        {% endif %}
+        {% endfor %}
+    </div>
 
 
 </div>
 <div class="row visible-xs">
-     <div class="col-md-3">
+    <div class="col-md-3">
         <section class="content" >
             <div class="box box-widget">
                 <div class="box-header with-border">
@@ -106,9 +104,13 @@
         </section>
     </div>
 </div>
+{% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
+
+
+
 
 <div class="row">
-    <div class="col-md-9" >
+    <div class="col-md-12" >
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
@@ -149,67 +151,65 @@
         {% if school_post_list %}
         <section class="content">
 
-        {% for school_post in school_post_list %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-info">
+            {% for school_post in school_post_list %}
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
+                            <a type="button" class="btn btn-primary pull-right" href="{% url 'school:school_post_detail_view' school_post.id %}">
+                                <span class="fa fa-share"></span>
+                            </a>
+                        </div>
+                        <div class="box-body">
+                            {% if school_post.post_image %}
+                            <div class="form-group">
+                                <img src="{{ school_post.post_image.url }}" alt="">
+                            </div>
+                            {% endif %}
+                            <div class="form-group">
+                                {{school_post.text}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+        {% endif %}
+        <div class="col-md-3 hidden-xs">
+                <div class="box box-widget">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
-                        <a type="button" class="btn btn-primary pull-right" href="{% url 'school:school_post_detail_view' school_post.id %}">
-                            <span class="fa fa-share"></span>
-                        </a>
+                        <div class="user-block">
+                            <h4>Members</h4>
+                        </div>
+
                     </div>
                     <div class="box-body">
-                        {% if school_post.post_image %}
-                        <div class="form-group">
-                            <img src="{{ school_post.post_image.url }}" alt="">
+                        <div class="row">
+
+                            {% for skmember in skmember_list %}
+                            {% if skmember.image %}
+                            <div class="col-xs-6"align="center">
+                                <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
+                                <p><strong>{{skmember.user}}</strong></p>
+                            </div>
+                            {% else %}
+                            <div class="col-xs-6" align="center">
+                                <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
+                                <p><strong>{{skmember.user}}</strong></p>
+                            </div>
+                            {% endif %}
+
+                            {% endfor %}
+
+
                         </div>
-                        {% endif %}
-                        <div class="form-group">
-                            {{school_post.text}}
-                        </div>
+
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
-        {% endfor %}
-
-        </section>
-        {% endif %}
-    </div>
-    <div class="col-md-3 hidden-xs">
-        <section class="content" >
-            <div class="box box-widget">
-                <div class="box-header with-border">
-                    <div class="user-block">
-                        <h4>Members</h4>
-                    </div>
-
-                </div>
-                <div class="box-body">
-                    <div class="row">
-
-                        {% for skmember in skmember_list %}
-                        {% if skmember.image %}
-                        <div class="col-xs-6"align="center">
-                            <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
-                            <p><strong>{{skmember.user}}</strong></p>
-                        </div>
-                        {% else %}
-                        <div class="col-xs-6" align="center">
-                            <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
-                            <p><strong>{{skmember.user}}</strong></p>
-                        </div>
-                        {% endif %}
-
-                        {% endfor %}
-
-
-                    </div>
-
-                </div>
-            </div>
-        </section>
     </div>
 </div>
 
