@@ -88,7 +88,7 @@ def school_list(request, export='null'):
         qs = qs.filter(upazilla__name__icontains=upazilla)
     if union !='' and union is not None:
         qs = qs.filter(union__name__icontains=union)
-    if action == None:
+    if export != 'export':
         return render(request, 'school/school_list.html', {'queryset': qs})
     else:
         resource = SchoolResource()

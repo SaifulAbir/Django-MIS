@@ -6,10 +6,8 @@ app_name = 'school'
 urlpatterns = [
     path('add/', views.CreateSchool.as_view(), name = 'create_school'),
     path('export/', views.export, name = 'export_school'),
-    path('school_list/<str:action>', views.school_list, name = 'school_list_export'),
     path('school_list/', views.school_list, name = 'school_list'),
-
-    path('school_list/<str:export>/', views.school_list),
+    path('school_list/<export>/', views.school_list, name = 'school_list_export'),
 
     path('delete/<int:pk>/', views.school_delete, name = 'delete_school'),
     path('update/<int:pk>', views.SchoolUpdate.as_view(), name = 'update_school'),
