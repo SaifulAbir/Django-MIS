@@ -208,3 +208,11 @@ ul#id_topic {
     list-style: none;
     padding-left: 20px;
 }
+
+.main-sidebar {
+    position:fixed !important;
+    height:100%;
+    overflow-y:auto;
+
+
+}
