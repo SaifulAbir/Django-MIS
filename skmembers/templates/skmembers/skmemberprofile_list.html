@@ -18,18 +18,18 @@
                         <div class="form-group col-sm-4">
                                 <strong>Name</strong>
                             {% if name is not None %}
-                                <input class="form-control" type="search" name="name_contains" />
+                                <input class="form-control" value="{{name}}" type="search" name="name_contains" />
                             {% else %}
-                             <input class="form-control" type="search"/>
+                             <input class="form-control" type="search" name="name_contains"/>
                             {% endif %}
 
                         </div>
                         <div class="form-group col-sm-4">
                                 <strong>School</strong>
                             {% if school is not None %}
-                                <input class="form-control " type="search" name="school_contains" />
+                                <input class="form-control " type="search" value="{{school}}" name="school_contains" />
                             {% else %}
-                             <input class="form-control " type="search"/>
+                             <input class="form-control " type="search" name="school_contains"/>
                             {% endif%}
                         </div>
                     </div>
