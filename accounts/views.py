@@ -92,7 +92,7 @@ def events(request):
 
 
 
-def custom_login(request,):
+def custom_login(request):
     next_destination = request.GET.get('next')
     if request.user.is_authenticated and request.user.user_type == 1:
         if next_destination:
@@ -162,6 +162,7 @@ def login_request(request):
 def admin_profile_update(request):
     user_profile = get_object_or_404(User, pk=request.user.id)
     old_user_profile = user_profile.image
+    old_email = user_profile.email
     old_password = user_profile.password
     if request.method == 'POST':
         user_form = EditUserForm(request.POST, files=request.FILES, instance=user_profile)
@@ -174,6 +175,35 @@ def admin_profile_update(request):
                 user_update.set_password(user_form.cleaned_data["password"])
             else:
                 user_update.password = old_password
+
+            update_session_auth_hash(request, user_update)
+
+            if old_email != user_form.cleaned_data["email"]:
+                unique_id = random.randint(100000, 999999)
+                user_update.email_verified = 0
+                user_update.email_verifiaction_code = unique_id
+                ## Now sending verification email
+                data = ''
+                html_message = loader.render_to_string(
+                    'accounts/email/email_context.html',
+                    {
+                        'activation_email_link': unique_id,
+                        'subject': 'Thank you from' + data,
+                        'host': request.get_host
+                    }
+                )
+                subject_text = loader.render_to_string(
+                    'accounts/email/email_subject.txt',
+                    {
+                        'user_name': 'name',
+                        'subject': 'Thank you from' + data,
+                    }
+                )
+                message = ''
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [user_update.email]
+                send_mail(subject_text, message, email_from, recipient_list, html_message=html_message)
+
             user_update.save()
             update_session_auth_hash(request, user_update)
             return redirect("accounts:profile")
@@ -272,9 +302,20 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'accounts/password_reset_complete.html'
 
 
+def email_verify(request,token):
+    try:
+        userobj = User.objects.get(email_verifiaction_code=token)
+        userobj.email_verified = 1
+        userobj.email_verifiaction_code=''
+        userobj.save()
+        return render(request, 'accounts/email_verification_complete.html')
+    except User.DoesNotExist:
+        userobj = None
+        return HttpResponse('The link is not valid or expired...')
+
+
 def verifyemail(request):
     email = request.GET.get('email')
-    print(email)
     num_results = User.objects.all().filter(email=email)
     number_of_record = num_results.count()
     if number_of_record > 0:
@@ -299,7 +340,7 @@ def verifyemail(request):
             'subject': 'Thank you from' + data,
         }
     )
-    message = ' it  means a world to us '
+    message = ''
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [email]
     send_mail(subject_text, message, email_from, recipient_list, html_message=html_message)

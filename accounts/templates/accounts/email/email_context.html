@@ -1,3 +1,4 @@
+
 <table>
     <tbody><tr>
         <td>
@@ -6,8 +7,10 @@
             </p>
 
             <p style="direction:ltr;font-size:14px;line-height:1.4em;color:#444444;font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;margin:0 0 1em 0;font-size:14px;padding:0;color:#666;padding-top:1em;padding-bottom:0em;margin-bottom:0;margin-left:0;padding-left:0">
-                <a href="activation_email_link"><span class="il">Confirm</span> Email</a>
-							</p>
+                <a target="_blank" href="http://{{ host }}{% url 'accounts:email_verify' activation_email_link %}">
+                    <span class="il">Confirm</span> Email
+                </a>
+            </p>
 
             <p> If you did not send the request, just ignore this email.</p>
             <p>
