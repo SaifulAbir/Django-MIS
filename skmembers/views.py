@@ -158,7 +158,7 @@ def skmember_list(request):
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
-    return render(request, 'skmembers/skmemberprofile_list.html', {'queryset': qs})
+    return render(request, 'skmembers/skmemberprofile_list.html', {'queryset': qs, 'name':name, 'school': school})
 
 @admin_login_required
 def skmember_update(request, pk):
