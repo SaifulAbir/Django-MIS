@@ -12,24 +12,26 @@
             <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
                 <h3>SK Leader Search</h3>
                 <form method="GET" action=".">
-                    <div class="form-row">
-                        <div class="form-group col-sm-6">
-                            <div class="input-group">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
                                 <strong>Name</strong>
+                            {% if name is not None %}
                                 <input class="form-control" type="search" name="name_contains" />
-                            </div>
+                            {% else %}
+                            <input class="form-control" type="search"/>
+                            {% endif %}
                         </div>
-                        <div class="form-group col-sm-6">
-                            <div class="input-group">
+                        <div class="form-group col-sm-4">
                                 <strong>School</strong>
+                            {% if school is not None %}
                                 <input class="form-control " type="search" name="school_contains" />
-                            </div>
+                            {% else %}
+                            <input class="form-control " type="search"/>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Search</button>
-
-                        <button type="reset" class="btn btn-default close-search pull-right">Close</button>
                     </div>
 
                 </form>
@@ -62,12 +64,6 @@
                    href="{% url 'school:export_school' %}">
                     <span class="fa file-export"></span>
                     Export CSV
-                </a>
-                <a type="button" style="margin-right: 5px"
-                   class="btn btn-primary pull-right" id="advancedButton"
-                   href="javascript:void(0)">
-                    <span class="fa fa-excel"></span>
-                    Search
                 </a>
             </div>
             <!-- /.box-header -->
