@@ -89,7 +89,8 @@ def school_list(request, export='null'):
     if union !='' and union is not None:
         qs = qs.filter(union__name__icontains=union)
     if export != 'export':
-        return render(request, 'school/school_list.html', {'queryset': qs})
+        return render(request, 'school/school_list.html', {'queryset': qs,'name':name,'school_id':school_id,'division':division,
+                                                       'district':district,'upazilla':upazilla,'union':union})
     else:
         resource = SchoolResource()
         dataset = resource.export(qs)
@@ -97,8 +98,6 @@ def school_list(request, export='null'):
         response['Content-Disposition'] = 'attachment; filename="school_list.csv"'
         return response
 
-    return render(request, 'school/school_list.html', {'queryset': qs,'name':name,'school_id':school_id,'division':division,
-                                                       'district':district,'upazilla':upazilla,'union':union})
 
 
 
