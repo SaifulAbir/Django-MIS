@@ -37,6 +37,7 @@ class EditSkMemberUserForm(forms.ModelForm):
 
 
 class SkMemberProfileForm(forms.ModelForm):
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     roll = forms.CharField(error_messages={'required': 'Roll is required.'})
@@ -47,7 +48,7 @@ class SkMemberProfileForm(forms.ModelForm):
     gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class','joining_date', 'roll', 'school', 'gender')
+        fields = ('mobile', 'image', 'student_class','joining_date', 'roll', 'school', 'gender', 'image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -57,6 +58,7 @@ class SkMemberProfileForm(forms.ModelForm):
             return image
 
 class SkMemberProfileFormSkleader(forms.ModelForm):
+
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     roll = forms.CharField(error_messages={'required': 'Roll is required.'})
@@ -77,6 +79,7 @@ class SkMemberProfileFormSkleader(forms.ModelForm):
             return image
 
 class SkMemberProfileFormForSkleader(forms.ModelForm):
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     roll = forms.CharField(error_messages={'required': 'Roll is required.'})
@@ -87,7 +90,7 @@ class SkMemberProfileFormForSkleader(forms.ModelForm):
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'gender')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'gender', 'image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -97,6 +100,7 @@ class SkMemberProfileFormForSkleader(forms.ModelForm):
             return image
 
 class EditSkMemberProfileForm(forms.ModelForm):
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
@@ -112,7 +116,7 @@ class EditSkMemberProfileForm(forms.ModelForm):
     joining_date = forms.DateField(required=False)
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date','gender')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date','gender', 'image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)

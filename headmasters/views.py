@@ -99,7 +99,7 @@ def headmaster_update(request, pk):
     user_profile = get_object_or_404(User, pk=int(headmaster_profile.user.id))
     if request.method == 'POST':
         user_form = EditUserForm(request.POST, instance=user_profile)
-        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile)
+        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             old_password = headmaster_profile.user.password
             user = user_form.save(commit=False)
@@ -111,12 +111,22 @@ def headmaster_update(request, pk):
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-headmaster.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
             messages.success(request, 'Headmaster Updated!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
         user_form = EditUserForm(instance=user_profile)
-        profile_form = HeadmasterProfileForm(instance=headmaster_profile)
+        profile_form = HeadmasterProfileForm(instance=headmaster_profile, prefix='PF')
 
     return render(request, 'headmasters/headmaster_profile_update.html', {
         'user_form': user_form,

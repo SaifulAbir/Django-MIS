@@ -1,5 +1,9 @@
+import base64
+import uuid
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
@@ -29,6 +33,16 @@ def club_meeting_add(request):
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
             club_meeting.school = profile.school
+            # image cropping code start here
+            img_base64 = club_meeting_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-club_meeting.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                club_meeting.image.save(filename, data, save=True)
+                club_meeting.image = 'images/' + filename
+            # end of image cropping code
             club_meeting.save()
             club_meeting_form.save_m2m()
             messages.success(request, 'Club Meeting Created!')
@@ -71,6 +85,16 @@ def club_meeting_update(request, pk):
         club_meeting_form = EditClubMeetingForm(request.POST, request.FILES, instance=club_meeting, prefix='CMF', user=request.user )
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
+            # image cropping code start here
+            img_base64 = club_meeting_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-club_meeting.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                club_meeting.image.save(filename, data, save=True)
+                club_meeting.image = 'images/' + filename
+            # end of image cropping code
             club_meeting.save()
             club_meeting_form.save_m2m()
             messages.success(request, 'Club Meeting Updated!')

@@ -1,5 +1,9 @@
+import base64
+import uuid
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -31,6 +35,16 @@ def skmember_profile_view(request):
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-skmember.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
 
             headmaster_details = SkmemberDetails()
@@ -168,18 +182,28 @@ def skmember_update(request, pk):
     school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
-        profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
+        profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-skmember.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
             messages.success(request, 'SK Member Updated!')
             return HttpResponseRedirect("/skmembers/skmember_list/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)
-        profile_form = EditSkMemberProfileForm(instance=skmember_profile)
+        profile_form = EditSkMemberProfileForm(instance=skmember_profile, prefix='PF')
 
     return render(request, 'skmembers/skmember_profile_update.html', {
         'user_form': user_form,
