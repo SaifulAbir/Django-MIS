@@ -74,17 +74,19 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if headmaster_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ headmaster_profile.image.url }}" class="pull-right preview-show" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ headmaster_profile.image.url }}" class="pull-right jcrop-holder" alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right preview-show" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
                                             {% endif %}
 
                                         </div>
                                     </div>
-                                    {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    <input type="file" accept="image/*" placeholder="Headmaster image" style="margin-top: 10px;" class="pull-right img-preview" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
+                        {% render_field profile_form.image_base64 %}
+                        {% include 'sknf/_crop_modal.html' %}
                         <div class="row" style="display:none;">
                             <div class="col-sm-12">
                                 <div class="box box-info">

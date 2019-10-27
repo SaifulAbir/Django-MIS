@@ -74,6 +74,7 @@ class EditSkUserForm(forms.ModelForm):
 
 
 class SkLeaderProfileForm(forms.ModelForm):
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
@@ -89,7 +90,7 @@ class SkLeaderProfileForm(forms.ModelForm):
 
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date','emergency_contact_person','emergency_contact_number', 'gender')
+        fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date','emergency_contact_person','emergency_contact_number', 'gender', 'image_base64')
 
     def clean_image(self):
 
@@ -103,6 +104,7 @@ class SkLeaderProfileForm(forms.ModelForm):
             return image
 
 class EditSkLeaderProfileForm(forms.ModelForm):
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
@@ -118,7 +120,7 @@ class EditSkLeaderProfileForm(forms.ModelForm):
     joining_date = forms.DateField(required=False)
     class Meta:
         model = SkLeaderProfile
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'emergency_contact_person','emergency_contact_number', 'gender')
+        fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'emergency_contact_person','emergency_contact_number', 'gender', 'image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)

@@ -8,7 +8,6 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.utils.decorators import method_decorator
-from django.utils.six import StringIO
 from django.views import generic
 
 from accounts.decorators import admin_login_required
@@ -21,6 +20,7 @@ import time
 from datetime import datetime
 import base64, uuid
 from django.core.files.base import ContentFile
+from headmasters.resources import HeadmasterResource
 from django.core.files.storage import FileSystemStorage
 
 @admin_login_required
@@ -77,8 +77,8 @@ class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
     template_name = 'headmasters/headmaster_detail.html'
 
 
-
-def headmaster_list(request):
+@admin_login_required
+def headmaster_list(request, export='null'):
     qs=HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
     name= request.GET.get('name_contains')
     school= request.GET.get('school_contains')
@@ -87,7 +87,15 @@ def headmaster_list(request):
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
-    return render(request, 'headmasters/headmasterprofile_list.html', {'queryset': qs, 'name': name, 'school':school})
+    if export != 'export':
+        return render(request, 'headmasters/headmasterprofile_list.html',
+                      {'queryset': qs, 'name': name, 'school': school,})
+    else:
+        resource = HeadmasterResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="headmaster_list.csv"'
+        return response
 
 
 @admin_login_required
@@ -99,7 +107,7 @@ def headmaster_update(request, pk):
     user_profile = get_object_or_404(User, pk=int(headmaster_profile.user.id))
     if request.method == 'POST':
         user_form = EditUserForm(request.POST, instance=user_profile)
-        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile)
+        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             old_password = headmaster_profile.user.password
             user = user_form.save(commit=False)
@@ -111,12 +119,22 @@ def headmaster_update(request, pk):
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-headmaster.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
             messages.success(request, 'Headmaster Updated!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
         user_form = EditUserForm(instance=user_profile)
-        profile_form = HeadmasterProfileForm(instance=headmaster_profile)
+        profile_form = HeadmasterProfileForm(instance=headmaster_profile, prefix='PF')
 
     return render(request, 'headmasters/headmaster_profile_update.html', {
         'user_form': user_form,

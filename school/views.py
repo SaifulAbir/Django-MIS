@@ -1,5 +1,9 @@
+import base64
+import uuid
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.files.base import ContentFile
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
@@ -211,6 +215,16 @@ def school_profile(request, pk):
             if post_form.is_valid():
                 post_school = post_form.save(commit=False)
                 post_school.school = school_profile
+                # image cropping code start here
+                img_base64 = post_form.cleaned_data.get('image_base64')
+                if img_base64:
+                    format, imgstr = img_base64.split(';base64,')
+                    ext = format.split('/')[-1]
+                    filename = str(uuid.uuid4()) + '-school_post.' + ext
+                    data = ContentFile(base64.b64decode(imgstr), name=filename)
+                    post_school.post_image.save(filename, data, save=True)
+                    post_school.post_image = 'images/' + filename
+                # end of image cropping code
                 post_school.save()
                 return redirect('school:school_profile', school_profile.id)
             post_form = SchoolPostForm()

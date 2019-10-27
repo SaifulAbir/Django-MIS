@@ -13,36 +13,38 @@
         <div class="box-header">
             <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
                 <h3>Head Master Search</h3>
-                <form method="GET" action=".">
+                <form method="GET" action="." class="search-form-headmaster">
                     <div class="row">
                         <div class="form-group col-sm-4">
                                 <strong>Name</strong>
                             {% if name is not None %}
-                                <input class="form-control" type="search" name="name_contains" />
+                                <input class="form-control" type="search" value="{{name}}" name="name_contains" />
                             {% else %}
-                             <input class="form-control" type="search" />
+                             <input class="form-control" type="search" name="name_contains"/>
                             {% endif %}
                         </div>
 
                         <div class="form-group col-sm-4">
                             <strong>School</strong>
                             {% if school is not None %}
-                            <input class="form-control " type="search" name="school_contains" />
+                            <input class="form-control " type="search" value="{{school}}" name="school_contains" />
                             {% else %}
-                            <input class="form-control " type="search" />
+                            <input class="form-control " type="search" name="school_contains" />
                             {% endif %}
                         </div>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Search</button>
+                    <div class="form-group pull-right">
+                        <button type="submit" class="btn btn-primary search-headmaster">Search</button>
+                        <button type="submit" class="btn btn-primary export-headmaster">Export CSV</button>
                     </div>
+                     <div class="clearfix"></div>
 
                 </form>
             </div>
         </div>
 
         <!-- Main content -->
-        <div class="box">
+
             <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
@@ -60,12 +62,6 @@
                    href="{% url 'headmasters:headmaster_profile' %}">
                     <span class="fa fa-plus"></span>
                     New Headmaster
-                </a>
-                <a type="button" style="margin-right: 5px"
-                   class="btn btn-primary pull-right"
-                   href="{% url 'school:export_school' %}">
-                    <span class="fa file-export"></span>
-                    Export CSV
                 </a>
             </div>
             <!-- /.box-header -->
@@ -109,7 +105,7 @@
                 </table>
             </div>
         </div>
-        </div>
+
         <!-- /.content -->
     </section>
 {% endblock %}

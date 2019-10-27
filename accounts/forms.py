@@ -46,9 +46,10 @@ class EditUserForm(forms.ModelForm):
     user_type = forms.ChoiceField(required=False, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     image = forms.ImageField(label=_('User image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     class Meta:
         model = User
-        fields = ('first_name', 'email', 'password', 'user_type', 'image',)
+        fields = ('first_name', 'email', 'password', 'user_type', 'image','image_base64')
 
     def clean(self):
         cleaned_data = super(EditUserForm, self).clean()
@@ -70,10 +71,11 @@ class EditUserForm(forms.ModelForm):
 class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = HeadmasterProfile
-        fields = ('image',)
+        fields = ('image','image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -85,10 +87,11 @@ class HeadmasterProfileForm(forms.ModelForm):
 class SkleaderProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = SkLeaderProfile
-        fields = ('image',)
+        fields = ('image','image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)

@@ -11,8 +11,10 @@ from django.template import loader
 from django.core.mail import send_mail
 
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden, JsonResponse
+from django.core.files.base import ContentFile
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
-
+import base64, uuid
 from django.shortcuts import render, redirect
 
 
@@ -66,7 +68,10 @@ def profile(request):
     else:
         headmaster_profile=None
     if school_profile is not None:
-        skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5).latest('school__id')
+        try:
+            skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5).latest('school__id')
+        except SkLeaderProfile.DoesNotExist:
+            skleader_profile = None
     else:
         skleader_profile=None
     if request.user.is_authenticated and request.user.user_type == 1:
@@ -165,7 +170,7 @@ def admin_profile_update(request):
     old_email = user_profile.email
     old_password = user_profile.password
     if request.method == 'POST':
-        user_form = EditUserForm(request.POST, files=request.FILES, instance=user_profile)
+        user_form = EditUserForm(request.POST, files=request.FILES, instance=user_profile, prefix='PF')
 
         if user_form.is_valid():
             user_update = user_form.save(commit=False)
@@ -204,12 +209,24 @@ def admin_profile_update(request):
                 recipient_list = [user_update.email]
                 send_mail(subject_text, message, email_from, recipient_list, html_message=html_message)
 
+
+            # image cropping code start here
+            img_base64 = user_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-admin.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                user_update.image.save(filename, data, save=True)
+                user_update.image = 'images/' + filename
+            # end of image cropping code
+
             user_update.save()
             update_session_auth_hash(request, user_update)
             return redirect("accounts:profile")
 
     else:
-        user_form = EditUserForm(instance=user_profile)
+        user_form = EditUserForm(instance=user_profile, prefix='PF')
 
     return render(request, 'accounts/admin_profile_form.html', {
         'user_form': user_form,
@@ -223,8 +240,8 @@ def headmaster_profile_update(request):
     headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
     old_password = headmaster_profile.user.password
     if request.method == 'POST':
-        user_form = EditUserForm(request.POST, instance=user_profile)
-        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile)
+        user_form = EditUserForm(request.POST, instance=user_profile, )
+        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             user_update = user_form.save(commit=False)
             form_password = user_form.cleaned_data["password"]
@@ -236,11 +253,21 @@ def headmaster_profile_update(request):
             update_session_auth_hash(request, user_update)
             profile = profile_form.save(commit = False)
             profile.user = user_update
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-headmaster.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
             return redirect("accounts:profile")
     else:
         user_form = EditUserForm(instance=user_profile)
-        profile_form = HeadmasterProfileForm(instance=headmaster_profile)
+        profile_form = HeadmasterProfileForm(instance=headmaster_profile, prefix='PF')
 
     return render(request, 'accounts/headmaster_profile_update.html', {
         'user_form': user_form,
@@ -255,7 +282,7 @@ def skleader_profile_update(request):
     old_password = skleader_profile.user.password
     if request.method == 'POST':
         user_form = EditUserForm(request.POST, instance=user_profile)
-        profile_form = SkleaderProfileForm(request.POST, request.FILES, instance=skleader_profile)
+        profile_form = SkleaderProfileForm(request.POST, request.FILES, instance=skleader_profile, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             user_update = user_form.save(commit=False)
             form_password = user_form.cleaned_data["password"]
@@ -267,11 +294,21 @@ def skleader_profile_update(request):
             update_session_auth_hash(request, user_update)
             profile = profile_form.save(commit = False)
             profile.user = user_update
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-skleader.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
             return redirect("accounts:profile")
     else:
         user_form = EditUserForm(instance=user_profile)
-        profile_form = SkleaderProfileForm(instance=skleader_profile)
+        profile_form = SkleaderProfileForm(instance=skleader_profile, prefix='PF')
 
     return render(request, 'accounts/skleader_profile_update.html', {
         'user_form': user_form,

@@ -83,17 +83,19 @@
                                             {% if profile_form.instance.pk and skmember_profile.image %}
                                                 <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skmember_profile.image.url }}" class="preview-show pull-right" alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="preview-show pull-right" alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
                                             {% endif %}
                                         </div>
                                     </div>
-                                    {% render_field profile_form.image class="img-preview pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    <input type="file" accept="image/*" placeholder="SkMember image" style="margin-top: 10px;" class="img-preview pull-right" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% render_field profile_form.image_base64 %}
+            {% include 'sknf/_crop_modal.html' %}
             <div class="row">
                 <div class="col-sm-12">
                     <div class="box box-info">

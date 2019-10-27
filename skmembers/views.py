@@ -1,5 +1,9 @@
+import base64
+import uuid
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -16,6 +20,7 @@ from skmembers.forms import SkMemberUserForm, SkMemberProfileForm, EditSkMemberU
     EditSkMemberProfileForm
 from skmembers.models import SkMemberProfile,SkmemberDetails
 from datetime import datetime
+from .resources import SkmemberResource
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -31,6 +36,16 @@ def skmember_profile_view(request):
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-skmember.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
 
             headmaster_details = SkmemberDetails()
@@ -149,7 +164,7 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
 
         return queryset
 
-def skmember_list(request):
+def skmember_list(request,export='null'):
     qs=SkMemberProfile.objects.filter(user__user_type__in=[6])
     name= request.GET.get('name_contains')
     school= request.GET.get('school_contains')
@@ -158,7 +173,15 @@ def skmember_list(request):
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
-    return render(request, 'skmembers/skmemberprofile_list.html', {'queryset': qs, 'name':name, 'school': school})
+    if export != 'export':
+        return render(request, 'skmembers/skmemberprofile_list.html',
+                      {'queryset': qs, 'name': name, 'school': school, })
+    else:
+        resource = SkmemberResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="skmember_list.csv"'
+        return response
 
 @admin_login_required
 def skmember_update(request, pk):
@@ -168,18 +191,28 @@ def skmember_update(request, pk):
     school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
-        profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
+        profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-skmember.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
             messages.success(request, 'SK Member Updated!')
             return HttpResponseRedirect("/skmembers/skmember_list/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)
-        profile_form = EditSkMemberProfileForm(instance=skmember_profile)
+        profile_form = EditSkMemberProfileForm(instance=skmember_profile, prefix='PF')
 
     return render(request, 'skmembers/skmember_profile_update.html', {
         'user_form': user_form,
