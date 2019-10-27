@@ -70,14 +70,15 @@
                                 <div class="col-sm-12">
                                     <div class="col-sm-12">
                                         {% if user_form.instance.pk and old_user_profile.image.url %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ user_profile.image.url }}" class="preview-show pull-right" alt="Pic"><br />
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ user_profile.image.url }}" class="pull-right jcrop-holder" alt="Pic"><br />
                                         {% else %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="preview-show pull-right" alt="Pic"><br />
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
                                         {% endif %}
                                     </div>
                                 </div>
-                                {% render_field user_form.image class="pull-right img-preview" style="margin-top: 10px;padding-bottom:10px;" placeholder=user_form.image.label %}
+                                <input type="file" accept="image/*" placeholder="User image" style="margin-top: 10px;padding-bottom:10px;" class="pull-right img-preview" id="id_PF-image">
                             </div>
+                            {% render_field user_form.image_base64 %}
                         </div>
                     </div>
                 </div>
@@ -94,6 +95,7 @@
 
     </section>
 </form>
+{% include 'sknf/_crop_modal.html' %}
 {% endblock %}
 {% block extra_js%}
 <script>

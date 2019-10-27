@@ -113,16 +113,17 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if skleader_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right preview-show " alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right jcrop-holder " alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right preview-show " alt="Pic"><br />
+                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder " alt="Pic"><br />
                                             {% endif %}
                                         </div>
                                     </div>
-                                    {% render_field profile_form.image class="img-preview pull-right" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    <input type="file" accept="image/*" placeholder="Skleader image" style="margin-top: 10px;" class="img-preview pull-right" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
+                        {% render_field profile_form.image_base64 %}
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="box box-body">
@@ -243,6 +244,7 @@
             </div>
         </section>
     </form>
+{% include 'sknf/_crop_modal.html' %}
 {% endblock %}
 {% block extra_js%}
     <script type="text/javascript">

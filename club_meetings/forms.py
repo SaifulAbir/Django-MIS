@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class ClubMeetingForm(forms.ModelForm):
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     presence_guide_teacher = forms.BooleanField()
     presence_skleader = forms.BooleanField(widget=forms.CheckboxInput(attrs={'checked': True}))
     topics = forms.ModelMultipleChoiceField(
@@ -29,7 +30,7 @@ class ClubMeetingForm(forms.ModelForm):
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model= ClubMeetings
-        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "attendance"]
+        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "attendance", 'image_base64']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
@@ -58,6 +59,7 @@ class EditClubMeetingForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
         required=False)
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=User.objects.filter(user_type=6),
@@ -67,7 +69,7 @@ class EditClubMeetingForm(forms.ModelForm):
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model= ClubMeetings
-        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "attendance"]
+        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "attendance", 'image_base64']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')

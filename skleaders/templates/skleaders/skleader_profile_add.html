@@ -105,10 +105,10 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="preview-show pull-right" alt="Pic"><br />
+                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
                                         </div>
                                     </div>
-                                    {% render_field profile_form.image class="pull-right img-preview" style="margin-top: 10px;" placeholder=profile_form.image.label %}
+                                    <input type="file" accept="image/*" placeholder="Skleader image" style="margin-top: 10px;" class="pull-right img-preview" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                 </div>
                 {% include 'sknf/_password_generator_modal.html' %}
             </div>
-
+            {% render_field profile_form.image_base64 %}
             <div class="row">
                 <div class="col-sm-12">
                     <div class="box box-info">
@@ -164,6 +164,7 @@
 
         </section>
     </form>
+{% include 'sknf/_crop_modal.html' %}
 {% endblock %}
 {% block extra_js%}
 
