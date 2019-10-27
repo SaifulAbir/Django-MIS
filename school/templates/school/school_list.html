@@ -14,26 +14,33 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <div class="input-group">
                                     <strong>Name</strong>
-                                    <input class="form-control" style="box-sizing:content-box;" type="search" name="name_contains" value="{{name}}" />
-                                </div>
+                                    {% if name is not None %}
+                                    <input class="form-control" type="search" name="name_contains" value= "{{name}}" />
+                                    {% else %}
+                                    <input class="form-control" type="search" name="name_contains" />
+                                    {% endif %}
+
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <div class="input-group">
                                     <strong>School ID</strong>
-                                    <input class="form-control " style="box-sizing:content-box;", type="search" name="school_id_contains" value="{{school_id}}" />
-                                </div>
+                                    {% if school_id is not None %}
+                                    <input class="form-control " type="search" name="school_id_contains" value="{{school_id}}" />
+                                    {% else %}
+                                    <input class="form-control " type="search" name="school_id_contains"  />
+                                    {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <div class="input-group">
                                     <strong>Division</strong>
-                                    <input class="form-control " style="box-sizing:content-box;",type="search" name="division_contains" value="{{division}}"/>
-                                </div>
+                                    {% if division is not None %}
+                                    <input class="form-control "type="search" name="division_contains" value="{{division}}"/>
+                                    {% else %}
+                                    <input class="form-control " type="search" name="division_contains" />
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
@@ -41,26 +48,34 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <div class="input-group">
                                     <strong>District</strong>
-                                    <input class="form-control "style="box-sizing:content-box;", type="search" name="district_contains" value="{{district}}" />
-                                </div>
+                                    {% if district is not None %}
+                                    <input class="form-control" type="search" name="district_contains" value="{{district}}" />
+                                    {% else %}
+                                    <input class="form-control" type="search" name="district_contains"/>
+                                    {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <div class="input-group">
+                                <div class="form-group">
                                     <strong>Upazilla</strong>
-                                    <input class="form-control"style="box-sizing:content-box;", type="search" name="upazilla_contains" value="{{upazilla}}"/>
+                                    {% if upazilla is not None %}
+                                    <input class="form-control"type="search" name="upazilla_contains" value="{{upazilla}}"/>
+                                    {% else %}
+                                    <input class="form-control"type="search" name="upazilla_contains" />
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <div class="input-group">
                                     <strong>Union</strong>
-                                    <input class="form-control"style="box-sizing:content-box;", type="search" name="union_contains" value="{{union}}"/>
-                                </div>
+                                    {% if union is not None %}
+                                    <input class="form-control" type="search" name="union_contains" value="{{union}}"/>
+                                    {% else %}
+                                    <input class="form-control" type="search" name="union_contains" />
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
