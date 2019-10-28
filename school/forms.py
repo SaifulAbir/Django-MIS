@@ -10,6 +10,8 @@ from django.utils.translation import ugettext_lazy as _
 class SchoolForm(forms.ModelForm):
     name = forms.CharField(error_messages={'required': 'School name is required.'})
     school_id = forms.CharField(error_messages={'required': 'EIIN is required.', 'unique': 'School with this EIIN already exists.'})
+    club_establishment_date = forms.DateField(error_messages={'required': 'Date is required.'},
+                                   widget=forms.DateInput(format='%d-%m-%Y'), input_formats=('%d-%m-%Y',))
     class Meta:
         model = School
         fields = ['name', 'school_id','club_establishment_date', 'division', 'district', 'upazilla', 'union', 'address']
@@ -17,12 +19,6 @@ class SchoolForm(forms.ModelForm):
             'address': forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}),
 
         }
-
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['district'].queryset = District.objects.none()
-    #     self.fields['upazilla'].queryset = Upazilla.objects.none()
-    #     self.fields['union'].queryset = Union.objects.none()
 
 class EditSchoolForm(forms.ModelForm):
     cover_image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
