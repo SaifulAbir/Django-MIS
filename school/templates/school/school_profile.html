@@ -16,9 +16,9 @@
 <!-- Main content -->
 <section class="content" style="position:relative">
     {% if school_profile.image %}
-    <img src="{{ school_profile.image.url }}" width="100%" height="500px;" class="jcrop-cover-holder"><br />
+    <img src="{{ school_profile.image.url }}" width="100%"class="jcrop-cover-holder"><br />
     {% else %}
-    <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}" height="500px;" width="100%" class="jcrop-cover-holder">
+    <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}"width="100%" class="jcrop-cover-holder">
     {% endif %}
     {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
     <div class="img-ctrl" style="position:absolute;z-index:99;bottom:25px;right:25px;">
@@ -327,7 +327,7 @@ var canvasData;
 $("#modalCoverCrop").on("shown.bs.modal", function () {
   $image.cropper({
     viewMode: 1,
-    aspectRatio: 16/9,
+    aspectRatio: 16/6,
     minCropBoxWidth: 200,
     minCropBoxHeight: 200,
 
