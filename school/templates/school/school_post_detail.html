@@ -2,7 +2,7 @@
 {% block body_block %}
 {% load static %}
 
-<section class="content">
+<section class="content"><br /><br /><br />
     <div class="row">
         <div class="col-md-12">
             <div class="box box-info">
@@ -12,7 +12,9 @@
                 <div class="box-body">
                     {% if post_detail.post_image %}
                     <div class="form-group">
+                        {% if post_detail.post_image %}
                         <img src="{{ post_detail.post_image.url }}" alt="">
+                        {% endif %}
                     </div>
                     {% endif %}
                     <div class="form-group">
