@@ -215,6 +215,7 @@ ul#id_topic {
     position:fixed !important;
     height:100%;
     overflow-y:auto;
-
-
+}
+.profile-username, .text-muted {
+    color: #fff;
 }

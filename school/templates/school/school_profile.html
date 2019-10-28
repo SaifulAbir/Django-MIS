@@ -256,7 +256,7 @@ $(function () {
     var reader = new FileReader();
 
     reader.onload = function (e) {
-      $("#image").attr("src", e.target.result);
+      $("#school-post-image").attr("src", e.target.result);
       $("#modalSchoolPostCrop").modal("show");
     }
     reader.readAsDataURL(this.files[0]);
@@ -264,7 +264,7 @@ $(function () {
 });
 
 /* SCRIPTS TO HANDLE THE CROPPER BOX */
-var $image = $("#image");
+var $image = $("#school-post-image");
 var cropBoxData;
 var canvasData;
 $("#modalSchoolPostCrop").on("shown.bs.modal", function () {
@@ -295,8 +295,8 @@ $(".js-zoom-out").click(function () {
 });
 
   /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
-  $(".js-crop-and-upload").click(function () {
-    var imageData = $('#image').cropper('getCroppedCanvas').toDataURL() ;
+  $(".js-crop-and-upload-post").click(function () {
+    var imageData = $('#school-post-image').cropper('getCroppedCanvas').toDataURL() ;
     $('.jcrop-holder').attr('src', imageData);
     $("#id_image_base64").val(imageData);
     $("#modalSchoolPostCrop").modal('hide');

@@ -103,7 +103,7 @@ class EditSkMemberProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
 
-    joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
+    #joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
 
     roll = forms.CharField(error_messages={'required': 'Roll is required.'})
 
@@ -113,10 +113,10 @@ class EditSkMemberProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
 
-    joining_date = forms.DateField(required=False)
+    #joining_date = forms.DateField(required=False)
     class Meta:
         model = SkMemberProfile
-        fields = ('mobile', 'image', 'student_class', 'roll','joining_date','gender', 'image_base64')
+        fields = ('mobile', 'image', 'student_class', 'roll','gender', 'image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
