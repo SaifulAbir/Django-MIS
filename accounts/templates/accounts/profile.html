@@ -13,12 +13,15 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8" >
+                    {% if msg %}
+                        <div style="font-size:15px;margin-top:15px;padding: 10px;" class="alert alert-success">
+                            <span>
+                              {{ msg }}
+                            </span>
+                        </div>
+                    {% endif %}
                     <!-- Profile Image -->
                     <div class="box box-primary">
-                        {% if msg %}
-                            {{ msg }}
-                        {% endif %}
-
                         <div class="box-body box-profile">
                             {% if profile.image %}
                                 <img class="profile-user-img img-responsive img-circle" style="height:100px;" src="{{ profile.image.url }}" alt="User profile picture">

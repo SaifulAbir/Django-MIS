@@ -87,10 +87,18 @@ def profile(request):
     else:
         profile = None
 
+    if 'status' in request.session:
+        try:
+            del request.session['status']
+            del request.session['msg']
+        except KeyError:
+            pass
+
     if 'msg' not in request.session:
         msg = None
     else:
-        msg = request.session.msg
+        msg = request.session.get('msg')
+        request.session['status'] = 'read'
 
     return render(request, 'accounts/profile.html', {'profile': profile, 'headmaster_profile':headmaster_profile,
                                                      'skleader_profile':skleader_profile, 'msg':msg})
@@ -214,8 +222,7 @@ def admin_profile_update(request):
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [user_update.email]
                 send_mail(subject_text, message, email_from, recipient_list, html_message=html_message)
-
-                request.session['msg'] = 'Please check your email'
+                request.session['msg'] = 'Please check your email and confirm your email address'
 
             # image cropping code start here
             img_base64 = user_form.cleaned_data.get('image_base64')
