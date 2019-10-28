@@ -1,7 +1,7 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 {% load static %}
-<section class="content-header">
+<section class="content-header" style="padding-top:60px">
     <h1>
         Club Meeting Info
     </h1>
@@ -23,7 +23,7 @@
                                 <span>Date: </span><label>{{club_meeting_detail.date}}</label>
                             </div>
                             <div class="form-group">
-                                <span>Class:</span><label>{{club_meeting_detail.class_room}}</label>
+                                <span>Class: </span><label>{{club_meeting_detail.class_room}}</label>
                             </div>
                             <div class="form-group">
                                 <span>Presence of Guide Teacher: </span>
@@ -34,7 +34,7 @@
                                 {% endif %}
                             </div>
                             <div class="form-group">
-                                <label>Topics:</label>
+                                <label>Topics: </label>
 <!--                                {% for topic in club_meeting_detail.topics.all %}-->
 <!--                                <input type="text" value="{{topic}}" class="form-control my-colorpicker1" readonly>-->
 <!--                                {% endfor %}-->
@@ -45,7 +45,7 @@
                                 </ul>
                             </div>
                             <div class="form-group">
-                                <label>Attendance:</label>
+                                <label>Attendance: </label>
 <!--                                {% for attendance in club_meeting_detail.attendance.all %}-->
 <!--                                <input type="text" value="{{attendance}}" class="form-control my-colorpicker1" readonly>-->
 <!--                                {% endfor %}-->
