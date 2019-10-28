@@ -20,25 +20,21 @@
                 {% else %}
                     <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
                 {% endif %}
-                <h3 class="profile-username text-center">
-                    <font color="white">
-                        {{ headmaster_profile.user.first_name }}
-                    </font>
-                </h3>
-                <p class="text-muted text-center"><font color="white">Head Master</font></p>
+                <h3 class="profile-username text-center">{{ headmaster_profile.user.first_name }}</h3>
+                <p class="text-muted text-center">Head Master</p>
             </div>
         </li>
 
         <li>
             <div class="box-body box-profile">
-                {% for skleader_profile in skleader_list%}
-                {% if skleader_profile.image %}
+                {% for skleader in skleader_list%}
+                {% if skleader.image %}
                     <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{skleader.image.url }}" alt="User profile picture">
                 {% else %}
                     <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
                 {% endif %}
-                <h3 class="profile-username text-center"><font color="white">{{ skleader_profile.user.first_name }}</font></h3>
-                <p class="text-muted text-center"><font color="white">Sk Leader</font></p>
+                <h3 class="profile-username text-center">{{ skleader.user.first_name }}</h3>
+                <p class="text-muted text-center">Sk Leader</p>
                 {% endfor %}
             </div>
         </li>

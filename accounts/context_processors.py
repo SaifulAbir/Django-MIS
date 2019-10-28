@@ -32,7 +32,8 @@ def sidebar_context(request):
             headmaster_profile=None
         if school_profile is not None:
             try:
-                skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5).latest('school__id')
+                skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5)
+                print(skleader_profile)
             except SkLeaderProfile.DoesNotExist:
                 skleader_profile = None
         else:

@@ -104,16 +104,13 @@
         </section>
     </div>
 </div>
-{% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
 
-
-
-
-<div class="row">
-    <div class="col-md-12" >
+<section class="content">
+    <div class="row">
         <section class="content">
+        <div class="col-sm-9">
             <div class="row">
-                <div class="col-md-12">
+                {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
                     <div class="box box-info">
                         <div id="image_preview"></div>
                         <form method='POST' enctype="multipart/form-data">
@@ -144,16 +141,12 @@
                             </div>
                         </form>
                     </div>
-                </div>
+    {% endif %}
             </div>
-        </section>
-        {% endif %}
-        {% if school_post_list %}
-        <section class="content">
-
-            {% for school_post in school_post_list %}
             <div class="row">
-                <div class="col-md-9">
+                {% if school_post_list %}
+            {% for school_post in school_post_list %}
+
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
@@ -172,13 +165,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
                 {% endfor %}
-
         {% endif %}
-        <div class="col-md-3 hidden-xs">
-                <div class="box box-widget">
+            </div>
+        </div>
+        <div class="col-sm-3 hidden-xs">
+            <div class="box box-widget">
                     <div class="box-header with-border">
                         <div class="user-block">
                             <h4>Members</h4>
@@ -208,10 +200,16 @@
 
                     </div>
                 </div>
-            </section>
+
+
         </div>
+
     </div>
-</div>
+    </section>
+</section>
+
+
+
 
 {% endblock %}
 

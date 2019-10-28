@@ -195,6 +195,8 @@ input#id_CMF-date {
     display:none !important;
 }
 .skin-blue .main-header .logo,
+.profile-username,
+.text-muted,
 .sidebar a{
     color: #cd911f !important;
 }
