@@ -207,6 +207,16 @@ def school_profile(request, pk):
             form = EditSchoolForm(request.POST, request.FILES, instance=school_profile)
             if form.is_valid():
                 school = form.save(commit=False)
+                # image cropping code start here
+                img_base64 = form.cleaned_data.get('cover_image_base64')
+                if img_base64:
+                    format, imgstr = img_base64.split(';base64,')
+                    ext = format.split('/')[-1]
+                    filename = str(uuid.uuid4()) + '-school_post.' + ext
+                    data = ContentFile(base64.b64decode(imgstr), name=filename)
+                    school.image.save(filename, data, save=True)
+                    school.image = 'images/' + filename
+                # end of image cropping code
                 school.save()
                 return redirect('school:school_profile', school.id)
             form = EditSchoolForm(instance=school_profile)

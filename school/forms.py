@@ -25,11 +25,12 @@ class SchoolForm(forms.ModelForm):
     #     self.fields['union'].queryset = Union.objects.none()
 
 class EditSchoolForm(forms.ModelForm):
+    cover_image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model = School
-        fields = ['image']
+        fields = ['image', 'cover_image_base64']
 
 class SchoolPostForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())

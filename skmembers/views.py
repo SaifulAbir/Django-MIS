@@ -84,6 +84,16 @@ def skmember_profile_view_skleader(request):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.school_id = school_id
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-skmember.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             profile.save()
 
             headmaster_details = SkmemberDetails()
