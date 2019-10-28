@@ -107,18 +107,18 @@
 </div>
 
 <div class="row">
-<section class="content">
-    <div class="col-sm-9">
-        <section class="content">
-        <div class="row">
-            {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
-            <div class="box box-info">
-                <div id="image_preview"><img class="jcrop-holder" src="" alt=""></div>
-                <form method='POST' enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="box-body">
-                        <!-- Color Picker -->
-                        <span id = "alert_placeholder">
+    <section class="content">
+        <div class="col-sm-9">
+            <section class="content">
+                <div class="row">
+                    {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
+                    <div class="box box-info">
+                        <div id="image_preview"><img class="jcrop-holder" src="" alt=""></div>
+                        <form method='POST' enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="box-body">
+                                <!-- Color Picker -->
+                                <span id = "alert_placeholder">
                         {% if post_form.errors %}
                         <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                             padding-bottom: 3px;" class="alert alert-danger-error-message">
@@ -130,84 +130,85 @@
                         </div>
                         {% endif %}
                     </span>
-                        <div class="form-group">
-                            {% render_field post_form.text class="form-control" placeholder='What is on your mind?' %}
-                        </div>
-                        <div class="form-group" style="left:25px;display: inline-block;">
-                            <input type="file"  accept="image/*" placeholder="" style="display:none" class="" id="id_post_image">
-                            <input type="button" style="display: inline-block;position:relative;width:40px;" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image" onclick="choosePic();" style="position:absolute;z-index:99;bottom:35px;left:22px;cursor: pointer;color:#fff;"></span>
-                        </div>
-                        {% render_field post_form.image_base64 %}
-                        <!-- /.box-footer -->
-                        <input type="submit" value="Post" style="display: inline-block;position:relative;" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
-                    </div>
-                </form>
-            </div>
-        </div>
-        {% include 'school/_crop_post_modal.html' %}
-        {% endif %}
-        <div class="row">
-            {% if school_post_list %}
-
-
-            {% for school_post in school_post_list %}
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
-                    <a type="button" class="btn btn-primary pull-right" href="{% url 'school:school_post_detail_view' school_post.id %}">
-                        <span class="fa fa-share"></span>
-                    </a>
-                </div>
-                <div class="box-body">
-                    {% if school_post.post_image %}
-                    <div class="form-group">
-                        <img src="{{ school_post.post_image.url }}" alt="">
-                    </div>
-                    {% endif %}
-                    <div class="form-group">
-                        {{school_post.text}}
+                                <div class="form-group">
+                                    {% render_field post_form.text class="form-control" placeholder='What is on your mind?' %}
+                                </div>
+                                <div class="form-group" style="left:25px;display: inline-block;">
+                                    <input type="file"  accept="image/*" placeholder="" style="display:none" class="" id="id_post_image">
+                                    <input type="button" style="display: inline-block;position:relative;width:40px;" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image" onclick="choosePic();" style="position:absolute;z-index:99;bottom:35px;left:22px;cursor: pointer;color:#fff;"></span>
+                                </div>
+                                {% render_field post_form.image_base64 %}
+                                <!-- /.box-footer -->
+                                <input type="submit" value="Post" style="display: inline-block;position:relative;" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
-
-        {% endif %}
-        </div>
-            </section>
-    </div>
-    <div class="col-sm-3 hidden-xs">
-        <div class="box box-widget">
-            <div class="box-header with-border">
-                <div class="user-block">
-                    <h4>Members</h4>
-                </div>
-
-            </div>
-            <div class="box-body">
+                {% include 'school/_crop_cover_modal.html' %}
+                {% include 'school/_crop_post_modal.html' %}
+                {% endif %}
                 <div class="row">
+                    {% if school_post_list %}
 
-                    {% for skmember in skmember_list %}
-                    {% if skmember.image %}
-                    <div class="col-xs-6"align="center">
-                        <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
-                        <p><strong>{{skmember.user}}</strong></p>
-                    </div>
-                    {% else %}
-                    <div class="col-xs-6" align="center">
-                        <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
-                        <p><strong>{{skmember.user}}</strong></p>
-                    </div>
-                    {% endif %}
 
+                    {% for school_post in school_post_list %}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
+                            <a type="button" class="btn btn-primary pull-right" href="{% url 'school:school_post_detail_view' school_post.id %}">
+                                <span class="fa fa-share"></span>
+                            </a>
+                        </div>
+                        <div class="box-body">
+                            {% if school_post.post_image %}
+                            <div class="form-group">
+                                <img src="{{ school_post.post_image.url }}" alt="">
+                            </div>
+                            {% endif %}
+                            <div class="form-group">
+                                {{school_post.text}}
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
 
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+        <div class="col-sm-3 hidden-xs">
+            <div class="box box-widget">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                        <h4>Members</h4>
+                    </div>
 
                 </div>
+                <div class="box-body">
+                    <div class="row">
 
+                        {% for skmember in skmember_list %}
+                        {% if skmember.image %}
+                        <div class="col-xs-6"align="center">
+                            <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
+                            <p><strong>{{skmember.user}}</strong></p>
+                        </div>
+                        {% else %}
+                        <div class="col-xs-6" align="center">
+                            <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
+                            <p><strong>{{skmember.user}}</strong></p>
+                        </div>
+                        {% endif %}
+
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
             </div>
-        </div>
 
-    </div>
+        </div>
     </section>
 </div>
 
