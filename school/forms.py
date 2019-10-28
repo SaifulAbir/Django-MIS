@@ -32,9 +32,10 @@ class EditSchoolForm(forms.ModelForm):
         fields = ['image']
 
 class SchoolPostForm(forms.ModelForm):
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     post_image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model = SchoolPost
-        fields = ['text','post_image']
+        fields = ['text','post_image', 'image_base64']
 

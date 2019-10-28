@@ -52,8 +52,8 @@ class User(AbstractUser):
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=6)
     image = models.ImageField(upload_to='images/', default='')
     username = None
-    #email_verifiaction_code = models.CharField(max_length=100, null=True, blank=True, default='')
-    # email_verified = models.CharField(max_length=)
+    email_verifiaction_code = models.CharField(max_length=100, null=True, blank=True, default='')
+    email_verified = models.CharField(max_length=1, null=True, blank=True, default=0)
     email = models.EmailField(_('email address'), unique=True )  # changes email to unique and blank to false
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  # removes email from REQUIRED_FIELDS

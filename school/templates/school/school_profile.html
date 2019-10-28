@@ -104,15 +104,18 @@
         </section>
     </div>
 </div>
+{% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
 
-<section class="content">
-    <div class="row">
+
+
+
+<div class="row">
+    <div class="col-md-12" >
         <section class="content">
-        <div class="col-sm-9">
             <div class="row">
-                {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
+                <div class="col-md-12">
                     <div class="box box-info">
-                        <div id="image_preview"></div>
+                        <div id="image_preview"><img class="jcrop-holder" src="" alt=""></div>
                         <form method='POST' enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="box-body">
@@ -133,20 +136,26 @@
                                     {% render_field post_form.text class="form-control" placeholder='What is on your mind?' %}
                                 </div>
                                 <div class="form-group" style="left:25px;display: inline-block;">
-                                    {% render_field post_form.post_image class="" style="display:none" placeholder=profile_form.image.label %}
+                                    <input type="file"  accept="image/*" placeholder="" style="display:none" class="" id="id_post_image">
                                     <input type="button" style="display: inline-block;position:relative;width:40px;" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image" onclick="choosePic();" style="position:absolute;z-index:99;bottom:35px;left:22px;cursor: pointer;color:#fff;"></span>
                                 </div>
+                                {% render_field post_form.image_base64 %}
                                 <!-- /.box-footer -->
                                 <input type="submit" value="Post" style="display: inline-block;position:relative;" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
                             </div>
                         </form>
                     </div>
-    {% endif %}
+                </div>
             </div>
-            <div class="row">
-                {% if school_post_list %}
-            {% for school_post in school_post_list %}
+        </section>
+        {% include 'school/_crop_post_modal.html' %}
+        {% endif %}
+        {% if school_post_list %}
+        <section class="content">
 
+            {% for school_post in school_post_list %}
+            <div class="row">
+                <div class="col-md-9">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
@@ -165,12 +174,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
                 {% endfor %}
+
         {% endif %}
-            </div>
-        </div>
-        <div class="col-sm-3 hidden-xs">
-            <div class="box box-widget">
+        <div class="col-md-3 hidden-xs">
+                <div class="box box-widget">
                     <div class="box-header with-border">
                         <div class="user-block">
                             <h4>Members</h4>
@@ -200,16 +210,10 @@
 
                     </div>
                 </div>
-
-
+            </section>
         </div>
-
     </div>
-    </section>
-</section>
-
-
-
+</div>
 
 {% endblock %}
 
@@ -228,16 +232,73 @@ function choosePic(){
     $('#id_post_image').click();
     $("#id_post_image").on("change", function(){
         if($("#id_post_image").val()){
-            $('#image_preview').html("");
-             var total_file=document.getElementById("id_post_image").files.length;
-             for(var i=0;i<total_file;i++)
-             {
-              $('#image_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'>");
-             }
+<!--            $('#image_preview').html("");-->
+<!--             var total_file=document.getElementById("id_post_image").files.length;-->
+<!--             for(var i=0;i<total_file;i++)-->
+<!--             {-->
+<!--              $('#image_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'>");-->
+<!--             }-->
         }
     });
 }
 
 
 </script>
+<script>
+$(function () {
+
+  /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+  $("#id_post_image").on('change',function () {
+  if (this.files && this.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $("#image").attr("src", e.target.result);
+      $("#modalSchoolPostCrop").modal("show");
+    }
+    reader.readAsDataURL(this.files[0]);
+  }
+});
+
+/* SCRIPTS TO HANDLE THE CROPPER BOX */
+var $image = $("#image");
+var cropBoxData;
+var canvasData;
+$("#modalSchoolPostCrop").on("shown.bs.modal", function () {
+  $image.cropper({
+    viewMode: 1,
+    aspectRatio: 16/9,
+    minCropBoxWidth: 200,
+    minCropBoxHeight: 200,
+    ready: function () {
+      $image.cropper("setCanvasData", canvasData);
+      $image.cropper("setCropBoxData", cropBoxData);
+    }
+  });
+}).on("hidden.bs.modal", function () {
+  cropBoxData = $image.cropper("getCropBoxData");
+  canvasData = $image.cropper("getCanvasData");
+  $image.cropper("destroy");
+});
+
+// Enable zoom in button
+$(".js-zoom-in").click(function () {
+  $image.cropper("zoom", 0.1);
+});
+
+// Enable zoom out button
+$(".js-zoom-out").click(function () {
+  $image.cropper("zoom", -0.1);
+});
+
+  /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+  $(".js-crop-and-upload").click(function () {
+    var imageData = $('#image').cropper('getCroppedCanvas').toDataURL() ;
+    $('.jcrop-holder').attr('src', imageData);
+    $("#id_image_base64").val(imageData);
+    $("#modalSchoolPostCrop").modal('hide');
+    $("#id_post_image").val("");
+  });
+});
+  </script>
 {% endblock %}
