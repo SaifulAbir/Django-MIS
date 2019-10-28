@@ -222,7 +222,7 @@ def admin_profile_update(request):
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [user_update.email]
                 send_mail(subject_text, message, email_from, recipient_list, html_message=html_message)
-                request.session['msg'] = 'Please check your email and confirm your email address'
+                request.session['msg'] = 'Please check your email to confirm the email address'
 
             # image cropping code start here
             img_base64 = user_form.cleaned_data.get('image_base64')
