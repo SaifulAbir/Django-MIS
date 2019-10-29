@@ -88,20 +88,17 @@
                         <td>{{ skmember.school }}</td>
                         <td>{{ skmember.student_class }}</td>
                         <td align="center">
-                            {% if user.is_authenticated and user.user_type == 1 %}
                             <a type="button" style="margin-right:10px"
                                class=""
                                href="{% url 'skmembers:skmember_detail' skmember.pk %}">
                                 <span class="fa fa-eye"></span>
                             </a>
-                            {% else %}
                             <a type="button"
                                class=""
                                href="{% url 'skmembers:skmember_update' skmember.pk %}">
                                 <span class="fa fa-edit"></span>
 
                             </a>
-                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}
