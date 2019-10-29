@@ -28,6 +28,9 @@
 <script src="{% static 'sknf/js/cropper.min.js' %}"></script>
 <!--<script src="{% static 'sknf/js/jquery-cropper.min.js' %}"></script>-->
 <script>
+    //for Disabling cache
+    $("form :input").attr("autocomplete", "off");
+    //for Disabling cache
 
     function initDatepicker(){
         $('.datepicker:not(".dp-inited")').datepicker({
