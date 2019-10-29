@@ -211,6 +211,10 @@ ul#id_topic {
     padding-left: 20px;
 }
 
+input[name=topic] {
+    vertical-align: text-top;
+}
+
 .main-sidebar {
     position:fixed !important;
     height:100%;

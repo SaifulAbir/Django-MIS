@@ -87,11 +87,13 @@
                         <td>{{ skmember.mobile }}</td>
                         <td>{{ skmember.school }}</td>
                         <td>{{ skmember.student_class }}</td>
-                        <td align="center"><a type="button" style="margin-right:10px"
+                        <td align="center">
+                            {% if user.is_authenticated and user.user_type == 1 %}
+                            <a type="button" style="margin-right:10px"
                                class=""
                                href="{% url 'skmembers:skmember_detail' skmember.pk %}">
-                            <span class="fa fa-eye"></span>
-                        </a>
+                                <span class="fa fa-eye"></span>
+                            </a>
                             <a type="button"
                                class=""
                                href="{% url 'skmembers:skmember_update' skmember.pk %}">

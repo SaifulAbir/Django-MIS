@@ -119,7 +119,7 @@ def skmember_update_for_skleader(request, pk):
     school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
-        profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
+        profile_form = EditSkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
