@@ -94,12 +94,14 @@
                                href="{% url 'skmembers:skmember_detail' skmember.pk %}">
                                 <span class="fa fa-eye"></span>
                             </a>
+                            {% else %}
                             <a type="button"
                                class=""
                                href="{% url 'skmembers:skmember_update' skmember.pk %}">
                                 <span class="fa fa-edit"></span>
 
                             </a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}
