@@ -14,18 +14,19 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class ClubMeetingForm(forms.ModelForm):
+    class_room = forms.CharField(error_messages={'required': 'Class room is required.'})
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    presence_guide_teacher = forms.BooleanField()
+    presence_guide_teacher = forms.BooleanField(required=False)
     presence_skleader = forms.BooleanField(widget=forms.CheckboxInput(attrs={'checked': True}))
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
-        required=True)
+        required=True, error_messages={'required': 'Select at least one topic.'})
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(attrs={'checked': 'checked'}),
         queryset=None,
-        required=True)
-    date = forms.DateField(widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',))
+        required=True, error_messages={'required': 'Member attendance is required.'})
+    date = forms.DateField(widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',), error_messages={'required': 'Date is required.'})
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
