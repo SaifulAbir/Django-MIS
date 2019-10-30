@@ -32,11 +32,11 @@ def sidebar_context(request):
             headmaster_profile=None
         if school_profile is not None:
             try:
-                skleader_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5)
+                skleader_list = SkLeaderProfile.objects.filter(school__id=school_profile.id, user__user_type=5)
             except SkLeaderProfile.DoesNotExist:
-                skleader_profile = None
+                skleader_list = None
         else:
-            skleader_profile=None
+            skleader_list=None
         if request.user.is_authenticated and request.user.user_type == 1:
             profile = request.user
         elif request.user.is_authenticated and request.user.user_type == 2:
@@ -50,7 +50,7 @@ def sidebar_context(request):
         else:
             profile = None
         return {
-            'profile': profile, 'headmaster_profile':headmaster_profile, 'skleader_profile':skleader_profile
+            'profile': profile, 'headmaster_profile':headmaster_profile, 'skleader_list':skleader_list
         }
     else:
         return {
