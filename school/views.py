@@ -253,7 +253,7 @@ def school_profile(request, pk):
         skleader_list = None
 
     try:
-        school_post_list = SchoolPost.objects.all()
+        school_post_list = SchoolPost.objects.filter(school__id=school_profile.id)
     except SchoolPost.DoesNotExist:
         school_post_list = None
 
