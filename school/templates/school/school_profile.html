@@ -226,7 +226,7 @@ function changePic(){
     $('#id_image').click();
     $("#id_image").on("change", function(){
         var imgSize = (this.files[0].size)
-        if($("#id_image").val() && imgSize<2000000){
+        if($("#id_image").val() && imgSize<2097152){
             $('#btn_change').hide();
             $('#btn_upload').show();
         }
@@ -236,12 +236,7 @@ function choosePic(){
     $('#id_post_image').click();
     $("#id_post_image").on("change", function(){
         if($("#id_post_image").val()){
-<!--            $('#image_preview').html("");-->
-<!--             var total_file=document.getElementById("id_post_image").files.length;-->
-<!--             for(var i=0;i<total_file;i++)-->
-<!--             {-->
-<!--              $('#image_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'>");-->
-<!--             }-->
+
         }
     });
 }
@@ -253,15 +248,25 @@ $(function () {
 
   /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
   $("#id_post_image").on('change',function () {
-    if (this.files && this.files[0]) {
-    var reader = new FileReader();
+    var imgSize = (this.files[0].size);
+      $('.remove-file').on('click', function () {
+          $('#img-error').modal('hide');
+          $("#id_PF-image").val("");
+      });
+    if(imgSize<2097152) {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
 
-    reader.onload = function (e) {
-      $("#school-post-image").attr("src", e.target.result);
-      $("#modalSchoolPostCrop").modal("show");
+            reader.onload = function (e) {
+                $("#school-post-image").attr("src", e.target.result);
+                $("#modalSchoolPostCrop").modal("show");
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
     }
-    reader.readAsDataURL(this.files[0]);
-  }
+    else{
+          $('#img-error').modal('show');
+    }
 });
 
 /* SCRIPTS TO HANDLE THE CROPPER BOX */
@@ -312,7 +317,7 @@ $(function () {
           $('#img-error').modal('hide');
           $("#id_PF-image").val("");
       });
-      if(imgSize<2000000){
+      if(imgSize<2097152){
           if (this.files && this.files[0]) {
         var reader = new FileReader();
 
