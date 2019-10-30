@@ -64,6 +64,7 @@ def skleader_profile_view(request):
         'profile_form': profile_form,
     })
 
+@admin_login_required
 def skleader_list(request, export='null'):
     qs=SkLeaderProfile.objects.filter(user__user_type__in=[5])
     name= request.GET.get('name_contains')
