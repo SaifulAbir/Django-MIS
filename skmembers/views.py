@@ -174,6 +174,7 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
 
         return queryset
 
+@admin_login_required
 def skmember_list(request,export='null'):
     qs=SkMemberProfile.objects.filter(user__user_type__in=[6])
     name= request.GET.get('name_contains')
