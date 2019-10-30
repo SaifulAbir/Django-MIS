@@ -223,3 +223,6 @@ input[name=topic] {
 .profile-username, .text-muted {
     color: #fff;
 }
+.sidebar-menu {
+    white-space: normal;
+}
