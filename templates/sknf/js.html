@@ -211,7 +211,7 @@ $(function () {
           $('#img-error').modal('hide');
           $("#id_PF-image").val("");
       });
-  if(imgSize<2000000){
+  if(imgSize<2097152){
       if (this.files && this.files[0]) {
     var reader = new FileReader();
 
