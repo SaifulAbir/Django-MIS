@@ -27,7 +27,7 @@
 
         <li>
             <div class="box-body box-profile">
-                {% for skleader in skleader_list%}
+                {% for skleader in skleader_profile%}
                 {% if skleader.image %}
                     <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{skleader.image.url }}" alt="User profile picture">
                 {% else %}
