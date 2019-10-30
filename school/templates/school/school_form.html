@@ -73,10 +73,7 @@
                 <div class="box-header with-border">
                     {% if not form.instance.pk %}
                     <h3 class="box-title">Location</h3>
-                    {% else %}
-                    <h3 class="box-title">Location</h3>
-                    {% endif %}
-                </div>
+                    </div>
                 <div class="box-body">
                     <!-- Color Picker -->
                     <div class="form-group">
@@ -95,6 +92,29 @@
                         <label for="{{ form.union.id_for_label }}">{{ form.union.label }}</label>
                         {% render_field form.union class="form-control" placeholder=form.union.label %}
                     </div>
+                    {% else %}
+                    <h3 class="box-title">Location</h3>
+                    </div>
+                <div class="box-body">
+                    <!-- Color Picker -->
+                    <div class="form-group">
+                        <label for="{{ form.division.id_for_label }}">{{ form.division.label }}</label>
+                        {% render_field form.division class="form-control" placeholder=form.division.label %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.district.id_for_label }}">{{ form.district.label }}</label>
+                        {% render_field form.district class="form-control" placeholder=form.district.label %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.upazilla.id_for_label }}">{{ form.upazilla.label }}</label>
+                        {% render_field form.upazilla class="form-control" placeholder=form.upazilla.label %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.union.id_for_label }}">{{ form.union.label }}</label>
+                        {% render_field form.union class="form-control" placeholder=form.union.label %}
+                    </div>
+                    {% endif %}
+
 
                     <!-- /.box-footer -->
 
@@ -127,16 +147,17 @@
 {% block extra_js%}
 <script>
 $(function(){
-
     $(".school-menu").addClass("menu-open");
     $(".school-menu .treeview-menu").css("display", "block");
     var titile = $(".content-header h1").html();
 
-    if("Add New School"){
+    if(titile == "Add New School"){
         $("#id_district, #id_upazilla, #id_union").text('<option value="">---------</option>');
     }
 
-
+    // if(title == "Update School Info"){
+    //     $("#id_district, #id_upazilla, #id_union").text('<option ></option>');
+    // }
 
 
 
