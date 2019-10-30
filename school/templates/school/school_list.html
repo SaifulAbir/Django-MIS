@@ -176,6 +176,7 @@
                         }
                     }
                 });
+                 location.reload();
                 return false;
             };
 
@@ -189,7 +190,8 @@
 
             // Delete school
             $(".school-table").on("click", ".js-delete-school", loadForm);
-            $("#modal-school").on("submit", ".js-school-delete-form", saveForm);
+            $("#modal-school").on("submit", ".js-school-delete-form", saveForm)
+
 
         });
 
