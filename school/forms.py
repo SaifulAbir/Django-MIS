@@ -35,4 +35,6 @@ class SchoolPostForm(forms.ModelForm):
     class Meta:
         model = SchoolPost
         fields = ['text','post_image', 'image_base64']
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}),}
 
