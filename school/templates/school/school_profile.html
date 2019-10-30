@@ -117,7 +117,7 @@
                                 <img style="max-width: 100%" class="jcrop-holder" src="" alt="">
                             </div><br />
                                 <!-- Color Picker -->
-                        S        <span id = "alert_placeholder">
+                               <span id = "alert_placeholder">
                         {% if post_form.errors %}
                         <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                             padding-bottom: 3px;" class="alert alert-danger-error-message">
@@ -162,7 +162,7 @@
                         <div class="box-body">
                             {% if school_post.post_image %}
                             <div class="form-group">
-                                <img src="{{ school_post.post_image.url }}" alt="">
+                                <img style="max-width: 100%" src="{{ school_post.post_image.url }}" alt="">
                             </div>
                             {% endif %}
                             <div class="form-group">
@@ -272,10 +272,6 @@ $("#modalSchoolPostCrop").on("shown.bs.modal", function () {
   $image.cropper({
     viewMode: 1,
     aspectRatio: 16/9,
-    data:{
-                    width: 540,
-                    height:  607,
-                },
     ready: function () {
       $image.cropper("setCanvasData", canvasData);
       $image.cropper("setCropBoxData", cropBoxData);
