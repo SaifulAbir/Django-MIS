@@ -65,7 +65,7 @@ class EditUserForm(forms.ModelForm):
         image = self.cleaned_data.get('image', False)
         if image:
             if image.size > 1 * 1024 * 1024:
-                raise ValidationError("Image file too large ( > 1mb )")
+                raise ValidationError("Image is too large")
             return image
 
 class HeadmasterProfileForm(forms.ModelForm):
