@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
-                                            {% if sklmember_profile.image %}
+                                            {% if skmember_profile.image %}
                                                 <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skmember_profile.image.url }}" class="pull-right jcrop-holder " alt="Pic"><br />
                                             {% else %}
                                                 <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder " alt="Pic"><br />
@@ -339,6 +339,7 @@
             $("#tb-doc").append(html);
             initDatepicker();
             initSelect2();
+            $("form :input").attr("autocomplete", "off");
         }
     </script>
 {% endblock %}

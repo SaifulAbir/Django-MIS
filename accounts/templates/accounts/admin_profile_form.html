@@ -107,31 +107,32 @@
 
     </section>
 </form>
+{% include 'sknf/_modal_show_image_error.html' %}
 {% include 'sknf/_crop_modal.html' %}
 {% endblock %}
 
 {% block extra_js%}
-    <script>
-        $(function(){
-            $(".verifyemail").click(function () {
-                var email = $('#id_email').val();
-                $.ajax({
-                    url: '/ajax/verifyemail/',
-                    data: {
-                        'email': email
-                    },
-                    success: function (data) {
-                        console.log(data['exist']);
-                        if (data['exist'] == true){
-                            alert('Sorry! This email already exist');
-                            $('#id_email').val('');
-                        }
-                        {% comment %}if (data['exist'] == 'True') {
-                            alert('This email already Exist')
-                        }{% endcomment %}
+<script>
+    $(function(){
+        $(".verifyemail").click(function () {
+            var email = $('#id_email').val();
+            $.ajax({
+                url: '/ajax/verifyemail/',
+                data: {
+                    'email': email
+                },
+                success: function (data) {
+                    console.log(data['exist']);
+                    if (data['exist'] == true){
+                        alert('Sorry! This email already exist');
+                        $('#id_email').val('');
                     }
-                });
+                    {% comment %}if (data['exist'] == 'True') {
+                        alert('This email already Exist')
+                    }{% endcomment %}
+                }
             });
         });
-    </script>
+    });
+</script>
 {% endblock %}

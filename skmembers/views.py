@@ -119,7 +119,7 @@ def skmember_update_for_skleader(request, pk):
     school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
-        profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
+        profile_form = EditSkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
@@ -127,12 +127,12 @@ def skmember_update_for_skleader(request, pk):
             profile.user = user
             profile.save()
             messages.success(request, 'SK Member Updated!')
-            return HttpResponseRedirect("/skmembers/skmember_list/")
+            return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)
         profile_form = EditSkMemberProfileForm(instance=skmember_profile)
 
-    return render(request, 'skmembers/skmember_profile_update.html', {
+    return render(request, 'skmembers/skmember_profile_update_for_skleader.html', {
         'user_form': user_form,
         'profile_form': profile_form,
         'skmember_profile': skmember_profile,
@@ -201,7 +201,7 @@ def skmember_update(request, pk):
     school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
-        profile_form = SkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile, prefix='PF')
+        profile_form = EditSkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
             user.save()
@@ -242,6 +242,39 @@ class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
 
 @admin_login_required
 def skmember_details_update(request):
+
+    school = request.GET.get('school')
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+    skmember_id = request.GET.get('headmaster_id')
+
+    school_list = school.split(",")
+    from_date = from_date.split(",")
+    to_date = to_date.split(",")
+
+    SkmemberDetails.objects.filter(skmember = skmember_id).delete()
+    current_school_index = len(school_list)
+    for school in school_list:
+        skmemberModel = SkmemberDetails()
+        skmemberModel.skmember_id = skmember_id
+        skmemberModel.school_id = school
+        schoolindex = school_list.index(school)
+        fromdate = datetime.strptime(from_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+
+        skmemberModel.from_date = fromdate
+        if schoolindex == current_school_index-1:
+            skmember_obj=SkMemberProfile.objects.get(pk=skmember_id)
+            skmember_obj.school_id = school
+            skmember_obj.save()
+
+        if to_date[schoolindex]:
+            todate = datetime.strptime(to_date[schoolindex], '%d-%m-%Y').strftime('%Y-%m-%d')
+            skmemberModel.to_date = todate
+        skmemberModel.save()
+    return HttpResponse('ok')
+
+
+def skmember_details_update_for_skleader(request):
 
     school = request.GET.get('school')
     from_date = request.GET.get('from_date')
