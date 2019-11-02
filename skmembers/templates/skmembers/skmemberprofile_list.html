@@ -113,3 +113,17 @@
         <!-- /.content -->
     </section>
 {% endblock %}
+{% block extra_js %}
+<script>
+     //for skmember search export
+    $(".export-skmember").click(function() {
+        $('.search-form-skmember').prop('action', '/skmembers/skmember_list/export')
+    });
+
+    $(".search-skmember").click(function() {
+        $('.search-form-skmember').prop('action', '/skmembers/skmember_list');
+    });
+    //for skleader search export
+</script>
+{% endblock %}
+

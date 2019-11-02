@@ -223,3 +223,7 @@ input[name=topic] {
 .profile-username, .text-muted {
     color: #fff;
 }
+
+.logo{
+    visibility: visible !important;
+}
