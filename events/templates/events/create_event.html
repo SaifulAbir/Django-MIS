@@ -44,7 +44,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-          <div class="form-group">
+          <div class="form-group" >
             <label for="id_start">Start</label>
             <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
               <input type="text" class="form-control datetimepicker-input" id="id_start" data-target="#datetimepicker7" readonly/>
@@ -176,6 +176,9 @@
           useCurrent: false,
           ignoreReadonly: true,
           format: 'DD-M-YYYY hh:mm A',
+          widgetPositioning: {
+            vertical: 'bottom',
+          },
           minDate: moment()
         });
 
