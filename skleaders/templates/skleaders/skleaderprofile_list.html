@@ -108,3 +108,18 @@
         <!-- /.content -->
 </section>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+    //for skleader search export
+    $(".export-skleader").click(function() {
+        $('.search-form-skleader').prop('action', '/skleaders/skleader_list/export')
+    });
+
+    $(".search-skleader").click(function() {
+        $('.search-form-skleader').prop('action', '/skleaders/skleader_list');
+    });
+    //for skleader search export
+
+</script>
+{% endblock %}

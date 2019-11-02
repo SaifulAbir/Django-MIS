@@ -226,3 +226,7 @@ input[name=topic] {
 .sidebar-menu {
     white-space: normal;
 }
+
+.logo{
+    visibility: visible !important;
+}
