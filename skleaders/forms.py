@@ -81,7 +81,8 @@ class SkLeaderProfileForm(forms.ModelForm):
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
 
-    roll = forms.CharField(error_messages={'required': 'Roll is required.'})
+    roll = forms.CharField(error_messages={'required': 'Roll is required.'},
+                           widget=forms.TextInput(attrs={'type':'number'}))
 
     student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
                                       choices=SkUserForm.class_choice, widget=forms.Select())
@@ -113,7 +114,8 @@ class EditSkLeaderProfileForm(forms.ModelForm):
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
 
-    roll = forms.CharField(error_messages={'required': 'Roll is required.'})
+    roll = forms.CharField(error_messages={'required': 'Roll is required.'},
+                           widget=forms.TextInput(attrs={'type':'number'}))
 
     student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
                                       choices=SkUserForm.class_choice, widget=forms.Select())
