@@ -61,7 +61,8 @@ class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     joining_date = DateField(error_messages={'required': 'From date is required.'})
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    mobile = forms.CharField(error_messages={'required': 'Mobile is required.','max_length': 'Moblie Number can not exceed 11 digits'},
+                             widget=forms.TextInput(attrs={'type':'number'}))
     school = forms.ModelChoiceField(error_messages={'required': 'School is required.'}, queryset=School.objects.all())
 
     class Meta:
