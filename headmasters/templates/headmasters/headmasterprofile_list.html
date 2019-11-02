@@ -109,3 +109,17 @@
         <!-- /.content -->
     </section>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+    //for headmaster search export
+    $(".export-headmaster").click(function() {
+        $('.search-form-headmaster').prop('action', '/headmasters/headmaster_list/export')
+    });
+
+    $(".search-headmaster").click(function() {
+        $('.search-form-headmaster').prop('action', '/headmasters/headmaster_list');
+    });
+    //for Headmaster search export
+</script>
+{% endblock %}

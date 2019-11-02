@@ -195,5 +195,15 @@
 
         });
 
+        //for school search export
+    $(".export-school").click(function() {
+        $('.search-form').prop('action', '/school_list/export')
+    });
+
+    $(".search-school").click(function() {
+        $('.search-form').prop('action', '/school_list')
+    });
+    //for school search export
+
     </script>
 {% endblock %}
