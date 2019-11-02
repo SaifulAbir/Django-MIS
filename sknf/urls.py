@@ -21,7 +21,6 @@ from django.urls import path, include
 from django.conf.urls import handler403
 from django.conf.urls import handler500
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('district/', include('districts.urls')),
     path('division/', include('division.urls')),
