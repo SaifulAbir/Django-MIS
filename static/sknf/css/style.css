@@ -171,17 +171,17 @@ input#id_CMF-date {
 
 
 @keyframes lock{
-	50%{top:-4%;}
-	100%{top:-6%;}
+    50%{top:-4%;}
+    100%{top:-6%;}
 }
 
 @keyframes colors{
-	50%{transform:scale(1.1);}
-	100%{color:#ca3074;}
+    50%{transform:scale(1.1);}
+    100%{color:#ca3074;}
 }
 
 @keyframes show{
-	100%{opacity:1;}
+    100%{opacity:1;}
 }
 .skin-blue .main-header .navbar,
 .skin-blue .main-header .logo,
@@ -229,4 +229,14 @@ input[name=topic] {
 
 .logo{
     visibility: visible !important;
+    z-index: 999;
+}
+
+@media screen and (max-width: 512px) {
+    .logo {
+        position: absolute;
+        z-index: 1050;
+        left: 35%;
+        width: auto !important;
+    }
 }
