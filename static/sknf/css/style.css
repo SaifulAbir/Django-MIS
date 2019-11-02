@@ -240,3 +240,7 @@ input[name=topic] {
         width: auto !important;
     }
 }
+
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom.pull-right {
+    right: 6px !important;
+}
