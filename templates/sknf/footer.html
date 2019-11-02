@@ -33,7 +33,8 @@
 
     function initDatepicker(){
         $('.datepicker:not(".dp-inited")').datepicker({
-            'format' : 'dd-mm-yyyy'
+            'format' : 'dd-mm-yyyy',
+            autoclose: true,
         }).addClass("dp-inited");
     }
 
