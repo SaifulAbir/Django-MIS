@@ -40,11 +40,11 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-                        {% render_field form.name class="form-control" placeholder=form.name.label %}
+                        {% render_field form.name class="form-control" %}
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group"  >
                         <label for="{{ form.school_id.id_for_label }}">EIIN</label>
                         {% render_field form.school_id class="form-control" %}
                     </div>
@@ -59,7 +59,7 @@
 
                     <div class="form-group">
                         <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
-                        {% render_field form.address class="form-control" placeholder=form.address.label %}
+                        {% render_field form.address class="form-control" %}
                     </div>
                     <!-- /.box-footer -->
 
