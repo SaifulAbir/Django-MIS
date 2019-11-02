@@ -19,7 +19,7 @@
 <!-- fullCalendar -->
 <script src="{% static 'vendor/moment/moment.js' %}"></script>
 <script src="{% static 'vendor/fullcalendar/dist/fullcalendar.min.js' %}"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+{% comment %}<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>{% endcomment %}
 <script src="{% static 'sknf/js/toastr.min.js' %}"></script>
 <script src="{% static 'sknf/js/select2.full.min.js' %}"></script>
 <script src="{% static 'sknf/js/bootstrap-datepicker.min.js' %}"></script>
@@ -73,10 +73,6 @@
             'autoWidth'   : false
         });
 
-
-
-
-
         $(function(){
             $('#addMoreDoc').on('click', addRow);
             $(document).on('click', '.removeDoc', function() {
@@ -106,10 +102,7 @@
 
     });
 
-
-
     $('#generate_password_confirm').click(function (event) {
-
         //check if checkbox is checked
         if ($(this).is(':checked')) {
             if($('#generate_password_input_field').val()){
@@ -120,7 +113,6 @@
                 event.preventDefault();
                 alert('First Generate Password.');
             }
-
         }
         else {
             $('#use-password').attr('disabled', true); //disable input
@@ -133,8 +125,8 @@
         $( "#generated-pass" ).val(generated_password)
         $( "#confirm-generated-pass" ).val(generated_password)
     });
-    $(".toggle-password").click(function() {
 
+    $(".toggle-password").click(function() {
         $(this).toggleClass("fa-eye fa-eye-slash");
         var input = $("#generated-pass");
         var input2 = $('#confirm-generated-pass');
@@ -201,61 +193,60 @@
 
 </script>
 
-    <script>
-$(function () {
+<script>
+    $(function () {
+        /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+        $("#id_PF-image").on('change',function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
 
-  /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
-  $("#id_PF-image").on('change',function () {
-      if (this.files && this.files[0]) {
-    var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#image").attr("src", e.target.result);
+                    $("#modalCrop").modal("show");
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
 
-    reader.onload = function (e) {
-      $("#image").attr("src", e.target.result);
-      $("#modalCrop").modal("show");
-    }
-    reader.readAsDataURL(this.files[0]);
-  }
-});
-
-/* SCRIPTS TO HANDLE THE CROPPER BOX */
-var $image = $("#image");
-var cropBoxData;
-var canvasData;
-$("#modalCrop").on("shown.bs.modal", function () {
-  $image.cropper({
-    viewMode: 1,
-    aspectRatio: 1/1,
-    minCropBoxWidth: 200,
-    minCropBoxHeight: 200,
-    ready: function () {
-      $image.cropper("setCanvasData", canvasData);
-      $image.cropper("setCropBoxData", cropBoxData);
-    }
-  });
-}).on("hidden.bs.modal", function () {
-  cropBoxData = $image.cropper("getCropBoxData");
-  canvasData = $image.cropper("getCanvasData");
-  $image.cropper("destroy");
-});
+        /* SCRIPTS TO HANDLE THE CROPPER BOX */
+        var $image = $("#image");
+        var cropBoxData;
+        var canvasData;
+        $("#modalCrop").on("shown.bs.modal", function () {
+            $image.cropper({
+                viewMode: 1,
+                aspectRatio: 1/1,
+                minCropBoxWidth: 200,
+                minCropBoxHeight: 200,
+                ready: function () {
+                    $image.cropper("setCanvasData", canvasData);
+                    $image.cropper("setCropBoxData", cropBoxData);
+                }
+            });
+        }).on("hidden.bs.modal", function () {
+            cropBoxData = $image.cropper("getCropBoxData");
+            canvasData = $image.cropper("getCanvasData");
+            $image.cropper("destroy");
+        });
 
 // Enable zoom in button
-$(".js-zoom-in").click(function () {
-  $image.cropper("zoom", 0.1);
-});
+        $(".js-zoom-in").click(function () {
+            $image.cropper("zoom", 0.1);
+        });
 
 // Enable zoom out button
-$(".js-zoom-out").click(function () {
-  $image.cropper("zoom", -0.1);
-});
+        $(".js-zoom-out").click(function () {
+            $image.cropper("zoom", -0.1);
+        });
 
-  /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
-  $(".js-crop-and-upload").click(function () {
-    var imageData = $('#image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
-    $('.jcrop-holder').attr('src', imageData);
-    $("#id_PF-image_base64").val(imageData);
-    $("#modalCrop").modal('hide');
-    $("#id_PF-image").val("");
-  });
-});
-  </script>
+        /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+        $(".js-crop-and-upload").click(function () {
+            var imageData = $('#image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
+            $('.jcrop-holder').attr('src', imageData);
+            $("#id_PF-image_base64").val(imageData);
+            $("#modalCrop").modal('hide');
+            $("#id_PF-image").val("");
+        });
+    });
+</script>
 
