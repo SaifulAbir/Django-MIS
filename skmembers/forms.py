@@ -40,10 +40,11 @@ class SkMemberProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    roll = forms.CharField(error_messages={'required': 'Roll is required.'})
+    roll = forms.CharField(error_messages={'required': 'Roll is required.', })
     student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    mobile = forms.CharField(error_messages={'required': 'Mobile is required.','max_length': 'Moblie Number can not exceed 11 digits'},
+                             widget=forms.TextInput(attrs={'type':'number'}))
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
     gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
     class Meta:
