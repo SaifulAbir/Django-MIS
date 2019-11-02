@@ -81,10 +81,10 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <div class="col-sm-12">
-                                        {% if user_form.instance.pk and old_user_profile.image.url %}
+                                        {% if user_form.instance and user_profile.image %}
                                         <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ user_profile.image.url }}" class="pull-right jcrop-holder" alt="Pic"><br />
                                         {% else %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ user_profile.image.url }}" class="pull-right jcrop-holder" alt="Pic"><br />
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
                                         {% endif %}
                                     </div>
                                 </div>
