@@ -180,6 +180,7 @@
                 aspectRatio: 1/1,
                 minCropBoxWidth: 200,
                 minCropBoxHeight: 200,
+                fillColor: '#fff',
                 ready: function () {
                     $image.cropper("setCanvasData", canvasData);
                     $image.cropper("setCropBoxData", cropBoxData);
@@ -203,7 +204,7 @@
 
         /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
         $(".js-crop-and-upload").click(function () {
-            var imageData = $('#image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
+            var imageData = $('#image').cropper('getCroppedCanvas', {fillColor: '#fff'}).toDataURL('image/jpeg', 0.5) ;
             $('.jcrop-holder').attr('src', imageData);
             $("#id_PF-image_base64").val(imageData);
             $("#modalCrop").modal('hide');

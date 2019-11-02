@@ -8,8 +8,15 @@
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b></b>SKNF</span>
     </a>
-  {% elif not user.is_authenticated or user.is_authenticated and user.user_type == 1 %}
+  {% elif not user.is_authenticated %}
     <a href="" class="logo" style="position:fixed;">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>SK</b>NF</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b></b>SKNF</span>
+    </a>
+  {% elif user.is_authenticated and user.user_type == 1 %}
+    <a href="{% url 'accounts:dashboard' %}" class="logo" style="position:fixed;">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>SK</b>NF</span>
       <!-- logo for regular state and mobile devices -->
