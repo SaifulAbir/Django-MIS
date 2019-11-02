@@ -75,7 +75,9 @@ class EditSkUserForm(forms.ModelForm):
 
 class SkLeaderProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    mobile = forms.CharField(error_messages={'required': 'Mobile is required.',
+                                             'max_length': 'Moblie Number can not exceed 11 digits'},
+                             widget=forms.TextInput(attrs={'type':'number'}))
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
 
@@ -105,7 +107,9 @@ class SkLeaderProfileForm(forms.ModelForm):
 
 class EditSkLeaderProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    mobile = forms.CharField(error_messages={'required': 'Mobile is required.',
+                                             'max_length': 'Moblie Number can not exceed 11 digits'},
+                             widget=forms.TextInput(attrs={'type':'number'}))
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
 
