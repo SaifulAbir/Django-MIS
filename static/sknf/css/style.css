@@ -167,6 +167,7 @@ input#id_CMF-date {
     border-right: 2px solid red;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    display: grid;
 }
 
 
