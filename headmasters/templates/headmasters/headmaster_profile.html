@@ -3,9 +3,9 @@
 {% load widget_tweaks %}
 {% load static %}
 <form method='POST' enctype="multipart/form-data" id="formUpload" novalidate>
-    <section class="content-header">
+    <section class="content-header"style="padding-top:60px">
         {% if not user_form.instance.pk %}
-        <h1>Add New Headmaster/Guide</h1>
+        <h1>Add New Headmaster/Guide Teacher</h1>
         {% else %}
         <h1>Update Headmaster Info</h1>
         {% endif %}
