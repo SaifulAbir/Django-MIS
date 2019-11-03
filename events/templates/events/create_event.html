@@ -105,6 +105,26 @@
         },
         {% endfor %}
       ],
+      eventRender: function(event, element) {
+            element.qtip({
+                id: 'calendar',
+                content: {
+                title: { text: event.title },
+                text: '<span class="title">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'd-M-Y')) + '<br><span class="title">End: </span>' + ($.fullCalendar.formatDate(event.end, 'd-M-Y'))
+                },
+                tip: 'true',
+                style: {
+                    classes: 'qtip-default  qtip qtip-light qtip-rounded',
+                    background: 'black',
+                    color: '#FFFFFF'
+                },
+                position: {
+                    my : 'bottom center',
+                    at: 'top center',
+                    viewport: $('#calendar'),
+                }
+            });
+      },
       timezone: 'local',
       selectable  : true,
       eventAfterRender: function (event, element, view) {
