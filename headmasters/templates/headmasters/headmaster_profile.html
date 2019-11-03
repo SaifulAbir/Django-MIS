@@ -5,7 +5,7 @@
     <form method='POST' enctype="multipart/form-data" id="formUpload" novalidate>
         <section class="content-header">
             {% if not user_form.instance.pk %}
-                <h1>Add New Headmaster/Guide Teacher</h1>
+                <h1>Add New Headmaster/Guide</h1>
             {% else %}
                 <h1>Update Headmaster Info</h1>
             {% endif %}
@@ -115,9 +115,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
-                                        <input type="text" class="datepicker copydate form-control"  />
+                                        <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
                                         <div style="display: none">
-                                            {% render_field profile_form.joining_date class="form-control pastedate" placeholder="From" %}
+                                            {% render_field profile_form.joining_date class="form-control pastedate" %}
                                         </div>
                                     </div>
                                 </div>
