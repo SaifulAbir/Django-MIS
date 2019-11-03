@@ -45,12 +45,12 @@
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="{{ club_meeting_form.date.id_for_label }}">{{ club_meeting_form.date.label }}</label>
-                                    {% render_field club_meeting_form.date class="form-control datepicker" %}
+                                    {% render_field club_meeting_form.date class="form-control datepicker" placeholder=club_meeting_form.date.label %}
                                 </div>
 
                                 <div class="form-group">
                                     <label for="{{ club_meeting_form.class_room.id_for_label }}">Class Room</label>
-                                    {% render_field club_meeting_form.class_room class="form-control" placeholder="" %}
+                                    {% render_field club_meeting_form.class_room class="form-control" placeholder=club_meeting_form.class_room.label %}
                                 </div>
 
                                 <div class="form-group">

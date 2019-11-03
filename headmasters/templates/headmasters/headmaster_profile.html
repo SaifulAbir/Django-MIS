@@ -115,9 +115,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
-                                        <input type="text" class="datepicker copydate form-control"  />
+                                        <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
                                         <div style="display: none">
-                                            {% render_field profile_form.joining_date class="form-control pastedate" placeholder="From" %}
+                                            {% render_field profile_form.joining_date class="form-control pastedate" %}
                                         </div>
                                     </div>
                                 </div>
