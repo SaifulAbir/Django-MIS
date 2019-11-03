@@ -1,32 +1,32 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    {% load widget_tweaks %}
-    {% load static %}
-    <form method='POST' enctype="multipart/form-data" id="formUpload" novalidate>
-        <section class="content-header">
-            {% if not user_form.instance.pk %}
-                <h1>Add New Headmaster/Guide</h1>
-            {% else %}
-                <h1>Update Headmaster Info</h1>
-            {% endif %}
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            {% if not form.instance.pk %}
-                                <h3 class="box-title">Basic Information</h3>
-                            {% else %}
-                                <h3 class="box-title">Basic Information</h3>
-                            {% endif %}
+{% load widget_tweaks %}
+{% load static %}
+<form method='POST' enctype="multipart/form-data" id="formUpload" novalidate>
+    <section class="content-header">
+        {% if not user_form.instance.pk %}
+        <h1>Add New Headmaster/Guide</h1>
+        {% else %}
+        <h1>Update Headmaster Info</h1>
+        {% endif %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        {% if not form.instance.pk %}
+                        <h3 class="box-title">Basic Information</h3>
+                        {% else %}
+                        <h3 class="box-title">Basic Information</h3>
+                        {% endif %}
 
-                        </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="box-body">
                                 <span id = "alert_placeholder">
                                     {% if user_form.errors or profile_form.errors %}
                                         <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
@@ -42,125 +42,124 @@
                                     </div>
                                     {% endif %}
                                 </span>
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">Email Address</label>
-                                        {% render_field user_form.email class="form-control" placeholder=user_form.email.label %}
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.mobile.id_for_label }}">{{ profile_form.mobile.label }}</label>
-                                        {% render_field profile_form.mobile class="form-control" placeholder=profile_form.mobile.label %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
-                                        {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
-                                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                        <button type="button"
-                                                class="btn btn-primary pull-right js-genarate-password">
-                                            Genarate Password
-                                        </button>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.confirm_password.id_for_label }}">Confirm Password</label>
-                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.user_type.id_for_label }}">User Type</label>
-                                        {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
-                                    </div>
-                                    {% include 'sknf/_password_generator_modal.html' %}
-                                </div>
-                            </div>
-                            <div class="col-sm-6"><br />
+                                {% csrf_token %}
                                 <div class="form-group">
+                                    <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                    {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.email.id_for_label }}">Email Address</label>
+                                    {% render_field user_form.email class="form-control" placeholder=user_form.email.label %}
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="{{ profile_form.mobile.id_for_label }}">{{ profile_form.mobile.label }}</label>
+                                    {% render_field profile_form.mobile class="form-control" placeholder=profile_form.mobile.label %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
+                                    {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    <button type="button"
+                                            class="btn btn-primary pull-right js-genarate-password">
+                                        Genarate Password
+                                    </button>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.confirm_password.id_for_label }}">Confirm Password</label>
+                                    {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.user_type.id_for_label }}">User Type</label>
+                                    {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
+                                </div>
+                                {% include 'sknf/_password_generator_modal.html' %}
+                            </div>
+                        </div>
+                        <div class="col-sm-6"><br />
+                            <div class="form-group">
+                                <div class="col-sm-12">
                                     <div class="col-sm-12">
-                                        <div class="col-sm-12">
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
-                                        </div>
+                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
                                     </div>
-                                    <input type="file" accept="image/*" placeholder="Image" style="margin-top: 10px;" class="pull-right img-preview" required="" id="id_PF-image">
                                 </div>
+                                <input type="file" accept="image/*" placeholder="Image" style="margin-top: 10px;" class="pull-right img-preview" required="" id="id_PF-image">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {% render_field profile_form.image_base64 %}
+        </div>
+        {% render_field profile_form.image_base64 %}
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">School Information</h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">School Information</h3>
+                    </div>
+                    <div class="box-body required">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
+                                    {% render_field profile_form.school class="form-control customer-select2" placeholder=profile_form.school.label %}
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
+                                    <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
+                                    <div style="display: none">
+                                        {% render_field profile_form.joining_date class="form-control pastedate" %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="id_hf-from_date">To</label>
+                                    <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
+                                </div>
+                            </div>
                         </div>
-                        <div class="box-body required">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                        {% render_field profile_form.school class="form-control customer-select2" placeholder=profile_form.school.label %}
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                       class="btn btn-warning pull-left"
+                                       href="javascript:void(0)">
+                                        Back
+                                    </a>
 
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
-                                        <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
-                                        <div style="display: none">
-                                            {% render_field profile_form.joining_date class="form-control pastedate" %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="id_hf-from_date">To</label>
-                                        <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
-                                    </div>
-                                </div>
+                                    <input type="submit" value="Save" id="save-btn" class="btn btn-primary pull-right"/>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-body">
-                        <a type="button" style="margin-right: 5px;" onclick="goBack()"
-                           class="btn btn-warning pull-left"
-                           href="javascript:void(0)">
-                            Back
-                        </a>
 
-                        <input type="submit" value="Save" id="save-btn" class="btn btn-primary pull-right"/>
-                    </div>
-                </div>
-            </div>
 
-        </section>
-    </form>
+    </section>
+</form>
 {% include 'sknf/_modal_show_image_error.html' %}
 {% include 'sknf/_crop_modal.html' %}
 {% endblock %}
 {% block extra_js%}
-    <script>
-        $(function () {
-            $('#datepicker').datepicker({
-                autoclose: true,
-                format: "dd-mm-yyyy"{% comment %}"mm/dd/yyyy"{% endcomment %}
-            });
-            $('#id_UF-user_type_0').prop("checked", true);
-        })
-    </script>
+<script>
+    $(function () {
+        $('#datepicker').datepicker({
+            autoclose: true,
+            format: "dd-mm-yyyy"{% comment %}"mm/dd/yyyy"{% endcomment %}
+    });
+        $('#id_UF-user_type_0').prop("checked", true);
+    })
+</script>
 
 {% endblock %}
