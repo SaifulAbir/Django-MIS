@@ -116,6 +116,9 @@ def skmember_update_for_skleader(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
     skmember_details = SkmemberDetails.objects.filter(skmember=pk)
+    h_user = request.user
+    headmaster = HeadmasterProfile.objects.get(user=h_user)
+    print(headmaster)
     school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
@@ -139,6 +142,7 @@ def skmember_update_for_skleader(request, pk):
         'pk': pk,
         'skmember_details': skmember_details,
         'school_list': school_list,
+        'headmaster': headmaster,
     })
 
 @method_decorator(admin_login_required, name='dispatch')
@@ -240,6 +244,16 @@ class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "skmember_detail"
     model = models.SkMemberProfile
     template_name = 'skmembers/skmember_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        h_user= self.request.user
+        context['headmaster']= HeadmasterProfile.objects.get(user=h_user)
+        print(context['headmaster'].school)
+        return context
+
+
+
 
 @admin_login_required
 def skmember_details_update(request):

@@ -2,10 +2,11 @@
 {% block body_block %}
     {% load widget_tweaks %}
     {% load static %}
+    {% if headmaster.school == skmember_profile.school %}
     <form method='POST' enctype="multipart/form-data" novalidate>
         <section class="content-header" style="padding-top:60px">
             {% if not profile_form.instance.pk %}
-                <h1>Add New Skleader</h1>
+                <h1>Add New SK Member</h1>
             {% else %}
                 <h1>Update SK Member Info</h1>
             {% endif %}
@@ -211,6 +212,10 @@
             </div>
         </section>
     </form>
+    {% else %}
+    {% include 'accounts/403.html' %}
+    {% endif%}
+
 {% endblock %}
 {% block extra_js%}
     <script type="text/javascript">

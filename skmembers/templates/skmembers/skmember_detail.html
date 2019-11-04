@@ -1,6 +1,9 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 {% load static %}
+
+
+{% if headmaster.school == skmember_detail.school %}
 <section class="content-header" style="padding-top:60px">
     <h1>
         SK Member Info
@@ -96,4 +99,8 @@
         </div>
 
 </section>
+{% else %}
+{% include 'accounts/403.html' %}
+
+{% endif %}
 {% endblock %}
