@@ -116,9 +116,16 @@ def skmember_update_for_skleader(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
     user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
     skmember_details = SkmemberDetails.objects.filter(skmember=pk)
-    h_user = request.user
-    headmaster = HeadmasterProfile.objects.get(user=h_user)
-    print(headmaster)
+    try:
+        h_user = request.user
+        headmaster= HeadmasterProfile.objects.get(user=h_user)
+    except HeadmasterProfile.DoesNotExist:
+        headmaster = None
+    try:
+        s_user =request.user
+        skleader = SkLeaderProfile.objects.get(user=s_user)
+    except SkLeaderProfile.DoesNotExist:
+        skleader = None
     school_list = School.objects.all()
     if request.method == 'POST':
         user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
@@ -143,6 +150,7 @@ def skmember_update_for_skleader(request, pk):
         'skmember_details': skmember_details,
         'school_list': school_list,
         'headmaster': headmaster,
+        'skleader' : skleader
     })
 
 @method_decorator(admin_login_required, name='dispatch')
@@ -247,9 +255,18 @@ class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        h_user= self.request.user
-        context['headmaster']= HeadmasterProfile.objects.get(user=h_user)
-        print(context['headmaster'].school)
+        try:
+            h_user= self.request.user
+            context['headmaster']= HeadmasterProfile.objects.get(user=h_user)
+        except HeadmasterProfile.DoesNotExist:
+            context['headmaster'] = None
+        try:
+            s_user = self.request.user
+            context['skleader'] = SkLeaderProfile.objects.get(user=s_user)
+        except SkLeaderProfile.DoesNotExist :
+            context['skleader'] = None
+
+
         return context
 
 

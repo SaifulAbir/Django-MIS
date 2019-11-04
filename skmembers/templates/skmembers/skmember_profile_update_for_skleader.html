@@ -2,7 +2,7 @@
 {% block body_block %}
     {% load widget_tweaks %}
     {% load static %}
-    {% if headmaster.school == skmember_profile.school %}
+    {% if headmaster.school == skmember_profile.school or skleader.school == skmember_profile.school %}
     <form method='POST' enctype="multipart/form-data" novalidate>
         <section class="content-header" style="padding-top:60px">
             {% if not profile_form.instance.pk %}
