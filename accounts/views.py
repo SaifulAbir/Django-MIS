@@ -399,3 +399,6 @@ def verifyemail(request):
         'exist': False,
         'msg': 'Please check your email and confirm your email address'
     })
+
+def bd_map(request):
+    return render(request, 'accounts/map/map.html')
