@@ -292,3 +292,17 @@ def export(request):
     response['Content-Disposition'] = 'attachment; filename="school_list.csv"'
     return response
 
+def school_post_delete(request, pk):
+    school_post = get_object_or_404(SchoolPost, pk=pk)
+    data = dict()
+    if request.method == 'POST':
+        school_post.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+    else:
+        context = {'school_post_delete': school_post}
+        data['html_form'] = render_to_string('school/schoolpost_confirm_delete.html',
+            context,
+            request=request,
+        )
+    return JsonResponse(data)
+

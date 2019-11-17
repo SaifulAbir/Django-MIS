@@ -18,5 +18,6 @@ urlpatterns = [
     path('<int:pk>/', views.school_profile, name='school_profile'),
     path('school_profile_homepage/', views.school_profile, name='school_profile'),
     path('school_post_detail/<int:pk>', views.school_post_detail_view, name='school_post_detail_view'),
+    path('school_post_delete/<int:pk>', views.school_post_delete, name='school_post_delete'),
     path('Sk_leaderApproval/', views.Sk_leaderApproval, name='Sk_leaderApproval'),
 ]
