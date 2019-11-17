@@ -25,9 +25,9 @@
             {% if field.label == 'Date' %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% render_field field placeholder=field.label class="form-control datepicker" %}
-            {% elif field.label == 'Student class' %}
+            {% elif field.label == 'Place' %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {% render_field field class="form-control" placeholder=field.label %}
+            {% render_field field class="" placeholder=field.label %}
             {% else %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% render_field field class="" placeholder=field.label %}

@@ -5,13 +5,17 @@ from django.urls import reverse
 from django.utils import timezone
 
 from school.models import School
-from skleaders.models import class_choice
 from topics.models import Topics
 
+place_choice=(
+    ('1', 'Class'),
+    ('2', 'Community'),
+)
 
 class ClassOrientation(models.Model):
     created_date = models.DateField(default=timezone.now)
-    student_class = models.CharField(max_length=10,choices=class_choice)
+    # student_class = models.CharField(max_length=10,choices=class_choice)
+    place = models.CharField(max_length=10, choices=place_choice, default='')
     # topic = models.ForeignKey(Topics, on_delete=models.CASCADE, null=True)
     topic = models.ManyToManyField(Topics)
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)

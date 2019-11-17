@@ -245,3 +245,19 @@ input[name=topic] {
 .bootstrap-datetimepicker-widget.dropdown-menu.bottom.pull-right {
     right: 6px !important;
 }
+
+/*class orientation*/
+ul#id_place {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+ul#id_place li{
+    margin-right: 10px;
+}
+
+input[type=radio]{
+    position: relative;
+    top: 3px;
+}

@@ -6,7 +6,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Update Class Orientation Info</h4>
+        <h4 class="modal-title">Update Peer Education Info</h4>
     </div>
     <div class="modal-body">
         <div class="{% if form.non_field_errors %}text-danger{% endif %}">
@@ -22,7 +22,7 @@
                 <p class="text-danger">{{ error }}</p>
                 {% endfor %}
             </div>
-            {% if field.label == 'Created date' %}
+            {% if field.label == 'Date' %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% render_field field placeholder=field.label class="form-control datepicker" %}
             {% elif field.label == 'Student class' %}
