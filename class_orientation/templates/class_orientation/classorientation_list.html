@@ -4,7 +4,7 @@
     <!-- Main content -->
 <section class="content-header" style="padding-top:60px">
     <h1>
-        Class Orientations
+        Peer Education
     </h1>
 </section>
     <section class="content">
@@ -27,7 +27,7 @@
                 class="btn btn-primary pull-right js-class-orientation-create"
                 data-url="{% url 'class_orientation:create_class_orientation' %}">
             <span class="fa fa-plus"></span>
-            New Class Orientation
+            New Peer Education
         </button>
             </div>
             <!-- /.box-header -->
@@ -83,6 +83,7 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
+            $('#peerSubmit').prop('disabled', true);
            if(formClass=="js-class-orientation-create-form"){
               showAlert("Class Orientation Created!", "alert-success-customized")
            }

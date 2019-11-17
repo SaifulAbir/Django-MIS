@@ -75,6 +75,7 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
+            $('#upazillaSubmit').prop('disabled', true);
           if(formClass=="js-upazilla-create-form"){
               showAlert("Upazilla Created!", "alert-success-customized")
            }

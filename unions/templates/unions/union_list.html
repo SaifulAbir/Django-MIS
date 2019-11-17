@@ -74,6 +74,7 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
+            $('#unionSubmit').prop('disabled', true);
           if(formClass=="js-union-create-form"){
              showAlert("Union Created!", "alert-success-customized")
           }

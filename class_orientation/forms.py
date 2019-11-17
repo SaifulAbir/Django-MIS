@@ -8,7 +8,7 @@ class ClassOrientationForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
         required=False)
-    created_date = forms.DateField(error_messages={'required': 'Date is required.'}, widget=forms.DateInput(format='%d-%m-%Y'), input_formats=('%d-%m-%Y',))
+    created_date = forms.DateField(label='Date',error_messages={'required': 'Date is required.'}, widget=forms.DateInput(format='%d-%m-%Y'), input_formats=('%d-%m-%Y',))
     class Meta:
         model = ClassOrientation
         fields = ['created_date', 'student_class', 'topic']
