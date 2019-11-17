@@ -298,6 +298,10 @@ def school_post_delete(request, pk):
     if request.method == 'POST':
         school_post.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
+        school_post_list = SchoolPost.objects.all()
+        data['html_school_post_list'] = render_to_string('school/partial_school_post_list.html', {
+            'school_post_list': school_post_list
+        })
     else:
         context = {'school_post_delete': school_post}
         data['html_form'] = render_to_string('school/schoolpost_confirm_delete.html',

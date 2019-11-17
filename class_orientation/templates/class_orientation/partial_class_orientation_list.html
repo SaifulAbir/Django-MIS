@@ -3,7 +3,16 @@
 <tr>
 
     <td>{{ class_orientation.created_date }}</td>
-    <td>{{ class_orientation.student_class }}</td>
+    <td>{{ class_orientation.get_place_display }}</td>
+    <td>
+    {% for topic in class_orientation.topic.all %}
+        {% if forloop.last %}
+        {{topic.name}}
+        {% else %}
+        {{topic.name}},
+        {% endif %}
+    {% endfor %}
+    </td>
     <td align="center"> <button type="button" style="margin-right:10px"
                 class="js-update-class_orientation"
                 data-url="{% url 'class_orientation:class_orientation_update' class_orientation.id %}">

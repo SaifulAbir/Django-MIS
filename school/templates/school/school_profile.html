@@ -147,43 +147,15 @@
                 {% include 'school/_crop_cover_modal.html' %}
                 {% include 'school/_crop_post_modal.html' %}
                 {% endif %}
-                <div class="row">
-                    {% if school_post_list %}
+                <div class="row" id="school-post">
+                    {% include 'school/partial_school_post_list.html' %}
+                </div>
+                <div class="modal fade" id="modal-school-post">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
 
-
-                    {% for school_post in school_post_list %}
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
-                            <a type="button" class="btn btn-primary btn-xs pull-right" href="http://www.facebook.com/sharer/sharer.php?u=http://{{request.get_host}}/school_post_detail/{{ school_post.id }}">
-                                <span class="fa fa-share"></span>
-                            </a>
-                        </div>
-                        <div class="box-body">
-                            {% if school_post.post_image %}
-                            <div class="form-group">
-                                <img style="max-width: 100%" src="{{ school_post.post_image.url }}" alt="">
-                            </div>
-                            {% endif %}
-                            <div class="form-group" style="font-size:18px">
-                                {{school_post.text}}
-                            </div>
-                            <div class="timeline-footer">
-                                <a class="btn btn-primary btn-xs">Edit</a>
-                                <button class="btn btn-danger btn-xs" data-url="{% url 'school:school_post_delete' school_post.pk %}" id="js-delete-school-post">Delete</button>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="modal-school-post">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    {% endfor %}
-
-                    {% endif %}
                 </div>
             </section>
         </div>
@@ -389,7 +361,7 @@ $(".js-zoom-out").click(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-
+          $("#school-post").html(data.html_school_post_list);
           $("#modal-school-post").modal("hide");  // <-- Close the modal
         }
         else {
@@ -401,7 +373,7 @@ $(".js-zoom-out").click(function () {
   };
 
   // Delete school post
-  $(".timeline-footer").on("click", "#js-delete-school-post", loadForm);
+  $("#school-post").on("click", "#js-delete-school-post", loadForm);
   $("#modal-school-post").on("submit", ".js-school-post-delete-form", saveForm);
 });
   </script>
