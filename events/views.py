@@ -21,7 +21,6 @@ def add_event(request):
     end = request.POST.get('end')
     start_date = datetime.strptime(start, '%d-%m-%Y %H:%M %p').strftime('%Y-%m-%d %H:%M:%S')
     end_date = datetime.strptime(end, '%d-%m-%Y %H:%M %p').strftime('%Y-%m-%d %H:%M:%S')
-    print(title)
     if title and start:
         event = Event(title=title,start_date=start_date,end_date=end_date)
         event.save()

@@ -155,7 +155,7 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
-                            <a type="button" class="btn btn-primary pull-right" href="{% url 'school:school_post_detail_view' school_post.id %}">
+                            <a type="button" class="btn btn-primary pull-right" href="http://www.facebook.com/sharer/sharer.php?u=http://{{request.get_host}}/school_post_detail/{{ school_post.id }}">
                                 <span class="fa fa-share"></span>
                             </a>
                         </div>

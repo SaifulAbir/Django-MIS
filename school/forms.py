@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 class SchoolForm(forms.ModelForm):
     name = forms.CharField(error_messages={'required': 'School name is required.'})
     school_id = forms.CharField(label='EIIN',error_messages={'required': 'EIIN is required.', 'unique': 'School with this EIIN already exists.'},
-                                widget=forms.TextInput(attrs={'type':'number'}))
+                                widget=forms.TextInput(attrs={'type':'text'}))
     club_establishment_date = forms.DateField(label='dd-mm-yyyy',error_messages={'required': 'Date is required.'},
                                    widget=forms.DateInput(format='%d-%m-%Y'), input_formats=('%d-%m-%Y',))
     class Meta:
