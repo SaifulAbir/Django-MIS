@@ -261,3 +261,8 @@ input[type=radio]{
     position: relative;
     top: 3px;
 }
+
+/*school post*/
+.post-list-margin{
+    margin-top: -15px;
+}

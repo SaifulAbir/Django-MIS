@@ -19,10 +19,12 @@
         <div class="form-group" style="font-size:18px">
             {{school_post.text}}
         </div>
+        {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
         <div class="timeline-footer">
             <button class="btn btn-primary btn-xs" data-url="{% url 'school:school_post_update' school_post.pk %}" id="js-update-school-post">Edit</button>
             <button class="btn btn-danger btn-xs" data-url="{% url 'school:school_post_delete' school_post.pk %}" id="js-delete-school-post">Delete</button>
         </div>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

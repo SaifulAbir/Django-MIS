@@ -107,8 +107,8 @@
     <section class="content">
         <div class="col-sm-9">
             <section class="content">
+                {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
                 <div class="row" style="margin-top: -15px;">
-                    {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
                     <div class="box box-info">
                         <form method='POST' enctype="multipart/form-data">
                             {% csrf_token %}
@@ -146,9 +146,10 @@
                 {% include 'sknf/_modal_show_image_error.html' %}
                 {% include 'school/_crop_cover_modal.html' %}
                 {% endif %}
-                <div class="row" id="school-post">
+                <div class="row {% if not user.is_authenticated %}post-list-margin{% endif %}" id="school-post">
                     {% include 'school/partial_school_post_list.html' %}
                 </div>
+
                 <div class="modal fade" id="modal-school-post">
                     <div class="modal-dialog">
                         <div class="modal-content">
