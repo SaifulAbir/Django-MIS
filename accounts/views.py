@@ -402,3 +402,6 @@ def verifyemail(request):
 
 def bd_map(request):
     return render(request, 'accounts/map/map.html')
+
+def home_page(request):
+    return render(request, 'accounts/home_page.html')
