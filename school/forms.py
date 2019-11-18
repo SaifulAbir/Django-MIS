@@ -39,3 +39,13 @@ class SchoolPostForm(forms.ModelForm):
         widgets = {
             'text': forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}),}
 
+class SchoolUpdatePostForm(forms.ModelForm):
+    image_base = forms.CharField(required=False, widget=forms.HiddenInput())
+    post_image = forms.ImageField(label=_('SkMember image'), required=False,
+                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    class Meta:
+        model = SchoolPost
+        fields = ['text','post_image', 'image_base']
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}),}
+

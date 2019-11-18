@@ -20,7 +20,7 @@ from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
 from unions.models import Union
 from upazillas.models import Upazilla
-from .forms import SchoolForm, EditSchoolForm, SchoolPostForm
+from .forms import SchoolForm, EditSchoolForm, SchoolPostForm, SchoolUpdatePostForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -309,4 +309,35 @@ def school_post_delete(request, pk):
             request=request,
         )
     return JsonResponse(data)
+
+def school_post_update(request, pk):
+    data = dict()
+    school_post = get_object_or_404(SchoolPost, pk=pk)
+    if request.method == 'POST':
+        form = SchoolUpdatePostForm(request.POST, request.FILES, instance=school_post)
+        if form.is_valid():
+            update_post = form.save(commit=False)
+            # image cropping code start here
+            img_base = form.cleaned_data.get('image_base')
+            if img_base:
+                format, imgstr = img_base.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-school_post.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                update_post.post_image.save(filename, data, save=True)
+                update_post.post_image = 'images/' + filename
+            # end of image cropping code
+            update_post.save()
+            school_post_list = SchoolPost.objects.all()
+            return JsonResponse({'data':'ok'})
+
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = SchoolUpdatePostForm(instance=school_post)
+        context = {'post_form': form}
+        data['html_form'] = render_to_string('school/school_post_update_form.html', context, request=request)
+    return JsonResponse(data)
+
+
 

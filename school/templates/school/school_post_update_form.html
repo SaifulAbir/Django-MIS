@@ -1,0 +1,42 @@
+{% load widget_tweaks %}
+<form method='POST' enctype="multipart/form-data" action="{% url 'school:school_post_update' post_form.instance.pk %}" class="js-school-post-update-form">
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit Post</h4>
+    </div>
+    <div class="box-body">
+        <div id="image_preview">
+            {% if post_form.instance.post_image %}
+            <img style="max-width: 100%" class="jcrop-holder-post-edit" src="{{ post_form.instance.post_image.url }}" alt="">
+            {% else %}
+            <img style="max-width: 100%" class="jcrop-holder-post-edit" src="" alt="">
+            {% endif %}
+        </div><br />
+        <!-- Color Picker -->
+        <span id = "alert_placeholder">
+                        {% if post_form.errors %}
+                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                            <span>
+                                {% for field in post_form %}
+                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </span>
+        <div class="form-group" >
+            {% render_field post_form.text class="form-control" placeholder='What is on your mind?' %}
+        </div>
+        <div class="form-group" style="left:25px;display: inline-block;">
+            <input type="file"  accept="image/*" placeholder="" style="display:none" class="" id="id_post_image">
+            <input type="button" style="display: inline-block;position:relative;width:40px;" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image" onclick="choosePic();" style="position:absolute;z-index:99;bottom:35px;left:22px;cursor: pointer;color:#fff;"></span>
+        </div>
+        {% render_field post_form.image_base %}
+        <!-- /.box-footer -->
+        <input type="submit" value="Save" style="display: inline-block;position:relative;" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
+    </div>
+</form>

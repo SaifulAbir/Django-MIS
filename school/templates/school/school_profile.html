@@ -145,7 +145,6 @@
                 </div>
                 {% include 'sknf/_modal_show_image_error.html' %}
                 {% include 'school/_crop_cover_modal.html' %}
-                {% include 'school/_crop_post_modal.html' %}
                 {% endif %}
                 <div class="row" id="school-post">
                     {% include 'school/partial_school_post_list.html' %}
@@ -157,6 +156,7 @@
                         </div>
                     </div>
                 </div>
+                {% include 'school/_crop_post_modal.html' %}
             </section>
         </div>
         <div class="col-sm-3 hidden-xs">
@@ -273,8 +273,15 @@ $(".js-zoom-out").click(function () {
   /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
   $(".js-crop-and-upload-post").click(function () {
     var imageData = $('#school-post-image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
-    $('.jcrop-holder').attr('src', imageData);
-    $("#id_image_base64").val(imageData);
+    if($('#modal-school-post').hasClass('in')){
+        $('.jcrop-holder-post-edit').attr('src', imageData);
+        $("#id_image_base").val(imageData);
+    }
+    else{
+        $('.jcrop-holder').attr('src', imageData);
+        $("#id_image_base64").val(imageData);
+    }
+
     $("#modalSchoolPostCrop").modal('hide');
     $("#id_post_image").val("");
   });
@@ -372,9 +379,36 @@ $(".js-zoom-out").click(function () {
     return false;
   };
 
+  var updateForm = function () {
+    var form = $(this);
+    var formClass = form.attr("class")
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+          $("#modal-school-post").modal("hide");  // <-- Close the modal
+          location.reload();
+        if (data.form_is_valid) {
+          $("#school-post").html(data.html_school_post_list);
+
+        }
+        else {
+          $("#modal-school-post .modal-content").html(data.html_form);
+        }
+        }
+    });
+    return false;
+  };
+
   // Delete school post
   $("#school-post").on("click", "#js-delete-school-post", loadForm);
   $("#modal-school-post").on("submit", ".js-school-post-delete-form", saveForm);
+
+  // Update school post
+  $("#school-post").on("click", "#js-update-school-post", loadForm);
+  $("#modal-school-post").on("submit", ".js-school-post-update-form", updateForm);
 });
   </script>
 {% endblock %}
