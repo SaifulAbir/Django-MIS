@@ -1,0 +1,101 @@
+
+#header-row{
+    background-color: #ffffff;
+}
+#sknf-logo{
+    display: inline-block;
+}
+#sknf-logo-text{
+    display: inline-block;
+}
+
+#sknf-logo-size{
+    width: 86%;
+}
+#sknf-logo-text-size{
+    width: 86%;
+}
+
+#page-content {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    height: 100%;
+    background-color: white;
+}
+#map{
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+}
+#forgot-password{
+    padding-left: 15px;
+    padding-top: 30px;
+}
+
+#search-form-id{
+        padding-right: 200px;
+        padding-left: 200px;
+        position: relative;
+    }
+#result-wrapper{
+    /*position: absolute;*/
+    /*z-index: 1;*/
+    /*background-color: #5bc0de;*/
+}
+
+#search-close {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 29px;
+    width: 34px;
+    opacity: 1;
+    z-index: 2000;
+    background: white;
+    cursor: pointer;
+    padding: 0px;
+    padding-left: 9px;
+    padding-top: 5px;
+}
+.btn-primary{
+    background-color: #2a2a86 !important;
+}
+@media (min-width: 992px){
+    .col-md-2 {
+        width: 15%;
+    }
+}
+@media only screen and (max-width: 500px) {
+    #sknf-logo {
+        width: 25%;
+    }
+    #sknf-logo-size,#sknf-logo-text-size {
+        width: 100%;
+    }
+    #sknf-logo-text {
+        width: 70%;
+    }
+    .form-horizontal{
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+    #forgot-password{
+        padding-top: 0px;
+    }
+    #search-form-id{
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    .col-sm-5{
+        padding-bottom: 5px;
+    }
+
+}
+

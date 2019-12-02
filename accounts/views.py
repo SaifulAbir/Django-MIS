@@ -139,7 +139,7 @@ def custom_login(request):
             raise PermissionDenied
         return redirect('school:school_profile', skleader_profile.school.id)
     else:
-        return home_page(request)
+        return login_page(request)
 
 def login_request(request):
 
@@ -455,6 +455,57 @@ def home_page(request):
 
     return render(request, 'accounts/home_page.html',
                   {'name': name, 'division': division,
+                   'district': district, 'upazilla': upazilla, 'union': union, 'form':form, 'next_destination':next_destination})
+
+def login_page(request):
+    next_destination = request.GET.get('next')
+    if request.method == 'POST':
+        form = PrettyAuthenticationForm(data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                login(request, user)
+                if next_destination:
+                    return redirect(next_destination)
+                if user.user_type == 1:
+                    return redirect('/dashboard/')
+                elif user.user_type == 2:
+                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', headmaster_profile.school.id)
+                elif user.user_type == 3:
+                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', headmaster_profile.school.id)
+                elif user.user_type == 4:
+                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', headmaster_profile.school.id)
+                elif user.user_type == 5:
+                    skleader_profile = SkLeaderProfile.objects.get(user=request.user)
+                    return redirect('school:school_profile', skleader_profile.school.id)
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = PrettyAuthenticationForm()
+    data = dict()
+    qs = School.objects.all()
+    name = request.POST.get('name_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    upazilla = request.GET.get('upazilla_contains')
+    union = request.GET.get('union_contains')
+    if name != '' and name is not None:
+        qs = qs.filter(name__icontains=name)
+    if division != '' and division is not None:
+        qs = qs.filter(division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(district__name__icontains=district)
+    if upazilla != '' and upazilla is not None:
+        qs = qs.filter(upazilla__name__icontains=upazilla)
+    if union != '' and union is not None:
+        qs = qs.filter(union__name__icontains=union)
+    return render(request, 'accounts/home_login_page.html', {'name': name, 'division': division,
                    'district': district, 'upazilla': upazilla, 'union': union, 'form':form, 'next_destination':next_destination})
 
 def search_school_list(request):

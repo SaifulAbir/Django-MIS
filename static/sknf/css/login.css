@@ -54,21 +54,23 @@
     cursor: pointer;
 }
 
-#search-close{
+#search-close {
     position: absolute;
     right: 0px;
     top: 0px;
-    height: 40px;
-    width: 40px;
+    height: 29px;
+    width: 34px;
     opacity: 1;
     z-index: 2000;
     background: white;
     cursor: pointer;
-    padding: 10px;
+    padding: 0px;
+    padding-left: 9px;
+    padding-top: 5px;
 }
 
 #login-box{
-    margin-top: 10px;
+    margin-top: 0px;
     border-top: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
@@ -83,15 +85,13 @@
 #home-logo{
     position: relative;
     top: 0;
-    left: 50px;
+    left: 0px;
     bottom: 655px;
-    border-radius: 0px 0px 60px 60px;
-    opacity: 0.95;
+    border-radius: 0px 0px 55px 55px;
     z-index: 1000;
     background: white;
-    width: 452px;
-    padding-bottom: 9px;
-    padding-left: 9px;
+    width: 360px;
+    margin-left: -15px;
     box-shadow: 5px 10px 10px #ccc;
 
 }
@@ -105,11 +105,56 @@
 }
 
 img#logo-text-size {
-    width: 309px;
+    width: 250px;
 }
 
 .btn-primary{
     background-color: #2a2a86 !important;
 }
 
+#logo-size{
+    height: 75px;
+    width: auto;
+}
+
+#home-logo-box{
+    padding-bottom: 13px;
+    padding-left: 0px;
+    padding-top: 8px;
+}
+
+/*login_page*/
+.col-md-6{
+    height: 100%;
+}
+.row{
+    height: 100%;
+}
+
+#login-area{
+    background-color: #2a2a86;
+    padding-left: 0px;
+}
+
+@media (max-width: 768px) {
+    .login-box{
+        width: 90%;
+        margin: 0px;
+        margin-left: 18px;
+    }
+}
+#map-area{
+    padding-right: 0px;
+}
+@media (max-width: 768px) {
+    #search-close{
+        padding-left: 0px;
+    }
+}
+#search-school-form .row{
+    margin-left: -15px;
+}
+.row{
+    margin-left: 0px;
+}
 

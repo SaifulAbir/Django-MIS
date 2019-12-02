@@ -1,6 +1,6 @@
 {% for school in queryset %}
 
 <tr>
-    <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>
+    <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }} ({{ school.division }}, {{ school.division }})</a></td>
 </tr>
 {% endfor %}

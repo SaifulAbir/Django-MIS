@@ -138,7 +138,7 @@
         <div class="row">
             <div id="home-logo-box">
                 <div id="logo" >
-                    <a href=""><img src="{% static 'sknf/images/logo.png' %}" alt="logo">
+                    <a href=""><img id="logo-size" src="{% static 'sknf/images/logo.png' %}" alt="logo">
                     </a>
                 </div>
                 <div id="logo-text">
@@ -363,7 +363,7 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
-
+        mymap.zoomControl.setPosition('bottomleft');
 
 
         for(i = 0; i < districts.length; i++){

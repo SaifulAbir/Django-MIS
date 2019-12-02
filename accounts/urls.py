@@ -6,7 +6,7 @@ from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
 from .views import index, profile, events, custom_login, admin_profile_update, headmaster_profile_update, \
     skleader_profile_update, CustomPasswordReset, CustomPasswordResetDoneView, CustomPasswordResetConfirmView, \
-    CustomPasswordResetCompleteView, verifyemail, email_verify, bd_map, home_page, search_school_list
+    CustomPasswordResetCompleteView, verifyemail, email_verify, bd_map, home_page, search_school_list, login_page
 
 app_name = 'accounts'
 
@@ -34,6 +34,7 @@ urlpatterns = [
     path('ajax/verifyemail/', verifyemail, name='verifyemail'),
     path('map/', bd_map, name='bd_map'),
     path('home_page/', home_page, name='home_page'),
+    path('login_page/', login_page, name='login_page'),
     path('api/search_school_list/', search_school_list, name='search_school_list'),
 
 ]
