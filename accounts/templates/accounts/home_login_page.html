@@ -17,7 +17,9 @@
     <link rel="stylesheet" href="{% static 'vendor/dist/css/AdminLTE.min.css' %}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{% static 'vendor/plugins/iCheck/square/blue.css' %}">
-
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'vendor/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/dist/css/skins/_all-skins.min.css' %}">
     <link rel="stylesheet" href="{% static 'sknf/css/home_login.css' %}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -90,7 +92,7 @@
         <div class="container-fluid">
             <h4>Schools</h4>
             <p id="search-msg"></p>
-            <table id="search-table" class=" data-table school-table table table-bordered table-striped">
+            <table id="search-table" class=" school-search-table table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th class = "col-sm-4">Name</th>
@@ -169,6 +171,11 @@
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 <!-- iCheck -->
 <script src="{% static 'vendor/plugins/iCheck/icheck.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'vendor/dist/js/adminlte.js' %}"></script>
+<!-- Database Tables -->
+<script src="{% static 'vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
 <script>
     var mymap;
     $(function () {
@@ -279,6 +286,12 @@
                         $('#result-wrapper').show('slow');
                         $('#form-wrapper').hide('slow');
                         $('#search-msg').html('You have searched for "'+district_contains+ '"');
+                        $('.school-search-table').DataTable({
+                        'destroy'      : true,
+                        'searching': false,
+                        'lengthChange': false,
+                        'ordering'    : false,
+                    });
                     }
                 });
             });
@@ -309,6 +322,12 @@
                     }
                     $('#result-wrapper').show('slow');
                     $('#form-wrapper').hide('slow');
+                    $('.school-search-table').DataTable({
+                        'destroy'      : true,
+                        'searching': false,
+                        'lengthChange': false,
+                        'ordering'    : false,
+                    });
                 }
             });
         });
