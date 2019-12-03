@@ -527,7 +527,8 @@ def search_school_list(request):
         qs = qs.filter(upazilla__name__icontains=upazilla)
     if union != '' and union is not None:
         qs = qs.filter(union__name__icontains=union)
-
+    if name == '' and division == '' and district == '' and upazilla == '' and union == '':
+        qs = None
     data['form_is_valid'] = True
     data['html_school_list'] = render_to_string('accounts/partial_school_list.html',
                                                   {'queryset': qs})
