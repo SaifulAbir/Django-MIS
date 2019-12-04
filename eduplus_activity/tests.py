@@ -42,21 +42,35 @@ class EduplusActivityTest(TestCase):
         u1.save()
 
 
-    def test__when_date_is_null__should_raise_error(self):
-        eplus_activity = EduPlusActivity(date=timezone.now(),presence_skleader=True, description='Nothing done')
+    def test__when_school_is_null__should_raise_error(self):
+        eplus_activity = EduPlusActivity(date=timezone.now(), presence_skleader=True, description='Nothing done')
         with self.assertRaises(ValidationError):
             eplus_activity.full_clean()
 
-    # def test__100_plus_char_text_in_class_room__should_raise_error(self):
-    #     s = ClubMeetings(
-    #         class_room="tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft"
-    #              " tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg"
-    #              " sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg"
-    #              " sdfgsdg sgddft sdfgsdg sgddft tesg"
-    #              " sdfgsdg sgddft sdfgsdg sgddft tesg"
-    #              " sdfgsdg sgddft ", date=timezone.now(),)
-    #     with self.assertRaises(ValidationError):
-    #         s.full_clean()
+    def test__when_description_is_null__should_raise_error(self):
+        eplus_activity = EduPlusActivity(date=timezone.now(), school=self.school, presence_skleader=True)
+        with self.assertRaises(ValidationError):
+            eplus_activity.full_clean()
+
+    def test__when_description_is_blank__should_raise_error(self):
+        eplus_activity = EduPlusActivity(date=timezone.now(), school=self.school, presence_skleader=True, description='')
+        with self.assertRaises(ValidationError):
+            eplus_activity.full_clean()
+
+    def test__max_length_validation_added__to_description(self):
+        max_length = EduPlusActivity._meta.get_field('description').max_length
+        self.assertEquals(max_length, 200)
+
+    def test__200_plus_char_text_in_description__should_raise_error(self):
+        s = EduPlusActivity(date=timezone.now(),presence_skleader=True,
+            description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+                        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
+                        "when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
+                        "It has survived not only five centuries, but also the leap into electronic "
+                        "typesetting, remaining essentially unchanged. It was popularised in the 1960s with the "
+                        "release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+        with self.assertRaises(ValidationError):
+            s.full_clean()
     #
     # #view test
     # def test_club_meeting_update_page_status_code(self):

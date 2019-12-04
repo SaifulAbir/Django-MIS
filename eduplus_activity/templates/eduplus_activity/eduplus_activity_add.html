@@ -61,9 +61,9 @@
                                     {% endif %}
                                 </div>
                                 <ul id="id_EPA-attendance">
-                                    {% for eduplus in edu_plus_activity.attendance.all %}
+                                    {% for eduplus in eduplus_activity.attendance.all %}
                                     <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{eduplus.id}}" placeholder="Attendance" class="" checked="">
-                                        {{club.first_name}}</label>
+                                        {{eduplus.first_name}}</label>
                                     </li>
                                     {% endfor %}
                                     {% for member in all_member %}
@@ -89,7 +89,7 @@
                 </div>
             </div>
         </div>
-        {% render_field club_meeting_form.image_base64 %}
+        {% render_field edu_plus_activity_form.image_base64 %}
         {% include 'eduplus_activity/_crop_modal.html' %}
         <div class="row">
             <div class="col-md-12">
