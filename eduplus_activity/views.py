@@ -99,7 +99,8 @@ def edu_plus_activity_update(request, pk):
     return render(request, 'eduplus_activity/eduplus_activity_add.html', {
         'edu_plus_activity_form': edu_plus_activity_form,
         'eduplus_activity': edu_plus_activity,
-        'all_member': all_member
+        'all_member': all_member,
+        'sk_lead': sk_profile
     })
 
 @method_decorator(headmaster_mentor_skleader_login_required, name='dispatch')

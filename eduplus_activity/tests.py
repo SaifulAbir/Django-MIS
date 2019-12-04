@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 # Create your tests here.
+from django.urls import reverse
 from django.utils import timezone
 
 from accounts.models import User
@@ -71,16 +72,6 @@ class EduplusActivityTest(TestCase):
                         "release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
         with self.assertRaises(ValidationError):
             s.full_clean()
-    #
-    # #view test
-    # def test_club_meeting_update_page_status_code(self):
-    #     logged_in = self.client.login(email='test@example.com', password='12345')
-    #     self.assertTrue(logged_in)
-    #     club_update_response = self.client.get(reverse('club_meetings:club_meeting_update',
-    #                                                           args=(self.club_m.id,)), follow=True)
-    #     self.assertEquals(club_update_response.status_code, 200)
-    #     self.assertTemplateUsed(club_update_response, 'club_meetings/club_meeting_add.html')
-    #     # self.assertContains(response = club_update_response, text='', html=True).
 
     def test__if_required_data_is_given__should_pass(self):
         topic = Topics.objects.exclude(name='')
@@ -93,3 +84,21 @@ class EduplusActivityTest(TestCase):
             instance.full_clean()
         except:
             self.fail()
+
+    # #view test
+
+    def test_when__send_get_request_for_eduplus_activity_creation__should_return_status_code_200(self):
+        logged_in = self.client.login(email='test@example.com', password='12345')
+        self.assertTrue(logged_in)
+        eduplus_activity_response = self.client.get(reverse('eduplus_activity:eduplus_activity_add'), follow=True)
+        self.assertEquals(eduplus_activity_response.status_code, 200)
+
+    def test_when__request_for_eduplus_activity_invalid_data__should_raise_error(self):
+        logged_in = self.client.login(email='test@example.com', password='12345')
+        self.assertTrue(logged_in)
+        topic = Topics.objects.exclude(name='')
+        user = User.objects.filter(user_type='6')
+        eduplus_activity_response = self.client.post(reverse('eduplus_activity:eduplus_activity_add'), {'date':timezone.now(), 'school':self.school.pk,
+                                                                                                        'presence_skleader':True,'attendance':set(user), 'topics':set(topic), 'description':'test'}, follow=True)
+        self.assertContains(response=eduplus_activity_response, status_code=200,
+                            text='<li class="help-block" style="color:red;margin-bottom: 5px;">Select at least one topic.</li>', html=True)

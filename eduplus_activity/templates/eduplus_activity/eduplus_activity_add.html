@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="{{ edu_plus_activity_form.attendance.id_for_label }}">Attendance</label><br>
                                     {% render_field edu_plus_activity_form.presence_skleader class="" placeholder=edu_plus_activity_form.presence_skleader.label %}
-                                    <label for="{{ edu_plus_activity_form.presence_skleader.id_for_label }}">{{user.first_name}} (SK Leader)</label>
+                                    <label for="{{ edu_plus_activity_form.presence_skleader.id_for_label }}">{{skleader_meeting_eduplus.user.first_name}} (SK Leader)</label>
                                     {% if not edu_plus_activity_form.instance.pk %}
                                     {% render_field edu_plus_activity_form.attendance class="" placeholder=edu_plus_activity_form.attendance.label %}
                                     {% endif %}
