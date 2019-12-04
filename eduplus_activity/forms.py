@@ -13,6 +13,7 @@ from topics.models import Topics
 class EduPlusActivityForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     presence_skleader = forms.BooleanField(widget=forms.CheckboxInput(attrs={'checked': True}))
+    description = forms.CharField(error_messages={'required': 'Description is required.'}, widget=forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}))
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),

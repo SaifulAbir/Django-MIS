@@ -15,7 +15,7 @@ class EduPlusActivity(models.Model):
     attendance= models.ManyToManyField(User, related_name='member_profile')
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     topics = models.ManyToManyField(Topics)
-    description = models.TextField(max_length=200, blank=True, null=True)
+    description = models.TextField(max_length=200)
 
     def __str__(self):
         return self.school + " on "+self.date
