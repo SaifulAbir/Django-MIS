@@ -1,0 +1,56 @@
+<div style="min-height: 500px">
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+</div>
+
+<div id="header-bar">
+    <div class="row" id="header-row">
+        <div class="col-md-6">
+            <div id="sknf-logo">
+                <a href=""><img id="sknf-logo-size" src="{% static 'sknf/images/logo.png' %}" alt="logo">
+                </a>
+            </div>
+            <div id="sknf-logo-text">
+                <img id="sknf-logo-text-size" src="{% static 'sknf/images/sknf-logo-text.png' %}" alt="logo Text">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <p class="text-center">Do you have an account? Login here</p>
+            <form class="form-horizontal" method="post">
+                {% csrf_token %}
+                <div class="box-body">
+                    {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                    <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p class="text-danger text-center">{{ message }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="form-group">
+
+                        <div class="col-sm-5">
+                            {{ form.email }}
+                            <span style="right: 20px;" class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        </div>
+                        <div class="col-sm-5">
+                            {{ form.password }}
+                            <span style="right: 20px;" class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                        <div class="col-md-2"><button type="submit" class="btn btn-primary pull-right">Sign in</button></div>
+                        <div>
+                            <p class="pull-right">Forgot Password?<a href="{% url 'accounts:password_reset' %}"> Reset</a></p>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
