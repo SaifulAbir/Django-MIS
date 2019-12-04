@@ -1,0 +1,84 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+
+<!-- Main content -->
+<section class="content-header" style="padding-top:60px">
+    <h1>
+        Eduplus Activity
+    </h1>
+</section>
+<section class="content">
+
+    <!-- Main content -->
+    <div class="box">
+        <div class="box-header">
+                <span id = "alert_placeholder">
+                    {% if messages %}
+                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                        <span>
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </span>
+            <a type="button"
+               class="btn btn-primary pull-right"
+               href="{% url 'eduplus_activity:eduplus_activity_add' %}">
+                <span class="fa fa-plus"></span>
+                New Eduplus Activity
+            </a>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+            <table   id="example1" class=" data-table table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class="col-sm-3">Date</th>
+                    <th class="col-sm-3">Topics</th>
+                    <th class="col-sm-5">Description</th>
+                    <th class="col-sm-1">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for eduplus_activity in eduplusactivity_list %}
+                <tr>
+                    <td>{{eduplus_activity.date}}</td>
+                    <td>
+                        {% for topic in eduplus_activity.topics.all %}
+                        {% if forloop.last %}
+                        {{topic.name}}
+                        {% else %}
+                        {{topic.name}},
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ eduplus_activity.description }}</td>
+                    <td>
+                        <a type="button"
+                           class=""
+                           href="#">
+                            <span class="fa fa-eye"></span>
+
+                        </a>
+                        <a type="button"
+                           class=""
+                           href="#">
+                            <span class="fa fa-edit"></span>
+
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!-- /.content -->
+</section>
+{% endblock %}

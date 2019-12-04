@@ -266,3 +266,14 @@ input[type=radio]{
 .post-list-margin{
     margin-top: -15px;
 }
+/*eduplus_activity*/
+ul#id_EPA-topics {
+    list-style: none;
+}
+input#id_EPA-presence_skleader {
+    /* padding-left: 10px; */
+    margin-left: 40px;
+}
+ul#id_EPA-attendance {
+    list-style: none;
+}

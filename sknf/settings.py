@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'class_orientation',
     'club_meetings',
     'events',
-    'import_export'
+    'import_export',
+    'eduplus_activity'
 ]
 
 MIDDLEWARE = [

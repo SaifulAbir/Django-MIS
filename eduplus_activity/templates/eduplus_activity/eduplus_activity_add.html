@@ -1,0 +1,108 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+{% load widget_tweaks %}
+{% load static %}
+<form method='POST' enctype="multipart/form-data" novalidate>
+    <section class="content-header" style="padding-top:60px">
+        {% if not edu_plus_activity_form.instance.pk %}
+        <h1>New Eduplus Activity</h1>
+        {% else %}
+        <h1>Update Eduplus Activity Info</h1>
+        {% endif %}
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        {% if not edu_plus_activity_form.instance.pk %}
+                        <h3 class="box-title">Basic Information</h3>
+                        {% else %}
+                        <h3 class="box-title">Basic Information</h3>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="box-body">
+                                <!-- Color Picker -->
+                                <span id = "alert_placeholder">
+                                        {% if edu_plus_activity_form.errors %}
+                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                            <span>
+                                                {% for field in edu_plus_activity_form %}
+                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                        {% endif %}
+                                    </span>
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="{{ edu_plus_activity_form.date.id_for_label }}">Date</label>
+                                    {% render_field edu_plus_activity_form.date class="form-control datepicker" placeholder=edu_plus_activity_form.date.label %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ edu_plus_activity_form.description.id_for_label }}">Describe what you did in the play below</label>
+                                    {% render_field edu_plus_activity_form.description class="form-control" %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ edu_plus_activity_form.topics.id_for_label }}">Topics</label>
+                                    {% render_field edu_plus_activity_form.topics class="" placeholder=edu_plus_activity_form.topics.label %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ edu_plus_activity_form.attendance.id_for_label }}">Attendance</label><br>
+                                    {% render_field edu_plus_activity_form.presence_skleader class="" placeholder=edu_plus_activity_form.presence_skleader.label %}
+                                    <label for="{{ edu_plus_activity_form.presence_skleader.id_for_label }}">{{user.first_name}} (SK Leader)</label>
+                                    {% if not edu_plus_activity_form.instance.pk %}
+                                    {% render_field edu_plus_activity_form.attendance class="" placeholder=edu_plus_activity_form.attendance.label %}
+                                    {% endif %}
+                                </div>
+                                <ul id="id_EPA-attendance">
+                                    {% for eduplus in edu_plus_activity.attendance.all %}
+                                    <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{eduplus.id}}" placeholder="Attendance" class="" checked="">
+                                        {{club.first_name}}</label>
+                                    </li>
+                                    {% endfor %}
+                                    {% for member in all_member %}
+                                    <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{member.id}}" placeholder="Attendance" class="">
+                                        {{member.first_name}}</label>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6"><br />
+                            <div class="from-group picture-align">
+                                {% if edu_plus_activity_form.instance.pk and eduplus_activity.image %}
+                                <img style="border-radius: 5px; border: 2px solid #ccc;;" height="auto" width="100%" src="{{ eduplus_activity.image.url }}" class="jcrop-holder pull-right" alt="Pic"><br />
+                                {% else %}
+                                <img style="border-radius: 5px; border: 2px solid #ccc;" height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
+                                {% endif %}
+                                <input type="file" accept="image/*" placeholder="Headmaster image" style="padding-top: 10px;padding-bottom: 10px;" class="img-preview pull-left" id="id_EPA-image">
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% render_field club_meeting_form.image_base64 %}
+        {% include 'eduplus_activity/_crop_modal.html' %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-body">
+                    <input type="submit" value="Save" id="save-btn" class="btn btn-primary pull-right"/>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</form>
+{% endblock %}
+{% block extra_js%}
+<script src="{% static 'sknf/js/eduplus-activity-image-cropper.js' %}"></script>
+{% endblock %}
+
