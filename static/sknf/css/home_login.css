@@ -72,6 +72,10 @@
 .btn-primary{
     background-color: #2a2a86 !important;
 }
+
+#form-wrapper h3 a{
+    color: #ffffff;
+}
 @media (min-width: 992px){
     .col-md-2 {
         width: 15%;
