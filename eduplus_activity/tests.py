@@ -24,10 +24,6 @@ class EduplusActivityTest(TestCase):
         s1 = School(name='Mirpur School', school_id=123)
         s1.save()
         self.school = s1
-        # s2 = ClubMeetings(date=timezone.now(), school=self.school, class_room='7', presence_guide_teacher='1',
-        #                  presence_skleader='1')
-        # s2.save()
-        # self.club_m = s2
         skleader = SkLeaderProfile(school=self.school, user=self.user, gender='M', student_class='6',
                                    roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
         skleader.save()
