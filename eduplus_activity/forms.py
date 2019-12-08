@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from accounts.models import User
-from eduplus_activity.models import EduPlusActivity
+from eduplus_activity.models import EduPlusActivity, EduplusTopics
 from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
@@ -16,7 +16,7 @@ class EduPlusActivityForm(forms.ModelForm):
     description = forms.CharField(error_messages={'required': 'Description is required.'}, widget=forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}))
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        queryset=Topics.objects.all(),
+        queryset=EduplusTopics.objects.all(),
         required=True, error_messages={'required': 'Select at least one topic.'})
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(attrs={'checked': 'checked'}),
@@ -55,7 +55,7 @@ class EditEduPlusActivityForm(forms.ModelForm):
     presence_skleader = forms.BooleanField()
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        queryset=Topics.objects.all(),
+        queryset=EduplusTopics.objects.all(),
         required=False)
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField(error_messages={'required': 'Description is required.'},
@@ -99,3 +99,11 @@ class EditEduPlusActivityForm(forms.ModelForm):
 #     class Meta:
 #         model= MeetingTopics
 #         fields=["topics"]
+
+class EduplusTopicsForm(forms.ModelForm):
+    class Meta:
+        model = EduplusTopics
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'style': ''}),
+        }

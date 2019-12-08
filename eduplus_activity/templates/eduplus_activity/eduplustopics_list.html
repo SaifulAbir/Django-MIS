@@ -1,0 +1,127 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+<section class="content-header" style="padding-top:60px">
+        <h1>Eduplus Topic List</h1>
+ </section>
+    <!-- Main content -->
+    <section class="content">
+<div class="box">
+        <!-- Main content -->
+        <div class="box-body table-responsive">
+            <div class="box-header">
+                <h3 style="display: inline-block;" class="box-title"> </h3>
+
+                <span id = "alert_placeholder"></span>
+                <button type="button"
+                        class="btn btn-primary pull-right js-create-eduplus-topics"
+                        data-url="{% url 'eduplus_activity:create_eduplus_topics' %}">
+                    <span class="fa fa-plus"></span>
+                    New Eduplus Topic
+                </button>
+            </div>
+
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+                <table   id="example1" class=" data-table eduplus-topics-table table table-bordered table-striped">
+                    <thead>
+                    <tr>
+
+                        <th class="col-sm-10">Topic Name</th>
+                        <th class="col-sm-2">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% include 'eduplus_activity/partial_eduplus_topics_list.html' %}
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+                {% include 'eduplus_activity/modal.html' %}
+            </div>
+        </div>
+</div>
+        <!-- /.content -->
+    </section>
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript">
+        $(function () {
+            $('.settings-menu, .eduplus_topics-menu').addClass('active');
+            $(".settings-menu").addClass("menu-open");
+            $(".settings-menu .treeview-menu").css("display", "block");
+
+            var loadForm = function () {
+                var btn = $(this);
+                $.ajax({
+                    url: btn.attr("data-url"),
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#modal-eduplus-topics").modal("show");
+                    },
+                    success: function (data) {
+                        $("#modal-eduplus-topics .modal-content").html(data.html_form);
+                    }
+                });
+            };
+            var saveForm = function () {
+                var form = $(this);
+                var formClass = form.attr("class")
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: form.attr("method"),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.form_is_valid) {
+                            $('#eduplus-topicsubmit').prop('disabled', true);
+                            if(formClass=="js-eduplus-topics-create-form"){
+                                showAlert("Eduplus Topic Created!", "alert-success-customized")
+                            }
+                            if(formClass=="js-update-eduplus-topics-form"){
+                                showAlert("Eduplus Topic Updated!", "alert alert-success-customized")
+                            }
+                            if(formClass=="js-eduplus-topics-delete-form"){
+                                showAlert("Eduplus Topic Deleted!", "alert alert-danger-customized")
+                            }
+
+                            $(".eduplus-topics-table tbody").html(data.html_eduplus_topics_list);  // <-- Replace the table body
+                            $("#modal-eduplus-topics").modal("hide");
+                        }
+                        else {
+                            $("#modal-eduplus-topics .modal-content").html(data.html_form);
+                        }
+
+
+                    }
+                });
+                return false;
+            };
+
+        function showAlert(message,alerttype) {
+
+            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+        }
+
+            /* Binding */
+
+            // Create eduplus_topics
+            $(".js-create-eduplus-topics").click(loadForm);
+            $("#modal-eduplus-topics").on("submit", ".js-eduplus-topics-create-form", saveForm);
+
+            // Update eduplus_topics
+            $(".eduplus-topics-table").on("click", ".js-update-eduplus-topics", loadForm);
+            $("#modal-eduplus-topics").on("submit", ".js-update-eduplus-topics-form", saveForm);
+
+            // Delete eduplus_topics
+            $(".eduplus-topics-table").on("click", ".js-delete-eduplus-topics", loadForm);
+            $("#modal-eduplus-topics").on("submit", ".js-eduplus-topics-delete-form", saveForm);
+
+        });
+
+    </script>
+{% endblock %}

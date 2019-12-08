@@ -7,6 +7,16 @@ from accounts.models import User
 from school.models import School
 from topics.models import Topics
 
+class EduplusTopics(models.Model):
+    name= models.CharField(max_length=128, unique=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    objects = models.Manager
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['-created_date']
 
 class EduPlusActivity(models.Model):
     date = models.DateField(default=timezone.now)
@@ -14,7 +24,7 @@ class EduPlusActivity(models.Model):
     presence_skleader = models.BooleanField(default=False)
     attendance= models.ManyToManyField(User, related_name='member_profile')
     image = models.ImageField(upload_to='images/', blank=True, null=True)
-    topics = models.ManyToManyField(Topics)
+    topics = models.ManyToManyField(EduplusTopics)
     description = models.TextField(max_length=200)
 
     def __str__(self):

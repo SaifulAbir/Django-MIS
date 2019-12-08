@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from accounts.models import User
-from eduplus_activity.models import EduPlusActivity
+from eduplus_activity.models import EduPlusActivity, EduplusTopics
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
@@ -98,3 +98,18 @@ class EduplusActivityTest(TestCase):
                                                                                                         'presence_skleader':True,'attendance':set(user), 'topics':set(topic), 'description':'test'}, follow=True)
         self.assertContains(response=eduplus_activity_response, status_code=200,
                             text='<li class="help-block" style="color:red;margin-bottom: 5px;">Select at least one topic.</li>', html=True)
+
+class TopicTest(TestCase):
+
+    def test__null_name__should_raise_error(self):
+        s = EduplusTopics(created_date=timezone.now())
+        with self.assertRaises(ValidationError):
+            s.full_clean()
+
+    def test__uniqe_validation_added(self):
+        unique = EduplusTopics._meta.get_field('name').unique
+        self.assertIn(str(unique),'True')
+
+    def test__max_length_validation_added(self):
+        max_length = EduplusTopics._meta.get_field('name').max_length
+        self.assertEquals(max_length, 128)

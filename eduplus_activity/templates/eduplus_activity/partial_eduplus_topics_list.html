@@ -1,0 +1,22 @@
+
+{% for topics in eduplustopics_list %}
+<tr>
+
+   <td>{{ topics.name }}</td>
+   <td align="center"><button type="button" style="margin-right:10px"
+               class="js-update-eduplus-topics"
+               data-url="{% url 'eduplus_activity:eduplus_update_topics' topics.id %}">
+       <span class="fa fa-edit"> </span>
+   </button>
+       <button type="button"
+               class="js-delete-eduplus-topics"
+               data-url="{% url 'eduplus_activity:delete_eduplus_topics' topics.id %}">
+           <span class="fa fa-trash"> </span>
+       </button>
+   </td>
+
+
+
+
+</tr>
+{% endfor %}
