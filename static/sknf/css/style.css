@@ -185,11 +185,15 @@ input#id_CMF-date {
     100%{opacity:1;}
 }
 .skin-blue .main-header .navbar,
-.skin-blue .main-header .logo,
+.skin-blue .main-header,
 .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side,
 .btn-primary,
 .pagination>.active>a{
     background-color: #2a2a86 !important;
+}
+
+.logo{
+    background-color: #ffffff!important;
 }
 
 .sidebar-collapse .sidebar .box-profile {
@@ -277,4 +281,21 @@ input#id_EPA-presence_skleader {
 ul#id_EPA-attendance {
     list-style: none;
 }
+
+@media screen and (max-width: 512px){
+    .logo {
+    position: absolute;
+    z-index: 1050;
+    left: 18%;
+    width: auto !important;
+}
+    .skin-blue .main-header .navbar{
+        background-color: #ffffff !important;
+    }
+    .sidebar-toggle{
+        background-color: #2a2a86!important;
+    }
+}
+
+
 
