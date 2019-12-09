@@ -21,6 +21,11 @@ class EduplusActivityTest(TestCase):
         user.user_type = 5
         user.save()
         self.user = user
+        admin_user = User.objects.create(email='admin@example.com')
+        admin_user.set_password('12345')
+        admin_user.user_type = 1
+        admin_user.save()
+        self.admin_user = admin_user
         s1 = School(name='Mirpur School', school_id=123)
         s1.save()
         self.school = s1
@@ -70,7 +75,7 @@ class EduplusActivityTest(TestCase):
             s.full_clean()
 
     def test__if_required_data_is_given__should_pass(self):
-        topic = Topics.objects.exclude(name='')
+        topic = EduplusTopics.objects.exclude(name='')
         user = User.objects.filter(user_type='6')
         instance = EduPlusActivity.objects.create(date=timezone.now(), school=self.school,presence_skleader=True, description='Nothing done')
 
@@ -98,6 +103,21 @@ class EduplusActivityTest(TestCase):
                                                                                                         'presence_skleader':True,'attendance':set(user), 'topics':set(topic), 'description':'test'}, follow=True)
         self.assertContains(response=eduplus_activity_response, status_code=200,
                             text='<li class="help-block" style="color:red;margin-bottom: 5px;">Select at least one topic.</li>', html=True)
+
+    def test_when__request_for_eduplus_activity_report_list__should_return_eduplus_activity_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        eduplus_activity_count = EduPlusActivity.objects.count()
+        topic = EduplusTopics.objects.exclude(name='')
+        user = User.objects.filter(user_type='6')
+        instance = EduPlusActivity.objects.create(date=timezone.now(), school=self.school, presence_skleader=True,
+                                                  description='Nothing done')
+        instance.topics.set(topic)
+        instance.attendance.set(user)
+        eduplus_activity_response = self.client.get(reverse('eduplus_activity:eduplus_activity_report_list'), follow=True)
+        self.assertEqual(EduPlusActivity.objects.count(), eduplus_activity_count + 1)
+        self.assertContains(response=eduplus_activity_response, status_code=200,
+                            text='<td>Nothing done</td>', html=True)
 
 class TopicTest(TestCase):
 

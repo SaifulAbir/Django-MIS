@@ -1,0 +1,67 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+
+<!-- Main content -->
+<section class="content-header" style="padding-top:60px">
+    <h1>
+        Eduplus Activity
+    </h1>
+</section>
+<section class="content">
+
+    <!-- Main content -->
+    <div class="box">
+        <div class="box-header">
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+            <table   id="example1" class=" data-table table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class="col-sm-1">Date</th>
+                    <th class="col-sm-2">Topics</th>
+                    <th class="col-sm-3">Description</th>
+                    <th class="col-sm-2">School</th>
+                    <th class="col-sm-2">Division</th>
+                    <th class="col-sm-2">District</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for eduplus_activity in eduplusactivity_list %}
+                <tr>
+                    <td>{{eduplus_activity.date}}</td>
+                    <td>
+                        {% for topic in eduplus_activity.topics.all %}
+                        {% if forloop.last %}
+                        {{topic.name}}
+                        {% else %}
+                        {{topic.name}},
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ eduplus_activity.description }}</td>
+                    <td>{{eduplus_activity.school}}</td>
+                    <td>{{eduplus_activity.school.division}}</td>
+                    <td>{{eduplus_activity.school.district}}</td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!-- /.content -->
+</section>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript">
+    $(function () {
+        $('#reports, .eduplus-activity-menu').addClass('active');
+        $("#reports").addClass("menu-open");
+        $("#reports .treeview-menu").css("display", "block");
+    });
+</script>
+{% endblock %}

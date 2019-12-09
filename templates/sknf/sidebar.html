@@ -35,7 +35,7 @@
           </a>
         </li>
 
-        <li class="treeview settings-menu">
+        <li class="treeview settings-menu" id="settings">
           <a href="#">
             <i class="fa fa-gears"></i> <span>Settings</span>
             <span class="pull-right-container">
@@ -48,7 +48,20 @@
             <li class="upazilla-menu"><a href="{% url 'upazillas:upazilla_list' %}"><i class="fa fa-circle-o"></i>Upazila</a></li>
             <li class="union-menu"><a href="{% url 'unions:union_list' %}"><i class="fa fa-circle-o"></i>Union</a></li>
             <li class="topics-menu"><a href="{% url 'topics:topics_list' %}"><i class="fa fa-circle-o"></i>Topic</a></li>
-            <li class="topics-menu"><a href="{% url 'eduplus_activity:eduplus_topics_list' %}"><i class="fa fa-circle-o"></i>Eduplus Topic</a></li>
+            <li class="eduplus-topics-menu"><a href="{% url 'eduplus_activity:eduplus_topics_list' %}"><i class="fa fa-circle-o"></i>Eduplus Topic</a></li>
+          </ul>
+        </li>
+        <li class="treeview settings-menu" id="reports">
+          <a href="#">
+            <i class="glyphicon glyphicon-list-alt"></i> <span>Reports</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="club-meeting-menu"><a href="{% url 'club_meetings:club_meeting_report_list' %}"><i class="fa fa-circle-o"></i>Club meeting</a></li>
+            <li class="peer-education-menu"><a href="{% url 'class_orientation:class_orientation_report_list' %}"><i class="fa fa-circle-o"></i>Peer Education</a></li>
+            <li class="eduplus-activity-menu"><a href="{% url 'eduplus_activity:eduplus_activity_report_list' %}"><i class="fa fa-circle-o"></i>Eduplus Activity</a></li>
           </ul>
         </li>
       </ul>

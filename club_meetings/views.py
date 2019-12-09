@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import generic
 
-from accounts.decorators import headmaster_mentor_skleader_login_required
+from accounts.decorators import headmaster_mentor_skleader_login_required, admin_login_required
 from accounts.models import User
 from club_meetings import models
 from club_meetings.models import ClubMeetings
@@ -114,6 +114,11 @@ class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "club_meeting_detail"
     model = models.ClubMeetings
     template_name = 'club_meetings/club_meeting_detail.html'
+
+@admin_login_required
+def clubmeetings_report_list(request):
+    clubmeetings_report = ClubMeetings.objects.all()
+    return render(request, 'club_meetings/club_meeting_report_list.html', {'clubmeetings_list': clubmeetings_report})
 
 
 

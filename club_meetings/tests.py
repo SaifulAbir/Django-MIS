@@ -19,6 +19,11 @@ class ClubMeetingsTest(TestCase):
         user.user_type = 5
         user.save()
         self.user = user
+        admin_user = User.objects.create(email='admin@example.com')
+        admin_user.set_password('12345')
+        admin_user.user_type = 1
+        admin_user.save()
+        self.admin_user = admin_user
         s1 = School(name='Mirpur School', school_id=123)
         s1.save()
         self.school = s1
@@ -67,6 +72,21 @@ class ClubMeetingsTest(TestCase):
         self.assertEquals(club_update_response.status_code, 200)
         self.assertTemplateUsed(club_update_response, 'club_meetings/club_meeting_add.html')
         # self.assertContains(response = club_update_response, text='', html=True).
+
+    def test_when__request_for_club_meeting_report_list__should_return_club_meeting_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        club_meeting_count = ClubMeetings.objects.count()
+        topic = Topics.objects.exclude(name='')
+        user = User.objects.filter(user_type='6')
+        instance = ClubMeetings.objects.create(date=timezone.now(), school=self.school, class_room='7', presence_guide_teacher='1',
+                         presence_skleader='1')
+        instance.topics.set(topic)
+        instance.attendance.set(user)
+        club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_report_list'), follow=True)
+        self.assertEqual(ClubMeetings.objects.count(), club_meeting_count + 1)
+        self.assertContains(response=club_meeting_response, status_code=200,
+                            text='<td>7</td>', html=True)
 
     def test__if_required_field_are_given__should_pass(self):
         topic = Topics.objects.exclude(name='')

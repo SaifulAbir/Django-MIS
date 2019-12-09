@@ -188,7 +188,11 @@ input#id_CMF-date {
 .skin-blue .main-header,
 .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side,
 .btn-primary,
-.pagination>.active>a{
+.pagination>.active>a, .pagination>.active>span{
+    background-color: #2a2a86 !important;
+}
+
+.dropdown-menu>li.user-header {
     background-color: #2a2a86 !important;
 }
 
@@ -295,6 +299,14 @@ ul#id_EPA-attendance {
     .sidebar-toggle{
         background-color: #2a2a86!important;
     }
+}
+
+/*pagination*/
+.pagination{
+    margin: 0px 0px;
+}
+.table-information{
+    display: inline-block;
 }
 
 

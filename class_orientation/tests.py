@@ -17,6 +17,11 @@ class ClassOrientationTest(TestCase):
         user.user_type = 5
         user.save()
         self.user = user
+        admin_user = User.objects.create(email='admin@example.com')
+        admin_user.set_password('12345')
+        admin_user.user_type = 1
+        admin_user.save()
+        self.admin_user = admin_user
         s1 = School(name='Mirpur School', school_id=123)
         s1.save()
         self.school = s1
@@ -24,7 +29,7 @@ class ClassOrientationTest(TestCase):
                                    roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
         skleader.save()
         to = Topics.objects.all()
-        co = ClassOrientation.objects.create(created_date=timezone.now(), student_class='7', school=self.school )
+        co = ClassOrientation.objects.create(created_date=timezone.now(), place='1', school=self.school )
         co.topic.set(to)
         self.class_orientation = co
 
@@ -74,6 +79,18 @@ class ClassOrientationTest(TestCase):
                                                               args=(self.class_orientation.id,)), follow=True)
         self.assertEquals(orientation_update_response.status_code, 200)
         self.assertEquals(orientation_update_response['Content-Type'], 'application/json')
+
+    def test_when__request_for_class_orientation_report_list__should_return_class_orientation_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        class_orientation_count = ClassOrientation.objects.count()
+        topic = Topics.objects.exclude(name='')
+        instance = ClassOrientation.objects.create(created_date=timezone.now(), place='1', school=self.school)
+        instance.topic.set(topic)
+        class_orientation_response = self.client.get(reverse('class_orientation:class_orientation_report_list'), follow=True)
+        self.assertEqual(ClassOrientation.objects.count(), class_orientation_count + 1)
+        self.assertContains(response=class_orientation_response, status_code=200,
+                            text='<td>Mirpur School (123)</td>', html=True)
 
 
 

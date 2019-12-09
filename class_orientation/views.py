@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 
-from accounts.decorators import headmaster_mentor_skleader_login_required
+from accounts.decorators import headmaster_mentor_skleader_login_required, admin_login_required
 from headmasters.models import HeadmasterProfile
 from skleaders.models import SkLeaderProfile
 from .models import ClassOrientation
@@ -112,3 +113,21 @@ def class_orientation_update(request, pk):
         form = ClassOrientationForm(instance=class_orientation)
 
     return class_orientation_form(request, form, 'class_orientation/classorientation_update_form.html')
+
+@admin_login_required
+def class_orientation_report_list(request):
+    class_orientation_list = ClassOrientation.objects.all()
+    paginator = Paginator(class_orientation_list, 10)
+    page = request.GET.get('page')
+    try:
+        class_orientation_report = paginator.page(page)
+    except PageNotAnInteger:
+        class_orientation_report = paginator.page(1)
+    except EmptyPage:
+        class_orientation_report = paginator.page(paginator.num_pages)
+    if request.is_ajax():
+        data={}
+        data['html_class_orientation_report'] = render_to_string('class_orientation/partial_class_orientation_report.html',
+                                                      {'classorientation_list': class_orientation_report})
+        return JsonResponse(data)
+    return render(request, 'class_orientation/class_orientation_report_list.html', {'classorientation_list': class_orientation_report, 'num_pages': paginator.count,})

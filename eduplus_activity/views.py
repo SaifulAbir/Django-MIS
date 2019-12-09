@@ -166,3 +166,8 @@ def eduplus_topics_delete(request, pk):
             request=request,
         )
     return JsonResponse(data)
+
+@admin_login_required
+def eduplus_activity_report_list(request):
+    eduplus_activity_report = EduPlusActivity.objects.all()
+    return render(request, 'eduplus_activity/eduplus_activity_report_list.html', {'eduplusactivity_list': eduplus_activity_report})
