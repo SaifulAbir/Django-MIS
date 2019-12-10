@@ -142,7 +142,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <button type="button" id="school-search" class="btn btn-primary text-center">Search</button>
+<!--                        <button type="button" id="school-search" class="btn btn-primary text-center">Search</button>-->
                     </div>
                 </div>
             </div>
@@ -194,7 +194,7 @@
             { name: 'Bandarban', div: 'Chittagong', loc: [21.8311, 92.3686]},
             { name: 'Sirajganj', div: 'Rajshahi', loc: [24.4621, 89.7033]},
             { name: 'Pabna', div: 'Rajshahi', loc: [24.0051, 89.2498]},
-            { name: 'Bogura', div: 'Rajshahi', loc: [24.8481, 89.3730]},
+            { name: 'Bogra', div: 'Rajshahi', loc: [24.8481, 89.3730]},
             { name: 'Rajshahi', div: 'Rajshahi', loc: [24.3745, 88.6042]},
             { name: 'Natore', div: 'Rajshahi', loc: [24.4165, 88.9830]},
             { name: 'Joypurhat', div: 'Rajshahi', loc: [25.1024, 89.0201]},
@@ -271,6 +271,7 @@
                 $(".school-search-table").DataTable().destroy();
                 division_contains = this.division;
                 district_contains = this.district;
+                name = '', division = division_contains, district = district_contains, upazilla = '', union = '';
                 $.ajax({
                     type: 'GET',
                     url: '/api/search_school_list/',
