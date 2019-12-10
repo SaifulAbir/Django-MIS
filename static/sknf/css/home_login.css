@@ -120,3 +120,7 @@
     display: inline-block;
 }
 
+.pagination>.active>span{
+    background-color: #2a2a86;
+}
+
