@@ -92,16 +92,11 @@
         <div class="container-fluid">
             <h4>Schools</h4>
             <p id="search-msg"></p>
-            <table id="search-table" class=" school-search-table table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th class = "col-sm-4">Name</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div id="search-result">
+
                 {% include 'accounts/partial_school_list.html' %}
-                </tbody>
-            </table>
+
+            </div>
         </div>
     </div>
     <div class="col-sm-6" id="form-wrapper" style="background-color: #2a2a86;">
@@ -119,28 +114,28 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="email" name="division_contains" class="form-control" id="division-name" placeholder="Enter Division">
+                        <input type="text" name="division_contains" class="form-control" id="division-name" placeholder="Enter Division">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="email" name="district_contains" class="form-control" id="district-name" placeholder="Enter District">
+                        <input type="text" name="district_contains" class="form-control" id="district-name" placeholder="Enter District">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="email" name="upazilla_contains" class="form-control" id="upazilla-name" placeholder="Enter Upazilla">
+                        <input type="text" name="upazilla_contains" class="form-control" id="upazilla-name" placeholder="Enter Upazilla">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="email" name="union_contains" class="form-control" id="union-name" placeholder="Enter Union">
+                        <input type="text" name="union_contains" class="form-control" id="union-name" placeholder="Enter Union">
                     </div>
                 </div>
             </div>
@@ -183,8 +178,8 @@
         var height2 = $("#header-bar").height();
         $(".map-wrapper").css("min-height", height-height2);
         $("#form-wrapper").css("min-height", height-height2);
-
-
+        var name, division, district, upazilla, union;
+        var globalTimeout = null;
         var districts = [
             { name: 'Cumilla', div: 'Chattogram', loc: [23.4593, 91.1805]},
             { name: 'Feni', div: 'Chattogram', loc: [23.0069, 91.3963]},
@@ -287,7 +282,7 @@
 
                         if (data.form_is_valid) {
 
-                            $("#search-table tbody").html(data.html_school_list);  // <-- Replace the table body
+                            $("#search-result").html(data.html_school_list);  // <-- Replace the table body
                         }
                         $('#result-wrapper').show('slow');
                         $('#form-wrapper').hide('slow');
@@ -295,11 +290,41 @@
                         $(".school-search-table").dataTable({
                             'lengthChange': false,
                             'searching'   : false,
+                            'paging'      : false,
+                            'info'        : false
                         });
                     }
                 });
             });
         }
+
+        $("#search-result").on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            $.ajax({
+                type: 'get',
+                url: '/api/search_school_list/'+addressValue,
+                data: {
+                    'name_contains': name,
+                    'division_contains': division,
+                    'district_contains': district,
+                    'upazilla_contains': upazilla,
+                    'union_contains': union,
+                },
+                success: function (data) {
+                    $("#search-result").html(data.html_school_list);
+                    $('#search-result .school-search-table').DataTable({
+                        'paging'      : false,
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'ordering'    : true,
+                        'info'        : false,
+                        'autoWidth'   : false,
+                        'destroy'     : true
+                    });
+                }
+            });
+        });
 
         $('#school-search').on('click', function () {
             $(".school-search-table").DataTable().destroy();
@@ -333,6 +358,51 @@
                     });
                 }
             });
+        });
+
+        $('input[type="text"]').on('keyup', function () {
+            var count = this.value.replace(" ", '').length;
+            if(count<3) return;
+            if (globalTimeout != null){
+                clearTimeout(globalTimeout);
+            }
+            globalTimeout = setTimeout(function () {
+                globalTimeout = null;
+                $(".school-search-table").DataTable().destroy();
+                name_contains = $('#school-name').val();
+                division_contains = $('#division-name').val();
+                district_contains = $('#district-name').val();
+                upazilla_contains = $('#upazilla-name').val();
+                union_contains = $('#union-name').val();
+                name = name_contains, division = division_contains, district = district_contains, upazilla = upazilla_contains, union = union_contains;
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/search_school_list/',
+                    data: {
+                        'name_contains': name_contains,
+                        'division_contains': division_contains,
+                        'district_contains': district_contains,
+                        'upazilla_contains': upazilla_contains,
+                        'union_contains': union_contains,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        if (data.form_is_valid) {
+
+                            $("#search-result").html(data.html_school_list);  // <-- Replace the table body
+                        }
+                        $('#result-wrapper').show('slow');
+                        $('#form-wrapper').hide('slow');
+                        $('#search-msg').html('');
+                        $(".school-search-table").dataTable({
+                            'lengthChange': false,
+                            'searching'   : false,
+                            'info'        : false,
+                            'paging'      : false,
+                        });
+                    }
+                });
+            }, 1000);
         });
 
     });

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
     PasswordResetCompleteView
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.template import loader
 from django.core.mail import send_mail
 
@@ -512,7 +513,6 @@ def search_school_list(request):
     data = dict()
     qs = School.objects.all()
     name = request.GET.get('name_contains')
-    print(name)
     division = request.GET.get('division_contains')
     district = request.GET.get('district_contains')
     upazilla = request.GET.get('upazilla_contains')
@@ -527,9 +527,18 @@ def search_school_list(request):
         qs = qs.filter(upazilla__name__icontains=upazilla)
     if union != '' and union is not None:
         qs = qs.filter(union__name__icontains=union)
+
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
     if name == '' and division == '' and district == '' and upazilla == '' and union == '':
-        qs = None
+        queryset = None
     data['form_is_valid'] = True
     data['html_school_list'] = render_to_string('accounts/partial_school_list.html',
-                                                  {'queryset': qs})
+                                                  {'queryset': queryset})
     return JsonResponse(data)
