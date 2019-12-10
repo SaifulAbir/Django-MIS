@@ -361,7 +361,7 @@
             });
         });
 
-        $('input[type="text"]').on('keyup', function () {
+        $('#search-form-id').on('keyup', 'input[type="text"]', function () {
             var count = this.value.replace(" ", '').length;
             if(count<3) return;
             if (globalTimeout != null){
