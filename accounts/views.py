@@ -29,10 +29,14 @@ from accounts.decorators import admin_login_required
 from accounts.forms import PrettyAuthenticationForm, EditUserForm, HeadmasterProfileForm, SkleaderProfileForm, \
     CustomPasswordResetForm, CustomSetPasswordForm
 from accounts.models import User
+from districts.models import District
+from division.models import Division
 from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
+from unions.models import Union
+from upazillas.models import Upazilla
 
 
 @admin_login_required
@@ -542,3 +546,19 @@ def search_school_list(request):
     data['html_school_list'] = render_to_string('accounts/partial_school_list.html',
                                                   {'queryset': queryset})
     return JsonResponse(data)
+
+def load_previous_school(request):
+    previous_schools = list(School.objects.values_list('name', flat=True))
+    return JsonResponse(previous_schools, safe=False)
+def load_previous_division(request):
+    previous_divisions = list(Division.objects.values_list('name', flat=True))
+    return JsonResponse(previous_divisions, safe=False)
+def load_previous_district(request):
+    previous_districts = list(District.objects.values_list('name', flat=True))
+    return JsonResponse(previous_districts, safe=False)
+def load_previous_upazilla(request):
+    previous_upazillas = list(Upazilla.objects.values_list('name', flat=True))
+    return JsonResponse(previous_upazillas, safe=False)
+def load_previous_union(request):
+    previous_unions = list(Union.objects.values_list('name', flat=True))
+    return JsonResponse(previous_unions, safe=False)

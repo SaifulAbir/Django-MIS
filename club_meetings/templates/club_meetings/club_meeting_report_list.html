@@ -1,51 +1,74 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 
-    <!-- Main content -->
+<!-- Main content -->
 <section class="content-header" style="padding-top:60px">
     <h1>
         Club Meetings
     </h1>
 </section>
-    <section class="content">
+<section class="content">
 
-        <!-- Main content -->
-        <div class="box">
-            <div class="box-header">
+    <!-- Main content -->
+    <div class="box">
+        <div class="box-header">
+            <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <h3>Club Meeting Search</h3>
+                <form method="GET" action="." class="search-form-club-meeting">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <strong>School</strong>
+                            <input class="form-control " type="search" name="school_contains" />
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <strong>Division</strong>
+                            <input class="form-control" type="search" name="division_contains"/>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <strong>District</strong>
+                            <input class="form-control" type="search" name="district_contains"/>
+                        </div>
+                    </div>
+                    <div class="form-group pull-right">
+                        <!--                        <button type="submit" class="btn btn-primary search-club-meeting">Search</button>-->
+                    </div>
+                    <div class="clearfix"></div>
 
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive">
-                <table   id="example1" class=" data-table table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th class="col-sm-2">Date</th>
-                        <th class="col-sm-1">Class Room</th>
-                        <th class="col-sm-4">School</th>
-                        <th class="col-sm-2">Division</th>
-                        <th class="col-sm-2">District</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for club_meeting in clubmeetings_list %}
-                        <tr>
-                            <td>{{club_meeting.date}}</td>
-                            <td>{{ club_meeting.class_room }}</td>
-                            <td>{{ club_meeting.school }}</td>
-                            <td>{{ club_meeting.school.division }}</td>
-                            <td>{{ club_meeting.school.district }}</td>
-                        </tr>
-                    {% endfor %}
-
-                    </tbody>
-                    <tfoot>
-
-                    </tfoot>
-                </table>
+                </form>
             </div>
         </div>
-        <!-- /.content -->
-    </section>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+            <table   id="example1" class=" data-table table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class="col-sm-2">Date</th>
+                    <th class="col-sm-1">Class Room</th>
+                    <th class="col-sm-4">School</th>
+                    <th class="col-sm-2">Division</th>
+                    <th class="col-sm-2">District</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for club_meeting in clubmeetings_list %}
+                <tr>
+                    <td>{{club_meeting.date}}</td>
+                    <td>{{ club_meeting.class_room }}</td>
+                    <td>{{ club_meeting.school }}</td>
+                    <td>{{ club_meeting.school.division }}</td>
+                    <td>{{ club_meeting.school.district }}</td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!-- /.content -->
+</section>
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
@@ -53,6 +76,44 @@
         $('#reports, .club-meeting-menu').addClass('active');
         $("#reports").addClass("menu-open");
         $("#reports .treeview-menu").css("display", "block");
+
+        $('#search-form-club-meeting').on('keyup', 'input[type="search"]', function () {
+            var count = this.value.replace(" ", '').length;
+            if(count<3) return;
+            $(".school-search-table").DataTable().destroy();
+            name_contains = $('#school-name').val();
+            division_contains = $('#division-name').val();
+            district_contains = $('#district-name').val();
+            upazilla_contains = $('#upazilla-name').val();
+            union_contains = $('#union-name').val();
+            $.ajax({
+                type: 'GET',
+                url: '/api/search_school_list/',
+                data: {
+                    'name_contains': name_contains,
+                    'division_contains': division_contains,
+                    'district_contains': district_contains,
+                    'upazilla_contains': upazilla_contains,
+                    'union_contains': union_contains,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.form_is_valid) {
+
+                        $("#search-result").html(data.html_school_list);  // <-- Replace the table body
+                    }
+                    $('#result-wrapper').show('slow');
+                    $('#form-wrapper').hide('slow');
+                    $('#search-msg').html('');
+                    $(".school-search-table").dataTable({
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'info'        : false,
+                        'paging'      : false,
+                    });
+                }
+            });
+        });
     });
 </script>
 {% endblock %}
