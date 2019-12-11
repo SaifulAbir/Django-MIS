@@ -240,5 +240,32 @@
                 source: previousItems.ttAdapter()
             });
     }
+    function pagination(id, url, name, division, district, tableId) {
+        $(id).on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            $.ajax({
+                type: 'get',
+                url: url+addressValue,
+                data: {
+                    'name_contains': name,
+                    'division_contains': division,
+                    'district_contains': district,
+                },
+                success: function (data) {
+                    $(id).html(data.html_club_meeting_list);
+                    $(tableId).DataTable({
+                        'paging'      : false,
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'ordering'    : true,
+                        'info'        : false,
+                        'autoWidth'   : false,
+                        'destroy'     : true
+                    });
+                }
+            });
+        });
+    }
 </script>
 

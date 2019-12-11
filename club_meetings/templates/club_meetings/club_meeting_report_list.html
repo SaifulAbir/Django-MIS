@@ -144,32 +144,7 @@
                 }
             });
         });
-
-        $(".box-body").on('click', '.paginator', function (e) {
-            e.preventDefault();
-            var addressValue = $(this).attr("href");
-            $.ajax({
-                type: 'get',
-                url: '/club_meetings/club_meeting_search_list/'+addressValue,
-                data: {
-                    'name_contains': name,
-                    'division_contains': division,
-                    'district_contains': district,
-                },
-                success: function (data) {
-                    $(".box-body").html(data.html_club_meeting_list);
-                    $('.box-body .club-meeting-search-table').DataTable({
-                        'paging'      : false,
-                        'lengthChange': false,
-                        'searching'   : false,
-                        'ordering'    : true,
-                        'info'        : false,
-                        'autoWidth'   : false,
-                        'destroy'     : true
-                    });
-                }
-            });
-        });
+        pagination(".box-body", '/club_meetings/club_meeting_search_list/', name, division, district, '.box-body .club-meeting-search-table');
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
