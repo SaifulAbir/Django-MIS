@@ -19,26 +19,12 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-               <table id="example1" class=" data-table table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                     <th class = "col-sm-4">Name</th>
-                     <th class ="col-sm-2">EIIN</th>
-                     <th class ="col-sm-2">Division</th>
-                     <th class ="col-sm-2">District</th>
-                  </tr>
-                  </thead>
-                  <tbody>
 
                   {% include 'school/partial_school_list_dashboard.html' %}
 
-
-               </table>
-               {% include 'school/_modal.html' %}
             </div>
          </div>
          <!-- /.content -->
-
       </div>
 
 
@@ -144,7 +130,13 @@ $(function () {
   $("#modal-school").on("submit", ".js-school-delete-form", saveForm);
 
   $('#ab').hide();
-
+  $('.dashboard-school-list').dataTable({
+            'lengthChange': false,
+            'searching'   : false,
+            'info'        : false,
+            'paging'      : false,
+        });
+   pagination('.box-body', '/dashboard/', '', '', '', '.box-body .dashboard-school-list')
 
 });
 

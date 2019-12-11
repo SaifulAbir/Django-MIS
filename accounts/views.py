@@ -41,11 +41,25 @@ from upazillas.models import Upazilla
 
 @admin_login_required
 def index(request):
-    school_list = School.objects.all()
+    data = dict()
+    schools = School.objects.all()
     school_total = School.objects.count()
     headmaster_total = User.objects.filter(user_type__in=[2,]).count()
     skleader_total = User.objects.filter(user_type__in=[5,]).count()
     skmember_total = User.objects.filter(user_type__in=[6,]).count()
+    paginator = Paginator(schools, 10)
+    page = request.GET.get('page')
+    try:
+        school_list = paginator.page(page)
+    except PageNotAnInteger:
+        school_list = paginator.page(1)
+    except EmptyPage:
+        school_list = paginator.page(paginator.num_pages)
+    if request.is_ajax():
+        data['form_is_valid'] = True
+        data['html_list'] = render_to_string('school/partial_school_list_dashboard.html',
+                                                    {'school_list': school_list})
+        return JsonResponse(data)
     context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list,
                'school_total': school_total, 'headmaster_total': headmaster_total, 'skleader_total': skleader_total, 'skmember_total': skmember_total}
     return render(request, 'sknf/index.html', context)

@@ -154,7 +154,7 @@ def club_meeting_search_list(request):
     if name == '' and division == '' and district == '':
         queryset = None
     data['form_is_valid'] = True
-    data['html_club_meeting_list'] = render_to_string('club_meetings/partial_club_meeting_report_list.html',
+    data['html_list'] = render_to_string('club_meetings/partial_club_meeting_report_list.html',
                                                   {'clubmeetings_list': queryset})
     return JsonResponse(data)
 

@@ -133,7 +133,7 @@
                 success: function (data) {
                     if (data.form_is_valid) {
 
-                        $(".box-body").html(data.html_club_meeting_list);  // <-- Replace the table body
+                        $(".box-body").html(data.html_list);  // <-- Replace the table body
                     }
                     $(".club-meeting-search-table").dataTable({
                         'lengthChange': false,

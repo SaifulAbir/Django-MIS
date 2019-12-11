@@ -1,12 +1,56 @@
 {% load static %}
-{% for school in school_list %}
+<table id="example1" class="dashboard-school-list table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class = "col-sm-4">Name</th>
+        <th class ="col-sm-2">EIIN</th>
+        <th class ="col-sm-2">Division</th>
+        <th class ="col-sm-2">District</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for school in school_list %}
 
-<tr>
-    <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>
-    <td>{{ school.school_id }}</td>
-    <td>{{ school.division }}</td>
-    <td>{{ school.district }}</td> 
-</tr>
+    <tr>
+        <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>
+        <td>{{ school.school_id }}</td>
+        <td>{{ school.division }}</td>
+        <td>{{ school.district }}</td>
+    </tr>
 
-{% endfor %}
+    {% endfor %}
+</table>
+</table>
+<p class="table-information">Showing {{ school_list.start_index }} to {{ school_list.end_index }} of {{ school_list.paginator.count }} entries</p>
+<ul class="pagination" style="float: right">
+
+    {% if school_list.has_previous %}
+    <li><a class="paginator" href="?page={{ school_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+    {% if school_list.number|add:'-4' > 1 %}
+    <li><a class="paginator" href="?page={{ school_list.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in school_list.paginator.page_range %}
+    {% if school_list.number == i %}
+    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% elif i > school_list.number|add:'-5' and i < school_list.number|add:'5' %}
+    <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if school_list.paginator.num_pages > school_list.number|add:'4' %}
+    <li><a href="?page={{ school_list.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if school_list.has_next %}
+    <li><a class="paginator" href="?page={{ school_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+</ul>
 
