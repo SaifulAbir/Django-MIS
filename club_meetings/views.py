@@ -4,8 +4,10 @@ import uuid
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
-from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views import generic
 
@@ -118,7 +120,43 @@ class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
 @admin_login_required
 def clubmeetings_report_list(request):
     clubmeetings_report = ClubMeetings.objects.all()
-    return render(request, 'club_meetings/club_meeting_report_list.html', {'clubmeetings_list': clubmeetings_report})
+    paginator = Paginator(clubmeetings_report, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+    return render(request, 'club_meetings/club_meeting_report_list.html', {'clubmeetings_list': queryset})
+
+def club_meeting_search_list(request):
+    data = dict()
+    qs = ClubMeetings.objects.all()
+    name = request.GET.get('name_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    if name != '' and name is not None:
+        qs = qs.filter(school__name__icontains=name)
+    if division != '' and division is not None:
+        qs = qs.filter(school__division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(school__district__name__icontains=district)
+
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+    if name == '' and division == '' and district == '':
+        queryset = None
+    data['form_is_valid'] = True
+    data['html_club_meeting_list'] = render_to_string('club_meetings/partial_club_meeting_report_list.html',
+                                                  {'clubmeetings_list': queryset})
+    return JsonResponse(data)
 
 
 

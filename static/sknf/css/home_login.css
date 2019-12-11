@@ -123,7 +123,7 @@
 .pagination>.active>span{
     background-color: #2a2a86;
 }
-
+/* auto-complete search */
 .typeahead, .tt-query, .tt-hint {
 	border: 2px solid #CCCCCC;
 	outline: medium none;

@@ -26,6 +26,7 @@
 <script src="{% static 'sknf/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'sknf/js/tempusdominus-bootstrap-3.js' %}"></script>
 <script src="{% static 'sknf/js/cropper.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 <!--<script src="{% static 'sknf/js/jquery-cropper.min.js' %}"></script>-->
 <script>
     //for Disabling cache
@@ -213,5 +214,31 @@
             $("#id_PF-image").val("");
         });
     });
+    function autoSuggesion(url, id) {
+        var previousItems = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: url,
+                filter: function(list) {
+                    return $.map(list, function(itemname) {
+                        return { name: itemname }; });
+                }
+            }
+        });
+        previousItems.initialize();
+        $(id).typeahead({
+                hint: true,
+                highlight: true, /* Enable substring highlighting */
+                minLength: 2 /* Specify minimum characters required for showing result */
+            },
+            {
+
+                name: 'previousItems',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: previousItems.ttAdapter()
+            });
+    }
 </script>
 

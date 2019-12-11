@@ -309,5 +309,34 @@ ul#id_EPA-attendance {
     display: inline-block;
 }
 
+/* auto-complete search */
+.typeahead, .tt-query, .tt-hint {
+	border: 2px solid #CCCCCC;
+	outline: medium none;
+	padding: 8px 12px;
+	width: 385px;
+}
+.tt-menu {
+	background-color: #FFFFFF;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	margin-top: 8px;
+	padding: 8px 0;
+	width: 385px;
+}
+.tt-suggestion:hover {
+	cursor: pointer;
+	background-color: #0097CF;
+	color: #FFFFFF;
+}
+.tt-suggestion {
+	font-size: 14px;  /* Set suggestion dropdown font size */
+	padding: 3px 20px;
+}
+.tt-dataset.tt-dataset-previousItems {
+    text-align: left;
+}
+
 
 

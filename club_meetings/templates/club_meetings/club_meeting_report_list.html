@@ -4,7 +4,7 @@
 <!-- Main content -->
 <section class="content-header" style="padding-top:60px">
     <h1>
-        Club Meetings
+        Club Meeting List
     </h1>
 </section>
 <section class="content">
@@ -14,23 +14,23 @@
         <div class="box-header">
             <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
                 <h3>Club Meeting Search</h3>
-                <form method="GET" action="." class="search-form-club-meeting">
+                <form method="GET" class="search-form-club-meeting">
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <strong>School</strong>
-                            <input class="form-control " type="search" name="school_contains" />
+                            <input class="form-control typehead tt-query" type="search" name="school_contains" autocomplete="off" id="school-name" />
                         </div>
                         <div class="form-group col-sm-4">
                             <strong>Division</strong>
-                            <input class="form-control" type="search" name="division_contains"/>
+                            <input class="form-control typehead tt-query" type="search" name="division_contains" autocomplete="off" id="division-name"/>
                         </div>
                         <div class="form-group col-sm-4">
                             <strong>District</strong>
-                            <input class="form-control" type="search" name="district_contains"/>
+                            <input class="form-control typehead tt-query" type="search" name="district_contains" autocomplete="off" id="district-name"/>
                         </div>
                     </div>
                     <div class="form-group pull-right">
-                        <!--                        <button type="submit" class="btn btn-primary search-club-meeting">Search</button>-->
+                        <button type="button" class="btn btn-primary search-club-meeting">Search</button>
                     </div>
                     <div class="clearfix"></div>
 
@@ -39,7 +39,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-            <table   id="example1" class=" data-table table table-bordered table-striped">
+            <table   id="example1" class="club-meeting-search-table table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th class="col-sm-2">Date</th>
@@ -65,6 +65,38 @@
 
                 </tfoot>
             </table>
+            <p class="table-information">Showing {{ clubmeetings_list.start_index }} to {{ clubmeetings_list.end_index }} of {{ clubmeetings_list.paginator.count }} entries</p>
+            <ul class="pagination" style="float: right">
+
+                {% if clubmeetings_list.has_previous %}
+                <li><a class="paginator" href="?page={{ clubmeetings_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                {% else %}
+                <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+                {% endif %}
+
+                {% if clubmeetings_list.number|add:'-4' > 1 %}
+                <li><a class="paginator" href="?page={{ clubmeetings_list.number|add:'-5' }}">&hellip;</a></li>
+                {% endif %}
+
+                {% for i in clubmeetings_list.paginator.page_range %}
+                {% if clubmeetings_list.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% elif i > clubmeetings_list.number|add:'-5' and i < clubmeetings_list.number|add:'5' %}
+                <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if clubmeetings_list.paginator.num_pages > clubmeetings_list.number|add:'4' %}
+                <li><a href="?page={{ clubmeetings_list.number|add:'5' }}">&hellip;</a></li>
+                {% endif %}
+
+                {% if clubmeetings_list.has_next %}
+                <li><a class="paginator" href="?page={{ clubmeetings_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                {% else %}
+                <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                {% endif %}
+
+            </ul>
         </div>
     </div>
     <!-- /.content -->
@@ -76,36 +108,34 @@
         $('#reports, .club-meeting-menu').addClass('active');
         $("#reports").addClass("menu-open");
         $("#reports .treeview-menu").css("display", "block");
-
-        $('#search-form-club-meeting').on('keyup', 'input[type="search"]', function () {
-            var count = this.value.replace(" ", '').length;
-            if(count<3) return;
-            $(".school-search-table").DataTable().destroy();
+        var name, division, district;
+        $('.club-meeting-search-table').dataTable({
+            'lengthChange': false,
+            'searching'   : false,
+            'info'        : false,
+            'paging'      : false,
+        });
+        $('.search-club-meeting').on('click', function () {
+            $(".club-meeting-search-table").DataTable().destroy();
             name_contains = $('#school-name').val();
             division_contains = $('#division-name').val();
             district_contains = $('#district-name').val();
-            upazilla_contains = $('#upazilla-name').val();
-            union_contains = $('#union-name').val();
+            name = name_contains, division = division_contains, district = district_contains;
             $.ajax({
                 type: 'GET',
-                url: '/api/search_school_list/',
+                url: '/club_meetings/club_meeting_search_list/',
                 data: {
                     'name_contains': name_contains,
                     'division_contains': division_contains,
                     'district_contains': district_contains,
-                    'upazilla_contains': upazilla_contains,
-                    'union_contains': union_contains,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 success: function (data) {
                     if (data.form_is_valid) {
 
-                        $("#search-result").html(data.html_school_list);  // <-- Replace the table body
+                        $(".box-body").html(data.html_club_meeting_list);  // <-- Replace the table body
                     }
-                    $('#result-wrapper').show('slow');
-                    $('#form-wrapper').hide('slow');
-                    $('#search-msg').html('');
-                    $(".school-search-table").dataTable({
+                    $(".club-meeting-search-table").dataTable({
                         'lengthChange': false,
                         'searching'   : false,
                         'info'        : false,
@@ -114,6 +144,35 @@
                 }
             });
         });
+
+        $(".box-body").on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            $.ajax({
+                type: 'get',
+                url: '/club_meetings/club_meeting_search_list/'+addressValue,
+                data: {
+                    'name_contains': name,
+                    'division_contains': division,
+                    'district_contains': district,
+                },
+                success: function (data) {
+                    $(".box-body").html(data.html_club_meeting_list);
+                    $('.box-body .club-meeting-search-table').DataTable({
+                        'paging'      : false,
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'ordering'    : true,
+                        'info'        : false,
+                        'autoWidth'   : false,
+                        'destroy'     : true
+                    });
+                }
+            });
+        });
+        autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
+        autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
+        autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
     });
 </script>
 {% endblock %}
