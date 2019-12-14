@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
@@ -57,9 +58,9 @@ def sidebar_context(request):
         else:
             profile = None
         return {
-            'profile': profile, 'headmaster_profile':headmaster_profile, 'skleader_list':skleader_list, 'skleader_meeting_eduplus':skleader_meeting_eduplus
+            'profile': profile, 'headmaster_profile':headmaster_profile, 'skleader_list':skleader_list, 'skleader_meeting_eduplus':skleader_meeting_eduplus, 'APP_VERSION_NUMBER' : settings.APP_VERSION_NUMBER,
         }
     else:
         return {
-            'profile': None, 'headmaster_profile':None, 'skleader_profile':None, 'skleader_meeting_eduplus':None
+            'profile': None, 'headmaster_profile':None, 'skleader_profile':None, 'skleader_meeting_eduplus':None, 'APP_VERSION_NUMBER' : settings.APP_VERSION_NUMBER
         }
