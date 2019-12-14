@@ -12,10 +12,34 @@
     <!-- Main content -->
     <div class="box">
         <div class="box-header">
+            <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <h3>Eduplus Activity Search</h3>
+                <form method="GET" class="search-form-club-meeting">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <strong>School</strong>
+                            <input class="form-control typehead tt-query" type="search" name="school_contains" autocomplete="off" id="school-name" />
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <strong>Division</strong>
+                            <input class="form-control typehead tt-query" type="search" name="division_contains" autocomplete="off" id="division-name"/>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <strong>District</strong>
+                            <input class="form-control typehead tt-query" type="search" name="district_contains" autocomplete="off" id="district-name"/>
+                        </div>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-primary search-eduplus-activity">Search</button>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </form>
+            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-            <table   id="example1" class=" data-table table table-bordered table-striped">
+            <table   id="example1" class=" eduplus-activity-search-table table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th class="col-sm-1">Date</th>
@@ -51,6 +75,38 @@
 
                 </tfoot>
             </table>
+            <p class="table-information">Showing {{ eduplusactivity_list.start_index }} to {{ eduplusactivity_list.end_index }} of {{ eduplusactivity_list.paginator.count }} entries</p>
+            <ul class="pagination" style="float: right">
+
+                {% if eduplusactivity_list.has_previous %}
+                <li><a class="paginator" href="?page={{ eduplusactivity_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                {% else %}
+                <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+                {% endif %}
+
+                {% if eduplusactivity_list.number|add:'-4' > 1 %}
+                <li><a class="paginator" href="?page={{ eduplusactivity_list.number|add:'-5' }}">&hellip;</a></li>
+                {% endif %}
+
+                {% for i in eduplusactivity_list.paginator.page_range %}
+                {% if eduplusactivity_list.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% elif i > eduplusactivity_list.number|add:'-5' and i < eduplusactivity_list.number|add:'5' %}
+                <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if eduplusactivity_list.paginator.num_pages > eduplusactivity_list.number|add:'4' %}
+                <li><a href="?page={{ eduplusactivity_list.number|add:'5' }}">&hellip;</a></li>
+                {% endif %}
+
+                {% if eduplusactivity_list.has_next %}
+                <li><a class="paginator" href="?page={{ eduplusactivity_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                {% else %}
+                <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                {% endif %}
+
+            </ul>
         </div>
     </div>
     <!-- /.content -->
@@ -62,6 +118,46 @@
         $('#reports, .eduplus-activity-menu').addClass('active');
         $("#reports").addClass("menu-open");
         $("#reports .treeview-menu").css("display", "block");
+        var name, division, district;
+        $('.eduplus-activity-search-table').dataTable({
+            'lengthChange': false,
+            'searching'   : false,
+            'info'        : false,
+            'paging'      : false,
+        });
+        $('.search-eduplus-activity').on('click', function () {
+            $(".eduplus-activity-search-table").DataTable().destroy();
+            name_contains = $('#school-name').val();
+            division_contains = $('#division-name').val();
+            district_contains = $('#district-name').val();
+            name = name_contains, division = division_contains, district = district_contains;
+            $.ajax({
+                type: 'GET',
+                url: '/eduplus_activity/eduplus_activity_search_list/',
+                data: {
+                    'name_contains': name_contains,
+                    'division_contains': division_contains,
+                    'district_contains': district_contains,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.form_is_valid) {
+
+                        $(".box-body").html(data.html_list);  // <-- Replace the table body
+                    }
+                    $(".box-body .eduplus-activity-search-table").dataTable({
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'info'        : false,
+                        'paging'      : false,
+                    });
+                }
+            });
+        });
+        pagination(".box-body", '/eduplus_activity/eduplus_activity_search_list/', name, division, district, '.box-body .eduplus-activity-search-table');
+        autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
+        autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
+        autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
     });
 </script>
 {% endblock %}

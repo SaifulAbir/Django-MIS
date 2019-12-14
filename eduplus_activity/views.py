@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 import base64
@@ -169,5 +170,41 @@ def eduplus_topics_delete(request, pk):
 
 @admin_login_required
 def eduplus_activity_report_list(request):
-    eduplus_activity_report = EduPlusActivity.objects.all()
+    eduplus_activity_list = EduPlusActivity.objects.all()
+    paginator = Paginator(eduplus_activity_list, 1)
+    page = request.GET.get('page')
+    try:
+        eduplus_activity_report = paginator.page(page)
+    except PageNotAnInteger:
+        eduplus_activity_report = paginator.page(1)
+    except EmptyPage:
+        eduplus_activity_report = paginator.page(paginator.num_pages)
     return render(request, 'eduplus_activity/eduplus_activity_report_list.html', {'eduplusactivity_list': eduplus_activity_report})
+
+def eduplus_activity_search_list(request):
+    data = dict()
+    qs = EduPlusActivity.objects.all()
+    name = request.GET.get('name_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    if name != '' and name is not None:
+        qs = qs.filter(school__name__icontains=name)
+    if division != '' and division is not None:
+        qs = qs.filter(school__division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(school__district__name__icontains=district)
+
+    paginator = Paginator(qs, 1)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+    if name == '' and division == '' and district == '':
+        queryset = None
+    data['form_is_valid'] = True
+    data['html_list'] = render_to_string('eduplus_activity/partial_eduplus_activity_report.html',
+                                                  {'eduplusactivity_list': queryset})
+    return JsonResponse(data)

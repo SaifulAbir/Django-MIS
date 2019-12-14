@@ -1,0 +1,69 @@
+
+<table   id="example1" class=" eduplus-activity-search-table table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class="col-sm-1">Date</th>
+        <th class="col-sm-2">Topics</th>
+        <th class="col-sm-3">Description</th>
+        <th class="col-sm-2">School</th>
+        <th class="col-sm-2">Division</th>
+        <th class="col-sm-2">District</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for eduplus_activity in eduplusactivity_list %}
+    <tr>
+        <td>{{eduplus_activity.date}}</td>
+        <td>
+            {% for topic in eduplus_activity.topics.all %}
+            {% if forloop.last %}
+            {{topic.name}}
+            {% else %}
+            {{topic.name}},
+            {% endif %}
+            {% endfor %}
+        </td>
+        <td>{{ eduplus_activity.description }}</td>
+        <td>{{eduplus_activity.school}}</td>
+        <td>{{eduplus_activity.school.division}}</td>
+        <td>{{eduplus_activity.school.district}}</td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+<p class="table-information">Showing {{ eduplusactivity_list.start_index }} to {{ eduplusactivity_list.end_index }} of {{ eduplusactivity_list.paginator.count }} entries</p>
+<ul class="pagination" style="float: right">
+
+    {% if eduplusactivity_list.has_previous %}
+    <li><a class="paginator" href="?page={{ eduplusactivity_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+    {% if eduplusactivity_list.number|add:'-4' > 1 %}
+    <li><a class="paginator" href="?page={{ eduplusactivity_list.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in eduplusactivity_list.paginator.page_range %}
+    {% if eduplusactivity_list.number == i %}
+    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% elif i > eduplusactivity_list.number|add:'-5' and i < eduplusactivity_list.number|add:'5' %}
+    <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if eduplusactivity_list.paginator.num_pages > eduplusactivity_list.number|add:'4' %}
+    <li><a href="?page={{ eduplusactivity_list.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if eduplusactivity_list.has_next %}
+    <li><a class="paginator" href="?page={{ eduplusactivity_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+</ul>
