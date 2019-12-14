@@ -125,9 +125,32 @@ def class_orientation_report_list(request):
         class_orientation_report = paginator.page(1)
     except EmptyPage:
         class_orientation_report = paginator.page(paginator.num_pages)
-    if request.is_ajax():
-        data={}
-        data['html_class_orientation_report'] = render_to_string('class_orientation/partial_class_orientation_report.html',
-                                                      {'classorientation_list': class_orientation_report})
-        return JsonResponse(data)
     return render(request, 'class_orientation/class_orientation_report_list.html', {'classorientation_list': class_orientation_report, 'num_pages': paginator.count,})
+
+def class_orientation_search_list(request):
+    data = dict()
+    qs = ClassOrientation.objects.all()
+    name = request.GET.get('name_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    if name != '' and name is not None:
+        qs = qs.filter(school__name__icontains=name)
+    if division != '' and division is not None:
+        qs = qs.filter(school__division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(school__district__name__icontains=district)
+
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+    if name == '' and division == '' and district == '':
+        queryset = None
+    data['form_is_valid'] = True
+    data['html_list'] = render_to_string('class_orientation/partial_class_orientation_report.html',
+                                                  {'classorientation_list': queryset})
+    return JsonResponse(data)

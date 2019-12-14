@@ -12,6 +12,30 @@
     <!-- Main content -->
     <div class="box">
         <div class="box-header">
+            <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <h3>Peer Education Search</h3>
+                <form method="GET" class="search-form-club-meeting">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <strong>School</strong>
+                            <input class="form-control typehead tt-query" type="search" name="school_contains" autocomplete="off" id="school-name" />
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <strong>Division</strong>
+                            <input class="form-control typehead tt-query" type="search" name="division_contains" autocomplete="off" id="division-name"/>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <strong>District</strong>
+                            <input class="form-control typehead tt-query" type="search" name="district_contains" autocomplete="off" id="district-name"/>
+                        </div>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-primary search-peer-education">Search</button>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </form>
+            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
@@ -94,36 +118,46 @@
         $('#reports, .peer-education-menu').addClass('active');
         $("#reports").addClass("menu-open");
         $("#reports .treeview-menu").css("display", "block");
-        $('.box .box-body .class-orientation-table').DataTable({
-            'paging'      : false,
+        var name, division, district;
+        $('.class-orientation-table').dataTable({
             'lengthChange': false,
             'searching'   : false,
-            'ordering'    : true,
             'info'        : false,
-            'autoWidth'   : false,
-            'destroy'     : true
+            'paging'      : false,
         });
-        $(".box").on('click', '.paginator', function (e) {
-            e.preventDefault();
-            var pageUrl = $(location).attr('href');
-            var addressValue = $(this).attr("href");
+        $('.search-peer-education').on('click', function () {
+            $(".class-orientation-table").DataTable().destroy();
+            name_contains = $('#school-name').val();
+            division_contains = $('#division-name').val();
+            district_contains = $('#district-name').val();
+            name = name_contains, division = division_contains, district = district_contains;
             $.ajax({
-                type: 'get',
-                url: pageUrl+addressValue,
+                type: 'GET',
+                url: '/class_orientation/class_orientation_search_list/',
+                data: {
+                    'name_contains': name_contains,
+                    'division_contains': division_contains,
+                    'district_contains': district_contains,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
                 success: function (data) {
-                    $(".box-body").html(data.html_class_orientation_report);
-                    $('.box .box-body .class-orientation-table').DataTable({
-                        'paging'      : false,
+                    if (data.form_is_valid) {
+
+                        $(".box-body").html(data.html_list);  // <-- Replace the table body
+                    }
+                    $(".class-orientation-table").dataTable({
                         'lengthChange': false,
                         'searching'   : false,
-                        'ordering'    : true,
                         'info'        : false,
-                        'autoWidth'   : false,
-                        'destroy'     : true
+                        'paging'      : false,
                     });
                 }
             });
         });
+        pagination(".box-body", '/class_orientation/class_orientation_search_list/', name, division, district, '.box-body .class-orientation-table');
+        autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
+        autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
+        autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
     });
 </script>
 {% endblock %}

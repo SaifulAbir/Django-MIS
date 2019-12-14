@@ -144,6 +144,5 @@ class ClubMeetingsTest(TestCase):
         club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
                                                 data={'name_contains': 'Mirpur School', 'division_contains': 'Dhaka',
                                                       'district_contains': 'Gazipur'}, follow=True)
-        print(club_meeting_response.content)
         self.assertContains(response=club_meeting_response, status_code=200,
                             text='<td>Mirpur School (123)</td>', html=True)
