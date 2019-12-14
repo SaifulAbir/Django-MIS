@@ -4,6 +4,9 @@ from django.db import IntegrityError
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
+
+from districts.models import District
+from division.models import Division
 from.models import ClubMeetings,School,Topics,User
 
 from accounts.models import User
@@ -24,7 +27,13 @@ class ClubMeetingsTest(TestCase):
         admin_user.user_type = 1
         admin_user.save()
         self.admin_user = admin_user
-        s1 = School(name='Mirpur School', school_id=123)
+        div = Division(name='Dhaka')
+        div.save()
+        self.division = div
+        dis = District(division=self.division, name='Gazipur')
+        dis.save()
+        self.district = dis
+        s1 = School(name='Mirpur School', school_id=123, division = self.division, district = self.district)
         s1.save()
         self.school = s1
         s2 = ClubMeetings(date=timezone.now(), school=self.school, class_room='7', presence_guide_teacher='1',
@@ -45,7 +54,6 @@ class ClubMeetingsTest(TestCase):
 
         u1=User(email='A@g.com', user_type= '6')
         u1.save()
-
 
     def test__when_school_is_null__should_raise_error(self):
         s = ClubMeetings(date=timezone.now(),class_room='7', )
@@ -99,3 +107,43 @@ class ClubMeetingsTest(TestCase):
             instance.full_clean()
         except:
             self.fail()
+
+    def test_when__search_for_club_meeting_report_list__should_return_report_list_page_status_code(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'), follow=True)
+        self.assertEquals(club_meeting_response.status_code, 200)
+
+    def test_when__school_name_is_searched__should_return_respective_club_meeting_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
+                                                data={'name_contains': 'Mirpur School'}, follow=True)
+        self.assertContains(response=club_meeting_response, status_code=200,
+                            text='<td>Mirpur School (123)</td>', html=True)
+
+    def test_when__division_name_is_searched__should_return_respective_club_meeting_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
+                                                data={'division_contains': 'Dhaka'}, follow=True)
+        self.assertContains(response=club_meeting_response, status_code=200,
+                            text='<td>Dhaka</td>', html=True)
+
+    def test_when__district_name_is_searched__should_return_respective_club_meeting_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
+                                                data={'district_contains': 'Gazipur'}, follow=True)
+        self.assertContains(response=club_meeting_response, status_code=200,
+                            text='<td>Gazipur</td>', html=True)
+
+    def test_when__all_are_searched__should_return_respective_club_meeting_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
+                                                data={'name_contains': 'Mirpur School', 'division_contains': 'Dhaka',
+                                                      'district_contains': 'Gazipur'}, follow=True)
+        print(club_meeting_response.content)
+        self.assertContains(response=club_meeting_response, status_code=200,
+                            text='<td>Mirpur School (123)</td>', html=True)
