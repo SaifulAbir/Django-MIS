@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils import timezone
 
 from accounts.models import User
+from districts.models import District
+from division.models import Division
 from eduplus_activity.models import EduPlusActivity, EduplusTopics
 from school.models import School
 from skleaders.models import SkLeaderProfile
@@ -26,9 +28,16 @@ class EduplusActivityTest(TestCase):
         admin_user.user_type = 1
         admin_user.save()
         self.admin_user = admin_user
-        s1 = School(name='Mirpur School', school_id=123)
+        div = Division(name='Dhaka')
+        div.save()
+        self.division = div
+        dis = District(division=self.division, name='Gazipur')
+        dis.save()
+        self.district = dis
+        s1 = School(name='Mirpur School', school_id=123, division=self.division, district=self.district)
         s1.save()
         self.school = s1
+        edu_activity = EduPlusActivity.objects.create(date=timezone.now(), school=self.school,presence_skleader=True, description='Nothing done')
         skleader = SkLeaderProfile(school=self.school, user=self.user, gender='M', student_class='6',
                                    roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
         skleader.save()
@@ -118,6 +127,45 @@ class EduplusActivityTest(TestCase):
         self.assertEqual(EduPlusActivity.objects.count(), eduplus_activity_count + 1)
         self.assertContains(response=eduplus_activity_response, status_code=200,
                             text='<td>Nothing done</td>', html=True)
+
+    def test_when__search_for_eduplus_activity_report_list__should_return_report_list_page_status_code(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        eduplus_activity_response = self.client.get(reverse('eduplus_activity:eduplus_activity_search_list'), follow=True)
+        self.assertEquals(eduplus_activity_response.status_code, 200)
+
+    def test_when__school_name_is_searched__should_return_respective_eduplus_activity_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        eduplus_activity_response = self.client.get(reverse('eduplus_activity:eduplus_activity_search_list'),
+                                                data={'name_contains': 'Mirpur School'}, follow=True)
+        self.assertContains(response=eduplus_activity_response, status_code=200,
+                            text='<td>Mirpur School (123)</td>', html=True)
+
+    def test_when__division_name_is_searched__should_return_respective_eduplus_activity_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        eduplus_activity_response = self.client.get(reverse('eduplus_activity:eduplus_activity_search_list'),
+                                                data={'division_contains': 'Dhaka'}, follow=True)
+        self.assertContains(response=eduplus_activity_response, status_code=200,
+                            text='<td>Dhaka</td>', html=True)
+
+    def test_when__district_name_is_searched__should_return_respective_eduplus_activity_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        eduplus_activity_response = self.client.get(reverse('eduplus_activity:eduplus_activity_search_list'),
+                                                data={'district_contains': 'Gazipur'}, follow=True)
+        self.assertContains(response=eduplus_activity_response, status_code=200,
+                            text='<td>Gazipur</td>', html=True)
+
+    def test_when__all_are_searched__should_return_respective_eduplus_activity_list(self):
+        logged_in = self.client.login(username='admin@example.com', password='12345')
+        self.assertTrue(logged_in)
+        eduplus_activity_response = self.client.get(reverse('eduplus_activity:eduplus_activity_search_list'),
+                                                data={'name_contains': 'Mirpur School', 'division_contains': 'Dhaka',
+                                                      'district_contains': 'Gazipur'}, follow=True)
+        self.assertContains(response=eduplus_activity_response, status_code=200,
+                            text='<td>Mirpur School (123)</td>', html=True)
 
 class TopicTest(TestCase):
 

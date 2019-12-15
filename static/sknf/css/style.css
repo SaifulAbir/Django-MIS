@@ -311,32 +311,41 @@ ul#id_EPA-attendance {
 
 /* auto-complete search */
 .typeahead, .tt-query, .tt-hint {
-	border: 2px solid #CCCCCC;
-	outline: medium none;
-	padding: 8px 12px;
-	width: 385px;
+  border: 1px solid #dfe1e5;
+  outline: medium none;
+  padding: 8px 12px;
+}
+.tt-input:hover{
+   border-color: rgba(223, 225, 229, 0);
+   box-shadow: 0 1px 6px rgba(32,33,36,0.20);
+}
+.tt-input:focus{
+   border-color: #2a2a86;
 }
 .tt-menu {
-	background-color: #FFFFFF;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	border-radius: 8px;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	margin-top: 8px;
-	padding: 8px 0;
-	width: 385px;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 8px;
+  padding: 8px 0;
 }
 .tt-suggestion:hover {
-	cursor: pointer;
-	background-color: #0097CF;
-	color: #FFFFFF;
+  cursor: pointer;
+  background-color: #f2f2f2;
+  color: #cd911f;
 }
 .tt-suggestion {
-	font-size: 14px;  /* Set suggestion dropdown font size */
-	padding: 3px 20px;
+  font-size: 14px;  /* Set suggestion dropdown font size */
+  padding: 3px 20px;
 }
 .tt-dataset.tt-dataset-previousItems {
-    text-align: left;
+   text-align: left;
 }
+.twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+   width: 100%;
+}
+
 
 
 
