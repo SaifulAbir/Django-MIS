@@ -46,17 +46,17 @@
                                         <label for="{{ user_form.email.id_for_label }}">Email Address</label>
                                         {% render_field user_form.email class="form-control" placeholder=user_form.email.label %}
 
-                                            {% if user_profile.email_verified == '1' %}
-                                                <button type="button"
-                                                class="btn btn-success pull-right verifyemail">
-                                                Verified
-                                                </button>
-                                            {% else %}
-                                                <button type="button"
-                                                class="btn btn-warning pull-right verifyemail">
-                                                Not Verified
-                                                </button>
-                                            {% endif %}
+<!--                                            {% if user_profile.email_verified == '1' %}-->
+<!--                                                <button type="button"-->
+<!--                                                class="btn btn-success pull-right verifyemail">-->
+<!--                                                Verified-->
+<!--                                                </button>-->
+<!--                                            {% else %}-->
+<!--                                                <button type="button"-->
+<!--                                                class="btn btn-warning pull-right verifyemail">-->
+<!--                                                Not Verified-->
+<!--                                                </button>-->
+<!--                                            {% endif %}-->
                                     </div>
 
                                     <div class="form-group">
