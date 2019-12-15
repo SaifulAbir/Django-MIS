@@ -118,7 +118,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-            <table id="example1" class=" data-table school-table table table-bordered table-striped">
+            <table id="example1" class=" school-search-table school-table table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th class = "col-sm-4">Name</th>
@@ -131,6 +131,38 @@
                 <tbody>
                 {% include 'school/partial_school_list.html' %}
             </table>
+            <p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
+            <ul class="pagination" style="float: right">
+
+                {% if queryset.has_previous %}
+                <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                {% else %}
+                <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+                {% endif %}
+
+                {% if queryset.number|add:'-4' > 1 %}
+                <li><a class="paginator" href="?page={{ queryset.number|add:'-5' }}">&hellip;</a></li>
+                {% endif %}
+
+                {% for i in queryset.paginator.page_range %}
+                {% if queryset.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% elif i > queryset.number|add:'-5' and i < queryset.number|add:'5' %}
+                <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if queryset.paginator.num_pages > queryset.number|add:'4' %}
+                <li><a href="?page={{ queryset.number|add:'5' }}">&hellip;</a></li>
+                {% endif %}
+
+                {% if queryset.has_next %}
+                <li><a class="paginator" href="?page={{ queryset.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                {% else %}
+                <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                {% endif %}
+
+            </ul>
             {% include 'school/_modal.html' %}
         </div>
     </div>
@@ -178,6 +210,13 @@
                 });
                  location.reload();
                 return false;
+            var name, eiin, division, district, upazilla, union;
+            $('.school-search-table').dataTable({
+                'lengthChange': false,
+                'searching'   : false,
+                'info'        : false,
+                'paging'      : false,
+            });
             };
 
             /* Binding */

@@ -4,6 +4,7 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.base import ContentFile
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
@@ -92,8 +93,17 @@ def school_list(request, export='null'):
         qs = qs.filter(upazilla__name__icontains=upazilla)
     if union !='' and union is not None:
         qs = qs.filter(union__name__icontains=union)
+
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
     if export != 'export':
-        return render(request, 'school/school_list.html', {'queryset': qs,'name':name,'school_id':school_id,'division':division,
+        return render(request, 'school/school_list.html', {'queryset': queryset,'name':name,'school_id':school_id,'division':division,
                                                        'district':district,'upazilla':upazilla,'union':union})
     else:
         resource = SchoolResource()
