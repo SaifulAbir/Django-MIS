@@ -160,5 +160,5 @@ def class_orientation_search_list(request, export='null'):
         resource = ClassOrientationResource()
         dataset = resource.export(qs)
         response = HttpResponse(dataset.csv, content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="class_orientation_list.csv"'
+        response['Content-Disposition'] = 'attachment; filename="peer_education_list.csv"'
         return response
