@@ -17,7 +17,7 @@ urlpatterns = [
     path('dashboard/', index, name = 'dashboard'),
     #path('', auth_views.LoginView.as_view(template_name = 'accounts/login.html', authentication_form = PrettyAuthenticationForm, redirect_authenticated_user=True), name = 'login'),
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
-    # path('profile/', profile, name='profile'),
+    path('profile/', profile, name='profile'),
     path('events/', events, name='events'),
     path('', custom_login, name='login'),
     path('password_reset/', CustomPasswordReset.as_view(), name='password_reset'),
