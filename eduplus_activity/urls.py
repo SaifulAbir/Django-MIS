@@ -16,4 +16,5 @@ urlpatterns = [
     path('delete_eduplus_topics/<int:pk>/', views.eduplus_topics_delete, name = 'delete_eduplus_topics'),
     path('update_eduplus_topics/<int:pk>', views.eduplus_topics_update, name = 'eduplus_update_topics'),
     path('eduplus_activity_search_list/', views.eduplus_activity_search_list, name = 'eduplus_activity_search_list'),
+    path('eduplus_activity_search_list/<export>/', views.eduplus_activity_search_list, name = 'eduplus_activity_search_list_export'),
 ]

@@ -164,7 +164,7 @@ def club_meeting_search_list(request, export='null'):
         resource = ClubMeetingResource()
         dataset = resource.export(qs)
         response = HttpResponse(dataset.csv, content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="school_list.csv"'
+        response['Content-Disposition'] = 'attachment; filename="club_meeting_list.csv"'
         return response
 
 

@@ -8,13 +8,12 @@
     </h1>
 </section>
 <section class="content">
-
+    <form method="GET" class="search-form-eduplus-activity">
     <!-- Main content -->
     <div class="box">
         <div class="box-header">
             <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
-                <h3>Eduplus Activity Search</h3>
-                <form method="GET" class="search-form-club-meeting">
+
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <strong>School</strong>
@@ -34,11 +33,12 @@
                     </div>
                     <div class="clearfix"></div>
 
-                </form>
+
             </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
+            <button type="submit" class="btn btn-primary export-eduplus-activity-report pull-right">Export CSV</button>
             <table   id="example1" class=" eduplus-activity-search-table table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -109,6 +109,7 @@
             </ul>
         </div>
     </div>
+        </form>
     <!-- /.content -->
 </section>
 {% endblock %}
@@ -158,6 +159,9 @@
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        $(".box").on('click', '.export-eduplus-activity-report', function() {
+            $('.search-form-eduplus-activity').prop('action', '/eduplus_activity/eduplus_activity_search_list/export')
+        });
     });
 </script>
 {% endblock %}

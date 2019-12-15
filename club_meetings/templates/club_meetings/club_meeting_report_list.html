@@ -161,8 +161,7 @@
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
         // for club meeting search export
-        $(".export-club-meeting-report").on('click', function() {
-            alert('hello')
+        $(".box").on('click', '.export-club-meeting-report', function() {
             $('.search-form-club-meeting').prop('action', '/club_meetings/club_meeting_search_list/export')
         });
     });

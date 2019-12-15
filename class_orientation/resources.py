@@ -7,11 +7,15 @@ from division.models import Division
 from topics.models import Topics
 from unions.models import Union
 from upazillas.models import Upazilla
-from .models import School, ClubMeetings
+from .models import School, ClassOrientation
 
 
-class ClubMeetingResource(resources.ModelResource):
-    class_room = Field(attribute='class_room', column_name='Class Room')
+class ClassOrientationResource(resources.ModelResource):
+
+    school = fields.Field(
+        column_name='School',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'name'))
 
     division = fields.Field(
         column_name='Division',
@@ -22,23 +26,19 @@ class ClubMeetingResource(resources.ModelResource):
         column_name='District',
         attribute='school',
         widget=ForeignKeyWidget(School, 'district'))
-
-    school = fields.Field(
-            column_name='School',
-            attribute='school',
-            widget=ForeignKeyWidget(School, 'name'))
     #club_establishment_date = fields.Field(column_name='Establishment Date')
 
-    topics = fields.Field(column_name='Topics',
-            attribute='topics', widget=ManyToManyWidget(Topics, ',', 'name'))
+    topic = fields.Field(column_name='Topics',
+            attribute='topic', widget=ManyToManyWidget(Topics, ',', 'name'))
+    place = fields.Field(column_name='Place', attribute='get_place_display')
 
-    def dehydrate_date(self, ClubMeetings):
-        date_string = str(ClubMeetings.date)
+    def dehydrate_created_date(self, ClassOrientation):
+        date_string = str(ClassOrientation.created_date)
         if date_string :
             return datetime.strptime(date_string, '%Y-%m-%d').strftime('%d-%m-%Y')
 
 
     class Meta:
-        model = ClubMeetings
+        model = ClassOrientation
 
-        fields = ("date", "class_room", "school","division")
+        fields = ('created_date', 'place', 'school' 'topic')

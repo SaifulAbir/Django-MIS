@@ -10,11 +10,11 @@
 <section class="content">
 
     <!-- Main content -->
+    <form method="GET" class="search-form-class-orientation">
     <div class="box">
         <div class="box-header">
             <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
-                <h3>Peer Education Search</h3>
-                <form method="GET" class="search-form-club-meeting">
+
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <strong>School</strong>
@@ -34,11 +34,12 @@
                     </div>
                     <div class="clearfix"></div>
 
-                </form>
+
             </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
+            <button type="submit" class="btn btn-primary export-class-orientation-report pull-right">Export CSV</button>
             <table   id="example1" class=" class-orientation-table table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -109,6 +110,7 @@
             </ul>
         </div>
     </div>
+        </form>
     <!-- /.content -->
 </section>
 {% endblock %}
@@ -158,6 +160,9 @@
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        $(".box").on('click', '.export-class-orientation-report', function() {
+            $('.search-form-class-orientation').prop('action', '/class_orientation/class_orientation_search_list/export')
+        });
     });
 </script>
 {% endblock %}
