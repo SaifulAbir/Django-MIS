@@ -564,6 +564,9 @@ def search_school_list(request):
 def load_previous_school(request):
     previous_schools = list(School.objects.values_list('name', flat=True))
     return JsonResponse(previous_schools, safe=False)
+def load_previous_eiin(request):
+    previous_eiins = list(School.objects.values_list('school_id', flat=True))
+    return JsonResponse(previous_eiins, safe=False)
 def load_previous_division(request):
     previous_divisions = list(Division.objects.values_list('name', flat=True))
     return JsonResponse(previous_divisions, safe=False)

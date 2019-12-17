@@ -6,7 +6,7 @@ from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
 from .views import index, profile, events, custom_login, admin_profile_update, headmaster_profile_update, \
     skleader_profile_update, CustomPasswordReset, CustomPasswordResetDoneView, CustomPasswordResetConfirmView, \
-    CustomPasswordResetCompleteView, verifyemail, email_verify, bd_map, home_page, search_school_list, login_page, load_previous_school
+    CustomPasswordResetCompleteView, verifyemail, email_verify, bd_map, home_page, search_school_list, login_page, load_previous_school, load_previous_eiin
 
 app_name = 'accounts'
 
@@ -37,6 +37,7 @@ urlpatterns = [
     path('login_page/', login_page, name='login_page'),
     path('api/search_school_list/', search_school_list, name='search_school_list'),
     path('load_previous_schools/', load_previous_school, name='load_previous_schools'),
+    path('load_previous_eiins/', load_previous_eiin, name='load_previous_eiins'),
     path('load_previous_divisions/', load_previous_division, name='load_previous_divisions'),
     path('load_previous_districts/', load_previous_district, name='load_previous_districts'),
     path('load_previous_upazillas/', load_previous_upazilla, name='load_previous_upazillas'),

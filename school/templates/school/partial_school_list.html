@@ -1,32 +1,77 @@
 {% load static %}
-{% for school in queryset %}
+<table id="example1" class=" school-search-table school-table table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class = "col-sm-4">Name</th>
+        <th class ="col-sm-2">EIIN</th>
+        <th class ="col-sm-2">Division</th>
+        <th class ="col-sm-2">District</th>
+        <th class ="col-sm-2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for school in queryset %}
 
-<tr>
-    <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>
-    <td>{{ school.school_id }}</td>
-    <td>{{ school.division }}</td>
-    <td>{{ school.district }}</td>
-    <td id="ab" align="center">
-        <a type="button"
-           class=""style="margin-right:10px"
-           href="{% url 'school:detail_school' school.pk %}">
-            <span class="fa fa-eye"></span>
-        </a>
+    <tr>
+        <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>
+        <td>{{ school.school_id }}</td>
+        <td>{{ school.division }}</td>
+        <td>{{ school.district }}</td>
+        <td id="ab" align="center">
+            <a type="button"
+               class=""style="margin-right:10px"
+               href="{% url 'school:detail_school' school.pk %}">
+                <span class="fa fa-eye"></span>
+            </a>
 
-        <a type="button"
-           class="" style="margin-right:10px"
-           href="{% url 'school:update_school' school.pk %}">
-            <span class="fa fa-edit"></span>
+            <a type="button"
+               class="" style="margin-right:10px"
+               href="{% url 'school:update_school' school.pk %}">
+                <span class="fa fa-edit"></span>
 
-       </a>
+            </a>
 
-        <button type="button"
-                class="js-delete-school" style="border: none; background: no-repeat; color: #3c8dbc; padding-left: 3px;"
-                data-url="{% url 'school:delete_school' school.pk %}">
-            <span class="fa fa-trash"></span>
-        </button>
-    </td>
-</tr>
+            <button type="button"
+                    class="js-delete-school" style="border: none; background: no-repeat; color: #3c8dbc; padding-left: 3px;"
+                    data-url="{% url 'school:delete_school' school.pk %}">
+                <span class="fa fa-trash"></span>
+            </button>
+        </td>
+    </tr>
 
-{% endfor %}
+    {% endfor %}
+    </tbody>
+</table>
+<p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
+<ul class="pagination" style="float: right">
+
+    {% if queryset.has_previous %}
+    <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+    {% if queryset.number|add:'-4' > 1 %}
+    <li><a class="paginator" href="?page={{ queryset.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in queryset.paginator.page_range %}
+    {% if queryset.number == i %}
+    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% elif i > queryset.number|add:'-5' and i < queryset.number|add:'5' %}
+    <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if queryset.paginator.num_pages > queryset.number|add:'4' %}
+    <li><a href="?page={{ queryset.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if queryset.has_next %}
+    <li><a class="paginator" href="?page={{ queryset.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+</ul>
 

@@ -7,6 +7,7 @@ urlpatterns = [
     path('add/', views.CreateSchool.as_view(), name = 'create_school'),
     path('export/', views.export, name = 'export_school'),
     path('school_list/', views.school_list, name = 'school_list'),
+    path('search_school_list/', views.school_list_search_list, name = 'search_school_list'),
     path('school_list/<export>/', views.school_list, name = 'school_list_export'),
 
     path('delete/<int:pk>/', views.school_delete, name = 'delete_school'),

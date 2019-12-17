@@ -7,40 +7,39 @@
 <section class="content">
     <!-- Main content -->
     <div class="box">
-        <div class="box-header">
-            <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
-                <h3>School Search</h3>
-                <form method="GET" action="." class="search-form">
+        <form method="GET" action="." class="search-form">
+            <div class="box-header">
+                <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                    <strong>Name</strong>
-                                    {% if name is not None %}
-                                    <input class="form-control" type="search" name="name_contains" value= "{{name}}" />
-                                    {% else %}
-                                    <input class="form-control" type="search" name="name_contains" />
-                                    {% endif %}
+                                <strong>Name</strong>
+                                {% if name is not None %}
+                                <input class="form-control" type="search" name="name_contains" value= "{{name}}" />
+                                {% else %}
+                                <input class="form-control" type="search" name="name_contains" />
+                                {% endif %}
 
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                    <strong>EIIN</strong>
-                                    {% if school_id is not None %}
-                                    <input class="form-control " type="search" name="school_id_contains" value="{{school_id}}" />
-                                    {% else %}
-                                    <input class="form-control " type="search" name="school_id_contains"  />
-                                    {% endif %}
+                                <strong>EIIN</strong>
+                                {% if school_id is not None %}
+                                <input class="form-control " type="search" name="school_id_contains" value="{{school_id}}" />
+                                {% else %}
+                                <input class="form-control " type="search" name="school_id_contains"  />
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                    <strong>Division</strong>
-                                    {% if division is not None %}
-                                    <input class="form-control "type="search" name="division_contains" value="{{division}}"/>
-                                    {% else %}
-                                    <input class="form-control " type="search" name="division_contains" />
-                                    {% endif %}
+                                <strong>Division</strong>
+                                {% if division is not None %}
+                                <input class="form-control "type="search" name="division_contains" value="{{division}}"/>
+                                {% else %}
+                                <input class="form-control " type="search" name="division_contains" />
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -48,12 +47,12 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                    <strong>District</strong>
-                                    {% if district is not None %}
-                                    <input class="form-control" type="search" name="district_contains" value="{{district}}" />
-                                    {% else %}
-                                    <input class="form-control" type="search" name="district_contains"/>
-                                    {% endif %}
+                                <strong>District</strong>
+                                {% if district is not None %}
+                                <input class="form-control" type="search" name="district_contains" value="{{district}}" />
+                                {% else %}
+                                <input class="form-control" type="search" name="district_contains"/>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -70,29 +69,28 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                    <strong>Union</strong>
-                                    {% if union is not None %}
-                                    <input class="form-control" type="search" name="union_contains" value="{{union}}"/>
-                                    {% else %}
-                                    <input class="form-control" type="search" name="union_contains" />
-                                    {% endif %}
+                                <strong>Union</strong>
+                                {% if union is not None %}
+                                <input class="form-control" type="search" name="union_contains" value="{{union}}"/>
+                                {% else %}
+                                <input class="form-control" type="search" name="union_contains" />
+                                {% endif %}
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group pull-right">
                         <button type="submit" class="btn btn-primary search-school">Search</button>
-                        <button type="submit" class="btn btn-primary export-school">Export CSV</button>
 
                     </div>
                     <div class="clearfix"></div>
-                </form>
-            </div>
-        </div>
 
-        <div class="box-header">
-            <h3 style="display: inline-block;" class="box-title"> </h3>
-            <span id = "alert_placeholder">
+                </div>
+            </div>
+
+            <div class="box-header">
+                <h3 style="display: inline-block;" class="box-title"> </h3>
+                <span id = "alert_placeholder">
                     {% if messages %}
                         <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
                         <span>
@@ -104,145 +102,173 @@
                     {% endif %}
                 </span>
 
-            <a type="button"
-               class="btn btn-primary pull-right"
-               href="{% url 'school:create_school' %}">
-                <span class="fa fa-plus"></span>
-                New School
-            </a>
+                <a type="button"
+                   class="btn btn-primary pull-right"
+                   href="{% url 'school:create_school' %}">
+                    <span class="fa fa-plus"></span>
+                    New School
+                </a>
+                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-school pull-right">Export CSV</button>
 
 
 
 
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
 
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body table-responsive">
-            <table id="example1" class=" school-search-table school-table table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th class = "col-sm-4">Name</th>
-                    <th class ="col-sm-2">EIIN</th>
-                    <th class ="col-sm-2">Division</th>
-                    <th class ="col-sm-2">District</th>
-                    <th class ="col-sm-2">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
                 {% include 'school/partial_school_list.html' %}
-            </table>
-            <p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
-            <ul class="pagination" style="float: right">
 
-                {% if queryset.has_previous %}
-                <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
-                {% else %}
-                <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
-                {% endif %}
-
-                {% if queryset.number|add:'-4' > 1 %}
-                <li><a class="paginator" href="?page={{ queryset.number|add:'-5' }}">&hellip;</a></li>
-                {% endif %}
-
-                {% for i in queryset.paginator.page_range %}
-                {% if queryset.number == i %}
-                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                {% elif i > queryset.number|add:'-5' and i < queryset.number|add:'5' %}
-                <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
-                {% endif %}
-                {% endfor %}
-
-                {% if queryset.paginator.num_pages > queryset.number|add:'4' %}
-                <li><a href="?page={{ queryset.number|add:'5' }}">&hellip;</a></li>
-                {% endif %}
-
-                {% if queryset.has_next %}
-                <li><a class="paginator" href="?page={{ queryset.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
-                {% else %}
-                <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
-                {% endif %}
-
-            </ul>
-            {% include 'school/_modal.html' %}
-        </div>
+            </div>
+        </form>
     </div>
     <!-- /.content -->
 </section>
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
-        $(function () {
-            var loadForm = function () {
-                var btn = $(this);
-                $.ajax({
-                    url: btn.attr("data-url"),
-                    type: 'get',
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $("#modal-school").modal("show");
-                    },
-                    success: function (data) {
+    $(function () {
+        var loadForm = function () {
+            var btn = $(this);
+            $.ajax({
+                url: btn.attr("data-url"),
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#modal-school").modal("show");
+                },
+                success: function (data) {
+                    $("#modal-school .modal-content").html(data.html_form);
+                }
+            });
+        };
+
+        var saveForm = function () {
+            var form = $(this);
+            var formClass = form.attr("class");
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: form.attr("method"),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.form_is_valid) {
+                        if(formClass=="js-school-delete-form"){
+                            $("body").html(data.html_school_list);
+                            showAlert("School Deleted!", "alert alert-danger-customized")
+                        }
+                        $("#modal-school").modal("hide");
+                    }
+                    else {
                         $("#modal-school .modal-content").html(data.html_form);
                     }
-                });
-            };
-
-            var saveForm = function () {
-                var form = $(this);
-                var formClass = form.attr("class");
-                $.ajax({
-                    url: form.attr("action"),
-                    data: form.serialize(),
-                    type: form.attr("method"),
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.form_is_valid) {
-                            if(formClass=="js-school-delete-form"){
-                                $("body").html(data.html_school_list);
-                                showAlert("School Deleted!", "alert alert-danger-customized")
-                            }
-                            $("#modal-school").modal("hide");
-                        }
-                        else {
-                            $("#modal-school .modal-content").html(data.html_form);
-                        }
-                    }
-                });
-                 location.reload();
-                return false;
-            var name, eiin, division, district, upazilla, union;
-            $('.school-search-table').dataTable({
-                'lengthChange': false,
-                'searching'   : false,
-                'info'        : false,
-                'paging'      : false,
+                }
             });
-            };
+            location.reload();
+            return false;
+        };
 
-            /* Binding */
-
-            function showAlert(message,alerttype) {
-
-                $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-
-            }
-
-            // Delete school
-            $(".school-table").on("click", ".js-delete-school", loadForm);
-            $("#modal-school").on("submit", ".js-school-delete-form", saveForm)
-
-
+        var name, eiin, division, district, upazilla, union;
+        $('.school-search-table').dataTable({
+            'lengthChange': false,
+            'searching'   : false,
+            'info'        : false,
+            'paging'      : false,
         });
+        $('.search-school').on('click', function (event) {
+            event.preventDefault();
+            $(".school-search-table").DataTable().destroy();
+            name_contains = $("input[name='name_contains']").val();
+            school_id_contains = $("input[name='school_id_contains']").val();
+            division_contains = $("input[name='division_contains']").val();
+            district_contains = $("input[name='district_contains']").val();
+            upazilla_contains = $("input[name='upazilla_contains']").val();
+            union_contains = $("input[name='union_contains']").val();
+            name = name_contains, eiin = school_id_contains, division = division_contains, district = district_contains, upazilla = upazilla_contains, union=union_contains;
+            $.ajax({
+                type: 'GET',
+                url: '/search_school_list/',
+                data: {
+                    'name_contains': name_contains,
+                    'school_id_contains':school_id_contains,
+                    'division_contains': division_contains,
+                    'district_contains': district_contains,
+                    'upazilla_contains': upazilla_contains,
+                    'union_contains': union_contains,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.form_is_valid) {
 
-        //for school search export
+                        $(".box-body").html(data.html_list);  // <-- Replace the table body
+                    }
+                    $(".school-search-table").dataTable({
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'info'        : false,
+                        'paging'      : false,
+                    });
+                }
+            });
+        });
+        pagination(".box-body", '/search_school_list/', name, eiin, division, district, upazilla, union, '.box-body .school-search-table');
+        /* Binding */
+
+        function showAlert(message,alerttype) {
+
+            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+        }
+
+        // Delete school
+        $(".school-table").on("click", ".js-delete-school", loadForm);
+        $("#modal-school").on("submit", ".js-school-delete-form", saveForm)
+        $('')
+
+    });
+
+    //for school search export
     $(".export-school").click(function() {
         $('.search-form').prop('action', '/school_list/export')
     });
-
-    $(".search-school").click(function() {
-        $('.search-form').prop('action', '/school_list')
-    });
     //for school search export
-
-    </script>
+    // auto suggesion
+    autoSuggesion('/load_previous_schools/', "input[name='name_contains']");
+    autoSuggesion('/load_previous_eiins/', "input[name='school_id_contains']");
+    autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
+    autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+    autoSuggesion('/load_previous_upazillas/', "input[name='upazilla_contains']");
+    autoSuggesion('/load_previous_unions/', "input[name='union_contains']");
+    // auto suggesion
+    function pagination(id, url, name, eiin, division, district, upazilla, union, tableId) {
+        $(id).on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            $.ajax({
+                type: 'get',
+                url: url+addressValue,
+                data: {
+                    'name_contains': name,
+                    'school_id_contains': eiin,
+                    'division_contains': division,
+                    'district_contains': district,
+                    'upazilla_contains': upazilla,
+                    'union_contains': union
+                },
+                success: function (data) {
+                    $(id).html(data.html_list);
+                    $(tableId).DataTable({
+                        'paging'      : false,
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'ordering'    : true,
+                        'info'        : false,
+                        'autoWidth'   : false,
+                        'destroy'     : true
+                    });
+                }
+            });
+        });
+    }
+</script>
 {% endblock %}

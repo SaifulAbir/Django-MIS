@@ -112,6 +112,50 @@ def school_list(request, export='null'):
         response['Content-Disposition'] = 'attachment; filename="school_list.csv"'
         return response
 
+def school_list_search_list(request, export='null'):
+    data = dict()
+    qs = School.objects.all()
+    name = request.GET.get('name_contains')
+    school_id = request.GET.get('school_id_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    upazilla = request.GET.get('upazilla_contains')
+    union = request.GET.get('union_contains')
+    if name != '' and name is not None:
+        qs = qs.filter(name__icontains=name)
+    if school_id != '' and school_id is not None:
+        qs = qs.filter(school_id__icontains=school_id)
+    if division != '' and division is not None:
+        qs = qs.filter(division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(district__name__icontains=district)
+    if upazilla != '' and upazilla is not None:
+        qs = qs.filter(upazilla__name__icontains=upazilla)
+    if union != '' and union is not None:
+        qs = qs.filter(union__name__icontains=union)
+
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+    if name == '' and school_id == '' and division == '' and district == '' and upazilla == '' and union=='':
+        queryset = None
+    data['form_is_valid'] = True
+    data['html_list'] = render_to_string('school/partial_school_list.html',
+                                                {'queryset': queryset})
+
+    if export != 'export':
+        return JsonResponse(data)
+    else:
+        resource = SchoolResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="school_list.csv"'
+        return response
 
 
 
