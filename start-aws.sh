@@ -12,5 +12,6 @@ if not User.objects.filter(email='admin').exists():
    user.first_name = 'Admin'
    user.save()
 EOF
-python manage.py runserver 0:80&
+python manage.py collectstatic
+python manage.py runserver 0:8000&
 echo $!>PID

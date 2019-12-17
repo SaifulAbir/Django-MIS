@@ -1,6 +1,8 @@
 from sknf.settings import *
 
-ALLOWED_HOSTS = ['mis.shornokishoree.org']
+DEBUG=False
+ALLOWED_HOSTS = ['*']
+STATIC_ROOT = '/var/www/sknf_static'
 
 DATABASES = {
     'default': {
