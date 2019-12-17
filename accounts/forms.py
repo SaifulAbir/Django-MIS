@@ -40,7 +40,7 @@ class EditUserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
         (1, 'admin')
     )
-    email = forms.EmailField(error_messages={'required': 'Email is required.'})
+    email = forms.CharField(error_messages={'required': 'Email is required.'})
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))

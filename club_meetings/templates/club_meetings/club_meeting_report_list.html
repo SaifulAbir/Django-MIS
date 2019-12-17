@@ -10,11 +10,11 @@
 <section class="content">
 
     <!-- Main content -->
-    <div class="box">
-        <div class="box-header">
-            <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
-                <h3>Club Meeting Search</h3>
-                <form method="GET" class="search-form-club-meeting">
+    <form method="GET" class="search-form-club-meeting">
+        <div class="box">
+            <div class="box-header">
+                <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <strong>School</strong>
@@ -34,71 +34,83 @@
                     </div>
                     <div class="clearfix"></div>
 
-                </form>
+
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive">
+                <button type="submit" class="btn btn-primary export-club-meeting-report pull-right">Export CSV</button>
+                <table   id="example1" class="club-meeting-search-table table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-1">Date</th>
+                        <th class="col-sm-2">Class Room</th>
+                        <th class="col-sm-3">School</th>
+                        <th class="col-sm-2">Topics</th>
+                        <th class="col-sm-2">Division</th>
+                        <th class="col-sm-2">District</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for club_meeting in clubmeetings_list %}
+                    <tr>
+                        <td>{{club_meeting.date}}</td>
+                        <td>{{ club_meeting.class_room }}</td>
+                        <td>{{ club_meeting.school }}</td>
+                        <td>
+                            {% for topic in club_meeting.topics.all %}
+                            {% if forloop.last %}
+                            {{topic.name}}
+                            {% else %}
+                            {{topic.name}},
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ club_meeting.school.division }}</td>
+                        <td>{{ club_meeting.school.district }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+                <p class="table-information">Showing {{ clubmeetings_list.start_index }} to {{ clubmeetings_list.end_index }} of {{ clubmeetings_list.paginator.count }} entries</p>
+                <ul class="pagination" style="float: right">
+
+                    {% if clubmeetings_list.has_previous %}
+                    <li><a class="paginator" href="?page={{ clubmeetings_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                    {% else %}
+                    <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+                    {% endif %}
+
+                    {% if clubmeetings_list.number|add:'-4' > 1 %}
+                    <li><a class="paginator" href="?page={{ clubmeetings_list.number|add:'-5' }}">&hellip;</a></li>
+                    {% endif %}
+
+                    {% for i in clubmeetings_list.paginator.page_range %}
+                    {% if clubmeetings_list.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% elif i > clubmeetings_list.number|add:'-5' and i < clubmeetings_list.number|add:'5' %}
+                    <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if clubmeetings_list.paginator.num_pages > clubmeetings_list.number|add:'4' %}
+                    <li><a href="?page={{ clubmeetings_list.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+
+                    {% if clubmeetings_list.has_next %}
+                    <li><a class="paginator" href="?page={{ clubmeetings_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                    {% else %}
+                    <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                    {% endif %}
+
+                </ul>
             </div>
         </div>
-        <!-- /.box-header -->
-        <div class="box-body table-responsive">
-            <table   id="example1" class="club-meeting-search-table table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th class="col-sm-2">Date</th>
-                    <th class="col-sm-1">Class Room</th>
-                    <th class="col-sm-4">School</th>
-                    <th class="col-sm-2">Division</th>
-                    <th class="col-sm-2">District</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for club_meeting in clubmeetings_list %}
-                <tr>
-                    <td>{{club_meeting.date}}</td>
-                    <td>{{ club_meeting.class_room }}</td>
-                    <td>{{ club_meeting.school }}</td>
-                    <td>{{ club_meeting.school.division }}</td>
-                    <td>{{ club_meeting.school.district }}</td>
-                </tr>
-                {% endfor %}
-
-                </tbody>
-                <tfoot>
-
-                </tfoot>
-            </table>
-            <p class="table-information">Showing {{ clubmeetings_list.start_index }} to {{ clubmeetings_list.end_index }} of {{ clubmeetings_list.paginator.count }} entries</p>
-            <ul class="pagination" style="float: right">
-
-                {% if clubmeetings_list.has_previous %}
-                <li><a class="paginator" href="?page={{ clubmeetings_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
-                {% else %}
-                <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
-                {% endif %}
-
-                {% if clubmeetings_list.number|add:'-4' > 1 %}
-                <li><a class="paginator" href="?page={{ clubmeetings_list.number|add:'-5' }}">&hellip;</a></li>
-                {% endif %}
-
-                {% for i in clubmeetings_list.paginator.page_range %}
-                {% if clubmeetings_list.number == i %}
-                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                {% elif i > clubmeetings_list.number|add:'-5' and i < clubmeetings_list.number|add:'5' %}
-                <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
-                {% endif %}
-                {% endfor %}
-
-                {% if clubmeetings_list.paginator.num_pages > clubmeetings_list.number|add:'4' %}
-                <li><a href="?page={{ clubmeetings_list.number|add:'5' }}">&hellip;</a></li>
-                {% endif %}
-
-                {% if clubmeetings_list.has_next %}
-                <li><a class="paginator" href="?page={{ clubmeetings_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
-                {% else %}
-                <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
-                {% endif %}
-
-            </ul>
-        </div>
-    </div>
+    </form>
     <!-- /.content -->
 </section>
 {% endblock %}
@@ -148,6 +160,10 @@
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        // for club meeting search export
+        $(".box").on('click', '.export-club-meeting-report', function() {
+            $('.search-form-club-meeting').prop('action', '/club_meetings/club_meeting_search_list/export')
+        });
     });
 </script>
 {% endblock %}

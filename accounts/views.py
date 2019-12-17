@@ -217,32 +217,32 @@ def admin_profile_update(request):
 
             update_session_auth_hash(request, user_update)
 
-            if old_email != user_form.cleaned_data["email"]:
-                unique_id = random.randint(100000, 999999)
-                user_update.email_verified = 0
-                user_update.email_verifiaction_code = unique_id
-                ## Now sending verification email
-                data = ''
-                html_message = loader.render_to_string(
-                    'accounts/email/email_context.html',
-                    {
-                        'activation_email_link': unique_id,
-                        'subject': 'Thank you from' + data,
-                        'host': request.get_host
-                    }
-                )
-                subject_text = loader.render_to_string(
-                    'accounts/email/email_subject.txt',
-                    {
-                        'user_name': 'name',
-                        'subject': 'Thank you from' + data,
-                    }
-                )
-                message = ''
-                email_from = settings.EMAIL_HOST_USER
-                recipient_list = [user_update.email]
-                send_mail(subject_text, message, email_from, recipient_list, html_message=html_message)
-                request.session['msg'] = 'Please check your email to confirm the email address'
+            # if old_email != user_form.cleaned_data["email"]:
+            #     # unique_id = random.randint(100000, 999999)
+            #     # user_update.email_verified = 0
+            #     # user_update.email_verifiaction_code = unique_id
+            #     ## Now sending verification email
+            #     data = ''
+            #     # html_message = loader.render_to_string(
+            #     #     'accounts/email/email_context.html',
+            #     #     {
+            #     #         'activation_email_link': unique_id,
+            #     #         'subject': 'Thank you from' + data,
+            #     #         'host': request.get_host
+            #     #     }
+            #     # )
+            #     # subject_text = loader.render_to_string(
+            #     #     'accounts/email/email_subject.txt',
+            #     #     {
+            #     #         'user_name': 'name',
+            #     #         'subject': 'Thank you from' + data,
+            #     #     }
+            #     # )
+            #     message = ''
+            #     email_from = settings.EMAIL_HOST_USER
+            #     recipient_list = [user_update.email]
+            #     send_mail(subject_text, message, email_from, recipient_list, html_message=html_message)
+            #     request.session['msg'] = 'Please check your email to confirm the email address'
 
             # image cropping code start here
             img_base64 = user_form.cleaned_data.get('image_base64')

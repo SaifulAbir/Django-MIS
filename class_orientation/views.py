@@ -1,12 +1,13 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 
 from accounts.decorators import headmaster_mentor_skleader_login_required, admin_login_required
+from class_orientation.resources import ClassOrientationResource
 from headmasters.models import HeadmasterProfile
 from skleaders.models import SkLeaderProfile
 from .models import ClassOrientation
@@ -127,7 +128,7 @@ def class_orientation_report_list(request):
         class_orientation_report = paginator.page(paginator.num_pages)
     return render(request, 'class_orientation/class_orientation_report_list.html', {'classorientation_list': class_orientation_report, 'num_pages': paginator.count,})
 
-def class_orientation_search_list(request):
+def class_orientation_search_list(request, export='null'):
     data = dict()
     qs = ClassOrientation.objects.all()
     name = request.GET.get('name_contains')
@@ -153,4 +154,11 @@ def class_orientation_search_list(request):
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('class_orientation/partial_class_orientation_report.html',
                                                   {'classorientation_list': queryset})
-    return JsonResponse(data)
+    if export != 'export':
+        return JsonResponse(data)
+    else:
+        resource = ClassOrientationResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="peer_education_list.csv"'
+        return response

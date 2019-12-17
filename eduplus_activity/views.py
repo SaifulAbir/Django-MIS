@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
 import base64
 import uuid
@@ -16,6 +16,7 @@ from accounts.models import User
 from eduplus_activity import models
 from eduplus_activity.forms import EduPlusActivityForm, EditEduPlusActivityForm, EduplusTopicsForm
 from eduplus_activity.models import EduPlusActivity, EduplusTopics
+from eduplus_activity.resources import EduPlusActivityResource
 from headmasters.models import HeadmasterProfile
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
@@ -171,7 +172,7 @@ def eduplus_topics_delete(request, pk):
 @admin_login_required
 def eduplus_activity_report_list(request):
     eduplus_activity_list = EduPlusActivity.objects.all()
-    paginator = Paginator(eduplus_activity_list, 1)
+    paginator = Paginator(eduplus_activity_list, 10)
     page = request.GET.get('page')
     try:
         eduplus_activity_report = paginator.page(page)
@@ -181,7 +182,7 @@ def eduplus_activity_report_list(request):
         eduplus_activity_report = paginator.page(paginator.num_pages)
     return render(request, 'eduplus_activity/eduplus_activity_report_list.html', {'eduplusactivity_list': eduplus_activity_report})
 
-def eduplus_activity_search_list(request):
+def eduplus_activity_search_list(request, export='null'):
     data = dict()
     qs = EduPlusActivity.objects.all()
     name = request.GET.get('name_contains')
@@ -194,7 +195,7 @@ def eduplus_activity_search_list(request):
     if district != '' and district is not None:
         qs = qs.filter(school__district__name__icontains=district)
 
-    paginator = Paginator(qs, 1)
+    paginator = Paginator(qs, 10)
     page = request.GET.get('page')
     try:
         queryset = paginator.page(page)
@@ -207,4 +208,11 @@ def eduplus_activity_search_list(request):
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('eduplus_activity/partial_eduplus_activity_report.html',
                                                   {'eduplusactivity_list': queryset})
-    return JsonResponse(data)
+    if export != 'export':
+        return JsonResponse(data)
+    else:
+        resource = EduPlusActivityResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="eduplus_activity_list.csv"'
+        return response

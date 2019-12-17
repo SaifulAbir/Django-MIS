@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
@@ -15,6 +15,7 @@ from accounts.decorators import headmaster_mentor_skleader_login_required, admin
 from accounts.models import User
 from club_meetings import models
 from club_meetings.models import ClubMeetings
+from club_meetings.resources import ClubMeetingResource
 from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
@@ -130,7 +131,7 @@ def clubmeetings_report_list(request):
         queryset = paginator.page(paginator.num_pages)
     return render(request, 'club_meetings/club_meeting_report_list.html', {'clubmeetings_list': queryset})
 
-def club_meeting_search_list(request):
+def club_meeting_search_list(request, export='null'):
     data = dict()
     qs = ClubMeetings.objects.all()
     name = request.GET.get('name_contains')
@@ -155,8 +156,17 @@ def club_meeting_search_list(request):
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('club_meetings/partial_club_meeting_report_list.html',
-                                                  {'clubmeetings_list': queryset})
-    return JsonResponse(data)
+                                                {'clubmeetings_list': queryset})
+
+    if export != 'export':
+        return JsonResponse(data)
+    else:
+        resource = ClubMeetingResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="club_meeting_list.csv"'
+        return response
+
 
 
 
