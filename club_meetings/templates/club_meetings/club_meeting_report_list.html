@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="form-group pull-right">
-                        <button type="button" class="btn btn-primary search-club-meeting">Search</button>
+                        <button type="submit" class="btn btn-primary search-club-meeting">Search</button>
                     </div>
                     <div class="clearfix"></div>
 
@@ -127,7 +127,8 @@
             'info'        : false,
             'paging'      : false,
         });
-        $('.search-club-meeting').on('click', function () {
+        $('.search-club-meeting').on('click', function (event) {
+            event.preventDefault();
             $(".club-meeting-search-table").DataTable().destroy();
             name_contains = $('#school-name').val();
             division_contains = $('#division-name').val();

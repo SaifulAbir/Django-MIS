@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="form-group pull-right">
-                        <button type="button" class="btn btn-primary search-eduplus-activity">Search</button>
+                        <button type="submit" class="btn btn-primary search-eduplus-activity">Search</button>
                     </div>
                     <div class="clearfix"></div>
 
@@ -126,7 +126,8 @@
             'info'        : false,
             'paging'      : false,
         });
-        $('.search-eduplus-activity').on('click', function () {
+        $('.search-eduplus-activity').on('click', function (event) {
+            event.preventDefault();
             $(".eduplus-activity-search-table").DataTable().destroy();
             name_contains = $('#school-name').val();
             division_contains = $('#division-name').val();
