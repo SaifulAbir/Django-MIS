@@ -3,10 +3,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
-from django.http import HttpResponseRedirect, HttpResponse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views import generic
 
@@ -82,14 +84,21 @@ def headmaster_list(request, export='null'):
     qs=HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
     name= request.GET.get('name_contains')
     school= request.GET.get('school_contains')
-
     if name !='' and name is not None:
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
     if export != 'export':
         return render(request, 'headmasters/headmasterprofile_list.html',
-                      {'queryset': qs, 'name': name, 'school': school,})
+                      {'queryset': queryset, 'name': name, 'school': school,})
     else:
         resource = HeadmasterResource()
         dataset = resource.export(qs)
@@ -186,5 +195,39 @@ def headmaster_home(request):
     obj_head = HeadmasterProfile.objects.filter(pk=request.user.id)
 
     return render(request, 'headmasters/headmaster_home.html')
+
+def headmaster_search_list(request, export='null'):
+    data = dict()
+    qs = HeadmasterProfile.objects.filter(user__user_type__in=[2, 3, 4])
+    name = request.GET.get('name_contains')
+    school = request.GET.get('school_contains')
+
+    if name != '' and name is not None:
+        qs = qs.filter(user__first_name__icontains=name)
+    if school != '' and school is not None:
+        qs = qs.filter(school__name__icontains=school)
+
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+    if name == '' and school == '':
+        queryset = None
+    data['form_is_valid'] = True
+    data['html_list'] = render_to_string('headmasters/partial_headmaster_list.html',
+                                                {'queryset': queryset})
+
+    if export != 'export':
+        return JsonResponse(data)
+    else:
+        resource = HeadmasterResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="headmaster_list.csv"'
+        return response
 
 

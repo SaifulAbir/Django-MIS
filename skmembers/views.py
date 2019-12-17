@@ -4,10 +4,12 @@ import uuid
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
-from django.http import HttpResponseRedirect, HttpResponse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views import generic
 from accounts.decorators import admin_login_required, headmaster_mentor_skleader_login_required
@@ -196,9 +198,17 @@ def skmember_list(request,export='null'):
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
     if export != 'export':
         return render(request, 'skmembers/skmemberprofile_list.html',
-                      {'queryset': qs, 'name': name, 'school': school, })
+                      {'queryset': queryset, 'name': name, 'school': school, })
     else:
         resource = SkmemberResource()
         dataset = resource.export(qs)
@@ -337,3 +347,36 @@ def skmember_details_update_for_skleader(request):
             skmemberModel.to_date = todate
         skmemberModel.save()
     return HttpResponse('ok')
+
+def skmember_search_list(request, export='null'):
+    data = dict()
+    qs = SkMemberProfile.objects.filter(user__user_type__in=[6])
+    name = request.GET.get('name_contains')
+    school = request.GET.get('school_contains')
+
+    if name != '' and name is not None:
+        qs = qs.filter(user__first_name__icontains=name)
+    if school != '' and school is not None:
+        qs = qs.filter(school__name__icontains=school)
+    paginator = Paginator(qs, 10)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+    if name == '' and school == '':
+        queryset = None
+    data['form_is_valid'] = True
+    data['html_list'] = render_to_string('skmembers/partial_skmember_list.html',
+                                                {'queryset': queryset})
+
+    if export != 'export':
+        return JsonResponse(data)
+    else:
+        resource = SkmemberResource()
+        dataset = resource.export(qs)
+        response = HttpResponse(dataset.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="skmember_list.csv"'
+        return response

@@ -579,3 +579,6 @@ def load_previous_upazilla(request):
 def load_previous_union(request):
     previous_unions = list(Union.objects.values_list('name', flat=True))
     return JsonResponse(previous_unions, safe=False)
+def load_previous_user(request):
+    previous_users = list(User.objects.values_list('first_name', flat=True))
+    return JsonResponse(previous_users, safe=False)

@@ -258,7 +258,33 @@
                         'paging'      : false,
                         'lengthChange': false,
                         'searching'   : false,
-                        'ordering'    : true,
+                        'ordering'    : false,
+                        'info'        : false,
+                        'autoWidth'   : false,
+                        'destroy'     : true
+                    });
+                }
+            });
+        });
+    }
+    function pagination(id, url, name, school, tableId) {
+        $(id).on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            $.ajax({
+                type: 'get',
+                url: url+addressValue,
+                data: {
+                    'name_contains': name,
+                    'school_contains': school,
+                },
+                success: function (data) {
+                    $(id).html(data.html_list);
+                    $(tableId).DataTable({
+                        'paging'      : false,
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'ordering'    : false,
                         'info'        : false,
                         'autoWidth'   : false,
                         'destroy'     : true

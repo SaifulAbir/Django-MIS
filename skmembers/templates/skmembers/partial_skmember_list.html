@@ -1,0 +1,72 @@
+<table   id="example1" class=" skmember-search-table table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class="col-sm-3">Name</th>
+        <th class="col-sm-2">Email</th>
+        <th class="col-sm-2">Mobile</th>
+        <th class="col-sm-3">School</th>
+        <th class="col-sm-1">Class</th>
+        <th class="col-sm-1">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for skmember in queryset %}
+    <tr>
+        <td>{{skmember.user.first_name}}</td>
+        <td>{{ skmember.user.email }}</td>
+        <td>{{ skmember.mobile }}</td>
+        <td>{{ skmember.school }}</td>
+        <td>{{ skmember.student_class }}</td>
+        <td align="center">
+            <a type="button" style="margin-right:10px"
+               class=""
+               href="{% url 'skmembers:skmember_detail' skmember.pk %}">
+                <span class="fa fa-eye"></span>
+            </a>
+            <a type="button"
+               class=""
+               href="{% url 'skmembers:skmember_update' skmember.pk %}">
+                <span class="fa fa-edit"></span>
+
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+<p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
+<ul class="pagination" style="float: right">
+
+    {% if queryset.has_previous %}
+    <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+    {% if queryset.number|add:'-4' > 1 %}
+    <li><a class="paginator" href="?page={{ queryset.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in queryset.paginator.page_range %}
+    {% if queryset.number == i %}
+    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% elif i > queryset.number|add:'-5' and i < queryset.number|add:'5' %}
+    <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if queryset.paginator.num_pages > queryset.number|add:'4' %}
+    <li><a href="?page={{ queryset.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if queryset.has_next %}
+    <li><a class="paginator" href="?page={{ queryset.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+</ul>
