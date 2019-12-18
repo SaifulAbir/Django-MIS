@@ -142,7 +142,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <button type="button" id="school-search" class="btn btn-primary text-center">Search</button>
+                        <button type="submit" id="school-search" class="btn btn-primary text-center">Search</button>
                     </div>
                 </div>
             </div>
@@ -369,7 +369,8 @@
         autoSuggesion('/load_previous_upazillas/', "input[name='upazilla_contains']");
         autoSuggesion('/load_previous_unions/', "input[name='union_contains']");
 
-        $('#school-search').on('click', function () {
+        $('#school-search').on('click', function (e) {
+            e.preventDefault();
             $(".school-search-table").DataTable().destroy();
             name_contains = $('#school-name').val();
             division_contains = $('#division-name').val();
