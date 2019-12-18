@@ -1,0 +1,13 @@
+[Unit]
+Description=SKNF MIS Serivce
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/ubuntu/projectsknf/run-aws.sh
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
