@@ -18,6 +18,7 @@ from eduplus_activity.forms import EduPlusActivityForm, EditEduPlusActivityForm,
 from eduplus_activity.models import EduPlusActivity, EduplusTopics
 from eduplus_activity.resources import EduPlusActivityResource
 from headmasters.models import HeadmasterProfile
+from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
 
@@ -28,12 +29,25 @@ def edu_plus_activity_add(request):
         profile = SkLeaderProfile.objects.get(user=request.user)
     elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
         profile = HeadmasterProfile.objects.get(user=request.user)
+
+    if profile is not None:
+        school_profile = get_object_or_404(School, pk=profile.school.id)
+    else:
+        school_profile = None
+    if school_profile is not None:
+        try:
+            sk_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id,
+                                                                  user__user_type=5).latest('school__id')
+        except SkLeaderProfile.DoesNotExist:
+            sk_profile = None
     if request.method == 'POST':
         edu_plus_activity_form = EduPlusActivityForm(request.POST, files=request.FILES, prefix='EPA', user=request.user)
         # meeting_topic_form = Meetingeduplus_topicsForm(request.POST, prefix='MTF')
         if edu_plus_activity_form.is_valid():
             edu_plus_activity = edu_plus_activity_form.save(commit=False)
             edu_plus_activity.school = profile.school
+            if sk_profile:
+                edu_plus_activity.skleader = sk_profile
             # image cropping code start here
             img_base64 = edu_plus_activity_form.cleaned_data.get('image_base64')
             if img_base64:
