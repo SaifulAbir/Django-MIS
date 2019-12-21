@@ -108,6 +108,18 @@
 
 }
 
+@media screen and (max-width: 992px) {
+  #search-form-id{
+        padding-right: 0px;
+        padding-left: 15px;
+    }
+
+  .form-horizontal{
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+}
+
 /*home-page school search list pagination*/
 .pagination{
     display: inline-block;

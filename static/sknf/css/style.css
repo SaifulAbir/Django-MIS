@@ -290,7 +290,7 @@ ul#id_EPA-attendance {
     .logo {
     position: absolute;
     z-index: 1050;
-    left: 18%;
+    margin-left: -65px;
     width: auto !important;
 }
     .skin-blue .main-header .navbar{

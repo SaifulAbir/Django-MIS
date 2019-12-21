@@ -30,12 +30,24 @@ def club_meeting_add(request):
         profile = SkLeaderProfile.objects.get(user=request.user)
     elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
         profile = HeadmasterProfile.objects.get(user=request.user)
+        if profile is not None:
+            school_profile = get_object_or_404(School, pk=profile.school.id)
+        else:
+            school_profile = None
+        if school_profile is not None:
+            try:
+                sk_profile = SkLeaderProfile.objects.filter(school__id=school_profile.id,
+                                                            user__user_type=5).latest('school__id')
+            except SkLeaderProfile.DoesNotExist:
+                sk_profile = None
     if request.method == 'POST':
         club_meeting_form = ClubMeetingForm(request.POST, files=request.FILES, prefix='CMF', user=request.user)
         # meeting_topic_form = MeetingTopicsForm(request.POST, prefix='MTF')
         if club_meeting_form.is_valid():
             club_meeting = club_meeting_form.save(commit=False)
             club_meeting.school = profile.school
+            if sk_profile:
+                club_meeting.skleader = sk_profile
             # image cropping code start here
             img_base64 = club_meeting_form.cleaned_data.get('image_base64')
             if img_base64:
@@ -156,7 +168,7 @@ def club_meeting_search_list(request, export='null'):
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('club_meetings/partial_club_meeting_report_list.html',
-                                                {'clubmeetings_list': queryset})
+                                         {'clubmeetings_list': queryset})
 
     if export != 'export':
         return JsonResponse(data)
