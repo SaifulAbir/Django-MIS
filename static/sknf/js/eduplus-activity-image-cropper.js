@@ -46,7 +46,7 @@ $(".js-zoom-out").click(function () {
 
   /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
   $(".js-crop-and-upload").click(function () {
-    var imageData = $('#image').cropper('getCroppedCanvas').toDataURL() ;
+    var imageData = $('#image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
     $('.jcrop-holder').attr('src', imageData);
     $("#id_EPA-image_base64").val(imageData);
     $("#modalPostCrop").modal('hide');
