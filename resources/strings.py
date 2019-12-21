@@ -1,0 +1,1 @@
+DESCRIPTION_REQUIRED_ERROR = "Description is required."
