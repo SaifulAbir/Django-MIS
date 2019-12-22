@@ -3,7 +3,7 @@
     <tr>
 
         <th class="col-sm-10">Division</th>
-        <th class="col-sm-2">Actions</th>
+        <th class="col-sm-2 text-center">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -59,3 +59,20 @@
     <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
     {% endif %}
 </ul>
+{% block extra_css %}
+<style type="text/css">
+    .js-delete-division{
+        border: none;
+        background: no-repeat;
+        color: #3c8dbc;
+        padding-left: 3px;
+        color: red;
+    }
+    .js-update-division{
+        border: none;
+        background: no-repeat;
+        color: #3c8dbc;
+        padding-left: 3px;
+    }
+</style>
+{% endblock %}

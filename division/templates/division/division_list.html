@@ -1,88 +1,107 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 <section class="content-header" style="padding-top:60px">
-        <h1>Division List</h1>
- </section>
-    <!-- Main content -->
-    <section class="content">
-<div class="box">
-    <!-- Main content -->
-    <div class="box-body table-responsive">
-        <div class="box-header">
-            <h3 style="display: inline-block;" class="box-title"> </h3>
+    <h1>Division List</h1>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <!-- Main content -->
+        <div class="box-body table-responsive">
+            <div class="box-header">
+                <h3 style="display: inline-block;" class="box-title"> </h3>
 
-            <span id = "alert_placeholder"></span>
-            <button type="button"
-                    class="btn btn-primary pull-right js-create-division"
-                    data-url="{% url 'division:create_division' %}">
-                <span class="fa fa-plus"></span>
-                New Division
-            </button>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body table-responsive division-container">
-            {% include 'division/partial_division_list.html' %}
+                <span id = "alert_placeholder"></span>
+                <button type="button"
+                        class="btn btn-primary pull-right js-create-division"
+                        data-url="{% url 'division:create_division' %}">
+                    <span class="fa fa-plus"></span>
+                    New Division
+                </button>
+            </div>
             {% include 'division/_modal.html' %}
+            <!-- /.box-header -->
+            <div class="box-body table-responsive division-container">
+                {% include 'division/partial_division_list.html' %}
+            </div>
         </div>
     </div>
-</div>
-        <!-- /.content -->
-    </section>
+    <!-- /.content -->
+</section>
+{% endblock %}
+{% block extra_css %}
+<style type="text/css">
+    .js-delete-division{
+        border: none;
+        background: no-repeat;
+        color: #3c8dbc;
+        padding-left: 3px;
+    }
+</style>
 {% endblock %}
 {% block extra_js %}
-    <script type="text/javascript">
-        $(function () {
-            $('#settings, .division-menu').addClass('active');
-            $("#settings").addClass("menu-open");
-            $("#settings .treeview-menu").css("display", "block");
+<script type="text/javascript">
+    $(function () {
+        $('#settings, .division-menu').addClass('active');
+        $("#settings").addClass("menu-open");
+        $("#settings .treeview-menu").css("display", "block");
 
-            var loadForm = function () {
-                var btn = $(this);
-                $.ajax({
-                    url: btn.attr("data-url"),
-                    type: 'get',
-                    dataType: 'json',
-                    beforeSend: function () {
-                        $("#modal-division").modal("show");
-                    },
-                    success: function (data) {
+        var loadForm = function () {
+            var btn = $(this);
+            $.ajax({
+                url: btn.attr("data-url"),
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#modal-division").modal("show");
+                },
+                success: function (data) {
+                    $("#modal-division .modal-content").html(data.html_form);
+                }
+            });
+        };
+        var saveForm = function () {
+            var form = $(this);
+            var formClass = form.attr("class")
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: form.attr("method"),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.form_is_valid) {
+                        $('#divisionSubmit').prop('disabled', true);
+                        if(formClass=="js-division-create-form"){
+                            showAlert("Division Created!", "alert-success-customized")
+                        }
+                        if(formClass=="js-division-update-form"){
+                            showAlert("Division Updated!", "alert alert-success-customized")
+                        }
+                        if(formClass=="js-division-delete-form"){
+                            showAlert("Division Deleted!", "alert alert-danger-customized")
+                        }
+
+                        $(".division-container").html(data.html_list);
+                        $('.division-table').DataTable({
+                            'paging'      : false,
+                            'lengthChange': false,
+                            'searching'   : false,
+                            'ordering'    : false,
+                            'info'        : false,
+                            'autoWidth'   : false,
+                            'destroy'     : true
+                        });
+                        $("#modal-division").modal("hide");
+                    }
+                    else {
                         $("#modal-division .modal-content").html(data.html_form);
                     }
-                });
-            };
-            var saveForm = function () {
-                var form = $(this);
-                var formClass = form.attr("class")
-                $.ajax({
-                    url: form.attr("action"),
-                    data: form.serialize(),
-                    type: form.attr("method"),
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.form_is_valid) {
-                            $('#divisionSubmit').prop('disabled', true);
-                            if(formClass=="js-division-create-form"){
-                                showAlert("Division Created!", "alert-success-customized")
-                            }
-                            if(formClass=="js-division-update-form"){
-                                showAlert("Division Updated!", "alert alert-success-customized")
-                            }
-                            if(formClass=="js-division-delete-form"){
-                                showAlert("Division Deleted!", "alert alert-danger-customized")
-                            }
-
-                            $(".division-table tbody").html(data.html_list);  // <-- Replace the table body
-                            $("#modal-division").modal("hide");
-                        }
-                        else {
-                            $("#modal-division .modal-content").html(data.html_form);
-                        }
 
 
-                    }
-                });
-                return false;
-            };
+                }
+            });
+            return false;
+        };
 
         function showAlert(message,alerttype) {
 
@@ -90,21 +109,21 @@
 
         }
 
-            /* Binding */
+        /* Binding */
 
-            // Create division
-            $(".js-create-division").click(loadForm);
-            $("#modal-division").on("submit", ".js-division-create-form", saveForm);
+        // Create division
+        $(".js-create-division").click(loadForm);
+        $("#modal-division").on("submit", ".js-division-create-form", saveForm);
 
-            // Update division
-            $(".division-table").on("click", ".js-update-division", loadForm);
-            $("#modal-division").on("submit", ".js-division-update-form", saveForm);
+        // Update division
+        $(".division-container").on("click", ".js-update-division", loadForm);
+        $("#modal-division").on("submit", ".js-division-update-form", saveForm);
 
-            // Delete division
-            $(".division-table").on("click", ".js-delete-division", loadForm);
-            $("#modal-division").on("submit", ".js-division-delete-form", saveForm);
-            pagination(".division-container", '/division/pagination/', '', '', '.division-table');
-        });
+        // Delete division
+        $(".division-container").on("click", ".js-delete-division", loadForm);
+        $("#modal-division").on("submit", ".js-division-delete-form", saveForm);
+        pagination(".division-container", '/division/pagination/', '', '', '.division-table');
+    });
 
-    </script>
+</script>
 {% endblock %}
