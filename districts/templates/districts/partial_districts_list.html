@@ -1,19 +1,63 @@
+<table id="example1" class=" data-table district-table table table-bordered table-striped">
+    <thead>
+    <tr>
 
-{% for district in district_list %}
-<tr>
+        <th class="col-sm-5">District Name</th>
+        <th class="col-sm-5">Division</th>
+        <th class="col-sm-2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for district in district_list %}
+        <tr>
 
-    <td>{{ district.name }}</td>
-    <td>{{ district.division }}</td>
-    <td align="center"> <button type="button" style="margin-right:10px"
-                class="js-update-district"
-                data-url="{% url 'districts:update_district' district.id %}">
-        <span class="fa fa-edit"></span>
-    </button>
-        <button type="button"
-                class="js-delete-district"
-                data-url="{% url 'districts:delete_district' district.id %}">
-            <span class="fa fa-trash"></span>
-        </button>
-    </td>
-</tr>
-{% endfor %}
+            <td>{{ district.name }}</td>
+            <td>{{ district.division }}</td>
+            <td align="center"> <button type="button" style="margin-right:10px"
+                                        class="js-update-district"
+                                        data-url="{% url 'districts:update_district' district.id %}">
+                <span class="fa fa-edit"></span>
+            </button>
+                <button type="button"
+                        class="js-delete-district"
+                        data-url="{% url 'districts:delete_district' district.id %}">
+                    <span class="fa fa-trash"></span>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>
+<p class="table-information">Showing {{ district_list.start_index }} to {{ district_list.end_index }} of {{ district_list.paginator.count }} entries</p>
+<ul class="pagination" style="float: right">
+
+    {% if district_list.has_previous %}
+        <li><a class="paginator" href="?page={{ district_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    {% else %}
+        <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+    {% if district_list.number|add:'-4' > 1 %}
+        <li><a class="paginator" href="?page={{ district_list.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in district_list.paginator.page_range %}
+        {% if district_list.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% elif i > district_list.number|add:'-5' and i < district_list.number|add:'5' %}
+            <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if district_list.paginator.num_pages > district_list.number|add:'4' %}
+        <li><a href="?page={{ district_list.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if district_list.has_next %}
+        <li><a class="paginator" href="?page={{ district_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    {% else %}
+        <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+    {% endif %}
+</ul>

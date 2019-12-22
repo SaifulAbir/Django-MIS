@@ -1,134 +1,114 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<section class="content-header" style="padding-top:60px">
+    <section class="content-header" style="padding-top:60px">
         <h1>District List</h1>
- </section>
+    </section>
 
-<!-- Main content -->
-<section class="content">
-<div class="box">
-    <div class="box-header">
-        <h3 style="display: inline-block;" class="box-title"> </h3>
-        <span id = "alert_placeholder"></span>
-        <button type="button"
-                class="btn btn-primary pull-right js-create-district"
-                data-url="{% url 'districts:create_district' %}">
-            <span class="fa fa-plus"></span>
-            New District
-        </button>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <table id="example1" class=" data-table district-table table table-bordered table-striped">
-            <thead>
-            <tr>
-
-                <th class="col-sm-5">District Name</th>
-                <th class="col-sm-5">Division</th>
-                <th class="col-sm-2">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {% include 'districts/partial_districts_list.html' %}
-
-            </tbody>
-
-
-            <tfoot>
-
-            </tfoot>
-
-
-        </table>
-        {% include 'districts/_modal.html' %}
-    </div>
-</div>
-<!-- /.content -->
-</section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 style="display: inline-block;" class="box-title"> </h3>
+                <span id = "alert_placeholder"></span>
+                <button type="button"
+                        class="btn btn-primary pull-right js-create-district"
+                        data-url="{% url 'districts:create_district' %}">
+                    <span class="fa fa-plus"></span>
+                    New District
+                </button>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive district-container">
+                {% include 'districts/partial_districts_list.html' %}
+                {% include 'districts/_modal.html' %}
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
 {% endblock %}
 {% block extra_js %}
-<script type="text/javascript">
-$(function () {
-    $('#settings, .district-menu').addClass('active');
+    <script type="text/javascript">
+        $(function () {
+            $('#settings, .district-menu').addClass('active');
 
-    $("#settings").addClass("menu-open");
-    $("#settings .treeview-menu").css("display", "block");
+            $("#settings").addClass("menu-open");
+            $("#settings .treeview-menu").css("display", "block");
 
-    var loadForm = function () {
-        var btn = $(this);
-        $.ajax({
-            url: btn.attr("data-url"),
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function () {
-                $("#modal-district").modal("show");
-            },
-            success: function (data) {
-                $("#modal-district .modal-content").html(data.html_form);
+            var loadForm = function () {
+                var btn = $(this);
+                $.ajax({
+                    url: btn.attr("data-url"),
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#modal-district").modal("show");
+                    },
+                    success: function (data) {
+                        $("#modal-district .modal-content").html(data.html_form);
+                    }
+                });
+            };
+
+            var saveForm = function () {
+                var form = $(this);
+                var formClass = form.attr("class")
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: form.attr("method"),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.form_is_valid) {
+                            $('#districtSubmit').prop('disabled', true);
+                            if(formClass=="js-district-create-form"){
+                                showAlert("District Created!", "alert-success-customized")
+                            }
+                            if(formClass=="js-district-update-form"){
+                                showAlert("District Updated!", "alert-success-customized")
+                            }
+                            if(formClass=="js-district-delete-form"){
+                                showAlert("District Deleted!", "alert-danger-customized")
+                            }
+
+                            $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
+                            $("#modal-district").modal("hide");  // <-- Close the modal
+                        }
+                        else {
+                            $("#modal-district .modal-content").html(data.html_form);
+                        }
+                    }
+                });
+                return false;
+            };
+
+            function showAlert(message,alerttype) {
+
+                $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
             }
+
+            /* Binding */
+
+            // Create district
+            $(".js-create-district").click(loadForm);
+            $("#modal-district").on("submit", ".js-district-create-form", saveForm);
+
+            // Update district
+            $(".district-table").on("click", ".js-update-district", loadForm);
+            $("#modal-district").on("submit", ".js-district-update-form", saveForm);
+
+            // Delete book
+            $(".district-table").on("click", ".js-delete-district", loadForm);
+            $("#modal-district").on("submit", ".js-district-delete-form", saveForm);
+            pagination(".district-container", '/district/pagination/', '', '', '.district-table');
+
+
+            $('.name-field').validate({
+                rules : {
+                    name : { greaterThanZero : true }
+                }
+            });
+
         });
-    };
 
-  var saveForm = function () {
-    var form = $(this);
-    var formClass = form.attr("class")
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-        if (data.form_is_valid) {
-            $('#districtSubmit').prop('disabled', true);
-           if(formClass=="js-district-create-form"){
-              showAlert("District Created!", "alert-success-customized")
-           }
-           if(formClass=="js-district-update-form"){
-              showAlert("District Updated!", "alert-success-customized")
-           }
-           if(formClass=="js-district-delete-form"){
-              showAlert("District Deleted!", "alert-danger-customized")
-           }
-
-          $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
-          $("#modal-district").modal("hide");  // <-- Close the modal
-        }
-        else {
-          $("#modal-district .modal-content").html(data.html_form);
-        }
-        }
-    });
-    return false;
-  };
-
-  function showAlert(message,alerttype) {
-
-       $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-  }
-
-  /* Binding */
-
-  // Create district
-  $(".js-create-district").click(loadForm);
-  $("#modal-district").on("submit", ".js-district-create-form", saveForm);
-
-  // Update district
-  $(".district-table").on("click", ".js-update-district", loadForm);
-  $("#modal-district").on("submit", ".js-district-update-form", saveForm);
-
-  // Delete book
-  $(".district-table").on("click", ".js-delete-district", loadForm);
-  $("#modal-district").on("submit", ".js-district-delete-form", saveForm);
-
-
-  $('.name-field').validate({
-    rules : {
-        name : { greaterThanZero : true }
-    }
-});
-
-});
-
-  </script>
+    </script>
 {% endblock %}
