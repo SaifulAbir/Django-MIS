@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -19,8 +20,16 @@ def save_division_form(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            division_list = Division.objects.all()
-            data['html_division_list'] = render_to_string('division/partial_division_list.html',
+            divisions = Division.objects.all()
+            paginator = Paginator(divisions, 10)
+            page = request.GET.get('page')
+            try:
+                division_list = paginator.page(page)
+            except PageNotAnInteger:
+                division_list = paginator.page(1)
+            except EmptyPage:
+                division_list = paginator.page(paginator.num_pages)
+            data['html_list'] = render_to_string('division/partial_division_list.html',
                                                           {'division_list': division_list})
         else:
             data['form_is_valid'] = False
@@ -49,7 +58,24 @@ def division_update(request, pk):
 class DivisionList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.Division
+    paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super(DivisionList, self).get_context_data(**kwargs)
+        divisions = Division.objects.all()
+        paginator = Paginator(divisions, self.paginate_by)
+
+        page = self.request.GET.get('page')
+
+        try:
+            division_list = paginator.page(page)
+        except PageNotAnInteger:
+            division_list = paginator.page(1)
+        except EmptyPage:
+            division_list = paginator.page(paginator.num_pages)
+
+        context['division_list'] = division_list
+        return context
 """class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
 
     model = models.District
@@ -61,8 +87,16 @@ def division_delete(request, pk):
     if request.method == 'POST':
         division.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
-        division_list = Division.objects.all()
-        data['html_division_list'] = render_to_string('division/partial_division_list.html', {
+        divisions = Division.objects.all()
+        paginator = Paginator(divisions, 10)
+        page = request.GET.get('page')
+        try:
+            division_list = paginator.page(page)
+        except PageNotAnInteger:
+            division_list = paginator.page(1)
+        except EmptyPage:
+            division_list = paginator.page(paginator.num_pages)
+        data['html_list'] = render_to_string('division/partial_division_list.html', {
             'division_list': division_list
         })
     else:
@@ -71,4 +105,21 @@ def division_delete(request, pk):
             context,
             request=request,
         )
+    return JsonResponse(data)
+
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    divisions = Division.objects.all()
+    paginator = Paginator(divisions, 10)
+    page = request.GET.get('page')
+    try:
+        division_list = paginator.page(page)
+    except PageNotAnInteger:
+        division_list = paginator.page(1)
+    except EmptyPage:
+        division_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('division/partial_division_list.html', {
+        'division_list': division_list
+    })
     return JsonResponse(data)
