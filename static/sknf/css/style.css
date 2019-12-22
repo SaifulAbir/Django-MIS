@@ -307,6 +307,8 @@ ul#id_EPA-attendance {
 }
 .table-information{
     display: inline-block;
+    margin-top: 6px;
+    margin-bottom: 0px;
 }
 
 /* auto-complete search */

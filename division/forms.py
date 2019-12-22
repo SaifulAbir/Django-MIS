@@ -1,4 +1,6 @@
 from django import forms
+
+from resources import strings
 from .models import Division
 
 class DivisionForm(forms.ModelForm):
@@ -6,5 +8,5 @@ class DivisionForm(forms.ModelForm):
         model = Division
         fields = ['name']
         widgets = {
-            'name': forms.TextInput(attrs={'pattern': '[a-zA-Z\s]+', 'oninvalid': "setCustomValidity('Please enter on alphabets only. ')", 'style': ''}),
+            'name': forms.TextInput(attrs={'pattern': strings.DIVISION_NAME_VALIDATION_PATTERN, 'oninvalid': strings.DIVISION_NAME_VALIDATION_ERROR,}),
         }
