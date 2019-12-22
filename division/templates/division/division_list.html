@@ -6,42 +6,25 @@
     <!-- Main content -->
     <section class="content">
 <div class="box">
-        <!-- Main content -->
-        <div class="box-body table-responsive">
-            <div class="box-header">
-                <h3 style="display: inline-block;" class="box-title"> </h3>
+    <!-- Main content -->
+    <div class="box-body table-responsive">
+        <div class="box-header">
+            <h3 style="display: inline-block;" class="box-title"> </h3>
 
-                <span id = "alert_placeholder"></span>
-                <button type="button"
-                        class="btn btn-primary pull-right js-create-division"
-                        data-url="{% url 'division:create_division' %}">
-                    <span class="fa fa-plus"></span>
-                    New Division
-                </button>
-            </div>
-
-            <!-- /.box-header -->
-            <div class="box-body table-responsive">
-                <table   id="example1" class=" data-table division-table table table-bordered table-striped">
-                    <thead>
-                    <tr>
-
-                        <th class="col-sm-10">Division</th>
-                        <th class="col-sm-2">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% include 'division/partial_division_list.html' %}
-
-                    </tbody>
-                    <tfoot>
-
-                    </tfoot>
-                </table>
-                {% include 'division/_modal.html' %}
-            </div>
+            <span id = "alert_placeholder"></span>
+            <button type="button"
+                    class="btn btn-primary pull-right js-create-division"
+                    data-url="{% url 'division:create_division' %}">
+                <span class="fa fa-plus"></span>
+                New Division
+            </button>
         </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive division-container">
+            {% include 'division/partial_division_list.html' %}
+            {% include 'division/_modal.html' %}
+        </div>
+    </div>
 </div>
         <!-- /.content -->
     </section>
@@ -88,7 +71,7 @@
                                 showAlert("Division Deleted!", "alert alert-danger-customized")
                             }
 
-                            $(".division-table tbody").html(data.html_division_list);  // <-- Replace the table body
+                            $(".division-table tbody").html(data.html_list);  // <-- Replace the table body
                             $("#modal-division").modal("hide");
                         }
                         else {
@@ -120,7 +103,7 @@
             // Delete division
             $(".division-table").on("click", ".js-delete-division", loadForm);
             $("#modal-division").on("submit", ".js-division-delete-form", saveForm);
-
+            pagination(".division-container", '/division/pagination/', '', '', '.division-table');
         });
 
     </script>
