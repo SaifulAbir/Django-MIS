@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -19,8 +20,17 @@ def save_district_form(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            district_list = District.objects.all()
-            data['html_district_list'] = render_to_string('districts/partial_districts_list.html',
+            districts = District.objects.all()
+            paginator = Paginator(districts, 10)
+            page = request.GET.get('page')
+
+            try:
+                district_list = paginator.page(page)
+            except PageNotAnInteger:
+                district_list = paginator.page(1)
+            except EmptyPage:
+                district_list = paginator.page(paginator.num_pages)
+            data['html_list'] = render_to_string('districts/partial_districts_list.html',
                                                           {'district_list': district_list})
         else:
             data['form_is_valid'] = False
@@ -49,11 +59,24 @@ def district_update(request, pk):
 class DistrictList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.District
+    paginate_by = 10
+    def get_context_data(self, **kwargs):
+        context = super(DistrictList, self).get_context_data(**kwargs)
+        districts = District.objects.all()
+        paginator = Paginator(districts, self.paginate_by)
 
-"""class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
+        page = self.request.GET.get('page')
 
-    model = models.District
-    success_url = reverse_lazy('districts:district_list')"""
+        try:
+            district_list = paginator.page(page)
+        except PageNotAnInteger:
+            district_list = paginator.page(1)
+        except EmptyPage:
+            district_list = paginator.page(paginator.num_pages)
+
+        context['district_list'] = district_list
+        return context
+
 
 def district_delete(request, pk):
     district = get_object_or_404(District, pk=pk)
@@ -61,8 +84,16 @@ def district_delete(request, pk):
     if request.method == 'POST':
         district.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
-        district_list = District.objects.all()
-        data['html_district_list'] = render_to_string('districts/partial_districts_list.html', {
+        districts = District.objects.all()
+        paginator = Paginator(districts, 10)
+        page = request.GET.get('page')
+        try:
+            district_list = paginator.page(page)
+        except PageNotAnInteger:
+            district_list = paginator.page(1)
+        except EmptyPage:
+            district_list = paginator.page(paginator.num_pages)
+        data['html_list'] = render_to_string('districts/partial_districts_list.html', {
             'district_list': district_list
         })
     else:
@@ -73,4 +104,20 @@ def district_delete(request, pk):
         )
     return JsonResponse(data)
 
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    districts = District.objects.all()
+    paginator = Paginator(districts, 10)
+    page = request.GET.get('page')
+    try:
+        district_list = paginator.page(page)
+    except PageNotAnInteger:
+        district_list = paginator.page(1)
+    except EmptyPage:
+        district_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('districts/partial_districts_list.html', {
+        'district_list': district_list
+    })
+    return JsonResponse(data)
 
