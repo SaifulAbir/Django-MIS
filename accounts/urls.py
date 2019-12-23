@@ -6,7 +6,7 @@ from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
 from .views import index, profile, events, custom_login, admin_profile_update, headmaster_profile_update, \
     skleader_profile_update, CustomPasswordReset, CustomPasswordResetDoneView, CustomPasswordResetConfirmView, \
-    CustomPasswordResetCompleteView, verifyemail, email_verify, bd_map, home_page, search_school_list, login_page, load_previous_school, load_previous_eiin, load_previous_user
+    CustomPasswordResetCompleteView, verifyemail, email_verify, bd_map, home_page, search_school_list, login_page, load_previous_school, load_previous_eiin, load_previous_user, home_login
 
 app_name = 'accounts'
 
@@ -20,6 +20,7 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('events/', events, name='events'),
     path('', custom_login, name='login'),
+    path('login/', home_login, name='home_login'),
     path('password_reset/', CustomPasswordReset.as_view(), name='password_reset'),
     path('password_reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/',CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
