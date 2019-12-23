@@ -4,7 +4,7 @@
 
         <th class="col-sm-5">District Name</th>
         <th class="col-sm-5">Division</th>
-        <th class="col-sm-2">Actions</th>
+        <th class="col-sm-1 text-center">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -13,7 +13,7 @@
 
             <td>{{ district.name }}</td>
             <td>{{ district.division }}</td>
-            <td align="center"> <button type="button" style="margin-right:10px"
+            <td align="center"> <button type="button"
                                         class="js-update-district"
                                         data-url="{% url 'districts:update_district' district.id %}">
                 <span class="fa fa-edit"></span>
@@ -61,3 +61,22 @@
         <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
     {% endif %}
 </ul>
+
+{% block extra_css %}
+    <style type="text/css">
+        .js-delete-district{
+            border: none;
+            background: no-repeat;
+            color: #3c8dbc;
+            padding-left: 3px;
+            color: red;
+        }
+        .js-update-district{
+            border: none;
+            background: no-repeat;
+            color: #3c8dbc;
+            padding-left: 3px;
+            margin-right:10px
+        }
+    </style>
+{% endblock %}
