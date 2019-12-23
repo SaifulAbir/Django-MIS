@@ -304,6 +304,7 @@ ul#id_EPA-attendance {
 /*pagination*/
 .pagination{
     margin: 0px 0px;
+    float: right;
 }
 .table-information{
     display: inline-block;
