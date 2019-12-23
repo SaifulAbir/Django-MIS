@@ -293,5 +293,19 @@
             });
         });
     }
+    // settings menubar
+    $(function () {
+        $("#settings").addClass("menu-open");
+        $("#settings .treeview-menu").css("display", "block");
+        //for Disabling cache
+        $("form :input").attr("autocomplete", "off");
+        //for Disabling cache
+    });
+    // alert messages for actions
+    function showAlert(message,alerttype) {
+
+        $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+    }
 </script>
 
