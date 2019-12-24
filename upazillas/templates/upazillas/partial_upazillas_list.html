@@ -1,21 +1,86 @@
-
-{% for upazilla in upazilla_list %}
+<table id="example1" class=" data-table upazilla-table table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class="col-sm-4">Upazila Name</th>
+        <th class="col-sm-3">District</th>
+        <th class="col-sm-3">Division</th>
+        <th class="col-sm-2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for upazila in upazila_list %}
 <tr>
 
-    <td>{{ upazilla.name }}</td>
-    <td>{{ upazilla.district }}</td>
-    <td>{{ upazilla.division }}</td>
+    <td>{{ upazila.name }}</td>
+    <td>{{ upazila.district }}</td>
+    <td>{{ upazila.division }}</td>
     <td align="center">
         <button type="button" style="margin-right:10px"
                 class="js-update-upazilla"
-                data-url="{% url 'upazillas:update_upazilla' upazilla.id %}">
+                data-url="{% url 'upazillas:update_upazilla' upazila.id %}">
             <span class="fa fa-edit"></span>
         </button>
         <button type="button"
                 class="js-delete-upazilla"
-                data-url="{% url 'upazillas:delete_upazilla' upazilla.id %}">
+                data-url="{% url 'upazillas:delete_upazilla' upazila.id %}">
             <span class="fa fa-trash"></span>
         </button>
     </td>
 </tr>
 {% endfor %}
+
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<p class="table-information">Showing {{ upazila_list.start_index }} to {{ upazila_list.end_index }} of {{ upazila_list.paginator.count }} entries</p>
+<ul class="pagination">
+
+    {% if upazila_list.has_previous %}
+        <li><a class="paginator" href="?page={{ upazila_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    {% else %}
+        <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+    {% if upazila_list.number|add:'-4' > 1 %}
+        <li><a class="paginator" href="?page={{ upazila_list.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in upazila_list.paginator.page_range %}
+        {% if upazila_list.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% elif i > upazila_list.number|add:'-5' and i < upazila_list.number|add:'5' %}
+            <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if upazila_list.paginator.num_pages > upazila_list.number|add:'4' %}
+        <li><a href="?page={{ upazila_list.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if upazila_list.has_next %}
+        <li><a class="paginator" href="?page={{ upazila_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    {% else %}
+        <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+    {% endif %}
+</ul>
+{% block extra_css %}
+    <style type="text/css">
+        .js-delete-upazilla{
+            border: none;
+            background: no-repeat;
+            color: #3c8dbc;
+            padding-left: 3px;
+            color: red;
+        }
+        .js-update-upazilla{
+            border: none;
+            background: no-repeat;
+            color: #3c8dbc;
+            padding-left: 3px;
+            margin-right:10px
+        }
+    </style>
+{% endblock %}
