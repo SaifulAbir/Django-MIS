@@ -44,6 +44,6 @@ class DistrictTest(TestCase):
     def test__name_is_greater_then_100_character__should_raise_error(self):
         s = District(
             division=self.division,
-            name=strings.EXCEEDING_LENGTH_DISTRICT_NAME_TEST, created_date=timezone.now())
+            name=strings.EXCEEDING_LENGTH_TEST, created_date=timezone.now())
         with self.assertRaises(ValidationError):
             s.full_clean()
