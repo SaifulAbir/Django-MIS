@@ -1,4 +1,6 @@
 DESCRIPTION_REQUIRED_ERROR = "Description is required."
+#Accounts Related Strings
+#Accounts Related Strings
 
 #Divisions Related Strings
 DIVISIONS_VERBOSE_NAME = 'Division'

@@ -32,134 +32,500 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <style type="text/css">
-        html, body {
-            height: 100%
-        }
+        @media only screen
+        and (min-width : 1224px) {
+            html, body {
+                height: 100%
+            }
 
-        body {
-            color: #FFF;
-            padding: 0;
-            margin: 0;
-        }
+            body {
+                color: #FFF;
+                padding: 0;
+                margin: 0;
+            }
 
-        header {
-            background-color: #ffffff;
-            height: 120px;
-        }
+            header {
+                background-color: #ffffff;
+                height: 120px;
+                box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
+                position: relative;
+                z-index: 1001;
+            }
 
-        main {
-            background-color: #2a2a86;
-            height: calc(100% - 170px);
-        }
+            main {
+                background-color: #2a2a86;
+                height: calc(100% - 170px);
+            }
 
-        footer {
-            background-color: #fff;
-            height: 50px;
-            color: #444;
-            padding: 15px;
-        }
-        #sknf-logo{
-            padding: 3px;
-        }
-        .main-container{
-            height: 100%;
-        }
-        .sknf-info{
-            color: #ffffff;
-        }
-        #map{
-            height: 100%;
-        }
-        .main-container-col{
-            height: 100%;
-            padding-left: 0px;
-        }
-        h3 a, h3 a:hover, h3 a:focus{
-            color: #ffffff;
-        }
-        .btn-primary{
-            background-color: #2a2a86 !important;
-        }
-        .sign-in-info{
-            padding-top: 10px;
-            display: inline-block;
-            color: #000;
-        }
-        .error-info{
-            display: inline-block;
-        }
-        .error-msg{
-            display: inline-block;
-            padding-left: 5px;
-        }
-        .form-control-feedback{
-            right: 20px;
-            color: #000;
-        }
-        #result-wrapper{
-            display: none;
-            background-color: #ffffff;
-            height: 100%;
-            color: #000;
-        }
-        .col-md-6{
-            padding-right: 0px;
-        }
-        #search-close{
-            cursor: pointer;
-        }
-        /*home-page school search list pagination*/
-        .pagination{
-            display: inline-block;
-            padding-left: 0;
-            margin: 0px 0;
-            border-radius: 4px;
-        }
+            footer {
+                background-color: #fff;
+                height: 50px;
+                color: #444;
+                padding: 15px;
+            }
 
-        .table-information{
-            display: inline-block;
-            margin-top: 6px;
-            margin-bottom: 0px;
-        }
+            #sknf-logo {
+                padding: 3px;
+            }
 
-        .pagination>.active>span{
-            background-color: #2a2a86;
+            .main-container {
+                height: 100%;
+            }
+
+            .sknf-info {
+                color: #ffffff;
+            }
+
+            #map {
+                height: 100%;
+            }
+
+            .main-container-col {
+                height: 100%;
+                padding-left: 0px;
+            }
+
+            h3 a, h3 a:hover, h3 a:focus {
+                color: #ffffff;
+            }
+
+            .btn-primary {
+                background-color: #2a2a86 !important;
+            }
+
+            .sign-in-info {
+                padding-top: 10px;
+                display: inline-block;
+                color: #000;
+            }
+
+            .error-info {
+                display: inline-block;
+            }
+
+            .error-msg {
+                display: inline-block;
+                padding-left: 5px;
+            }
+
+            .form-control-feedback {
+                right: 20px;
+                color: #444;
+            }
+
+            #result-wrapper {
+                display: none;
+                background-color: #ffffff;
+                height: 100%;
+                color: #000;
+            }
+
+            .col-md-6 {
+                padding-right: 0px;
+            }
+
+            #search-close {
+                cursor: pointer;
+            }
+
+            .mob-footer {
+                display: none;
+            }
+
+            #search-form-id .col-md-6{
+                padding-right: 15px;
+            }
+
+            /*home-page school search list pagination*/
+            .pagination {
+                display: inline-block;
+                padding-left: 0;
+                margin: 0px 0;
+                border-radius: 4px;
+            }
+
+            .table-information {
+                display: inline-block;
+                margin-top: 6px;
+                margin-bottom: 0px;
+            }
+
+            .pagination > .active > span {
+                background-color: #2a2a86;
+            }
+
+            /* auto-complete search */
+            .typeahead, .tt-query, .tt-hint {
+                border: 1px solid #dfe1e5;
+                outline: medium none;
+                padding: 8px 12px;
+            }
+
+            .tt-input:hover {
+                border-color: rgba(223, 225, 229, 0);
+                box-shadow: 0 1px 6px rgba(32, 33, 36, 0.20);
+            }
+
+            .tt-input:focus {
+                border-color: #2a2a86;
+            }
+
+            .tt-menu {
+                background-color: #FFFFFF;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                margin-top: 8px;
+                padding: 8px 0;
+            }
+
+            .tt-suggestion:hover {
+                cursor: pointer;
+                background-color: #f2f2f2;
+                color: #cd911f;
+            }
+
+            .tt-suggestion {
+                font-size: 14px; /* Set suggestion dropdown font size */
+                padding: 3px 20px;
+                color: #2a2a86;
+            }
+
+            .tt-dataset.tt-dataset-previousItems {
+                text-align: left;
+            }
+
+            .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+                width: 100%;
+            }
         }
-        /* auto-complete search */
-        .typeahead, .tt-query, .tt-hint {
-            border: 1px solid #dfe1e5;
-            outline: medium none;
-            padding: 8px 12px;
+        @media only screen
+        and (min-device-width : 768px)
+        and (max-device-width : 1024px) {
+            html, body {
+                height: 100%
+            }
+
+            body {
+                color: #FFF;
+                padding: 0;
+                margin: 0;
+            }
+
+            header {
+                background-color: #ffffff;
+                height: auto;
+                box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.15);
+                position: relative;
+                z-index: 1001;
+            }
+
+            main {
+                background-color: #2a2a86;
+                height: calc(100% - 50px);
+            }
+
+            footer {
+                background-color: #fff;
+                height: 50px;
+                color: #444;
+                padding: 15px;
+            }
+            #form-wrapper{
+                margin-right: 15px;
+                padding-right: 15px;
+            }
+            #search-form-id{
+                padding-right: 15px;
+            }
+            .mob-footer{
+                display: block;
+            }
+            #sknf-logo{
+                padding: 3px;
+            }
+            .main-container{
+                height: 100%;
+                margin-left: 0px;
+            }
+            .sknf-info{
+                color: #ffffff;
+            }
+            #map{
+                height: calc(100% - 50px);
+            }
+            .main-container-col{
+                height: calc(100% - 50px);
+                padding-left: 0px;
+            }
+            h3 a, h3 a:hover, h3 a:focus{
+                color: #ffffff;
+            }
+            .btn-primary{
+                background-color: #2a2a86 !important;
+            }
+            .sign-in-info{
+                padding-top: 10px;
+                display: inline-block;
+                color: #000;
+            }
+            .error-info{
+                display: inline-block;
+            }
+            .error-msg{
+                display: inline-block;
+                padding-left: 5px;
+            }
+            .form-control-feedback{
+                right: 20px;
+                color: #000;
+            }
+            #result-wrapper{
+                display: none;
+                background-color: #ffffff;
+                height: 100%;
+                color: #000;
+            }
+            .col-md-6{
+                padding-right: 0px;
+            }
+            #search-close{
+                cursor: pointer;
+            }
+
+            /*home-page school search list pagination*/
+            .pagination{
+                display: inline-block;
+                padding-left: 0;
+                margin: 0px 0;
+                border-radius: 4px;
+            }
+
+            .table-information{
+                display: inline-block;
+                margin-top: 6px;
+                margin-bottom: 0px;
+            }
+
+            .pagination>.active>span{
+                background-color: #2a2a86;
+            }
+            /* auto-complete search */
+            .typeahead, .tt-query, .tt-hint {
+                border: 1px solid #dfe1e5;
+                outline: medium none;
+                padding: 8px 12px;
+            }
+            .tt-input:hover{
+                border-color: rgba(223, 225, 229, 0);
+                box-shadow: 0 1px 6px rgba(32,33,36,0.20);
+            }
+            .tt-input:focus{
+                border-color: #2a2a86;
+            }
+            .tt-menu {
+                background-color: #FFFFFF;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                margin-top: 8px;
+                padding: 8px 0;
+            }
+            .tt-suggestion:hover {
+                cursor: pointer;
+                background-color: #f2f2f2;
+                color: #cd911f;
+            }
+            .tt-suggestion {
+                font-size: 14px;  /* Set suggestion dropdown font size */
+                padding: 3px 20px;
+                color:#2a2a86;
+            }
+            .tt-dataset.tt-dataset-previousItems {
+                text-align: left;
+            }
+            .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+                width: 100%;
+            }
+
+            img#sknf-logo-size {
+                width: 96%;
+            }
+            .form-horizontal{
+                margin-right: 15px;
+                margin-left: 15px;
+                padding-right: 15px;
+            }
+            .col-sm-5{
+                padding-bottom: 5px;
+            }
+            #sign-in{
+                float: right;
+            }
         }
-        .tt-input:hover{
-            border-color: rgba(223, 225, 229, 0);
-            box-shadow: 0 1px 6px rgba(32,33,36,0.20);
-        }
-        .tt-input:focus{
-            border-color: #2a2a86;
-        }
-        .tt-menu {
-            background-color: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            margin-top: 8px;
-            padding: 8px 0;
-        }
-        .tt-suggestion:hover {
-            cursor: pointer;
-            background-color: #f2f2f2;
-            color: #cd911f;
-        }
-        .tt-suggestion {
-            font-size: 14px;  /* Set suggestion dropdown font size */
-            padding: 3px 20px;
-        }
-        .tt-dataset.tt-dataset-previousItems {
-            text-align: left;
-        }
-        .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
-            width: 100%;
+        @media only screen
+        and (min-device-width : 320px)
+        and (max-device-width : 480px) {
+            html, body {
+                height: 100%
+            }
+
+            body {
+                color: #FFF;
+                padding: 0;
+                margin: 0;
+            }
+
+            header {
+                background-color: #ffffff;
+                height: auto;
+                box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.15);
+                position: relative;
+                z-index: 1001;
+            }
+
+            main {
+                background-color: #2a2a86;
+                height: calc(100% - 50px);
+            }
+
+            footer {
+                background-color: #fff;
+                height: 50px;
+                color: #444;
+                padding: 15px;
+            }
+            #form-wrapper{
+                margin-right: 15px;
+                padding-right: 15px;
+            }
+            #search-form-id{
+                padding-right: 15px;
+            }
+            .mob-footer{
+                display: block;
+            }
+            #sknf-logo{
+                padding: 3px;
+            }
+            .main-container{
+                height: 100%;
+                margin-left: 0px;
+            }
+            .sknf-info{
+                color: #ffffff;
+            }
+            #map{
+                height: calc(100% - 50px);
+            }
+            .main-container-col{
+                height: calc(100% - 50px);
+                padding-left: 0px;
+            }
+            h3 a, h3 a:hover, h3 a:focus{
+                color: #ffffff;
+            }
+            .btn-primary{
+                background-color: #2a2a86 !important;
+            }
+            .sign-in-info{
+                padding-top: 10px;
+                display: inline-block;
+                color: #000;
+            }
+            .error-info{
+                display: inline-block;
+            }
+            .error-msg{
+                display: inline-block;
+                padding-left: 5px;
+            }
+            .form-control-feedback{
+                right: 20px;
+                color: #000;
+            }
+            #result-wrapper{
+                display: none;
+                background-color: #ffffff;
+                height: 100%;
+                color: #000;
+            }
+            .col-md-6{
+                padding-right: 0px;
+            }
+            #search-close{
+                cursor: pointer;
+            }
+
+            /*home-page school search list pagination*/
+            .pagination{
+                display: inline-block;
+                padding-left: 0;
+                margin: 0px 0;
+                border-radius: 4px;
+            }
+
+            .table-information{
+                display: inline-block;
+                margin-top: 6px;
+                margin-bottom: 0px;
+            }
+
+            .pagination>.active>span{
+                background-color: #2a2a86;
+            }
+            /* auto-complete search */
+            .typeahead, .tt-query, .tt-hint {
+                border: 1px solid #dfe1e5;
+                outline: medium none;
+                padding: 8px 12px;
+            }
+            .tt-input:hover{
+                border-color: rgba(223, 225, 229, 0);
+                box-shadow: 0 1px 6px rgba(32,33,36,0.20);
+            }
+            .tt-input:focus{
+                border-color: #2a2a86;
+            }
+            .tt-menu {
+                background-color: #FFFFFF;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                margin-top: 8px;
+                padding: 8px 0;
+            }
+            .tt-suggestion:hover {
+                cursor: pointer;
+                background-color: #f2f2f2;
+                color: #cd911f;
+            }
+            .tt-suggestion {
+                font-size: 14px;  /* Set suggestion dropdown font size */
+                padding: 3px 20px;
+                color:#2a2a86;
+            }
+            .tt-dataset.tt-dataset-previousItems {
+                text-align: left;
+            }
+            .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+                width: 100%;
+            }
+
+            img#sknf-logo-size {
+                width: 96%;
+            }
+            .form-horizontal{
+                margin-right: 15px;
+                margin-left: 15px;
+                padding-right: 15px;
+            }
+            .col-sm-5{
+                padding-bottom: 5px;
+            }
+            #sign-in{
+                float: right;
+            }
         }
     </style>
 </head>
@@ -174,7 +540,7 @@
         </div>
         <div class="col-md-6">
             <form class="form-horizontal" method="post">
-                <h5 class="sign-in-info">Do you have an account? Sign in here</h5>
+                <h5 class="sign-in-info">{{account_strings.SIGN_IN_INFO}}</h5>
                 {% csrf_token %}
                 {% if form.non_field_errors %}
                 {% for error in form.non_field_errors %}
@@ -188,7 +554,7 @@
                 {% endif %}
                 {% if next_destination %}
                 <p class="text-danger" style="display: inline-block">
-                    You have to login first to view this page.</p>
+                    {{account_strings.PERMISSION_ERROR_MESSAGE}}</p>
                 {% endif %}
                 <div class="">
                     <div class="form-group">
@@ -201,7 +567,7 @@
                             {{ form.password }}
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
-                        <div class="col-md-2" id="sign-in"><button type="submit" class="btn btn-primary">Sign in</button></div>
+                        <div class="col-md-2" id="sign-in"><button type="submit" class="btn btn-primary">{{account_strings.SIGN_IN_BUTTON_TEXT}}</button></div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -213,7 +579,7 @@
     <div class="row main-container">
         <div class="col-md-6" id="result-wrapper">
             <div class="container-fluid">
-                <h4>Schools<div id="search-close" class="pull-right" onclick="hideSearch();">
+                <h4>{{account_strings.SCHOOL_SEARCH_LIST_TEXT}}<div id="search-close" class="pull-right" onclick="hideSearch();">
                     <span class="fa fa-close"></span>
                 </div></h4>
                 <p id="search-msg"></p>
@@ -227,7 +593,7 @@
         <div class="col-md-6" id="form-wrapper">
             <form role="form" class="text-center" id="search-form-id">
                 <div class="box-header">
-                    <h3 class="text-center sknf-info">Are you looking for a school?<br>Click on a district on the map or search here</h3>
+                    <h3 class="text-center sknf-info">{{account_strings.SCHOOL_SEARCH_INFO}}<br>{{account_strings.SEARCH_MESSAGE}}</h3>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
@@ -267,25 +633,30 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <button type="submit" id="school-search" class="btn btn-primary text-center">Search</button>
+                            <button type="submit" id="school-search" class="btn btn-primary text-center">{{account_strings.SCHOOL_SEARCH_BUTTON_TEXT}}</button>
                         </div>
                     </div>
                 </div>
                 <!-- /.box-body -->
             </form>
-            <h3 class="text-center sknf-info">To know more about SKNF, please visit <a href="http://www.shornokishoree.org/" target="_blank">www.shornokishoree.org</a></h3>
+            <h3 class="text-center sknf-info">{{account_strings.SKNF_WEB_INFO}}<a href="http://www.shornokishoree.org/" target="_blank">{{account_strings.SKNF_WEB_URL}}</a></h3>
         </div>
         <div class="col-md-6 main-container-col">
             <div id="map"></div>
+            <footer class="mob-footer">
+                <div class="pull-right hidden-xs">
+                    <b>{{account_strings.VERSION_TEXT}}</b>{{APP_VERSION_NUMBER}}
+                </div>
+                <strong>{{account_strings.COPYRIGHT_TEXT}}</strong> {{account_strings.ALL_RIGHTS_RESERVED}}
+            </footer>
         </div>
     </div>
 </main>
 <footer>
     <div class="pull-right hidden-xs">
-        <b>Version </b>{{APP_VERSION_NUMBER}}
+        <b>{{account_strings.VERSION_TEXT}}</b>{{APP_VERSION_NUMBER}}
     </div>
-    <strong>Copyright &copy; 2019.</strong> All rights
-    reserved.
+    <strong>{{account_strings.COPYRIGHT_TEXT}}</strong> {{account_strings.ALL_RIGHTS_RESERVED}}
 </footer>
 <!-- jQuery 3 -->
 <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
@@ -461,40 +832,6 @@
                 }
             });
         });
-
-        // $('#school-search').on('click', function () {
-        //     $(".school-search-table").DataTable().destroy();
-        //     name_contains = $('#school-name').val();
-        //     division_contains = $('#division-name').val();
-        //     district_contains = $('#district-name').val();
-        //     upazilla_contains = $('#upazilla-name').val();
-        //     union_contains = $('#union-name').val();
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '/api/search_school_list/',
-        //         data: {
-        //             'name_contains': name_contains,
-        //             'division_contains': division_contains,
-        //             'district_contains': district_contains,
-        //             'upazilla_contains': upazilla_contains,
-        //             'union_contains': union_contains,
-        //             csrfmiddlewaretoken: '{{ csrf_token }}'
-        //         },
-        //         success: function (data) {
-        //             if (data.form_is_valid) {
-        //
-        //                 $("#search-table tbody").html(data.html_school_list);  // <-- Replace the table body
-        //             }
-        //             $('#result-wrapper').show('slow');
-        //             $('#form-wrapper').hide('slow');
-        //             $('#search-msg').html('');
-        //             $(".school-search-table").dataTable({
-        //                 'lengthChange': false,
-        //                 'searching'   : false,
-        //             });
-        //         }
-        //     });
-        // });
         autoSuggesion('/load_previous_schools/', "input[name='name_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
@@ -510,43 +847,60 @@
             upazilla_contains = $('#upazilla-name').val();
             union_contains = $('#union-name').val();
             name = name_contains, division = division_contains, district = district_contains, upazilla = upazilla_contains, union = union_contains;
-            $.ajax({
-                type: 'GET',
-                url: '/api/search_school_list/',
-                data: {
-                    'name_contains': name_contains,
-                    'division_contains': division_contains,
-                    'district_contains': district_contains,
-                    'upazilla_contains': upazilla_contains,
-                    'union_contains': union_contains,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function (data) {
-                    if (data.form_is_valid) {
+            var searchResults = '';
+            if(name_contains){
+                searchResults = searchResults+"school: "+name_contains+", ";
+            }
+            if(division_contains){
+                searchResults = searchResults+"division: "+division_contains+", ";
+            }
+            if(district_contains){
+                searchResults = searchResults+"district: "+district_contains+", ";
+            }
+            if(upazilla_contains){
+                searchResults = searchResults+"upazila: "+upazilla_contains+", ";
+            }
+            if(union_contains){
+                searchResults = searchResults+"union: "+union_contains+", ";
+            }
+            if(name_contains.length>1  || division_contains.length>1 || district_contains.length>1 || upazilla_contains.length>1 || union_contains.length>1){
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/search_school_list/',
+                    data: {
+                        'name_contains': name_contains,
+                        'division_contains': division_contains,
+                        'district_contains': district_contains,
+                        'upazilla_contains': upazilla_contains,
+                        'union_contains': union_contains,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        if (data.form_is_valid) {
 
-                        $("#search-result").html(data.html_school_list);  // <-- Replace the table body
-                    }
-                    $('#result-wrapper').show('slow');
-                    $('#form-wrapper').hide('slow');
-                    $('#search-msg').html('Search results for ');
-                    if(name_contains){
-                        $('#search-msg').append(name_contains);
-                    }
-                    if(division_contains){
-                        $('#search-msg').append('Search results for "district: '+division_contains+', division: '+district_contains+'"');
-                    }
-                    $(".school-search-table").dataTable({
-                        'lengthChange': false,
-                        'searching'   : false,
-                        'info'        : false,
-                        'paging'      : false,
-                        'ordering'    : false,
-                        "language": {
-                            "emptyTable": "No results found"
+                            $("#search-result").html(data.html_school_list);  // <-- Replace the table body
                         }
-                    });
-                }
-            });
+                        $('#result-wrapper').show('slow');
+                        $('#form-wrapper').hide('slow');
+                        if(!name_contains && !division_contains && !district_contains && !upazilla_contains && !union_contains){
+                            $('#search-msg').html('');
+                        }
+                        else{
+                            $('#search-msg').html('Search results for ('+searchResults.substring(0, searchResults.length-2)+')');
+                        }
+                        $(".school-search-table").dataTable({
+                            'lengthChange': false,
+                            'searching'   : false,
+                            'info'        : false,
+                            'paging'      : false,
+                            'ordering'    : false,
+                            "language": {
+                                "emptyTable": "No results found"
+                            }
+                        });
+                    }
+                });
+            }
         });
 
     });
