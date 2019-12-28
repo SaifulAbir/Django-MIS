@@ -1,11 +1,4 @@
 DESCRIPTION_REQUIRED_ERROR = "Description is required."
-#Divisions Related Strings
-DIVISIONS_VERBOSE_NAME = 'Division'
-DIVISIONS_VERBOSE_NAME_PLURAL = 'Divisions'
-DIVISION_NAME = 'Division Name'
-DIVISION_NAME_VALIDATION_ERROR = 'setCustomValidity("Please enter on alphabets only.")'
-DIVISION_NAME_VALIDATION_PATTERN = "[a-zA-Z\s]+"
-#Divisions Related Strings
 
 #Districts Related Strings
 DISTRICTS_VERBOSE_NAME = 'District'
@@ -33,8 +26,13 @@ UPAZILA_NAME_TEST = 'Doulotpur'
 
 #Upazilas Related Strings
 
-
+# Common Strings
 SAVE_BUTTON	= "Save"
 UPDATE_BUTTON = "Update"
 DELETE_BUTTON = "Delete"
 CLOSE_BUTTON = "Close"
+SEARCH_BUTTON = "Search"
+PAGINATION_NULL_INFO_TEXT = 'Showing 0 to 0 of 0 entries'
+PAGINATION_INFO = 'Showing %s to %s of %s entries'
+LIST_ACTION_TEXT = 'Actions'
+# Common Strings

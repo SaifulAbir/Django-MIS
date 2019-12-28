@@ -1,5 +1,5 @@
 import random
-
+import accounts.strings as account_strings
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, update_session_auth_hash, urls, forms, views
@@ -26,8 +26,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 
 from accounts.decorators import admin_login_required
-from accounts.forms import PrettyAuthenticationForm, EditUserForm, HeadmasterProfileForm, SkleaderProfileForm, \
-    CustomPasswordResetForm, CustomSetPasswordForm
+from accounts.forms import PrettyAuthenticationForm, EditUserForm, HeadmasterProfileForm, SkleaderProfileForm
 from accounts.models import User
 from districts.models import District
 from division.models import Division
@@ -58,7 +57,7 @@ def index(request):
     if request.is_ajax():
         data['form_is_valid'] = True
         data['html_list'] = render_to_string('school/partial_school_list_dashboard.html',
-                                                    {'school_list': school_list})
+                                             {'school_list': school_list})
         return JsonResponse(data)
     context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list,
                'school_total': school_total, 'headmaster_total': headmaster_total, 'skleader_total': skleader_total, 'skmember_total': skmember_total}
@@ -158,44 +157,7 @@ def custom_login(request):
             raise PermissionDenied
         return redirect('school:school_profile', skleader_profile.school.id)
     else:
-        return login_page(request)
-
-def login_request(request):
-
-    next_destination = request.GET.get('next')
-    if request.method == 'POST':
-        form = PrettyAuthenticationForm( data=request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            user = authenticate(email=email, password=password)
-            if user is not None:
-                login(request, user)
-                if next_destination:
-                    return redirect(next_destination)
-                if user.user_type == 1:
-                    return redirect('/dashboard/')
-                elif user.user_type == 2:
-                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
-                    return redirect('school:school_profile', headmaster_profile.school.id)
-                elif user.user_type == 3:
-                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
-                    return redirect('school:school_profile', headmaster_profile.school.id)
-                elif user.user_type == 4:
-                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
-                    return redirect('school:school_profile', headmaster_profile.school.id)
-                elif user.user_type == 5:
-                    skleader_profile = SkLeaderProfile.objects.get(user=request.user)
-                    return redirect('school:school_profile', skleader_profile.school.id)
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
-    form = PrettyAuthenticationForm()
-
-    return render(request = request,
-                    template_name = "accounts/login.html",
-                    context={"form":form, 'next_destination': next_destination})
+        return home_login(request)
 
 @admin_login_required
 def admin_profile_update(request):
@@ -354,24 +316,6 @@ def skleader_profile_update(request):
 def handler403(request, exception):
     return render(request, 'accounts/403.html', status=403)
 
-class CustomPasswordReset(PasswordResetView):
-    email_template_name = 'accounts/password_reset_email.html'
-    subject_template_name = 'accounts/password_reset_subject.txt'
-    form_class = CustomPasswordResetForm
-    template_name = 'accounts/password_reset_form.html'
-    success_url = reverse_lazy('accounts:password_reset_done')
-
-class CustomPasswordResetDoneView(PasswordResetDoneView):
-    template_name = 'accounts/password_reset_done.html'
-
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    form_class = CustomSetPasswordForm
-    template_name = 'accounts/password_reset_confirm.html'
-    success_url = reverse_lazy('accounts:password_reset_complete')
-
-class CustomPasswordResetCompleteView(PasswordResetCompleteView):
-    template_name = 'accounts/password_reset_complete.html'
-
 
 def email_verify(request,token):
     try:
@@ -420,10 +364,8 @@ def verifyemail(request):
         'msg': 'Please check your email and confirm your email address'
     })
 
-def bd_map(request):
-    return render(request, 'accounts/map/map.html')
 
-def home_page(request):
+def home_login(request):
     next_destination = request.GET.get('next')
     if request.method == 'POST':
         form = PrettyAuthenticationForm(data=request.POST)
@@ -450,9 +392,9 @@ def home_page(request):
                     skleader_profile = SkLeaderProfile.objects.get(user=request.user)
                     return redirect('school:school_profile', skleader_profile.school.id)
             else:
-                messages.error(request, "Invalid username or password.")
+                messages.error(request, account_strings.SIGN_IN_INVALID_ERROR)
         else:
-            messages.error(request, "Invalid username or password.")
+            messages.error(request, account_strings.SIGN_IN_INVALID_ERROR)
     form = PrettyAuthenticationForm()
     data = dict()
     qs = School.objects.all()
@@ -471,61 +413,8 @@ def home_page(request):
         qs = qs.filter(upazilla__name__icontains=upazilla)
     if union != '' and union is not None:
         qs = qs.filter(union__name__icontains=union)
-
-    return render(request, 'accounts/home_page.html',
-                  {'name': name, 'division': division,
-                   'district': district, 'upazilla': upazilla, 'union': union, 'form':form, 'next_destination':next_destination})
-
-def login_page(request):
-    next_destination = request.GET.get('next')
-    if request.method == 'POST':
-        form = PrettyAuthenticationForm(data=request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            user = authenticate(email=email, password=password)
-            if user is not None:
-                login(request, user)
-                if next_destination:
-                    return redirect(next_destination)
-                if user.user_type == 1:
-                    return redirect('/dashboard/')
-                elif user.user_type == 2:
-                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
-                    return redirect('school:school_profile', headmaster_profile.school.id)
-                elif user.user_type == 3:
-                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
-                    return redirect('school:school_profile', headmaster_profile.school.id)
-                elif user.user_type == 4:
-                    headmaster_profile = HeadmasterProfile.objects.get(user=request.user)
-                    return redirect('school:school_profile', headmaster_profile.school.id)
-                elif user.user_type == 5:
-                    skleader_profile = SkLeaderProfile.objects.get(user=request.user)
-                    return redirect('school:school_profile', skleader_profile.school.id)
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
-    form = PrettyAuthenticationForm()
-    data = dict()
-    qs = School.objects.all()
-    name = request.POST.get('name_contains')
-    division = request.GET.get('division_contains')
-    district = request.GET.get('district_contains')
-    upazilla = request.GET.get('upazilla_contains')
-    union = request.GET.get('union_contains')
-    if name != '' and name is not None:
-        qs = qs.filter(name__icontains=name)
-    if division != '' and division is not None:
-        qs = qs.filter(division__name__icontains=division)
-    if district != '' and district is not None:
-        qs = qs.filter(district__name__icontains=district)
-    if upazilla != '' and upazilla is not None:
-        qs = qs.filter(upazilla__name__icontains=upazilla)
-    if union != '' and union is not None:
-        qs = qs.filter(union__name__icontains=union)
-    return render(request, 'accounts/home_login_page.html', {'name': name, 'division': division,
-                   'district': district, 'upazilla': upazilla, 'union': union, 'form':form, 'next_destination':next_destination})
+    return render(request, 'accounts/home_login.html', {'name': name, 'division': division, 'district': district, 'upazilla': upazilla, 'union': union,
+                                                        'form':form, 'next_destination':next_destination, 'account_strings': account_strings})
 
 def search_school_list(request):
     data = dict()
@@ -558,7 +447,7 @@ def search_school_list(request):
         queryset = None
     data['form_is_valid'] = True
     data['html_school_list'] = render_to_string('accounts/partial_school_list.html',
-                                                  {'queryset': queryset})
+                                                {'queryset': queryset})
     return JsonResponse(data)
 
 def load_previous_school(request):

@@ -4,7 +4,8 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-
+import division.strings as division_strings
+from resources import strings as common_strings
 from accounts.decorators import admin_login_required
 from division.models import Division
 from .forms import DivisionForm
@@ -30,10 +31,10 @@ def save_division_form(request, form, template_name):
             except EmptyPage:
                 division_list = paginator.page(paginator.num_pages)
             data['html_list'] = render_to_string('division/partial_division_list.html',
-                                                          {'division_list': division_list})
+                                                          {'division_list': division_list, 'division_strings':division_strings, 'common_strings':common_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form, 'division_strings':division_strings, 'common_strings':common_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -75,11 +76,9 @@ class DivisionList(LoginRequiredMixin, generic.ListView):
             division_list = paginator.page(paginator.num_pages)
 
         context['division_list'] = division_list
+        context['common_strings'] = common_strings
+        context['division_strings'] = division_strings
         return context
-"""class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
-
-    model = models.District
-    success_url = reverse_lazy('districts:district_list')"""
 
 def division_delete(request, pk):
     division = get_object_or_404(Division, pk=pk)
@@ -97,10 +96,10 @@ def division_delete(request, pk):
         except EmptyPage:
             division_list = paginator.page(paginator.num_pages)
         data['html_list'] = render_to_string('division/partial_division_list.html', {
-            'division_list': division_list
+            'division_list': division_list, 'division_strings':division_strings, 'common_strings':common_strings
         })
     else:
-        context = {'division': division}
+        context = {'division': division, 'division_strings':division_strings, 'common_strings':common_strings}
         data['html_form'] = render_to_string('division/division_confirm_delete.html',
             context,
             request=request,
@@ -120,6 +119,6 @@ def pagination(request):
     except EmptyPage:
         division_list = paginator.page(paginator.num_pages)
     data['html_list'] = render_to_string('division/partial_division_list.html', {
-        'division_list': division_list
+        'division_list': division_list, 'division_strings':division_strings, 'common_strings':common_strings
     })
     return JsonResponse(data)

@@ -2,8 +2,8 @@
     <thead>
     <tr>
 
-        <th class="col-sm-11">Division</th>
-        <th class="col-sm-1 text-center">Actions</th>
+        <th class="col-sm-11">{{division_strings.DIVISION_NAME}}</th>
+        <th class="col-sm-1 text-center">{{common_strings.LIST_ACTION_TEXT}}</th>
     </tr>
     </thead>
     <tbody>
@@ -28,7 +28,12 @@
 
     </tfoot>
 </table>
-<p class="table-information">Showing {{ division_list.start_index }} to {{ division_list.end_index }} of {{ division_list.paginator.count }} entries</p>
+{% if division_list %}
+<p class="table-information">{% format_values common_strings.PAGINATION_INFO division_list.start_index  division_list.end_index division_list.paginator.count %}
+</p>
+{% else %}
+<p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+{% endif %}
 <ul class="pagination">
 
     {% if division_list.has_previous %}
