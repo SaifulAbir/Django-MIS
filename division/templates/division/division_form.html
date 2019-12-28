@@ -6,7 +6,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">New Division</h4>
+        <h4 class="modal-title">{{division_strings.NEW_DIVISION_TITLE_TEXT}}</h4>
     </div>
     <div class="modal-body">
         <div class="{% if form.non_field_errors %}invalid{% endif %}">
@@ -28,7 +28,7 @@
         {% endfor %}
     </div>
     <div class="modal-footer">
-        <input type="submit" value="Save" id="divisionSubmit" class="btn btn-primary form-submit"/>
+        <input type="submit" value="{{common_strings.SAVE_BUTTON}}" id="divisionSubmit" class="btn btn-primary form-submit"/>
 
     </div>
 </form>

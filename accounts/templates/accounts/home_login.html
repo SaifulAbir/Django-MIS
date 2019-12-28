@@ -29,136 +29,139 @@
     <![endif]-->
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="{% static 'sknf/css/fonts-googleapis.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+
 </head>
 <body>
-<div id="header-bar">
-    <div class="row" id="header-row">
-        <div class="col-md-6" style="padding: 15px; padding-left: 25px;">
+<header>
+    <div class="row">
+        <div class="col-md-6">
             <div id="sknf-logo">
-                <a href=""><img id="sknf-logo-size" src="{% static 'sknf/images/logo.png' %}" alt="logo">
+                <a href=""><img id="sknf-logo-size" src="{% static 'sknf/images/sknf.png' %}" alt="logo">
                 </a>
-            </div>
-            <div id="sknf-logo-text">
-                <img id="sknf-logo-text-size" src="{% static 'sknf/images/sknf-logo-text.png' %}" alt="logo Text">
             </div>
         </div>
         <div class="col-md-6">
             <form class="form-horizontal" method="post">
-                <h5 style="padding-top: 10px;display: inline-block;">Do you have an account? Login here</h5>
+                <h5 class="sign-in-info">{{account_strings.SIGN_IN_INFO}}</h5>
                 {% csrf_token %}
                 {% if form.non_field_errors %}
                 {% for error in form.non_field_errors %}
-                <p class="text-danger" style="display: inline-block;">{{ error }}</p>
+                <p class="text-danger error-info">{{ error }}</p>
                 {% endfor %}
                 {% endif %}
                 {% if messages %}
                 {% for message in messages %}
-                <p class="text-danger text-center" style="display: inline-block; padding-left: 5px;">{{ message }}</p>
+                <p class="text-danger text-center error-msg">{{ message }}</p>
                 {% endfor %}
                 {% endif %}
                 {% if next_destination %}
                 <p class="text-danger" style="display: inline-block">
-                    You have to login first to view this page.</p>
+                    {{account_strings.PERMISSION_ERROR_MESSAGE}}</p>
                 {% endif %}
                 <div class="">
                     <div class="form-group">
 
                         <div class="col-sm-5">
                             {{ form.email }}
-                            <span style="right: 20px;" class="glyphicon glyphicon-user form-control-feedback"></span>
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
                         </div>
                         <div class="col-sm-5">
                             {{ form.password }}
-                            <span style="right: 20px;" class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
-                        <div class="col-md-2" id="sign-in"><button type="submit" class="btn btn-primary pull-right">Sign in</button></div>
-                        <div id="forgot-password">
-                            <h5>Forgot Password?<a href="{% url 'accounts:password_reset' %}"> Reset</a></h5>
-                        </div>
+                        <div class="col-md-2" id="sign-in"><button type="submit" class="btn btn-primary">{{account_strings.SIGN_IN_BUTTON_TEXT}}</button></div>
                     </div>
                     <!-- /.box-body -->
                 </div>
             </form>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-6" id="result-wrapper" style="display: none">
-        <div id="search-close" onclick="hideSearch();">
-            <span class="fa fa-close"></span>
-        </div>
-        <div class="container-fluid">
-            <h4>Schools</h4>
-            <p id="search-msg"></p>
-            <div id="search-result">
+</header>
+<main>
+    <div class="row main-container">
+        <div class="col-md-6" id="result-wrapper">
+            <div class="container-fluid">
+                <h4>{{account_strings.SCHOOL_SEARCH_LIST_TEXT}}<div id="search-close" class="pull-right" onclick="hideSearch();">
+                    <span class="fa fa-close"></span>
+                </div></h4>
+                <p id="search-msg"></p>
+                <div id="search-result">
 
-                {% include 'accounts/partial_school_list.html' %}
+                    {% include 'accounts/partial_school_list.html' %}
 
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-6" id="form-wrapper" style="background-color: #2a2a86;">
-        <form role="form" class="text-center" id="search-form-id">
-            <div class="box-header">
-                <h3 class="text-center" style="padding-left: 5px;color:#ffffff;">Are you looking for a school?<br>Click on a district on the map or search here</h3>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="text" name="name_contains" class="form-control typehead tt-query" id="school-name" autocomplete="off" placeholder="Enter School">
+        <div class="col-md-6" id="form-wrapper">
+            <form role="form" class="text-center" id="search-form-id">
+                <div class="box-header">
+                    <h3 class="text-center sknf-info">{{account_strings.SCHOOL_SEARCH_INFO}}<br>{{account_strings.SEARCH_MESSAGE}}</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <input type="text" name="name_contains" class="form-control typehead tt-query" id="school-name" autocomplete="off" placeholder="Enter School">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="text" name="division_contains" class="form-control typehead tt-query" id="division-name" autocomplete="off" placeholder="Enter Division">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <input type="text" name="division_contains" class="form-control typehead tt-query" id="division-name" autocomplete="off" placeholder="Enter Division">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="text" name="district_contains" class="form-control typehead tt-query" id="district-name" autocomplete="off" placeholder="Enter District">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <input type="text" name="district_contains" class="form-control typehead tt-query" id="district-name" autocomplete="off" placeholder="Enter District">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="text" name="upazilla_contains" class="form-control typehead tt-query" id="upazilla-name" autocomplete="off" placeholder="Enter Upazilla">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <input type="text" name="upazilla_contains" class="form-control typehead tt-query" id="upazilla-name" autocomplete="off" placeholder="Enter Upazilla">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="text" name="union_contains" class="form-control typehead tt-query" id="union-name" autocomplete="off" placeholder="Enter Union">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <input type="text" name="union_contains" class="form-control typehead tt-query" id="union-name" autocomplete="off" placeholder="Enter Union">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <button type="submit" id="school-search" class="btn btn-primary text-center">Search</button>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" id="school-search" class="btn btn-primary text-center">{{account_strings.SCHOOL_SEARCH_BUTTON_TEXT}}</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- /.box-body -->
-        </form>
-        <h3 class="text-center" style="color: #ffffff;">To know more about SKNF, Please visit <a href="http://www.shornokishoree.org/" target="_blank">www.shornokishoree.org</a></h3>
-    </div>
-    <div class="col-sm-6" style="padding-left: 0px;">
-        <div class="map-wrapper" style="position: relative;" >
+                <!-- /.box-body -->
+            </form>
+            <h3 class="text-center sknf-info">{{account_strings.SKNF_WEB_INFO}}<a href="http://www.shornokishoree.org/" target="_blank">{{account_strings.SKNF_WEB_URL}}</a></h3>
+        </div>
+        <div class="col-md-6 main-container-col">
             <div id="map"></div>
+            <footer class="mob-footer">
+                <div class="pull-right hidden-xs">
+                    <b>{{account_strings.VERSION_TEXT}}</b>{{APP_VERSION_NUMBER}}
+                </div>
+                <strong>{{account_strings.COPYRIGHT_TEXT}}</strong> {{account_strings.ALL_RIGHTS_RESERVED}}
+            </footer>
         </div>
     </div>
-</div>
-
-
-
+</main>
+<footer>
+    <div class="pull-right hidden-xs">
+        <b>{{account_strings.VERSION_TEXT}}</b>{{APP_VERSION_NUMBER}}
+    </div>
+    <strong>{{account_strings.COPYRIGHT_TEXT}}</strong> {{account_strings.ALL_RIGHTS_RESERVED}}
+</footer>
 <!-- jQuery 3 -->
 <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -166,19 +169,13 @@
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 <!-- iCheck -->
 <script src="{% static 'vendor/plugins/iCheck/icheck.min.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{% static 'vendor/dist/js/adminlte.js' %}"></script>
 <!-- Database Tables -->
 <script src="{% static 'vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'vendor/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="{% static 'sknf/js/typeahead.min.js' %}"></script>
 <script>
     var mymap;
     $(function () {
-        var height = $( document ).height();
-        var height2 = $("#header-bar").height();
-        $(".map-wrapper").css("min-height", height-height2);
-        $("#form-wrapper").css("min-height", height-height2);
         var name, division, district, upazilla, union;
         var globalTimeout = null;
         var districts = [
@@ -289,13 +286,16 @@
                         }
                         $('#result-wrapper').show('slow');
                         $('#form-wrapper').hide('slow');
-                        $('#search-msg').html('You have searched for "'+district_contains+ '"');
+                        $('#search-msg').html('Search results for "district: '+district_contains+', division: '+district_contains+'"');
                         $(".school-search-table").dataTable({
                             'lengthChange': false,
                             'searching'   : false,
                             'paging'      : false,
                             'info'        : false,
                             'ordering'    : false,
+                            "language": {
+                                "emptyTable": "No results found"
+                            }
                         });
                     }
                 });
@@ -324,45 +324,14 @@
                         'ordering'    : false,
                         'info'        : false,
                         'autoWidth'   : false,
-                        'destroy'     : true
+                        'destroy'     : true,
+                        "language": {
+                            "emptyTable": "No results found"
+                        }
                     });
                 }
             });
         });
-
-        // $('#school-search').on('click', function () {
-        //     $(".school-search-table").DataTable().destroy();
-        //     name_contains = $('#school-name').val();
-        //     division_contains = $('#division-name').val();
-        //     district_contains = $('#district-name').val();
-        //     upazilla_contains = $('#upazilla-name').val();
-        //     union_contains = $('#union-name').val();
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '/api/search_school_list/',
-        //         data: {
-        //             'name_contains': name_contains,
-        //             'division_contains': division_contains,
-        //             'district_contains': district_contains,
-        //             'upazilla_contains': upazilla_contains,
-        //             'union_contains': union_contains,
-        //             csrfmiddlewaretoken: '{{ csrf_token }}'
-        //         },
-        //         success: function (data) {
-        //             if (data.form_is_valid) {
-        //
-        //                 $("#search-table tbody").html(data.html_school_list);  // <-- Replace the table body
-        //             }
-        //             $('#result-wrapper').show('slow');
-        //             $('#form-wrapper').hide('slow');
-        //             $('#search-msg').html('');
-        //             $(".school-search-table").dataTable({
-        //                 'lengthChange': false,
-        //                 'searching'   : false,
-        //             });
-        //         }
-        //     });
-        // });
         autoSuggesion('/load_previous_schools/', "input[name='name_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
@@ -378,34 +347,60 @@
             upazilla_contains = $('#upazilla-name').val();
             union_contains = $('#union-name').val();
             name = name_contains, division = division_contains, district = district_contains, upazilla = upazilla_contains, union = union_contains;
-            $.ajax({
-                type: 'GET',
-                url: '/api/search_school_list/',
-                data: {
-                    'name_contains': name_contains,
-                    'division_contains': division_contains,
-                    'district_contains': district_contains,
-                    'upazilla_contains': upazilla_contains,
-                    'union_contains': union_contains,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function (data) {
-                    if (data.form_is_valid) {
+            var searchResults = '';
+            if(name_contains){
+                searchResults = searchResults+"school: "+name_contains+", ";
+            }
+            if(division_contains){
+                searchResults = searchResults+"division: "+division_contains+", ";
+            }
+            if(district_contains){
+                searchResults = searchResults+"district: "+district_contains+", ";
+            }
+            if(upazilla_contains){
+                searchResults = searchResults+"upazila: "+upazilla_contains+", ";
+            }
+            if(union_contains){
+                searchResults = searchResults+"union: "+union_contains+", ";
+            }
+            if(name_contains.length>1  || division_contains.length>1 || district_contains.length>1 || upazilla_contains.length>1 || union_contains.length>1){
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/search_school_list/',
+                    data: {
+                        'name_contains': name_contains,
+                        'division_contains': division_contains,
+                        'district_contains': district_contains,
+                        'upazilla_contains': upazilla_contains,
+                        'union_contains': union_contains,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        if (data.form_is_valid) {
 
-                        $("#search-result").html(data.html_school_list);  // <-- Replace the table body
+                            $("#search-result").html(data.html_school_list);  // <-- Replace the table body
+                        }
+                        $('#result-wrapper').show('slow');
+                        $('#form-wrapper').hide('slow');
+                        if(!name_contains && !division_contains && !district_contains && !upazilla_contains && !union_contains){
+                            $('#search-msg').html('');
+                        }
+                        else{
+                            $('#search-msg').html('Search results for ('+searchResults.substring(0, searchResults.length-2)+')');
+                        }
+                        $(".school-search-table").dataTable({
+                            'lengthChange': false,
+                            'searching'   : false,
+                            'info'        : false,
+                            'paging'      : false,
+                            'ordering'    : false,
+                            "language": {
+                                "emptyTable": "No results found"
+                            }
+                        });
                     }
-                    $('#result-wrapper').show('slow');
-                    $('#form-wrapper').hide('slow');
-                    $('#search-msg').html('');
-                    $(".school-search-table").dataTable({
-                        'lengthChange': false,
-                        'searching'   : false,
-                        'info'        : false,
-                        'paging'      : false,
-                        'ordering'    : false,
-                    });
-                }
-            });
+                });
+            }
         });
 
     });

@@ -1,174 +1,498 @@
+@media only screen
+and (min-width : 1024px) {
+    html, body {
+        height: 100%
+    }
 
-#header-row{
-    background-color: #ffffff;
-}
-#header-bar{
-    box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.15);
-    position: relative;
-    z-index: 2001;
-}
-#sknf-logo{
-    display: inline-block;
-}
-#sknf-logo-text{
-    display: inline-block;
-}
+    body {
+        color: #FFF;
+        padding: 0;
+        margin: 0;
+    }
 
-#sknf-logo-size{
-    width: 86%;
-}
-#sknf-logo-text-size{
-    width: 86%;
-}
-
-#page-content {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-    height: 100%;
-    background-color: white;
-}
-#map{
-    position: absolute;
-    left: 0px;
-    height: 100%;
-    width: 100%;
-    z-index: 1000;
-}
-#forgot-password{
-    padding-left: 15px;
-    padding-top: 30px;
-}
-
-#search-form-id{
-        padding-right: 200px;
-        padding-left: 200px;
+    header {
+        background-color: #ffffff;
+        height: 120px;
+        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
         position: relative;
+        z-index: 1001;
     }
-#result-wrapper{
-    /*position: absolute;*/
-    /*z-index: 1;*/
-    /*background-color: #5bc0de;*/
-}
 
-#search-close {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    height: 29px;
-    width: 34px;
-    opacity: 1;
-    z-index: 2000;
-    background: white;
-    cursor: pointer;
-    padding: 0px;
-    padding-left: 9px;
-    padding-top: 5px;
-}
-.btn-primary{
-    background-color: #2a2a86 !important;
-}
-
-#form-wrapper h3 a{
-    color: #ffffff;
-}
-@media (min-width: 992px){
-    .col-md-2 {
-        width: 15%;
+    main {
+        background-color: #2a2a86;
+        height: calc(100% - 170px);
     }
-}
-@media only screen and (max-width: 500px) {
+
+    footer {
+        background-color: #fff;
+        height: 50px;
+        color: #444;
+        padding: 15px;
+    }
+
     #sknf-logo {
-        width: 25%;
+        padding: 3px;
     }
-    #sknf-logo-size,#sknf-logo-text-size {
+
+    .main-container {
+        height: 100%;
+    }
+
+    .sknf-info {
+        color: #ffffff;
+    }
+
+    #map {
+        height: 100%;
+    }
+
+    .main-container-col {
+        height: 100%;
+        padding-left: 0px;
+    }
+
+    h3 a, h3 a:hover, h3 a:focus {
+        color: #ffffff;
+    }
+
+    .btn-primary {
+        background-color: #2a2a86 !important;
+    }
+
+    .sign-in-info {
+        padding-top: 10px;
+        display: inline-block;
+        color: #000;
+    }
+
+    .error-info {
+        display: inline-block;
+    }
+
+    .error-msg {
+        display: inline-block;
+        padding-left: 5px;
+    }
+
+    .form-control-feedback {
+        right: 20px;
+        color: #444;
+    }
+
+    #result-wrapper {
+        display: none;
+        background-color: #ffffff;
+        height: 100%;
+        color: #000;
+    }
+
+    .col-md-6 {
+        padding-right: 0px;
+    }
+
+    #search-close {
+        cursor: pointer;
+    }
+
+    .mob-footer {
+        display: none;
+    }
+
+    #search-form-id .col-md-6{
+        padding-right: 15px;
+    }
+
+    /*home-page school search list pagination*/
+    .pagination {
+        display: inline-block;
+        padding-left: 0;
+        margin: 0px 0;
+        border-radius: 4px;
+        float: right;
+    }
+
+    .table-information {
+        display: inline-block;
+        margin-top: 6px;
+        margin-bottom: 0px;
+    }
+
+    .pagination > .active > span {
+        background-color: #2a2a86;
+    }
+
+    /* auto-complete search */
+    .typeahead, .tt-query, .tt-hint {
+        border: 1px solid #dfe1e5;
+        outline: medium none;
+        padding: 8px 12px;
+    }
+
+    .tt-input:hover {
+        border-color: rgba(223, 225, 229, 0);
+        box-shadow: 0 1px 6px rgba(32, 33, 36, 0.20);
+    }
+
+    .tt-input:focus {
+        border-color: #2a2a86;
+    }
+
+    .tt-menu {
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        margin-top: 8px;
+        padding: 8px 0;
+    }
+
+    .tt-suggestion:hover {
+        cursor: pointer;
+        background-color: #f2f2f2;
+        color: #cd911f;
+    }
+
+    .tt-suggestion {
+        font-size: 14px; /* Set suggestion dropdown font size */
+        padding: 3px 20px;
+        color: #2a2a86;
+    }
+
+    .tt-dataset.tt-dataset-previousItems {
+        text-align: left;
+    }
+
+    .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
         width: 100%;
     }
-    #sknf-logo-text {
-        width: 70%;
+}
+@media only screen
+and (min-width : 468px)
+and (max-width : 1024px) {
+    html, body {
+        height: 100%
+    }
+
+    body {
+        color: #FFF;
+        padding: 0;
+        margin: 0;
+    }
+
+    header {
+        background-color: #ffffff;
+        height: auto;
+        box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.15);
+        position: relative;
+        z-index: 1001;
+    }
+
+    main {
+        background-color: #2a2a86;
+        height: calc(100% - 50px);
+    }
+
+    footer {
+        background-color: #fff;
+        height: 50px;
+        color: #444;
+        padding: 15px;
+    }
+    #form-wrapper{
+        margin-right: 15px;
+        padding-right: 15px;
+    }
+    #search-form-id{
+        padding-right: 15px;
+    }
+    .mob-footer{
+        display: block;
+    }
+    #sknf-logo{
+        padding: 3px;
+    }
+    .main-container{
+        height: 100%;
+        margin-left: 0px;
+    }
+    .sknf-info{
+        color: #ffffff;
+    }
+    #map{
+        height: calc(100% - 50px);
+    }
+    .main-container-col{
+        height: calc(100% - 50px);
+        padding-left: 0px;
+    }
+    h3 a, h3 a:hover, h3 a:focus{
+        color: #ffffff;
+    }
+    .btn-primary{
+        background-color: #2a2a86 !important;
+    }
+    .sign-in-info{
+        padding-top: 10px;
+        display: inline-block;
+        color: #000;
+    }
+    .error-info{
+        display: inline-block;
+    }
+    .error-msg{
+        display: inline-block;
+        padding-left: 5px;
+    }
+    .form-control-feedback{
+        right: 20px;
+        color: #000;
+    }
+    #result-wrapper{
+        display: none;
+        background-color: #ffffff;
+        height: 100%;
+        color: #000;
+    }
+    .col-md-6{
+        padding-right: 0px;
+    }
+    #search-close{
+        cursor: pointer;
+    }
+
+    /*home-page school search list pagination*/
+    .pagination{
+        display: inline-block;
+        padding-left: 0;
+        margin: 0px 0;
+        border-radius: 4px;
+    }
+
+    .table-information{
+        display: inline-block;
+        margin-top: 6px;
+        margin-bottom: 0px;
+    }
+
+    .pagination>.active>span{
+        background-color: #2a2a86;
+    }
+    /* auto-complete search */
+    .typeahead, .tt-query, .tt-hint {
+        border: 1px solid #dfe1e5;
+        outline: medium none;
+        padding: 8px 12px;
+    }
+    .tt-input:hover{
+        border-color: rgba(223, 225, 229, 0);
+        box-shadow: 0 1px 6px rgba(32,33,36,0.20);
+    }
+    .tt-input:focus{
+        border-color: #2a2a86;
+    }
+    .tt-menu {
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        margin-top: 8px;
+        padding: 8px 0;
+    }
+    .tt-suggestion:hover {
+        cursor: pointer;
+        background-color: #f2f2f2;
+        color: #cd911f;
+    }
+    .tt-suggestion {
+        font-size: 14px;  /* Set suggestion dropdown font size */
+        padding: 3px 20px;
+        color:#2a2a86;
+    }
+    .tt-dataset.tt-dataset-previousItems {
+        text-align: left;
+    }
+    .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+        width: 100%;
+    }
+
+    img#sknf-logo-size {
+        width: 96%;
     }
     .form-horizontal{
         margin-right: 15px;
         margin-left: 15px;
-    }
-    #forgot-password{
-        padding-top: 0px;
-    }
-    #search-form-id{
-        padding-right: 10px;
-        padding-left: 10px;
+        padding-right: 15px;
     }
     .col-sm-5{
         padding-bottom: 5px;
     }
-
+    #sign-in{
+        float: right;
+    }
 }
-
-@media screen and (min-width: 501px) and (max-width: 992px) {
-  #search-form-id{
-        padding-right: 0px;
-        padding-left: 15px;
+@media only screen
+and (min-width : 320px)
+and (max-width : 480px) {
+    html, body {
+        height: 100%
     }
 
-  .form-horizontal{
+    body {
+        color: #FFF;
+        padding: 0;
+        margin: 0;
+    }
+
+    header {
+        background-color: #ffffff;
+        height: auto;
+        box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.15);
+        position: relative;
+        z-index: 1001;
+    }
+
+    main {
+        background-color: #2a2a86;
+        height: calc(100% - 50px);
+    }
+
+    footer {
+        background-color: #fff;
+        height: 50px;
+        color: #444;
+        padding: 15px;
+    }
+    #form-wrapper{
+        margin-right: 15px;
+        padding-right: 15px;
+    }
+    #search-form-id{
+        padding-right: 15px;
+    }
+    .mob-footer{
+        display: block;
+    }
+    #sknf-logo{
+        padding: 3px;
+    }
+    .main-container{
+        height: 100%;
+        margin-left: 0px;
+    }
+    .sknf-info{
+        color: #ffffff;
+    }
+    #map{
+        height: calc(100% - 50px);
+    }
+    .main-container-col{
+        height: calc(100% - 50px);
+        padding-left: 0px;
+    }
+    h3 a, h3 a:hover, h3 a:focus{
+        color: #ffffff;
+    }
+    .btn-primary{
+        background-color: #2a2a86 !important;
+    }
+    .sign-in-info{
+        padding-top: 10px;
+        display: inline-block;
+        color: #000;
+    }
+    .error-info{
+        display: inline-block;
+    }
+    .error-msg{
+        display: inline-block;
+        padding-left: 5px;
+    }
+    .form-control-feedback{
+        right: 20px;
+        color: #000;
+    }
+    #result-wrapper{
+        display: none;
+        background-color: #ffffff;
+        height: 100%;
+        color: #000;
+        padding-left: 0px;
+        padding-right: 15px;
+    }
+    .col-md-6{
+        padding-right: 0px;
+    }
+    #search-close{
+        cursor: pointer;
+    }
+
+    /*home-page school search list pagination*/
+    .pagination{
+        display: inline-block;
+        padding-left: 0;
+        margin: 0px 0;
+        border-radius: 4px;
+    }
+
+    .table-information{
+        display: inline-block;
+        margin-top: 6px;
+        margin-bottom: 0px;
+    }
+
+    .pagination>.active>span{
+        background-color: #2a2a86;
+    }
+    /* auto-complete search */
+    .typeahead, .tt-query, .tt-hint {
+        border: 1px solid #dfe1e5;
+        outline: medium none;
+        padding: 8px 12px;
+    }
+    .tt-input:hover{
+        border-color: rgba(223, 225, 229, 0);
+        box-shadow: 0 1px 6px rgba(32,33,36,0.20);
+    }
+    .tt-input:focus{
+        border-color: #2a2a86;
+    }
+    .tt-menu {
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        margin-top: 8px;
+        padding: 8px 0;
+    }
+    .tt-suggestion:hover {
+        cursor: pointer;
+        background-color: #f2f2f2;
+        color: #cd911f;
+    }
+    .tt-suggestion {
+        font-size: 14px;  /* Set suggestion dropdown font size */
+        padding: 3px 20px;
+        color:#2a2a86;
+    }
+    .tt-dataset.tt-dataset-previousItems {
+        text-align: left;
+    }
+    .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+        width: 100%;
+    }
+
+    img#sknf-logo-size {
+        width: 96%;
+    }
+    .form-horizontal{
         margin-right: 15px;
         margin-left: 15px;
+        padding-right: 15px;
+    }
+    .col-sm-5{
+        padding-bottom: 5px;
+    }
+    #sign-in{
+        float: right;
     }
 }
-
-/*home-page school search list pagination*/
-.pagination{
-    display: inline-block;
-    padding-left: 0;
-    margin: 0px 0;
-    border-radius: 4px;
-}
-
-.table-information{
-    display: inline-block;
-}
-
-.pagination>.active>span{
-    background-color: #2a2a86;
-}
-/* auto-complete search */
-.typeahead, .tt-query, .tt-hint {
-  border: 1px solid #dfe1e5;
-  outline: medium none;
-  padding: 8px 12px;
-}
-.tt-input:hover{
-   border-color: rgba(223, 225, 229, 0);
-   box-shadow: 0 1px 6px rgba(32,33,36,0.20);
-}
-.tt-input:focus{
-   border-color: #2a2a86;
-}
-.tt-menu {
-  background-color: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  margin-top: 8px;
-  padding: 8px 0;
-}
-.tt-suggestion:hover {
-  cursor: pointer;
-  background-color: #f2f2f2;
-  color: #cd911f;
-}
-.tt-suggestion {
-  font-size: 14px;  /* Set suggestion dropdown font size */
-  padding: 3px 20px;
-}
-.tt-dataset.tt-dataset-previousItems {
-   text-align: left;
-}
-.twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
-   width: 100%;
-}
-

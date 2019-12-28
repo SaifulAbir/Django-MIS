@@ -5,18 +5,20 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.translation import ugettext_lazy as _
 from accounts.models import User
 from headmasters.models import HeadmasterProfile
+import accounts.strings as account_strings
 from skleaders.models import SkLeaderProfile
+import resources.strings as common_strings
 
 
 class PrettyAuthenticationForm(forms.Form):
 
-    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'class': account_strings.CLASS_FORM_CONTROL, 'placeholder': account_strings.USER_NAME_PLACEHOLDER}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': account_strings.CLASS_FORM_CONTROL, 'placeholder': account_strings.PASSWORD_PLACEHOLDER}))
 
     def clean(self):
         user = self.authenticate_via_email()
         if not user:
-            raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+            raise forms.ValidationError(account_strings.EMAIL_AUTHENTICATION_ERROR)
         else:
             self.user = user
         return self.cleaned_data
@@ -38,14 +40,15 @@ class PrettyAuthenticationForm(forms.Form):
 
 class EditUserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
-        (1, 'admin')
+        (1, account_strings.USER_TYPE_ADMIN)
     )
-    email = forms.CharField(error_messages={'required': 'Email is required.'})
-    password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
+    first_name = forms.CharField(label=common_strings.USER_PROFILE_NAME)
+    email = forms.CharField(label=common_strings.USER_PROFILE_USERNAME, error_messages={'required': account_strings.EMAIL_REQUIRED_ERROR})
+    password = forms.CharField(label=common_strings.USER_PROFILE_PASSWORD,required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    confirm_password = forms.CharField(label=common_strings.USER_PROFILE_CONFIRM_PASSWORD,required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
-    image = forms.ImageField(label=_('User image'), required=False,
-                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image = forms.ImageField(label=_(account_strings.USER_IMAGE_LEVEL_TEXT), required=False,
+                             error_messages={'invalid': _(account_strings.USER_IMAGE_VALIDATION_ERROR)}, widget=forms.FileInput)
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     class Meta:
         model = User
@@ -57,7 +60,7 @@ class EditUserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match.")
+            self.add_error('confirm_password', account_strings.USER_CONFIRM_PASSWORD_ERROR)
 
         return cleaned_data
 
@@ -65,12 +68,12 @@ class EditUserForm(forms.ModelForm):
         image = self.cleaned_data.get('image', False)
         if image:
             if image.size > 1 * 1024 * 1024:
-                raise ValidationError("Image is too large")
+                raise ValidationError(account_strings.USER_IMAGE_SIZE_ERROR)
             return image
 
 class HeadmasterProfileForm(forms.ModelForm):
-    image = forms.ImageField(label=_('Headmaster image'), required=False,
-                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image = forms.ImageField(label=_(account_strings.HEADMASTER_IMAGE_LEVEL_TEXT), required=False,
+                             error_messages={'invalid': _(account_strings.USER_IMAGE_VALIDATION_ERROR)}, widget=forms.FileInput)
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
@@ -81,12 +84,12 @@ class HeadmasterProfileForm(forms.ModelForm):
         image = self.cleaned_data.get('image', False)
         if image:
             if image.size > 1 * 1024 * 1024:
-                raise ValidationError("Image file too large ( > 1mb )")
+                raise ValidationError(account_strings.USER_IMAGE_SIZE_ERROR)
             return image
 
 class SkleaderProfileForm(forms.ModelForm):
-    image = forms.ImageField(label=_('Headmaster image'), required=False,
-                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image = forms.ImageField(label=_(account_strings.SKLEADER_IMAGE_LEVEL_TEXT), required=False,
+                             error_messages={'invalid': _(account_strings.USER_IMAGE_VALIDATION_ERROR)}, widget=forms.FileInput)
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
@@ -97,31 +100,6 @@ class SkleaderProfileForm(forms.ModelForm):
         image = self.cleaned_data.get('image', False)
         if image:
             if image.size > 1 * 1024 * 1024:
-                raise ValidationError("Image file too large ( > 1mb )")
+                raise ValidationError(account_strings.USER_IMAGE_SIZE_ERROR)
             return image
 
-class CustomPasswordResetForm(PasswordResetForm):
-    email = forms.EmailField(label=_("Email"), max_length=254, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
-
-class CustomSetPasswordForm(SetPasswordForm):
-    new_password1 = forms.CharField(
-        label=_("New password"),
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'New password'}),
-        strip=False,
-    )
-    new_password2 = forms.CharField(
-        label=_("New password confirmation"),
-        strip=False,
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'New password confirmation'}),
-    )
-
-    def clean_new_password2(self):
-        password1 = self.cleaned_data.get('new_password1')
-        password2 = self.cleaned_data.get('new_password2')
-        if password1 and password2:
-            if password1 != password2:
-                raise forms.ValidationError(
-                    self.error_messages['password_mismatch'],
-                    code='password_mismatch',
-                )
-        return password2
