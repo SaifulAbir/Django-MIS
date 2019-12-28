@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 
-<form action="{% url 'upazillas:update_upazilla' form.instance.pk %}" class="js-upazilla-update-form" method='POST'>
+<form action="{% url 'upazillas:update_upazilla' form.instance.pk %}" id="upazillaForm" data-districts-url="{% url 'upazillas:ajax_load_districts' %}" class="js-upazilla-update-form" method='POST'>
     {% csrf_token %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -35,8 +35,27 @@
 
 
 <script>
+    $(function () {
+
+        $("#id_division").change(function () {
+            var url = $("#upazillaForm").attr("data-districts-url");
+            var divisionId = $(this).val();
+
+            $.ajax({
+                url: url,
+                data: {
+                    'division': divisionId
+                },
+                success: function (data) {
+                    $("#id_district").html(data);
+                }
+            });
+
+        });
+    });
     //for Disabling cache
     $("form :input").attr("autocomplete", "off");
+
     //for Disabling cache
 </script>
 

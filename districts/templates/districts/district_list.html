@@ -1,30 +1,37 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    <section class="content-header" style="padding-top:60px">
-        <h1>District List</h1>
+    <section class="content-header" >
+        <h1>{{ district_strings.DISTRICT_LIST_TITLE }}</h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
         <div class="box">
             <div class="box-header">
-                <h3 style="display: inline-block;" class="box-title"> </h3>
                 <span id = "alert_placeholder"></span>
                 <button type="button"
                         class="btn btn-primary pull-right js-create-district"
                         data-url="{% url 'districts:create_district' %}">
                     <span class="fa fa-plus"></span>
-                    New District
+                    {{ district_strings.CREATE_DSTRICT_BUTTON_TEXT }}
                 </button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive district-container">
                 {% include 'districts/partial_districts_list.html' %}
-                {% include 'districts/_modal.html' %}
+
             </div>
+            {% include 'districts/_modal.html' %}
         </div>
         <!-- /.content -->
     </section>
+    {% block extra_css %}
+        <style type="text/css">
+            .content-header{
+                padding-top: 60px !important;
+            }
+        </style>
+    {% endblock %}
 {% endblock %}
 {% block extra_js %}
     <script type="text/javascript">
@@ -70,7 +77,16 @@
                                 showAlert("District Deleted!", "alert-danger-customized")
                             }
 
-                            $(".district-table tbody").html(data.html_district_list);  // <-- Replace the table body
+                            $(".district-container").html(data.html_list);
+                            $('.district-table').DataTable({
+                                'paging'      : false,
+                                'lengthChange': false,
+                                'searching'   : false,
+                                'ordering'    : false,
+                                'info'        : false,
+                                'autoWidth'   : false,
+                                'destroy'     : true
+                            });// <-- Replace the table body
                             $("#modal-district").modal("hide");  // <-- Close the modal
                         }
                         else {
@@ -93,11 +109,11 @@
             $("#modal-district").on("submit", ".js-district-create-form", saveForm);
 
             // Update district
-            $(".district-table").on("click", ".js-update-district", loadForm);
+            $(".district-container").on("click", ".js-update-district", loadForm);
             $("#modal-district").on("submit", ".js-district-update-form", saveForm);
 
             // Delete book
-            $(".district-table").on("click", ".js-delete-district", loadForm);
+            $(".district-container").on("click", ".js-delete-district", loadForm);
             $("#modal-district").on("submit", ".js-district-delete-form", saveForm);
             pagination(".district-container", '/district/pagination/', '', '', '.district-table');
 
