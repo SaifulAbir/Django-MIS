@@ -1,7 +1,7 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 <section class="content-header">
-    <h1>Division List</h1>
+    <h1>{{division_strings.DIVISION_LIST_TEXT}}</h1>
 </section>
 <!-- Main content -->
 <section class="content">
@@ -16,7 +16,7 @@
                         class="btn btn-primary pull-right js-create-division"
                         data-url="{% url 'division:create_division' %}">
                     <span class="fa fa-plus"></span>
-                    New Division
+                    {{division_strings.NEW_DIVISION_TITLE_TEXT}}
                 </button>
             </div>
             {% include 'division/_modal.html' %}
@@ -28,7 +28,6 @@
     </div>
     <!-- /.content -->
 </section>
-{% endblock %}
 {% block extra_css %}
 <style type="text/css">
     .content-header{
@@ -38,6 +37,7 @@
         display: inline-block;
     }
 </style>
+{% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">

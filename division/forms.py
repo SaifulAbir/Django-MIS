@@ -7,5 +7,5 @@ class DivisionForm(forms.ModelForm):
         model = Division
         fields = ['name']
         widgets = {
-            'name': forms.TextInput(attrs={'pattern': division_strings.DIVISION_NAME_VALIDATION_PATTERN, 'oninvalid': division_strings.DIVISION_NAME_VALIDATION_ERROR,}),
+            'name': forms.TextInput(attrs={'pattern': "[a-zA-Z\s]+", 'oninvalid': division_strings.DIVISION_NAME_VALIDATION_ERROR,}),
         }

@@ -30,10 +30,10 @@ def save_division_form(request, form, template_name):
             except EmptyPage:
                 division_list = paginator.page(paginator.num_pages)
             data['html_list'] = render_to_string('division/partial_division_list.html',
-                                                          {'division_list': division_list})
+                                                          {'division_list': division_list, 'division_strings':division_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form, 'division_strings':division_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -75,6 +75,7 @@ class DivisionList(LoginRequiredMixin, generic.ListView):
             division_list = paginator.page(paginator.num_pages)
 
         context['division_list'] = division_list
+        context['division_strings'] = division_strings
         return context
 
 def division_delete(request, pk):
@@ -93,10 +94,10 @@ def division_delete(request, pk):
         except EmptyPage:
             division_list = paginator.page(paginator.num_pages)
         data['html_list'] = render_to_string('division/partial_division_list.html', {
-            'division_list': division_list
+            'division_list': division_list, 'division_strings':division_strings
         })
     else:
-        context = {'division': division}
+        context = {'division': division, 'division_strings':division_strings}
         data['html_form'] = render_to_string('division/division_confirm_delete.html',
             context,
             request=request,
@@ -116,6 +117,6 @@ def pagination(request):
     except EmptyPage:
         division_list = paginator.page(paginator.num_pages)
     data['html_list'] = render_to_string('division/partial_division_list.html', {
-        'division_list': division_list
+        'division_list': division_list, 'division_strings':division_strings
     })
     return JsonResponse(data)
