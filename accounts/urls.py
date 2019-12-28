@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 from accounts.views import *
 from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
-from .views import index, profile, events, custom_login, admin_profile_update, headmaster_profile_update, \
+from .views import index, events, custom_login, admin_profile_update, headmaster_profile_update, \
     skleader_profile_update, verifyemail, email_verify, search_school_list, load_previous_school, load_previous_eiin, load_previous_user, home_login
 
 app_name = 'accounts'
@@ -16,7 +16,6 @@ urlpatterns = [
     path('dashboard/', index, name = 'dashboard'),
     #path('', auth_views.LoginView.as_view(template_name = 'accounts/login.html', authentication_form = PrettyAuthenticationForm, redirect_authenticated_user=True), name = 'login'),
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
-    path('profile/', profile, name='profile'),
     path('events/', events, name='events'),
     path('', custom_login, name='login'),
     path('login/', home_login, name='home_login'),

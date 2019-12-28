@@ -29,7 +29,7 @@
     <![endif]-->
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="{% static 'sknf/css/fonts-googleapis.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <style type="text/css">
         @media only screen
@@ -142,6 +142,7 @@
                 padding-left: 0;
                 margin: 0px 0;
                 border-radius: 4px;
+                float: right;
             }
 
             .table-information {
@@ -200,7 +201,7 @@
             }
         }
         @media only screen
-        and (min-device-width : 768px)
+        and (min-device-width : 468px)
         and (max-device-width : 1024px) {
             html, body {
                 height: 100%
@@ -449,6 +450,8 @@
                 background-color: #ffffff;
                 height: 100%;
                 color: #000;
+                padding-left: 0px;
+                padding-right: 15px;
             }
             .col-md-6{
                 padding-right: 0px;
@@ -668,14 +671,14 @@
 <!-- Database Tables -->
 <script src="{% static 'vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'vendor/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="{% static 'sknf/js/typeahead.min.js' %}"></script>
 <script>
     var mymap;
     $(function () {
-        var height = $( document ).height();
-        var height2 = $("#header-bar").height();
-        $(".map-wrapper").css("min-height", height-height2);
-        $("#form-wrapper").css("min-height", height-height2);
+        // var height = $( document ).height();
+        // var height2 = $("#header-bar").height();
+        // $(".map-wrapper").css("min-height", height-height2);
+        // $("#form-wrapper").css("min-height", height-height2);
         var name, division, district, upazilla, union;
         var globalTimeout = null;
         var districts = [
