@@ -7,6 +7,7 @@ from accounts.models import User
 from headmasters.models import HeadmasterProfile
 import accounts.strings as account_strings
 from skleaders.models import SkLeaderProfile
+import resources.strings as common_strings
 
 
 class PrettyAuthenticationForm(forms.Form):
@@ -41,9 +42,10 @@ class EditUserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
         (1, account_strings.USER_TYPE_ADMIN)
     )
-    email = forms.CharField(error_messages={'required': account_strings.EMAIL_REQUIRED_ERROR})
-    password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
+    first_name = forms.CharField(label=common_strings.USER_PROFILE_NAME)
+    email = forms.CharField(label=common_strings.USER_PROFILE_USERNAME, error_messages={'required': account_strings.EMAIL_REQUIRED_ERROR})
+    password = forms.CharField(label=common_strings.USER_PROFILE_PASSWORD,required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    confirm_password = forms.CharField(label=common_strings.USER_PROFILE_CONFIRM_PASSWORD,required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     image = forms.ImageField(label=_(account_strings.USER_IMAGE_LEVEL_TEXT), required=False,
                              error_messages={'invalid': _(account_strings.USER_IMAGE_VALIDATION_ERROR)}, widget=forms.FileInput)

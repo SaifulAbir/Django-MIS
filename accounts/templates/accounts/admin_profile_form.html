@@ -1,78 +1,61 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    {% load widget_tweaks %}
-    {% load static %}
-    <form method='POST' enctype="multipart/form-data" novalidate>
-        <section class="content-header"style="padding-top:60px">
-            {% if not user_form.instance.pk %}
-                <h1>Add Admin</h1>
-            {% else %}
-                <h1>Edit Admin Profile</h1>
-            {% endif %}
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <!-- left column -->
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Basic Information</h3>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="box-body">
-                                    <!-- Color Picker -->
-                                    <span id = "alert_placeholder">
+{% load widget_tweaks %}
+{% load static %}
+<form method='POST' enctype="multipart/form-data" novalidate>
+    <section class="content-header">
+        <h1>{{account_strings.EDIT_ADMIN_PROFILE_TITLE}}</h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{common_strings.PROFILE_FORM_TITLE}}</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="box-body">
+                                <!-- Color Picker -->
+                                <span id = "alert_placeholder">
                                         {% if user_form.errors %}
-                                            <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                            <div id="alertdiv" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                             </span>
                                         </div>
                                         {% endif %}
                                     </span>
-                                    {% csrf_token %}
+                                {% csrf_token %}
 
-                                    <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
-                                    </div>
+                                <div class="form-group">
+                                    <label for="{{ user_form.first_name.id_for_label }}">{{user_form.first_name.label}}</label>
+                                    {% render_field user_form.first_name class="form-control" placeholder=user_form.first_name.label %}
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">Username / Mobile Number</label>
-                                        {% render_field user_form.email class="form-control" placeholder="Username / Mobile Number" %}
+                                <div class="form-group">
+                                    <label for="{{ user_form.email.id_for_label }}">{{user_form.email.label}}</label>
+                                    {% render_field user_form.email class="form-control" placeholder=user_form.email.label %}
+                                </div>
 
-<!--                                            {% if user_profile.email_verified == '1' %}-->
-<!--                                                <button type="button"-->
-<!--                                                class="btn btn-success pull-right verifyemail">-->
-<!--                                                Verified-->
-<!--                                                </button>-->
-<!--                                            {% else %}-->
-<!--                                                <button type="button"-->
-<!--                                                class="btn btn-warning pull-right verifyemail">-->
-<!--                                                Not Verified-->
-<!--                                                </button>-->
-<!--                                            {% endif %}-->
-                                    </div>
+                                <div class="form-group">
+                                    <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
+                                    {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    <button type="button"
+                                            class="btn btn-primary pull-right js-genarate-password">
+                                        {{common_strings.GENERATE_PASSWORD_BUTTON}}
+                                    </button>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
-                                        {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
-                                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                        <button type="button"
-                                                class="btn btn-primary pull-right js-genarate-password">
-                                            Genarate Password
-                                        </button>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
-                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
-                                    </div>
+                                <div class="form-group">
+                                    <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
+                                    {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
+                                </div>
 
 
                             </div>
@@ -82,13 +65,13 @@
                                 <div class="col-sm-12">
                                     <div class="col-sm-12">
                                         {% if user_form.instance and user_profile.image %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ user_profile.image.url }}" class="pull-right jcrop-holder" alt="Pic"><br />
+                                        <img width="220" src="{{ user_profile.image.url }}" class="pull-right jcrop-holder" alt="Pic"><br />
                                         {% else %}
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
+                                        <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
                                         {% endif %}
                                     </div>
                                 </div>
-                                <input type="file" accept="image/*" placeholder="User image" style="margin-top: 10px;padding-bottom:10px;" class="pull-right img-preview" id="id_PF-image">
+                                <input type="file" accept="image/*" placeholder="User image" class="pull-right img-preview" id="id_PF-image">
                             </div>
                             {% render_field user_form.image_base64 %}
                         </div>
@@ -100,7 +83,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-body">
-                    <input type="submit" id="save-btn" value="Save" class="btn btn-primary pull-right"/>
+                    <input type="submit" id="save-btn" value="{{common_strings.SAVE_BUTTON}}" class="btn btn-primary pull-right"/>
                 </div>
             </div>
         </div>
@@ -109,30 +92,4 @@
 </form>
 {% include 'sknf/_modal_show_image_error.html' %}
 {% include 'sknf/_crop_modal.html' %}
-{% endblock %}
-
-{% block extra_js%}
-<script>
-    $(function(){
-        $(".verifyemail").click(function () {
-            var email = $('#id_email').val();
-            $.ajax({
-                url: '/ajax/verifyemail/',
-                data: {
-                    'email': email
-                },
-                success: function (data) {
-                    console.log(data['exist']);
-                    if (data['exist'] == true){
-                        alert('Sorry! This email already exist');
-                        $('#id_email').val('');
-                    }
-                    {% comment %}if (data['exist'] == 'True') {
-                        alert('This email already Exist')
-                    }{% endcomment %}
-                }
-            });
-        });
-    });
-</script>
 {% endblock %}

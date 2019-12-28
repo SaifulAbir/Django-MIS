@@ -5,7 +5,7 @@ from accounts.views import *
 from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
 from .views import index, events, custom_login, admin_profile_update, headmaster_profile_update, \
-    skleader_profile_update, verifyemail, email_verify, search_school_list, load_previous_school, load_previous_eiin, load_previous_user, home_login
+    skleader_profile_update, search_school_list, load_previous_school, load_previous_eiin, load_previous_user, home_login
 
 app_name = 'accounts'
 
@@ -24,9 +24,6 @@ urlpatterns = [
     path('admin_update/', admin_profile_update, name = 'admin_update'),
     path('headmaster_update/', headmaster_profile_update, name = 'headmaster_update'),
     path('skleader_update/', skleader_profile_update, name = 'skleader_update'),
-    path('email_verify/<token>', email_verify, name='email_verify'),
-
-    path('ajax/verifyemail/', verifyemail, name='verifyemail'),
     path('api/search_school_list/', search_school_list, name='search_school_list'),
     path('load_previous_schools/', load_previous_school, name='load_previous_schools'),
     path('load_previous_eiins/', load_previous_eiin, name='load_previous_eiins'),

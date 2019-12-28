@@ -35,4 +35,10 @@ SEARCH_BUTTON = "Search"
 PAGINATION_NULL_INFO_TEXT = 'Showing 0 to 0 of 0 entries'
 PAGINATION_INFO = 'Showing %s to %s of %s entries'
 LIST_ACTION_TEXT = 'Actions'
+PROFILE_FORM_TITLE = "Basic Information"
+USER_PROFILE_NAME = "Name"
+USER_PROFILE_USERNAME = "Username / Mobile Number"
+USER_PROFILE_PASSWORD = "Password"
+USER_PROFILE_CONFIRM_PASSWORD = "Confirm password"
+GENERATE_PASSWORD_BUTTON = "Generate Password"
 # Common Strings

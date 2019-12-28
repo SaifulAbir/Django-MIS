@@ -288,11 +288,11 @@ ul#id_EPA-attendance {
 
 @media screen and (max-width: 512px){
     .logo {
-    position: absolute;
-    z-index: 1050;
-    margin-left: -65px;
-    width: auto !important;
-}
+        position: absolute;
+        z-index: 1050;
+        margin-left: -65px;
+        width: auto !important;
+    }
     .skin-blue .main-header .navbar{
         background-color: #ffffff !important;
     }
@@ -314,41 +314,63 @@ ul#id_EPA-attendance {
 
 /* auto-complete search */
 .typeahead, .tt-query, .tt-hint {
-  border: 1px solid #dfe1e5;
-  outline: medium none;
-  padding: 8px 12px;
+    border: 1px solid #dfe1e5;
+    outline: medium none;
+    padding: 8px 12px;
 }
 .tt-input:hover{
-   border-color: rgba(223, 225, 229, 0);
-   box-shadow: 0 1px 6px rgba(32,33,36,0.20);
+    border-color: rgba(223, 225, 229, 0);
+    box-shadow: 0 1px 6px rgba(32,33,36,0.20);
 }
 .tt-input:focus{
-   border-color: #2a2a86;
+    border-color: #2a2a86;
 }
 .tt-menu {
-  background-color: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  margin-top: 8px;
-  padding: 8px 0;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 8px;
+    padding: 8px 0;
 }
 .tt-suggestion:hover {
-  cursor: pointer;
-  background-color: #f2f2f2;
-  color: #cd911f;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    color: #cd911f;
 }
 .tt-suggestion {
-  font-size: 14px;  /* Set suggestion dropdown font size */
-  padding: 3px 20px;
+    font-size: 14px;  /* Set suggestion dropdown font size */
+    padding: 3px 20px;
 }
 .tt-dataset.tt-dataset-previousItems {
-   text-align: left;
+    text-align: left;
 }
 .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
-   width: 100%;
+    width: 100%;
 }
 
-
+/*EDIT PROFILE*/
+.content-header{
+    padding-top:60px;
+}
+#alertdiv{
+    font-size:15px;
+    margin-top:15px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+}
+.help-block{
+    color:red;
+    margin-bottom: 5px;
+}
+.jcrop-holder{
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
+#id_PF-image{
+    margin-top: 10px;
+    padding-bottom:10px;
+}
+/*EDIT PROFILE*/
 
 
