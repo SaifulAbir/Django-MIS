@@ -3,7 +3,7 @@
     <tr>
 
         <th class="col-sm-11">{{division_strings.DIVISION_NAME}}</th>
-        <th class="col-sm-1 text-center">{{division_strings.DIVISION_LIST_ACTION_TEXT}}</th>
+        <th class="col-sm-1 text-center">{{common_strings.LIST_ACTION_TEXT}}</th>
     </tr>
     </thead>
     <tbody>
@@ -29,10 +29,10 @@
     </tfoot>
 </table>
 {% if division_list %}
-<p class="table-information">
+<p class="table-information">{% format_values common_strings.PAGINATION_INFO division_list.start_index  division_list.end_index division_list.paginator.count %}
 </p>
 {% else %}
-<p class="table-information">{{division_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+<p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
 {% endif %}
 <ul class="pagination">
 
