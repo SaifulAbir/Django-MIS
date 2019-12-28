@@ -32,7 +32,7 @@ def save_district_form(request, form, template_name):
             except EmptyPage:
                 district_list = paginator.page(paginator.num_pages)
             data['html_list'] = render_to_string('districts/partial_districts_list.html',
-                                                          {'district_list': district_list,})
+                                                          {'district_list': district_list,"district_strings":district_strings})
         else:
             data['form_is_valid'] = False
     context = {'form': form, "district_strings":district_strings,'common_strings':common_strings}
@@ -98,7 +98,7 @@ def district_delete(request, pk):
         except EmptyPage:
             district_list = paginator.page(paginator.num_pages)
         data['html_list'] = render_to_string('districts/partial_districts_list.html', {
-            'district_list': district_list
+            'district_list': district_list,"district_strings":district_strings
         })
     else:
         context = {'district': district,"district_strings":district_strings,"common_strings":common_strings}
