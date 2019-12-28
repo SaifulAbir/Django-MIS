@@ -1,5 +1,4 @@
 DESCRIPTION_REQUIRED_ERROR = "Description is required."
-
 #Divisions Related Strings
 DIVISIONS_VERBOSE_NAME = 'Division'
 DIVISIONS_VERBOSE_NAME_PLURAL = 'Divisions'
@@ -33,3 +32,9 @@ UPAZILA_DIVISION_NAME= 'Division'
 UPAZILA_NAME_TEST = 'Doulotpur'
 
 #Upazilas Related Strings
+
+
+SAVE_BUTTON	= "Save"
+UPDATE_BUTTON = "Update"
+DELETE_BUTTON = "Delete"
+CLOSE_BUTTON = "Close"

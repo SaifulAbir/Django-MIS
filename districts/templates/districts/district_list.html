@@ -1,20 +1,19 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    <section class="content-header" style="padding-top:60px">
-        <h1>District List</h1>
+    <section class="content-header" >
+        <h1>{{ district_strings.DISTRICT_LIST_TITLE }}</h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
         <div class="box">
             <div class="box-header">
-                <h3 style="display: inline-block;" class="box-title"> </h3>
                 <span id = "alert_placeholder"></span>
                 <button type="button"
                         class="btn btn-primary pull-right js-create-district"
                         data-url="{% url 'districts:create_district' %}">
                     <span class="fa fa-plus"></span>
-                    New District
+                    {{ district_strings.CREATE_DSTRICT_BUTTON_TEXT }}
                 </button>
             </div>
             <!-- /.box-header -->
@@ -26,6 +25,13 @@
         </div>
         <!-- /.content -->
     </section>
+    {% block extra_css %}
+        <style type="text/css">
+            .content-header{
+                padding-top: 60px !important;
+            }
+        </style>
+    {% endblock %}
 {% endblock %}
 {% block extra_js %}
     <script type="text/javascript">

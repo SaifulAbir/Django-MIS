@@ -1,6 +1,6 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<section class="content-header"style="padding-top:60px">
+<section class="content-header">
         <h1>Upazila List </h1>
  </section>
 <!-- Main content -->
@@ -25,6 +25,13 @@
 </div>
 <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <style type="text/css">
+            .content-header{
+                padding-top: 60px !important;
+            }
+        </style>
+    {% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
@@ -129,6 +136,7 @@ $(function () {
 
 
 
-  </script>
 
+
+  </script>
 {% endblock %}
