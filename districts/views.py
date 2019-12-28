@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
+from django.template.defaultfilters import register
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -12,8 +13,8 @@ from .forms import DistrictForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from . import models
-
-
+from . import strings as district_strings
+from resources import strings as common_strings
 def save_district_form(request, form, template_name):
     data = dict()
     if request.method == 'POST':
@@ -31,10 +32,10 @@ def save_district_form(request, form, template_name):
             except EmptyPage:
                 district_list = paginator.page(paginator.num_pages)
             data['html_list'] = render_to_string('districts/partial_districts_list.html',
-                                                          {'district_list': district_list})
+                                                          {'district_list': district_list,"district_strings":district_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form, "district_strings":district_strings,'common_strings':common_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -75,6 +76,9 @@ class DistrictList(LoginRequiredMixin, generic.ListView):
             district_list = paginator.page(paginator.num_pages)
 
         context['district_list'] = district_list
+        context['district_strings'] = district_strings
+        context['common_strings'] = common_strings
+
         return context
 
 
@@ -94,10 +98,10 @@ def district_delete(request, pk):
         except EmptyPage:
             district_list = paginator.page(paginator.num_pages)
         data['html_list'] = render_to_string('districts/partial_districts_list.html', {
-            'district_list': district_list
+            'district_list': district_list,"district_strings":district_strings
         })
     else:
-        context = {'district': district}
+        context = {'district': district,"district_strings":district_strings,"common_strings":common_strings}
         data['html_form'] = render_to_string('districts/district_confirm_delete.html',
             context,
             request=request,

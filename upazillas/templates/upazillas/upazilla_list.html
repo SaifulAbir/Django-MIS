@@ -1,7 +1,7 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<section class="content-header"style="padding-top:60px">
-        <h1>Upazilla List </h1>
+<section class="content-header">
+        <h1>Upazila List </h1>
  </section>
 <!-- Main content -->
 <section class="content">
@@ -14,34 +14,24 @@
                 class="btn btn-primary pull-right js-create-upazilla"
                 data-url="{% url 'upazillas:create_upazilla' %}">
             <span class="fa fa-plus"></span>
-            New Upazilla
+            New Upazila
         </button>
     </div>
     <!-- /.box-header -->
-    <div class="box-body table-responsive">
-        <table id="example1" class=" data-table upazilla-table table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th class="col-sm-4">Upazilla Name</th>
-                <th class="col-sm-3">District</th>
-                <th class="col-sm-3">Division</th>
-                <th class="col-sm-2">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {% include 'upazillas/partial_upazillas_list.html' %}
-
-            </tbody>
-            <tfoot>
-
-            </tfoot>
-        </table>
-        {% include 'upazillas/_modal.html' %}
+    {% include 'upazillas/_modal.html' %}
+    <div class="box-body table-responsive upazila-container">
+        {% include 'upazillas/partial_upazillas_list.html' %}
     </div>
 </div>
 <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <style type="text/css">
+            .content-header{
+                padding-top: 60px !important;
+            }
+        </style>
+    {% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
@@ -85,7 +75,16 @@ $(function () {
            if(formClass=="js-upazilla-delete-form"){
               showAlert("Upazilla Deleted!", "alert-danger-customized")
            }
-          $(".upazilla-table tbody").html(data.html_upazilla_list);  // <-- Replace the table body
+          $(".upazila-container").html(data.html_list);
+            $('.upazilla-table').DataTable({
+                'paging'      : false,
+                'lengthChange': false,
+                'searching'   : false,
+                'ordering'    : false,
+                'info'        : false,
+                'autoWidth'   : false,
+                'destroy'     : true
+            });// <-- Replace the table body
           $("#modal-upazilla").modal("hide");  // <-- Close the modal
         }
         else {
@@ -109,12 +108,13 @@ $(function () {
   $("#modal-upazilla").on("submit", ".js-upazilla-create-form", saveForm);
 
   // Update upazilla
-  $(".upazilla-table").on("click", ".js-update-upazilla", loadForm);
+  $(".upazila-container").on("click", ".js-update-upazilla", loadForm);
   $("#modal-upazilla").on("submit", ".js-upazilla-update-form", saveForm);
 
   // Delete upazilla
-  $(".upazilla-table").on("click", ".js-delete-upazilla", loadForm);
+  $(".upazila-container").on("click", ".js-delete-upazilla", loadForm);
   $("#modal-upazilla").on("submit", ".js-upazilla-delete-form", saveForm);
+  pagination(".upazila-container", '/upazilla/pagination/', '', '', '.upazilla-table');
 
   $("#id_division").change(function () {
       var url = $("#upazillaForm").attr("data-districts-url");  // get the url of the `load_cities` view
@@ -136,7 +136,7 @@ $(function () {
 
 
 
+
+
   </script>
-
-
 {% endblock %}

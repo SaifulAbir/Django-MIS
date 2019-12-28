@@ -3,6 +3,7 @@ import division.strings as division_strings
 from .models import Division
 
 class DivisionForm(forms.ModelForm):
+    name = forms.CharField(label=division_strings.DIVISION_NAME)
     class Meta:
         model = Division
         fields = ['name']

@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from districts.models import District
 from division.models import Division
+from resources import strings
 
 
 class Upazilla(models.Model):
@@ -18,5 +19,10 @@ class Upazilla(models.Model):
 
     class Meta:
         unique_together = ['division','district','name']
+        verbose_name = strings.UPAZILAS_VERBOSE_NAME
+        verbose_name_plural = strings.UPAZILAS_VERBOSE_NAME_PLURAL
+        db_table = 'upazilas'
+
+
 
 

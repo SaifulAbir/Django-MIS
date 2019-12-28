@@ -19,7 +19,7 @@ class District(models.Model):
     def __init__(self, *args, **kwargs):
         super(District, self).__init__(*args, **kwargs)
         self._meta.get_field('name').verbose_name = strings.DISTRICT_NAME
-        self._meta.get_field('division').verbose_name = strings.DIVISION_NAME
+        self._meta.get_field('division').verbose_name = strings.DISTRICT_DIVISION_NAME
 
 
     class Meta:
