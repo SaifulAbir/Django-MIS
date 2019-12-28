@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-
+import division.strings as division_strings
 from accounts.decorators import admin_login_required
 from division.models import Division
 from .forms import DivisionForm
@@ -76,10 +76,6 @@ class DivisionList(LoginRequiredMixin, generic.ListView):
 
         context['division_list'] = division_list
         return context
-"""class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
-
-    model = models.District
-    success_url = reverse_lazy('districts:district_list')"""
 
 def division_delete(request, pk):
     division = get_object_or_404(Division, pk=pk)

@@ -1,0 +1,9 @@
+DIVISIONS_VERBOSE_NAME = 'Division'
+DIVISIONS_VERBOSE_NAME_PLURAL = 'Divisions'
+DIVISION_NAME = 'Division Name'
+DIVISION_NAME_VALIDATION_ERROR = 'setCustomValidity("Please enter on alphabets only.")'
+DIVISION_NAME_VALIDATION_PATTERN = "[a-zA-Z\s]+"
+DIVISION_DELETE_CONFIRMATION = 'Confirm division deletion'
+DIVISION_DELETE_INFO = 'Are you sure you want to delete the division '
+DIVISION_CLOSE_BUTTON = ''
+DIVISION_DELETE_BUTTON = ''
