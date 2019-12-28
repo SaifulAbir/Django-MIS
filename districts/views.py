@@ -121,7 +121,7 @@ def pagination(request):
     except EmptyPage:
         district_list = paginator.page(paginator.num_pages)
     data['html_list'] = render_to_string('districts/partial_districts_list.html', {
-        'district_list': district_list
+        'district_list': district_list,"district_strings":district_strings,"common_strings":common_strings
     })
     return JsonResponse(data)
 
