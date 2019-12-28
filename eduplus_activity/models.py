@@ -26,7 +26,8 @@ class EduPlusActivity(models.Model):
     skleader = models.ForeignKey(SkLeaderProfile, on_delete=models.CASCADE, null=True)
     attendance= models.ManyToManyField(User, related_name='member_profile')
     image = models.ImageField(upload_to='images/', blank=True, null=True)
-    topics = models.ManyToManyField(EduplusTopics)
+    topics = models.ManyToManyField(Topics)
+    method = models.ForeignKey(EduplusTopics, on_delete=models.CASCADE)
     description = models.TextField(max_length=200)
 
     def __str__(self):
