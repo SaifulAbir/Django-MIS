@@ -12,7 +12,7 @@ and (min-width : 1024px) {
 
     header {
         background-color: #ffffff;
-        height: 120px;
+        height: 130px;
         box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.15);
         position: relative;
         z-index: 1001;
@@ -20,7 +20,7 @@ and (min-width : 1024px) {
 
     main {
         background-color: #2a2a86;
-        height: calc(100% - 170px);
+        height: calc(100% - 180px);
     }
 
     footer {
@@ -34,7 +34,7 @@ and (min-width : 1024px) {
     }
 
     #sknf-logo {
-        padding: 3px;
+        padding: 8px 8px 8px 38px;
     }
 
     .main-container {
