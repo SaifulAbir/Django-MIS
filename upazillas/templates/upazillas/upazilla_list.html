@@ -1,7 +1,7 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 <section class="content-header">
-        <h1>Upazila List </h1>
+        <h1>{{ upazila_strings.UPAZILA_LIST_TITLE }} </h1>
  </section>
 <!-- Main content -->
 <section class="content">
@@ -14,7 +14,7 @@
                 class="btn btn-primary pull-right js-create-upazilla"
                 data-url="{% url 'upazillas:create_upazilla' %}">
             <span class="fa fa-plus"></span>
-            New Upazila
+            {{ upazila_strings.CREATE_UPAZILA_BUTTON_TEXT }}
         </button>
     </div>
     <!-- /.box-header -->

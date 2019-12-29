@@ -1,0 +1,10 @@
+test_case_id,test_priority,test_description,test_designed_by,test_designed_date,expected_result,_division,_district,_upazilla,_union,actual_result,status,notes,attachments,test_executed_by,test_execution_date
+union_1,,New Union with Valid Unit Together,,,1,Dhaka,Rajbari,Pansha,NewUnionnewuni,,,,,,
+union_2,,Existing Union Same Unit Together,,,0,Dhaka,Rajbari,Pansha,NewUnionnew,,,,,,
+union_3,,Different District + InValid Unit Together + Existing Upazila,,,0,Khulna,Faridpur,Pansha,NewUnionnew,,,,,,
+union_4,,Different Division + Valid Unit Together + Existing Upazila,,,1,Khulna,Bagerhat,Kachua,NewUnionnew,,,,,,
+union_6,,Invalid Division Valid District name,,,0,Dhakka,Bagerhat,Kachua,NewUnionnewN,,,,,,
+union_7,,Upazila with Digit,,,0,Dhaka,Rajbari,Pansha,3DUnion,,,,,,
+union_8,,Upazila with Special Character,,,0,Dhaka,Rajbari,Pansha,~U-nion,,,,,,
+union_9,,All Field is Empty,,,0,,,,,,,,,,
+union_10,,Uni Together field is empty,,,0,,,,NewUnion,,,,,,

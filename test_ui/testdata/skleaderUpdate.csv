@@ -1,0 +1,24 @@
+"NAME","EIIN","SCHOOL","EMAIL","MOBILE","CLASS","ROLL","GENDER","PASS","CON_PASS","FROM_DATE","TO_DATE","NEW_EIIN",expected,"topic"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","01714915899@sknf.org","019756565",10,"1","Female","123","123","01-09-2019","01-09-2020",113001,1,"All Valid Field,,New Unique Email and New Valid School"
+,,,,,,,,,,"01-09-2020",113001,0,"All Blank Field except New toDate and School"
+,100032,"Gazipur Bandar High School","shifa01210@sknf.com","019756565",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"No Name"
+"Md. Shifatullah","---------","Gazipur Bandar High School","shifa01310@sknf.com","019756565",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Deselect School Name"
+"Md. Shifatullah",100032,"Gazipur Bandar High School",,"019756565",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Empty Email Address"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa01410@sknf.com","019756565",,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Deselect Class"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa01510@sknf.com","019756565",10,,"Male","123","123","01-09-2019","01-09-2020",113001,0,"No Roll Number"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa21110@sknf.com","019756565",10,"1","--Select--","123","123","01-09-2019","01-09-2020",113001,0,"Deselect Gender"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa01610@sknf.com","019756565",10,"1","Male","-123",+"123","01-09-2019","01-09-2020",113001,0,"Mismatched Password"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa01710@sknf.com","019756565",10,"1","Male","123","123",,"01-09-2020",113001,0,"Empty From Date"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa01810@sknf.com","019756565",10,"~d-4","Male","123","123","01-09-2019","01-09-2020",113001,0,"Garbage Roll: ~d-4"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","sup#xdf~1!gh43@sknf.com","019756565",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Special Character in Mail: sup#xdf~1!gh43@sknf.com"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","@sknf.com","019756565",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Email with empty Prefix: @sknf.com"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa011110@sknf","019756565",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Email with empty Postfix: shfg4510@sknf"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa011210@.com","019756565",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Email with empty Infix: shiergre34@.com"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa011410@sknf.com",,10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Mobile Field is Empty"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa0111510@sknf.com","-01$~920",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Garbage Mobile: -01$~920"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa011710@sknf.com","01215421541213",10,"1","Male","123","123","01-09-2019","01-09-2020",113001,0,"Mobile with More then 11 Digit"
+"Md. Shifatullah",100032,"Gazipur Bandar High School","shifa011310@sknf.com","019756565",10,"1","Male","123","123","01-09-3019","01-09-1950",113001,0,"Selecting Past To Date 01-09-1950"
+
+
+
+
