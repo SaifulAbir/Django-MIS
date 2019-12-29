@@ -53,6 +53,10 @@
                                     {% render_field edu_plus_activity_form.topics class="" placeholder=edu_plus_activity_form.topics.label %}
                                 </div>
                                 <div class="form-group">
+                                    <label for="{{ edu_plus_activity_form.method.id_for_label }}">Methods</label>
+                                    {% render_field edu_plus_activity_form.method class="" placeholder=edu_plus_activity_form.method.label %}
+                                </div>
+                                <div class="form-group">
                                     <label for="{{ edu_plus_activity_form.attendance.id_for_label }}">Attendance</label><br>
                                     {% render_field edu_plus_activity_form.presence_skleader class="" placeholder=edu_plus_activity_form.presence_skleader.label %}
                                     <label for="{{ edu_plus_activity_form.presence_skleader.id_for_label }}">{{skleader_meeting_eduplus.user.first_name}} (SK Leader)</label>
@@ -101,6 +105,15 @@
 
     </section>
 </form>
+
+    {% block extra_css %}
+        <style type="text/css">
+        #id_EPA-method{
+            width: 60%;
+
+        }
+        </style>
+    {% endblock %}
 {% endblock %}
 {% block extra_js%}
 <script src="{% static 'sknf/js/eduplus-activity-image-cropper.js' %}"></script>

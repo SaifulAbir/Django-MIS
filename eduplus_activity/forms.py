@@ -17,8 +17,13 @@ class EduPlusActivityForm(forms.ModelForm):
     description = forms.CharField(error_messages={'required': strings.DESCRIPTION_REQUIRED_ERROR}, widget=forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}))
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        queryset=EduplusTopics.objects.all(),
+        queryset=Topics.objects.all(),
         required=True, error_messages={'required': 'Select at least one topic.'})
+    method = forms.ModelChoiceField(
+        widget=forms.Select(attrs={'width': '5000px'}),
+        queryset = EduplusTopics.objects.all(),
+        required=True, error_messages={'required': 'Select  method.'}
+    )
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(attrs={'checked': 'checked'}),
         queryset=None,
@@ -28,7 +33,7 @@ class EduPlusActivityForm(forms.ModelForm):
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model= EduPlusActivity
-        fields=["date", "image", "topics", "presence_skleader", "attendance", 'image_base64', 'description']
+        fields=["date", "image", "topics", "presence_skleader",'method', "attendance", 'image_base64', 'description']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}),
         }
@@ -56,7 +61,7 @@ class EditEduPlusActivityForm(forms.ModelForm):
     presence_skleader = forms.BooleanField()
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        queryset=EduplusTopics.objects.all(),
+        queryset=Topics.objects.all(),
         required=False)
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField(error_messages={'required': 'Description is required.'},
@@ -70,7 +75,7 @@ class EditEduPlusActivityForm(forms.ModelForm):
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     class Meta:
         model= EduPlusActivity
-        fields=["date", "description", "image", "topics", "presence_skleader", "attendance", 'image_base64']
+        fields=["date", "description", "image", "topics","method", "presence_skleader", "attendance", 'image_base64']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
