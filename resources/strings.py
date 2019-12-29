@@ -41,4 +41,7 @@ USER_PROFILE_USERNAME = "Username / Mobile Number"
 USER_PROFILE_PASSWORD = "Password"
 USER_PROFILE_CONFIRM_PASSWORD = "Confirm password"
 GENERATE_PASSWORD_BUTTON = "Generate Password"
+DATE_FORMAT = "d M Y"
+EXPORT_CSV_BUTTON_TEXT = "Export CSV"
+
 # Common Strings
