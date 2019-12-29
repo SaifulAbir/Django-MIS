@@ -15,17 +15,53 @@
             <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
 
                     <div class="row">
+                        <div class="form-group col-sm-3">
+                            <strong>{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_FROM_DATE }}</strong>
+                            <input class="form-control typehead tt-query datepicker" type="search" name="fromdate_contains" autocomplete="off" id="from-date" />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_TO_DATE }}</strong>
+                            <input class="form-control typehead tt-query datepicker" type="search" name="todate_contains" autocomplete="off" id="to-date"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_TOPICS }}</strong>
+                            <select class="form-control typehead tt-query" type="search" name="topics_contains"  id="topics-name">
+                            <option value="">-----</option>
+                            {% for topic in topic %}
+                                <option>{{ topic.name }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_METHODS }}</strong>
+                            <select class="form-control typehead tt-query" type="search" name="method_contains"  id="method-name">
+                                <option value="">-----</option>
+                                {% for method in method %}
+                                    <option>{{ method.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-sm-4">
                             <strong>{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_SCHOOL }}</strong>
                             <input class="form-control typehead tt-query" type="search" name="school_contains" autocomplete="off" id="school-name" />
                         </div>
-                        <div class="form-group col-sm-4">
+                        <div class="form-group col-sm-2">
                             <strong>{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DIVISION }}</strong>
                             <input class="form-control typehead tt-query" type="search" name="division_contains" autocomplete="off" id="division-name"/>
                         </div>
-                        <div class="form-group col-sm-4">
+                        <div class="form-group col-sm-2">
                             <strong>{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DISTRICT }}</strong>
                             <input class="form-control typehead tt-query" type="search" name="district_contains" autocomplete="off" id="district-name"/>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <strong>{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_UPAZILA }}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="upazila_contains" autocomplete="off" id="upazila-name"/>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <strong>{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_UNION }}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="union_contains" autocomplete="off" id="union-name"/>
                         </div>
                     </div>
                     <div class="form-group pull-right">
@@ -141,7 +177,7 @@
         $('#reports, .eduplus-activity-menu').addClass('active');
         $("#reports").addClass("menu-open");
         $("#reports .treeview-menu").css("display", "block");
-        var name, division, district;
+        var name, division, district,upazila,union,fromdate,todate,topics,method;
         $('.eduplus-activity-search-table').dataTable({
             'lengthChange': false,
             'searching'   : false,
@@ -152,10 +188,18 @@
         $('.search-eduplus-activity').on('click', function (event) {
             event.preventDefault();
             $(".eduplus-activity-search-table").DataTable().destroy();
+            fromdate_contains = $('#from-date').val();
+            todate_contains = $('#to-date').val();
             name_contains = $('#school-name').val();
             division_contains = $('#division-name').val();
             district_contains = $('#district-name').val();
-            name = name_contains, division = division_contains, district = district_contains;
+            upazila_contains = $('#upazila-name').val();
+            union_contains = $('#union-name').val();
+            topics_contains = $('#topics-name').val();
+            method_contains = $('#method-name').val();
+            name = name_contains, division = division_contains, district = district_contains,
+            upazila=upazila_contains,union=union_contains,topics=topics_contains,method=method_contains,
+            fromdate=fromdate_contains,todate=todate_contains;
             $.ajax({
                 type: 'GET',
                 url: '/eduplus_activity/eduplus_activity_search_list/',
@@ -163,6 +207,12 @@
                     'name_contains': name_contains,
                     'division_contains': division_contains,
                     'district_contains': district_contains,
+                    'fromdate_contains': fromdate_contains,
+                    'todate_contains':todate_contains,
+                    'upazila_contains':upazila_contains,
+                    'union_contains':union_contains,
+                    'topics_contains':topics_contains,
+                    'method_contains':method_contains,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 success: function (data) {
@@ -184,6 +234,8 @@
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        autoSuggesion('/load_previous_upazillas/', "input[name='upazila_contains']");
+        autoSuggesion('/load_previous_unions/', "input[name='union_contains']");
         $(".box").on('click', '.export-eduplus-activity-report', function() {
             $('.search-form-eduplus-activity').prop('action', '/eduplus_activity/eduplus_activity_search_list/export')
         });
