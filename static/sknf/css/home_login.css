@@ -29,6 +29,9 @@ and (min-width : 1024px) {
         color: #444;
         padding: 15px;
     }
+    .form-horizontal .form-group {
+        margin-right: 0px;
+    }
 
     #sknf-logo {
         padding: 3px;
@@ -100,6 +103,10 @@ and (min-width : 1024px) {
 
     #search-form-id .col-md-6{
         padding-right: 15px;
+    }
+
+    img#sknf-logo-size {
+        max-width: 100%;
     }
 
     /*home-page school search list pagination*/
@@ -199,14 +206,18 @@ and (max-width : 1024px) {
         padding: 15px;
     }
     #form-wrapper{
-        margin-right: 15px;
+        margin-right: 0px;
         padding-right: 15px;
     }
     #search-form-id{
         padding-right: 15px;
     }
+
+    #search-form-id .col-md-6{
+        padding-right: 15px;
+    }
     .mob-footer{
-        display: block;
+        display: none;
     }
     #sknf-logo{
         padding: 3px;
@@ -219,10 +230,10 @@ and (max-width : 1024px) {
         color: #ffffff;
     }
     #map{
-        height: calc(100% - 50px);
+        height: 100%;
     }
     .main-container-col{
-        height: calc(100% - 50px);
+        height: 100%;
         padding-left: 0px;
     }
     h3 a, h3 a:hover, h3 a:focus{
