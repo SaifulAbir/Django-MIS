@@ -44,7 +44,9 @@ and (min-width : 1024px) {
     .sknf-info {
         color: #ffffff;
     }
-
+    .col-md-6.sign-in-col {
+        padding-right: 15px;
+    }
     #map {
         height: 100%;
     }
@@ -264,6 +266,7 @@ and (max-width : 1024px) {
         height: 100%;
         color: #000;
     }
+
     .col-md-6{
         padding-right: 0px;
     }
