@@ -79,7 +79,7 @@ def edu_plus_activity_add(request):
 class EduplusActivityList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.EduPlusActivity
-
+    paginate_by = 2
     def get_queryset(self):
         if self.request.user.is_authenticated and self.request.user.user_type == 5:
             profile = SkLeaderProfile.objects.get(user=self.request.user)
@@ -91,6 +91,21 @@ class EduplusActivityList(LoginRequiredMixin, generic.ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
+        if self.request.user.is_authenticated and self.request.user.user_type == 5:
+            profile = SkLeaderProfile.objects.get(user=self.request.user)
+        elif self.request.user.is_authenticated and self.request.user.user_type == 2 or self.request.user.user_type == 3 or self.request.user.user_type == 4:
+            profile = HeadmasterProfile.objects.get(user=self.request.user)
+        eduplus_activities = EduPlusActivity.objects.filter(school=profile.school)
+        paginator = Paginator(eduplus_activities, self.paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            eduplus_activity_list = paginator.page(page)
+        except PageNotAnInteger:
+            eduplus_activity_list = paginator.page(1)
+        except EmptyPage:
+            eduplus_activity_list = paginator.page(paginator.num_pages)
+        context['eduplus_activity_list'] = eduplus_activity_list
         context['edu_strings'] = edu_strings
         context['common_strings'] = common_strings
         return context
@@ -243,3 +258,20 @@ def eduplus_activity_search_list(request, export='null'):
         response = HttpResponse(dataset.csv, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="eduplus_activity_list.csv"'
         return response
+
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    eduplus_activities = EduPlusActivity.objects.all()
+    paginator = Paginator(eduplus_activities, 2)
+    page = request.GET.get('page')
+    try:
+        eduplus_activity_list = paginator.page(page)
+    except PageNotAnInteger:
+        eduplus_activity_list = paginator.page(1)
+    except EmptyPage:
+        eduplus_activity_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('eduplus_activity/partial_eduplus_activity_list.html', {
+        'eduplus_activity_list': eduplus_activity_list, 'edu_strings':edu_strings, 'common_strings':common_strings
+    })
+    return JsonResponse(data)
