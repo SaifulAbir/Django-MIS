@@ -81,7 +81,7 @@ def edu_plus_activity_add(request):
 class EduplusActivityList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.EduPlusActivity
-    paginate_by = 2
+    paginate_by = 10
     def get_queryset(self):
         if self.request.user.is_authenticated and self.request.user.user_type == 5:
             profile = SkLeaderProfile.objects.get(user=self.request.user)
@@ -300,7 +300,7 @@ def pagination(request):
     data = dict()
     data['form_is_valid'] = True  # This is just to play along with the existing code
     eduplus_activities = EduPlusActivity.objects.all()
-    paginator = Paginator(eduplus_activities, 2)
+    paginator = Paginator(eduplus_activities, 10)
     page = request.GET.get('page')
     try:
         eduplus_activity_list = paginator.page(page)
