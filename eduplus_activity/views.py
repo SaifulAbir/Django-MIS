@@ -21,6 +21,10 @@ from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
+from topics.models import Topics
+from . import strings as edu_strings
+from resources import strings as common_strings
+from datetime import datetime
 
 
 @headmaster_mentor_skleader_login_required
@@ -69,7 +73,7 @@ def edu_plus_activity_add(request):
         #headmaster_form_details = HeadmasterDetailsForm(prefix='hf')
 
     return render(request, 'eduplus_activity/eduplus_activity_add.html', {
-        'edu_plus_activity_form': edu_plus_activity_form,
+        'edu_plus_activity_form': edu_plus_activity_form,'edu_strings':edu_strings,'common_strings':common_strings
         #'headmaster_form_details': headmaster_form_details,
     })
 
@@ -77,7 +81,7 @@ def edu_plus_activity_add(request):
 class EduplusActivityList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.EduPlusActivity
-
+    paginate_by = 2
     def get_queryset(self):
         if self.request.user.is_authenticated and self.request.user.user_type == 5:
             profile = SkLeaderProfile.objects.get(user=self.request.user)
@@ -85,6 +89,29 @@ class EduplusActivityList(LoginRequiredMixin, generic.ListView):
             profile = HeadmasterProfile.objects.get(user=self.request.user)
         queryset = EduPlusActivity.objects.filter(school=profile.school)
         return queryset
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        if self.request.user.is_authenticated and self.request.user.user_type == 5:
+            profile = SkLeaderProfile.objects.get(user=self.request.user)
+        elif self.request.user.is_authenticated and self.request.user.user_type == 2 or self.request.user.user_type == 3 or self.request.user.user_type == 4:
+            profile = HeadmasterProfile.objects.get(user=self.request.user)
+        eduplus_activities = EduPlusActivity.objects.filter(school=profile.school)
+        paginator = Paginator(eduplus_activities, self.paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            eduplus_activity_list = paginator.page(page)
+        except PageNotAnInteger:
+            eduplus_activity_list = paginator.page(1)
+        except EmptyPage:
+            eduplus_activity_list = paginator.page(paginator.num_pages)
+        context['eduplus_activity_list'] = eduplus_activity_list
+        context['edu_strings'] = edu_strings
+        context['common_strings'] = common_strings
+        return context
+
 
 @headmaster_mentor_skleader_login_required
 def edu_plus_activity_update(request, pk):
@@ -117,10 +144,10 @@ def edu_plus_activity_update(request, pk):
         'edu_plus_activity_form': edu_plus_activity_form,
         'eduplus_activity': edu_plus_activity,
         'all_member': all_member,
-        'sk_lead': sk_profile
+        'sk_lead': sk_profile,
+        'edu_strings':edu_strings,'common_strings':common_strings
     })
 
-@method_decorator(headmaster_mentor_skleader_login_required, name='dispatch')
 class EduplusActivityDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "eduplus_activity_detail"
@@ -136,10 +163,11 @@ def save_eduplus_topics_form(request, form, template_name):
             data['form_is_valid'] = True
             eduplus_topics_list = EduplusTopics.objects.all()
             data['html_eduplus_topics_list'] = render_to_string('eduplus_activity/partial_eduplus_topics_list.html',
-                                                          {'eduplustopics_list': eduplus_topics_list})
+                                                          {'eduplustopics_list': eduplus_topics_list,
+                                                           'edu_strings':edu_strings,'common_strings':common_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form,'edu_strings':edu_strings,'common_strings':common_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -173,10 +201,10 @@ def eduplus_topics_delete(request, pk):
         data['form_is_valid'] = True  # This is just to play along with the existing code
         eduplus_topics_list = EduplusTopics.objects.all()
         data['html_eduplus_topics_list'] = render_to_string('eduplus_activity/partial_eduplus_topics_list.html', {
-            'eduplustopics_list': eduplus_topics_list
+            'eduplustopics_list': eduplus_topics_list ,'edu_strings':edu_strings,'common_strings':common_strings
         })
     else:
-        context = {'eduplus_topics': eduplus_topics}
+        context = {'eduplus_topics': eduplus_topics,'edu_strings':edu_strings,'common_strings':common_strings}
         data['html_form'] = render_to_string('eduplus_activity/eduplus_topics_confirm_delete.html',
             context,
             request=request,
@@ -186,6 +214,8 @@ def eduplus_topics_delete(request, pk):
 @admin_login_required
 def eduplus_activity_report_list(request):
     eduplus_activity_list = EduPlusActivity.objects.all()
+    topic = Topics.objects.all()
+    method = EduplusTopics.objects.all()
     paginator = Paginator(eduplus_activity_list, 10)
     page = request.GET.get('page')
     try:
@@ -194,7 +224,8 @@ def eduplus_activity_report_list(request):
         eduplus_activity_report = paginator.page(1)
     except EmptyPage:
         eduplus_activity_report = paginator.page(paginator.num_pages)
-    return render(request, 'eduplus_activity/eduplus_activity_report_list.html', {'eduplusactivity_list': eduplus_activity_report})
+    return render(request, 'eduplus_activity/eduplus_activity_report_list.html', {'eduplusactivity_list': eduplus_activity_report,'topic':topic,'method':method,
+                                                                                  'edu_strings':edu_strings,'common_strings':common_strings})
 
 def eduplus_activity_search_list(request, export='null'):
     data = dict()
@@ -202,12 +233,45 @@ def eduplus_activity_search_list(request, export='null'):
     name = request.GET.get('name_contains')
     division = request.GET.get('division_contains')
     district = request.GET.get('district_contains')
+    upazila = request.GET.get('upazila_contains')
+    union = request.GET.get('union_contains')
+    from_date = request.GET.get('fromdate_contains')
+    if from_date :
+        fromdate = datetime.strptime(from_date,'%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        fromdate = from_date
+
+    to_date = request.GET.get('todate_contains')
+    print(to_date)
+    if to_date:
+        todate = datetime.strptime(to_date,'%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        todate = to_date
+
+    topics = request.GET.get('topics_contains')
+    method = request.GET.get('method_contains')
+
     if name != '' and name is not None:
         qs = qs.filter(school__name__icontains=name)
     if division != '' and division is not None:
         qs = qs.filter(school__division__name__icontains=division)
     if district != '' and district is not None:
         qs = qs.filter(school__district__name__icontains=district)
+    if upazila != '' and upazila is not None:
+        qs = qs.filter(school__upazilla__name__icontains=upazila)
+    if union != '' and union is not None:
+        qs = qs.filter(school__union__name__icontains=union)
+    if topics != '' and topics is not None:
+        qs = qs.filter(topics__name__icontains=topics)
+    if method != '' and method is not None:
+        qs = qs.filter(method__name__icontains=method)
+    if fromdate:
+        qs = qs.filter(date__gt=fromdate)
+    if todate and not fromdate:
+        qs = qs.filter(date__lt=todate)
+    if from_date and to_date :
+        qs = qs.filter(date__gte=fromdate, date__lte=todate)
+
 
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')
@@ -217,11 +281,12 @@ def eduplus_activity_search_list(request, export='null'):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    if name == '' and division == '' and district == '':
+    if name == '' and division == '' and district == '' and upazila== '' and union == '' and from_date == '' and to_date =='' and topics == '' and method == '':
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('eduplus_activity/partial_eduplus_activity_report.html',
-                                                  {'eduplusactivity_list': queryset})
+                                                  {'eduplusactivity_list': queryset,
+                                                   'edu_strings':edu_strings,'common_strings':common_strings})
     if export != 'export':
         return JsonResponse(data)
     else:
@@ -230,3 +295,20 @@ def eduplus_activity_search_list(request, export='null'):
         response = HttpResponse(dataset.csv, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="eduplus_activity_list.csv"'
         return response
+
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    eduplus_activities = EduPlusActivity.objects.all()
+    paginator = Paginator(eduplus_activities, 2)
+    page = request.GET.get('page')
+    try:
+        eduplus_activity_list = paginator.page(page)
+    except PageNotAnInteger:
+        eduplus_activity_list = paginator.page(1)
+    except EmptyPage:
+        eduplus_activity_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('eduplus_activity/partial_eduplus_activity_list.html', {
+        'eduplus_activity_list': eduplus_activity_list, 'edu_strings':edu_strings, 'common_strings':common_strings
+    })
+    return JsonResponse(data)

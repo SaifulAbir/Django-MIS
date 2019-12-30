@@ -65,7 +65,6 @@ class DivisionList(LoginRequiredMixin, generic.ListView):
         context = super(DivisionList, self).get_context_data(**kwargs)
         divisions = Division.objects.all()
         paginator = Paginator(divisions, self.paginate_by)
-
         page = self.request.GET.get('page')
 
         try:

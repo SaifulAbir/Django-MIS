@@ -13,6 +13,8 @@ from .forms import UpazillaForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from . import models
+from . import strings as upazila_strings
+from resources import strings as common_strings
 
 def save_upazilla_form(request, form, template_name):
     data = dict()
@@ -30,10 +32,11 @@ def save_upazilla_form(request, form, template_name):
             except EmptyPage:
                 upazila_list = paginator.page(paginator.num_pages)
             data['html_list'] = render_to_string('upazillas/partial_upazillas_list.html',
-                                                          {'upazila_list': upazila_list})
+                                                          {'upazila_list': upazila_list,'upazila_strings':upazila_strings,
+                                                           'common_strings':common_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form, 'upazila_strings':upazila_strings,'common_strings':common_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -75,6 +78,8 @@ class UpazillaList(LoginRequiredMixin, generic.ListView):
             upazila_list = paginator.page(paginator.num_pages)
 
         context['upazila_list'] = upazila_list
+        context['upazila_strings'] = upazila_strings
+        context['common_strings'] = common_strings
         return context
 
 def upazilla_delete(request, pk):
@@ -93,10 +98,10 @@ def upazilla_delete(request, pk):
         except EmptyPage:
             upazila_list = paginator.page(paginator.num_pages)
         data['html_list'] = render_to_string('upazillas/partial_upazillas_list.html', {
-            'upazila_list': upazila_list
+            'upazila_list': upazila_list,'upazila_strings':upazila_strings,'common_strings':common_strings
         })
     else:
-        context = {'upazilla': upazilla}
+        context = {'upazilla': upazilla,'upazila_strings':upazila_strings,'common_strings':common_strings}
         data['html_form'] = render_to_string('upazillas/upazilla_confirm_delete.html',
             context,
             request=request,
@@ -121,6 +126,6 @@ def pagination(request):
     except EmptyPage:
         upazila_list = paginator.page(paginator.num_pages)
     data['html_list'] = render_to_string('division/partial_division_list.html', {
-        'upazila_list': upazila_list
+        'upazila_list': upazila_list,'upazila_strings':upazila_strings,'common_strings':common_strings
     })
     return JsonResponse(data)

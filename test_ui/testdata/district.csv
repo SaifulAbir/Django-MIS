@@ -1,0 +1,11 @@
+"DIVISION","DISTRICT",expected,"topic"
+"Dhaka","District",1,"Valid District Name"
+"Dhaka","District",0,"Existing District"
+"District","District",1,"Different Division but Existing District"
+"Dhaka","3District",0,"District With Digit"
+"Dhaka","~+strict",0,"District With Special Character"
+"-5656sdf","NewDistrict",0,"Invalid Division Valid District name"
+"Dhaka",,0,"Valid Division Empty District"
+,"ValidDistrict",0,"Empty Division but Valid District"
+,,0,"All Field is Empty"
+

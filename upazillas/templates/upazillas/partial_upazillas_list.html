@@ -1,10 +1,10 @@
 <table id="example1" class=" data-table upazilla-table table table-bordered table-striped">
     <thead>
     <tr>
-        <th class="col-sm-4">Upazila Name</th>
-        <th class="col-sm-4">District</th>
-        <th class="col-sm-3">Division</th>
-        <th class="text-center col-sm-1">Actions</th>
+        <th class="col-sm-4">{{ upazila_strings.TABLE_HEADER_UPAZILA_NAME }}</th>
+        <th class="col-sm-3">{{ upazila_strings.TABLE_HEADER_DISTRICT }}</th>
+        <th class="col-sm-4">{{ upazila_strings.TABLE_HEADER_DIVISION }}</th>
+        <th class="text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
     </tr>
     </thead>
     <tbody>
@@ -35,7 +35,7 @@
     </tfoot>
 </table>
 
-<p class="table-information">Showing {{ upazila_list.start_index }} to {{ upazila_list.end_index }} of {{ upazila_list.paginator.count }} entries</p>
+<p class="table-information">{% format_values common_strings.PAGINATION_INFO upazila_list.start_index upazila_list.end_index upazila_list.paginator.count%}</p>
 <ul class="pagination">
 
     {% if upazila_list.has_previous %}

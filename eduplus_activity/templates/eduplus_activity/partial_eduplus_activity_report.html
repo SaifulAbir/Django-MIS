@@ -1,33 +1,55 @@
 <button type="submit" class="btn btn-primary export-eduplus-activity-report pull-right">Export CSV</button>
-<table   id="example1" class=" eduplus-activity-search-table table table-bordered table-striped">
+<table   id="example1" class="data-table eduplus-activity-search-table table table-bordered table-striped">
     <thead>
     <tr>
-        <th class="col-sm-1">Date</th>
-        <th class="col-sm-2">Topics</th>
-        <th class="col-sm-3">Description</th>
-        <th class="col-sm-2">School</th>
-        <th class="col-sm-2">Division</th>
-        <th class="col-sm-2">District</th>
+        <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_DATE }}</th>
+        <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_TOPICS }}</th>
+        <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_METHODS }}</th>
+        <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ATTENDANCE }}</th>
+        <th class="col-sm-2">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_SCHOOL }}</th>
+        <th class="col-sm-1">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DIVISION }}</th>
+        <th class="col-sm-1">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DISTRICT }}</th>
+        <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_UPAZILA }}</th>
+        <th class="text-center col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ACTIONS }}</th>
+
     </tr>
     </thead>
     <tbody>
     {% for eduplus_activity in eduplusactivity_list %}
-    <tr>
-        <td>{{eduplus_activity.date}}</td>
-        <td>
-            {% for topic in eduplus_activity.topics.all %}
-            {% if forloop.last %}
-            {{topic.name}}
-            {% else %}
-            {{topic.name}},
-            {% endif %}
-            {% endfor %}
-        </td>
-        <td>{{ eduplus_activity.description }}</td>
-        <td>{{eduplus_activity.school}}</td>
-        <td>{{eduplus_activity.school.division}}</td>
-        <td>{{eduplus_activity.school.district}}</td>
-    </tr>
+        <tr>
+            <td>{{eduplus_activity.date |date:common_strings.DATE_FORMAT}}</td>
+            <td>
+                {% for topic in eduplus_activity.topics.all %}
+                    {% if forloop.last %}
+                        {{topic.name}}
+                    {% else %}
+                        {{topic.name}},
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ eduplus_activity.method }}</td>
+            <td>
+                {% for attendance in eduplus_activity.attendance.all %}
+                    {% if forloop.last %}
+                        {{attendance.first_name}}
+                    {% else %}
+                        {{attendance.first_name}},
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{eduplus_activity.school}}</td>
+            <td>{{eduplus_activity.school.division}}</td>
+            <td>{{eduplus_activity.school.district}}</td>
+            <td>{{eduplus_activity.school.upazilla}}</td>
+            <td align="center">
+                <a type="button"
+                   class=""
+                   href="{% url 'eduplus_activity:eduplus_activity_detail' eduplus_activity.pk %}">
+                    <span class="fa fa-eye"></span>
+
+                </a>
+            </td>
+        </tr>
     {% endfor %}
 
     </tbody>

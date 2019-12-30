@@ -1,0 +1,10 @@
+UPAZILA_LIST_TITLE = "Upazila List"
+TABLE_HEADER_UPAZILA_NAME = "Upazila Name"
+TABLE_HEADER_DISTRICT = "District"
+TABLE_HEADER_DIVISION = "Division"
+TABLE_HEADER_ACTIONS = 	"Actions"
+CREATE_UPAZILA_BUTTON_TEXT = "New Upazila"
+CREATE_UPAZILA_TITLE = "New Upazila"
+UPDATE_UPAZILA_TITLE = "Update Upazila"
+DELETION_MESSEGE ="Are you sure you want to delete the upazila %s ?"
+DELETE_UPAZILA_TITLE = 'Confirm upazilla deletion'

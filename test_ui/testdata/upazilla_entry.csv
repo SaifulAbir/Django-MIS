@@ -1,0 +1,13 @@
+test_case_id,test_priority,test_description,test_designed_by,test_designed_date,expected_result,_division,_district,_upazilla,actual_result,status,notes,attachments,test_executed_by,test_execution_date
+upazilla_1,,All Valid Field with New Upazila,,,1,Dhaka,Kishoreganj,NewUpazillanew,,,,,,
+upazilla_2,,Existing District,,,0,Dhaka,Kishoreganj,NewUpazillanew,,,,,,
+upazilla_3,,Different District but Existing Upazila,,,1,Dhaka,Tangail,NewUpazillanew,,,,,,
+upazilla_4,,Different Division and District but Existing Upazila,,,0,Rangpur,Panchagarh,Debigonj,,,,,,
+upazilla_5,,No District but Valid Upazila,,,0,Dhaka,--,UpazillaNewnew,,,,,,
+upazilla_6,,Invalid Division Valid District name,,,0,-5656sdf,Panchagarh,DistrictNamenew,,,,,,
+upazilla_7,,Valid Division Empty District,,,0,Dhaka,,DivisionNamenew,,,,,,
+upazilla_8,,Empty Division but Valid District,,,0,,DistrictNamenew,UpazillaNewn,,,,,,
+upazilla_9,,All Field is Empty,,,0,,,,,,,,,
+upazilla_10,,Upazila with Digit,,,0,Dhaka,Tangail,9ivision,,,,,,
+upazilla_11,,Upazila with Special Character,,,0,Dhaka,Tangail,-*il~a,,,,,,
+upazilla_12,,No Division and District is selected,,,0,,,UpazillaNew,,,,,,
