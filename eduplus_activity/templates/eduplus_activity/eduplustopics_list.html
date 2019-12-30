@@ -1,7 +1,7 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 <section class="content-header" style="padding-top:60px">
-        <h1>Eduplus Topic List</h1>
+        <h1>Method List</h1>
  </section>
     <!-- Main content -->
     <section class="content">
@@ -16,7 +16,7 @@
                         class="btn btn-primary pull-right js-create-eduplus-topics"
                         data-url="{% url 'eduplus_activity:create_eduplus_topics' %}">
                     <span class="fa fa-plus"></span>
-                    New Eduplus Topic
+                    New Method
                 </button>
             </div>
 
@@ -26,7 +26,7 @@
                     <thead>
                     <tr>
 
-                        <th class="col-sm-10">Topic Name</th>
+                        <th class="col-sm-10">Method Name</th>
                         <th class="col-sm-2">Actions</th>
                     </tr>
                     </thead>
@@ -79,13 +79,13 @@
                         if (data.form_is_valid) {
                             $('#eduplus-topicsubmit').prop('disabled', true);
                             if(formClass=="js-eduplus-topics-create-form"){
-                                showAlert("Eduplus Topic Created!", "alert-success-customized")
+                                showAlert("Method Created!", "alert-success-customized")
                             }
                             if(formClass=="js-update-eduplus-topics-form"){
-                                showAlert("Eduplus Topic Updated!", "alert alert-success-customized")
+                                showAlert("Method Updated!", "alert alert-success-customized")
                             }
                             if(formClass=="js-eduplus-topics-delete-form"){
-                                showAlert("Eduplus Topic Deleted!", "alert alert-danger-customized")
+                                showAlert("Method Deleted!", "alert alert-danger-customized")
                             }
 
                             $(".eduplus-topics-table tbody").html(data.html_eduplus_topics_list);  // <-- Replace the table body
