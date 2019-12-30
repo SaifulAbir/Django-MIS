@@ -1,5 +1,5 @@
 from django.db import models
-
+import unions.strings as union_strings
 # Create your models here.
 from django.utils import timezone
 from sknf.validators import check_valid_chars
@@ -23,3 +23,6 @@ class Union(models.Model):
     class Meta:
         ordering = ['-created_date']
         unique_together = ['division', 'district','upazilla', 'name']
+        verbose_name = union_strings.UNIONS_VERBOSE_NAME
+        verbose_name_plural = union_strings.UNIONS_VERBOSE_NAME_PLURAL
+        db_table = 'unions'

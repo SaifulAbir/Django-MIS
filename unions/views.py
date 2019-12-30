@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -8,7 +9,8 @@ from accounts.decorators import admin_login_required
 from districts.models import District
 from unions.models import Union
 from upazillas.models import Upazilla
-
+import unions.strings as union_strings
+import resources.strings as common_strings
 from .forms import UnionForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -24,10 +26,10 @@ def save_union_form(request, form, template_name):
             data['form_is_valid'] = True
             union_list = Union.objects.all()
             data['html_union_list'] = render_to_string('unions/partial_union_list.html',
-                                                          {'union_list': union_list})
+                                                          {'union_list': union_list, 'union_strings':union_strings, 'common_strings':common_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form, 'union_strings':union_strings, 'common_strings':common_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -53,6 +55,25 @@ def union_update(request, pk):
 class UnionList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.Union
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(UnionList, self).get_context_data(**kwargs)
+        unions = Union.objects.all()
+        paginator = Paginator(unions, self.paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            union_list = paginator.page(page)
+        except PageNotAnInteger:
+            union_list = paginator.page(1)
+        except EmptyPage:
+            union_list = paginator.page(paginator.num_pages)
+
+        context['union_list'] = union_list
+        context['common_strings'] = common_strings
+        context['union_strings'] = union_strings
+        return context
 
 """class DeleteDistrict(LoginRequiredMixin, generic.DeleteView):
 
@@ -67,10 +88,10 @@ def union_delete(request, pk):
         data['form_is_valid'] = True  # This is just to play along with the existing code
         union_list = Union.objects.all()
         data['html_union_list'] = render_to_string('unions/partial_union_list.html', {
-            'union_list': union_list
+            'union_list': union_list, 'union_strings':union_strings, 'common_strings':common_strings
         })
     else:
-        context = {'union': union}
+        context = {'union': union, 'union_strings':union_strings, 'common_strings':common_strings}
         data['html_form'] = render_to_string('unions/union_confirm_delete.html',
             context,
             request=request,
@@ -91,4 +112,21 @@ def load_unions(request):
     upazilla_id = request.GET.get('upazilla')
     unions = Union.objects.filter(upazilla_id=upazilla_id).order_by('name')
     return render(request, 'unions/union_dropdown_list_options.html', {'unions': unions})
+
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    unions = Union.objects.all()
+    paginator = Paginator(unions, 10)
+    page = request.GET.get('page')
+    try:
+        union_list = paginator.page(page)
+    except PageNotAnInteger:
+        union_list = paginator.page(1)
+    except EmptyPage:
+        union_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('unions/partial_union_list.html', {
+        'union_list': union_list, 'union_strings':union_strings, 'common_strings':common_strings
+    })
+    return JsonResponse(data)
 

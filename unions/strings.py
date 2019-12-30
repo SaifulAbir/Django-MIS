@@ -1,0 +1,10 @@
+UNIONS_VERBOSE_NAME = 'Union'
+UNIONS_VERBOSE_NAME_PLURAL = 'Unions'
+UNION_NAME = 'Union Name'
+UNION_NAME_VALIDATION_ERROR = 'setCustomValidity("Please enter on alphabets only.")'
+UNION_DELETE_CONFIRMATION = 'Confirm union deletion'
+UNION_DELETE_INFO = 'Are you sure you want to delete the union '
+UNION_LIST_TEXT = 'Union List'
+NEW_UNION_TITLE_TEXT = 'New Union'
+UPDATE_UNION_TITLE_TEXT = 'Update Union'
+DELETION_MESSEGE ="Are you sure you want to delete the union %s ?"
