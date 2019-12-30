@@ -15,13 +15,13 @@
         <td>{{ union.upazilla }}</td>
         <td>{{ union.district }}</td>
         <td>{{ union.division }}</td>
-        <td align="center"><button type="button" style="margin-right:10px"
-                                   class="js-update-union"
+        <td align="center"><button type="button"
+                                   class="js-update-union update-icon"
                                    data-url="{% url 'unions:update_union' union.id %}">
             <span class="fa fa-edit"></span>
         </button>
             <button type="button"
-                    class="js-delete-union"
+                    class="js-delete-union delete-icon"
                     data-url="{% url 'unions:delete_union' union.id %}">
                 <span class="fa fa-trash"></span>
             </button>
