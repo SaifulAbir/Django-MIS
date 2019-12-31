@@ -32,4 +32,46 @@
 
     </div>
 </form>
+<script>
+    $(function(){
+        $("#id_division").change(function () {
+            var divisionId = $(this).val();
+            if(divisionId==''){
+                $("#id_district").html('<option value="">---------</option>');
+                $("#id_upazilla").html('<option value="">---------</option>');
+            }
+            else {
+                $.ajax({
+                    url: '/ajax/load-districts/',
+                    data: {
+                        'division': divisionId
+                    },
+                    success: function (data) {
+                        $("#id_district").html(data);
+                        $("#id_upazilla").html('<option value="">---------</option>');
 
+                    }
+                });
+            }
+        });
+
+        $("#id_district").change(function () {
+            var districtId = $(this).val();
+            if(districtId==''){
+                $("#id_upazilla").html('<option value="">---------</option>');
+            }
+            else{
+                $.ajax({
+                url: '/ajax/load-upazillas/',
+                data: {
+                    'district': districtId
+                },
+                success: function (data) {
+                    $("#id_upazilla").html(data);
+
+                }
+            });
+            }
+        });
+    });
+</script>
