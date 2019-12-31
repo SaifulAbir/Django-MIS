@@ -34,8 +34,11 @@
 
 <script>
     $(function(){
-        $("#id_district").html('<option value="">---------</option>');
-        $("#id_upazilla").html('<option value="">---------</option>');
+        if(!$('#modal-union').hasClass('in')){
+            $("#id_district").html('<option value="">---------</option>');
+            $("#id_upazilla").html('<option value="">---------</option>');
+        }
+
         $("#id_division").change(function () {
             var divisionId = $(this).val();
             if(divisionId==''){
@@ -64,15 +67,15 @@
             }
             else{
                 $.ajax({
-                url: '/ajax/load-upazillas/',
-                data: {
-                    'district': districtId
-                },
-                success: function (data) {
-                    $("#id_upazilla").html(data);
+                    url: '/ajax/load-upazillas/',
+                    data: {
+                        'district': districtId
+                    },
+                    success: function (data) {
+                        $("#id_upazilla").html(data);
 
-                }
-            });
+                    }
+                });
             }
         });
 
