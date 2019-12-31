@@ -1,0 +1,10 @@
+TOPICS_VERBOSE_NAME = 'Topic'
+TOPICS_VERBOSE_NAME_PLURAL = 'Topics'
+TOPIC_NAME = 'Topic Name'
+TOPIC_NAME_VALIDATION_ERROR = 'setCustomValidity("Please enter on alphabets only.")'
+TOPIC_DELETE_CONFIRMATION = 'Confirm Topic Deletion'
+TOPIC_DELETE_INFO = 'Are you sure you want to delete the topic '
+TOPIC_LIST_TEXT = 'Topic List'
+NEW_TOPIC_TITLE_TEXT = 'New Topic'
+UPDATE_TOPIC_TITLE_TEXT = 'Update Topic'
+DELETION_MESSEGE ="Are you sure you want to delete the topic %s ?"

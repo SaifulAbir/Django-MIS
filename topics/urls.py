@@ -8,4 +8,5 @@ urlpatterns = [
     path('topics_list/', views.TopicsList.as_view(), name = 'topics_list'),
     path('delete/<int:pk>/', views.topics_delete, name = 'delete_topics'),
     path('update/<int:pk>', views.topics_update, name = 'update_topics'),
+    path('pagination/', views.pagination, name = 'pagination'),
     ]

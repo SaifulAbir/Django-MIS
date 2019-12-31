@@ -7,7 +7,6 @@
 <section class="content">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">  </h3>
             <span id = "alert_placeholder"></span>
             <button type="button"
                     class="btn btn-primary pull-right js-create-union"
@@ -17,10 +16,10 @@
             </button>
         </div>
         <!-- /.box-header -->
-        <div class="box-body table-responsive">
+        <div class="box-body table-responsive union-container">
             {% include 'unions/partial_union_list.html' %}
-            {% include 'unions/_modal.html' %}
         </div>
+        {% include 'unions/_modal.html' %}
     </div>
     <!-- /.content -->
 </section>
@@ -65,6 +64,15 @@
                             showAlert("Union Deleted!", "alert alert-danger-customized")
                         }
                         $(".union-container").html(data.html_union_list);  // <-- Replace the table body
+                        $('.union-table').DataTable({
+                            'paging'      : false,
+                            'lengthChange': false,
+                            'searching'   : false,
+                            'ordering'    : false,
+                            'info'        : false,
+                            'autoWidth'   : false,
+                            'destroy'     : true
+                        });
                         $("#modal-union").modal("hide");  // <-- Close the modal
                     }
                     else {
@@ -80,11 +88,11 @@
         $("#modal-union").on("submit", ".js-union-create-form", saveForm);
 
         // Update union
-        $(".union-table").on("click", ".js-update-union", loadForm);
+        $(".union-container").on("click", ".js-update-union", loadForm);
         $("#modal-union").on("submit", ".js-union-update-form", saveForm);
 
         // Delete union
-        $(".union-table").on("click", ".js-delete-union", loadForm);
+        $(".union-container").on("click", ".js-delete-union", loadForm);
         $("#modal-union").on("submit", ".js-union-delete-form", saveForm);
         pagination(".table-responsive", '/unions/pagination/', '', '', '.union-table');
 
