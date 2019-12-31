@@ -6,7 +6,7 @@ from school.models import School
 from skleaders.models import SkLeaderProfile
 from topics.models import Topics
 from skmembers.models import SkMemberProfile
-
+import club_meetings.strings as club_meeting_strings
 # Create your models here.
 
 class ClubMeetings(models.Model):
@@ -25,10 +25,9 @@ class ClubMeetings(models.Model):
 
     class Meta:
         ordering = ['-date']
-
-    # class MeetingTopics(models.Model):
-    #     club_meeting = models.ForeignKey(ClubMeetings, on_delete=models.CASCADE)
-    #     topics = models.ManyToManyField(Topics)
+        verbose_name = club_meeting_strings.CLUB_MEETING_VERBOSE_NAME
+        verbose_name_plural = club_meeting_strings.CLUB_MEETING_VERBOSE_NAME_PLURAL
+        db_table = 'club_meetings'
 
 
 
