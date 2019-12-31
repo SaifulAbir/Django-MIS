@@ -1,4 +1,3 @@
-DESCRIPTION_REQUIRED_ERROR = "Description is required."
 
 #Districts Related Strings
 DISTRICTS_VERBOSE_NAME = 'District'
