@@ -373,4 +373,22 @@ ul#id_EPA-attendance {
 }
 /*EDIT PROFILE*/
 
+/*Common Css*/
+.content-header{
+    padding-top:60px;
+}
+.delete-icon{
+    border: none;
+    background: no-repeat;
+    padding-left: 3px;
+    color: #DC3545;
+}
+.update-icon{
+    border: none;
+    background: no-repeat;
+    color: #3c8dbc;
+    padding-left: 3px;
+    margin-right:10px;
+}
+/*Common Css*/
 

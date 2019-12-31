@@ -1,16 +1,11 @@
 from django import forms
 from .models import Union
-
+import unions.strings as union_strings
 
 
 class UnionForm(forms.ModelForm):
+    name = forms.CharField(label=union_strings.UNION_NAME)
     class Meta:
         model = Union
         fields = ['division','district','upazilla','name']
-
-        # widgets = {
-        #     'name': forms.TextInput(
-        #         attrs={'pattern': '[a-zA-Z\s]+', 'oninvalid': "setCustomValidity('Please enter on alphabets only. ')",
-        #                'style': ''}),
-        # }
 

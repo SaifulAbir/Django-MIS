@@ -1,24 +1,68 @@
-
-{% for union in union_list %}
-<tr>
-
-    <td>{{ union.name }}</td>
-    <td>{{ union.upazilla }}</td>
-    <td>{{ union.district }}</td>
-    <td>{{ union.division }}</td>
-
-
-
-    <td align="center"><button type="button" style="margin-right:10px"
-                class="js-update-union"
-                data-url="{% url 'unions:update_union' union.id %}">
-        <span class="fa fa-edit"></span>
-    </button>
-        <button type="button"
-                class="js-delete-union"
-                data-url="{% url 'unions:delete_union' union.id %}">
-            <span class="fa fa-trash"></span>
+<table id="example1" class=" data-table union-table table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class="col-sm-2">{{union_strings.UNION_NAME}}</th>
+        <th class="col-sm-3">{{union_strings.UNION_UPAZILA_LABEL_TEXT}}</th>
+        <th class="col-sm-3">{{union_strings.UNION_DISTRICT_LABEL_TEXT}}</th>
+        <th class="col-sm-2">{{union_strings.UNION_DIVISION_LABEL_TEXT}}</th>
+        <th class="col-sm-2">{{common_strings.LIST_ACTION_TEXT}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for union in union_list %}
+    <tr>
+        <td>{{ union.name }}</td>
+        <td>{{ union.upazilla }}</td>
+        <td>{{ union.district }}</td>
+        <td>{{ union.division }}</td>
+        <td align="center"><button type="button"
+                                   class="js-update-union update-icon"
+                                   data-url="{% url 'unions:update_union' union.id %}">
+            <span class="fa fa-edit"></span>
         </button>
-    </td>
-</tr>
-{% endfor %}
+            <button type="button"
+                    class="js-delete-union delete-icon"
+                    data-url="{% url 'unions:delete_union' union.id %}">
+                <span class="fa fa-trash"></span>
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% if union_list %}
+<p class="table-information">{% format_values common_strings.PAGINATION_INFO union_list.start_index  union_list.end_index union_list.paginator.count %}
+</p>
+{% else %}
+<p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+{% endif %}
+<ul class="pagination">
+
+    {% if union_list.has_previous %}
+    <li><a class="paginator" href="?page={{ union_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+    {% if union_list.number|add:'-4' > 1 %}
+    <li><a class="paginator" href="?page={{ union_list.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in union_list.paginator.page_range %}
+    {% if union_list.number == i %}
+    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% elif i > union_list.number|add:'-5' and i < union_list.number|add:'5' %}
+    <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if union_list.paginator.num_pages > union_list.number|add:'4' %}
+    <li><a href="?page={{ union_list.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if union_list.has_next %}
+    <li><a class="paginator" href="?page={{ union_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+    {% endif %}
+</ul>

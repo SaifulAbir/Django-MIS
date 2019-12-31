@@ -1,96 +1,93 @@
-
-
 {% load widget_tweaks %}
-
 <!-- Main content -->
-<section class="content">
-
 <form action="{% url 'unions:create_union' %}" class="js-union-create-form" method='POST'>
     {% csrf_token %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">New Union</h4>
+        <h4 class="modal-title">{{union_strings.NEW_UNION_TITLE_TEXT}}</h4>
     </div>
     <div class="modal-body">
         <div class="{% if form.non_field_errors %}text-danger{% endif %}">
-    {% for error in form.non_field_errors %}
-    {{ error }}
-    {% endfor %}
-</div>
-
-
-
-{% for field in form %}
-<div class="form-group">
-    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-    {% render_field field class="form-control" placeholder=field.label %}
-    <div class="{% if field.errors %} invalid{% endif %}">
-        {% for error in field.errors %}
-        <p class="text-danger" >{{ error }}</p>
+            {% for error in form.non_field_errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% render_field field class="form-control" placeholder=field.label %}
+            <div class="{% if field.errors %} invalid{% endif %}">
+                {% for error in field.errors %}
+                <p class="text-danger" >{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
         {% endfor %}
     </div>
-</div>
-{% endfor %} 
-
-
-
-
-    </div>
     <div class="modal-footer">
-        <input type="submit" value="Save" id="unionSubmit" class="btn btn-primary"/>
+        <input type="submit" value="{{common_strings.SAVE_BUTTON}}" id="unionSubmit" class="btn btn-primary"/>
 
     </div>
 </form>
 
 <script>
-$(function(){
-    $("#id_division").change(function () {
-    var divisionId = $(this).val();
-    $.ajax({
-        url: '/ajax/load-districts/',
-        data: {
-            'division': divisionId
-        },
-        success: function (data) {
-        $("#id_district").html(data);
+    $(function(){
+        $("#id_district").html('<option value="">---------</option>');
+        $("#id_upazilla").html('<option value="">---------</option>');
+        $("#id_division").change(function () {
+            var divisionId = $(this).val();
+            if(divisionId==''){
+                $("#id_district").html('<option value="">---------</option>');
+                $("#id_upazilla").html('<option value="">---------</option>');
+            }
+            else {
+                $.ajax({
+                    url: '/ajax/load-districts/',
+                    data: {
+                        'division': divisionId
+                    },
+                    success: function (data) {
+                        $("#id_district").html(data);
+                        $("#id_upazilla").html('<option value="">---------</option>');
 
-    }
-});
-});
+                    }
+                });
+            }
+        });
 
-   $("#id_district").change(function () {
-    var districtId = $(this).val();
-    $.ajax({
-        url: '/ajax/load-upazillas/',
-        data: {
-            'district': districtId
-        },
-        success: function (data) {
-        $("#id_upazilla").html(data);
+        $("#id_district").change(function () {
+            var districtId = $(this).val();
+            if(districtId==''){
+                $("#id_upazilla").html('<option value="">---------</option>');
+            }
+            else{
+                $.ajax({
+                url: '/ajax/load-upazillas/',
+                data: {
+                    'district': districtId
+                },
+                success: function (data) {
+                    $("#id_upazilla").html(data);
 
-    }
-});
-});
+                }
+            });
+            }
+        });
 
-$("#id_upazilla").change(function () {
-    var upazillaId = $(this).val();
-    $.ajax({
-        url: '/ajax/load-unions/',
-        data: {
-            'upazilla': upazillaId
-        },
-        success: function (data) {
-        $("#id_union").html(data);
+        $("#id_upazilla").change(function () {
+            var upazillaId = $(this).val();
+            $.ajax({
+                url: '/ajax/load-unions/',
+                data: {
+                    'upazilla': upazillaId
+                },
+                success: function (data) {
+                    $("#id_union").html(data);
 
-    }
-});
-});
-});
-
-
-    //for Disabling cache
-    $("form :input").attr("autocomplete", "off");
-    //for Disabling cache
+                }
+            });
+        });
+    });
 </script>
