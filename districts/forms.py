@@ -1,17 +1,8 @@
 from django import forms
 
 from resources import strings
+from . import strings as district_strings
 from .models import District
-
-
-"""class DistrictForm(forms.ModelForm):
-    division = forms.ModelChoiceField(queryset = Division.objects.all())
-    division.widget.attrs.update({'class': 'form-control'})
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-
-    class Meta:
-        model = District
-        fields = ['division', 'name']"""
 
 
 class DistrictForm(forms.ModelForm):
@@ -21,6 +12,5 @@ class DistrictForm(forms.ModelForm):
         fields = ['division', 'name']
         widgets = {
             'name': forms.TextInput(
-                attrs={'pattern': '[a-zA-Z\s]+', 'oninvalid': "setCustomValidity('Please enter on alphabets only. ')",
-                       'style': ''}),
+                attrs={'pattern': '[a-zA-Z\s]+', 'oninvalid': district_strings.DISTRICT_NAME_VALIDATION_ERROR,}),
         }
