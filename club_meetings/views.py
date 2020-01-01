@@ -1,5 +1,5 @@
 import base64
-import datetime
+from datetime import datetime
 import uuid
 
 from django.contrib import messages
@@ -128,12 +128,18 @@ def club_meeting_update(request, pk):
         'common_strings':common_strings
     })
 
-@method_decorator(headmaster_mentor_skleader_login_required, name='dispatch')
 class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "club_meeting_detail"
     model = models.ClubMeetings
     template_name = 'club_meetings/club_meeting_detail.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context['club_meeting_strings'] = club_meeting_strings
+        context['common_strings'] = common_strings
+        return context
 
 @admin_login_required
 def clubmeetings_report_list(request):
@@ -196,7 +202,7 @@ def club_meeting_search_list(request, export='null'):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    if name == '' and division == '' and district == '':
+    if name == '' and division == '' and district == '' and upazila== '' and union == '' and from_date == '' and to_date =='' and topics == '':
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('club_meetings/partial_club_meeting_report_list.html',

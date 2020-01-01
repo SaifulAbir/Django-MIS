@@ -13,7 +13,7 @@
     <form method="GET" class="search-form-club-meeting">
         <div class="box">
             <div class="box-header">
-                <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <div class="main-box card-block search-box">
 
                     <div class="row">
                         <div class="form-group col-sm-3">
@@ -49,10 +49,10 @@
                         <div class="form-group col-sm-3">
                             <strong>{{ club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_TOPIC }}</strong>
                             <select class="form-control" type="search" name="topics_contains"  id="topics-name">
-                            <option value="">-----</option>
-                            {% for topic in topics %}
+                                <option value="">-----</option>
+                                {% for topic in topics %}
                                 <option>{{ topic.name }}</option>
-                            {% endfor %}
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -77,13 +77,13 @@
                         <th class="col-sm-2">{{club_meeting_strings.CLUB_MEETING_DIVISION_TEXT}}</th>
                         <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_DISTRICT_TEXT}}</th>
                         <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_UPAZILA_TEXT}}</th>
-                        <th class="text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
+                        <th class="text-center col-sm-1">{{ common_strings.LIST_ACTION_SINGULAR_TEXT }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for club_meeting in clubmeetings_list %}
                     <tr>
-                        <td>{{club_meeting.date}}</td>
+                        <td>{{club_meeting.date|date:common_strings.DATE_FORMAT}}</td>
                         <td>
                             {% for topic in club_meeting.topics.all %}
                             {% if forloop.last %}
@@ -94,14 +94,14 @@
                             {% endfor %}
                         </td>
                         <td>{{ club_meeting.school }}</td>
-                        <td>0%</td>
+                        <td>{{club_meeting.attendance.count}}</td>
                         <td>{{ club_meeting.school.division }}</td>
                         <td>{{ club_meeting.school.district }}</td>
                         <td>{{ club_meeting.school.upazilla }}</td>
                         <td align="center">
                             <a type="button"
                                class=""
-                               href="#">
+                               href="{% url 'club_meetings:club_meeting_detail' club_meeting.pk %}">
                                 <span class="fa fa-eye"></span>
 
                             </a>
@@ -156,6 +156,16 @@
     </form>
     <!-- /.content -->
 </section>
+{% block extra_css %}
+<style>
+    .search-box{
+        border: 1px solid rgb(204, 204, 204);
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding-bottom: 0px;
+    }
+</style>
+{% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
@@ -163,7 +173,7 @@
         $('#reports, .club-meeting-menu').addClass('active');
         $("#reports").addClass("menu-open");
         $("#reports .treeview-menu").css("display", "block");
-        var name, division, district;
+        var name, division, district, upazila, union, fromdate, todate, topics;
         $('.club-meeting-search-table').dataTable({
             'lengthChange': false,
             'searching'   : false,
@@ -174,10 +184,17 @@
         $('.search-club-meeting').on('click', function (event) {
             event.preventDefault();
             $(".club-meeting-search-table").DataTable().destroy();
+            fromdate_contains = $('#from-date').val();
+            todate_contains = $('#to-date').val();
             name_contains = $('#school-name').val();
             division_contains = $('#division-name').val();
             district_contains = $('#district-name').val();
-            name = name_contains, division = division_contains, district = district_contains;
+            upazila_contains = $('#upazila-name').val();
+            union_contains = $('#union-name').val();
+            topics_contains = $('#topics-name').val();
+            name = name_contains, division = division_contains, district = district_contains,
+                upazila=upazila_contains,union=union_contains,topics=topics_contains,
+                fromdate=fromdate_contains,todate=todate_contains;
             $.ajax({
                 type: 'GET',
                 url: '/club_meetings/club_meeting_search_list/',
@@ -185,6 +202,11 @@
                     'name_contains': name_contains,
                     'division_contains': division_contains,
                     'district_contains': district_contains,
+                    'fromdate_contains': fromdate_contains,
+                    'todate_contains':todate_contains,
+                    'upazila_contains':upazila_contains,
+                    'union_contains':union_contains,
+                    'topics_contains':topics_contains,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 success: function (data) {
@@ -206,6 +228,8 @@
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        autoSuggesion('/load_previous_upazillas/', "input[name='upazila_contains']");
+        autoSuggesion('/load_previous_unions/', "input[name='union_contains']");
         // for club meeting search export
         $(".box").on('click', '.export-club-meeting-report', function() {
             $('.search-form-club-meeting').prop('action', '/club_meetings/club_meeting_search_list/export')
