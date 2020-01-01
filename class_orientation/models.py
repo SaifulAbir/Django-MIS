@@ -12,7 +12,7 @@ place_choice=(
     ('2', 'Community'),
 )
 
-class ClassOrientation(models.Model):
+class PeerEducation(models.Model):
     created_date = models.DateField(default=timezone.now)
     place = models.CharField(max_length=10, choices=place_choice, default='')
     topic = models.ManyToManyField(Topics)
@@ -22,7 +22,7 @@ class ClassOrientation(models.Model):
         return self.topic.created_date
 
     def get_absolute_url(self):
-        return reverse('class_orientation:class_orientation_list')
+        return reverse('peer_education:peer_education_list')
 
     class Meta:
         ordering = ['-created_date']

@@ -33,7 +33,7 @@ urlpatterns = [
     path('topics/', include('topics.urls')),
     path('club_meetings/', include('club_meetings.urls')),
     path('events/', include('events.urls')),
-    path('class_orientation/',include('class_orientation.urls')),
+    path('peer_education/',include('class_orientation.urls')),
     path('eduplus_activity/',include('eduplus_activity.urls')),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

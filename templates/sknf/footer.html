@@ -246,6 +246,7 @@
     function pagination(id, url, name, division, district, tableId) {
         $(id).on('click', '.paginator', function (e) {
             e.preventDefault();
+            $("tableId").DataTable().destroy();
             var addressValue = $(this).attr("href");
             $.ajax({
                 type: 'get',
