@@ -10,7 +10,3 @@ class DistrictForm(forms.ModelForm):
     class Meta:
         model = District
         fields = ['division', 'name']
-        widgets = {
-            'name': forms.TextInput(
-                attrs={'pattern': '[a-zA-Z\s]+', 'oninvalid': district_strings.DISTRICT_NAME_VALIDATION_ERROR,}),
-        }
