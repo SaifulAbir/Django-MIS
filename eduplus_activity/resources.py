@@ -14,6 +14,20 @@ from .models import School, EduPlusActivity, EduplusTopics
 
 class EduPlusActivityResource(resources.ModelResource):
 
+    class Meta:
+        model = EduPlusActivity
+        exclude = ('id','presence_skleader','image','skleader','topics','method')
+        export_order = ('date','topic','method','school', 'attendance','division','district','upazila','union','description' )
+        widgets = {
+            'date': {'format': '%d.%m.%Y'},
+        }
+
+
+    def dehydrate_attendance(self, eduPlusActivity):
+        #EduPlusActivity.objects.fil
+        alldata = list(eduPlusActivity.attendance.all())
+        return len(alldata)
+
     school = fields.Field(
         column_name='School',
         attribute='school',
@@ -50,11 +64,5 @@ class EduPlusActivityResource(resources.ModelResource):
 
 
 
-    class Meta:
-        model = EduPlusActivity
-        exclude = ('id','presence_skleader','image','skleader','topics','method')
-        export_order = ('date','topic','method','school', 'attendance','division','district','upazila','union','description' )
-        widgets = {
-            'date': {'format': '%d.%m.%Y'},
-        }
+
 
