@@ -1,4 +1,3 @@
-DESCRIPTION_REQUIRED_ERROR = "Description is required."
 
 #Districts Related Strings
 DISTRICTS_VERBOSE_NAME = 'District'
@@ -46,5 +45,6 @@ USER_PROFILE_CONFIRM_PASSWORD = "Confirm password"
 GENERATE_PASSWORD_BUTTON = "Generate Password"
 DATE_FORMAT = "d-m-Y"
 EXPORT_CSV_BUTTON_TEXT = "Export CSV"
-
+VALIDATION_CHAR_ERROR_MESSEGE = 'Invalid Validation'
+FUTURE_DATE_VALIDATION_ERROR_MESSEGE = 'This Date cannot be in the future.'
 # Common Strings

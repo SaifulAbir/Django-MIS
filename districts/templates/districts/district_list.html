@@ -25,13 +25,6 @@
         </div>
         <!-- /.content -->
     </section>
-    {% block extra_css %}
-        <style type="text/css">
-            .content-header{
-                padding-top: 60px !important;
-            }
-        </style>
-    {% endblock %}
 {% endblock %}
 {% block extra_js %}
     <script type="text/javascript">
@@ -97,10 +90,6 @@
                 return false;
             };
 
-            function showAlert(message,alerttype) {
-
-                $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-            }
 
             /* Binding */
 
@@ -118,11 +107,7 @@
             pagination(".district-container", '/district/pagination/', '', '', '.district-table');
 
 
-            $('.name-field').validate({
-                rules : {
-                    name : { greaterThanZero : true }
-                }
-            });
+
 
         });
 

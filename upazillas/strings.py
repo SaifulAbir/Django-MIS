@@ -8,3 +8,4 @@ CREATE_UPAZILA_TITLE = "New Upazila"
 UPDATE_UPAZILA_TITLE = "Update Upazila"
 DELETION_MESSEGE ="Are you sure you want to delete the upazila %s ?"
 DELETE_UPAZILA_TITLE = 'Confirm upazilla deletion'
+UPAZILA_NAME_VALIDATION_ERROR = 'setCustomValidity("Please enter on alphabets only.")'

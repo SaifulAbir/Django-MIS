@@ -3,14 +3,14 @@ from django.db import models
 # Create your models here.
 from django.urls import reverse
 from django.utils import timezone
-
+from sknf.validators import *
 from division.models import Division
 from resources import strings
 
 
 class District(models.Model):
     division = models.ForeignKey(Division, on_delete=models.CASCADE, related_name='districts')
-    name = models.CharField(max_length=128 )
+    name = models.CharField(max_length=128,  validators=[check_valid_chars])
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
