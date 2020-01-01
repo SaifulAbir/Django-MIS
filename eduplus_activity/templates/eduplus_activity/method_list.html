@@ -13,8 +13,8 @@
 
                 <span id = "alert_placeholder"></span>
                 <button type="button"
-                        class="btn btn-primary pull-right js-create-eduplus-topics"
-                        data-url="{% url 'eduplus_activity:create_eduplus_topics' %}">
+                        class="btn btn-primary pull-right js-create-method"
+                        data-url="{% url 'eduplus_activity:create_method' %}">
                     <span class="fa fa-plus"></span>
                     New Method
                 </button>
@@ -22,7 +22,7 @@
 
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-                <table   id="example1" class=" data-table eduplus-topics-table table table-bordered table-striped">
+                <table   id="example1" class=" data-table method-table table table-bordered table-striped">
                     <thead>
                     <tr>
 
@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
 
-                    {% include 'eduplus_activity/partial_eduplus_topics_list.html' %}
+                    {% include 'eduplus_activity/partial_method_list.html' %}
 
                     </tbody>
                     <tfoot>
@@ -49,7 +49,7 @@
 {% block extra_js %}
     <script type="text/javascript">
         $(function () {
-            $('#settings, .eduplus-topics-menu').addClass('active');
+            $('#settings, .method-menu').addClass('active');
             $("#settings").addClass("menu-open");
             $("#settings .treeview-menu").css("display", "block");
 
@@ -60,10 +60,10 @@
                     type: 'get',
                     dataType: 'json',
                     beforeSend: function () {
-                        $("#modal-eduplus-topics").modal("show");
+                        $("#modal-method").modal("show");
                     },
                     success: function (data) {
-                        $("#modal-eduplus-topics .modal-content").html(data.html_form);
+                        $("#modal-method .modal-content").html(data.html_form);
                     }
                 });
             };
@@ -77,22 +77,22 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.form_is_valid) {
-                            $('#eduplus-topicsubmit').prop('disabled', true);
-                            if(formClass=="js-eduplus-topics-create-form"){
+                            $('#methodubmit').prop('disabled', true);
+                            if(formClass=="js-method-create-form"){
                                 showAlert("Method Created!", "alert-success-customized")
                             }
-                            if(formClass=="js-update-eduplus-topics-form"){
+                            if(formClass=="js-update-method-form"){
                                 showAlert("Method Updated!", "alert alert-success-customized")
                             }
-                            if(formClass=="js-eduplus-topics-delete-form"){
+                            if(formClass=="js-method-delete-form"){
                                 showAlert("Method Deleted!", "alert alert-danger-customized")
                             }
 
-                            $(".eduplus-topics-table tbody").html(data.html_eduplus_topics_list);  // <-- Replace the table body
-                            $("#modal-eduplus-topics").modal("hide");
+                            $(".method-table tbody").html(data.html_method_list);  // <-- Replace the table body
+                            $("#modal-method").modal("hide");
                         }
                         else {
-                            $("#modal-eduplus-topics .modal-content").html(data.html_form);
+                            $("#modal-method .modal-content").html(data.html_form);
                         }
 
 
@@ -110,16 +110,16 @@
             /* Binding */
 
             // Create eduplus_topics
-            $(".js-create-eduplus-topics").click(loadForm);
-            $("#modal-eduplus-topics").on("submit", ".js-eduplus-topics-create-form", saveForm);
+            $(".js-create-method").click(loadForm);
+            $("#modal-method").on("submit", ".js-method-create-form", saveForm);
 
             // Update eduplus_topics
-            $(".eduplus-topics-table").on("click", ".js-update-eduplus-topics", loadForm);
-            $("#modal-eduplus-topics").on("submit", ".js-update-eduplus-topics-form", saveForm);
+            $(".method-table").on("click", ".js-update-method", loadForm);
+            $("#modal-method").on("submit", ".js-update-method-form", saveForm);
 
             // Delete eduplus_topics
-            $(".eduplus-topics-table").on("click", ".js-delete-eduplus-topics", loadForm);
-            $("#modal-eduplus-topics").on("submit", ".js-eduplus-topics-delete-form", saveForm);
+            $(".method-table").on("click", ".js-delete-method", loadForm);
+            $("#modal-method").on("submit", ".js-method-delete-form", saveForm);
 
         });
 

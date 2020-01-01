@@ -14,8 +14,8 @@ from django.views import generic
 from accounts.decorators import headmaster_mentor_skleader_login_required, admin_login_required
 from accounts.models import User
 from eduplus_activity import models
-from eduplus_activity.forms import EduPlusActivityForm, EditEduPlusActivityForm, EduplusTopicsForm
-from eduplus_activity.models import EduPlusActivity, EduplusTopics
+from eduplus_activity.forms import EduPlusActivityForm, EditEduPlusActivityForm, MethodForm
+from eduplus_activity.models import EduPlusActivity, Method
 from eduplus_activity.resources import EduPlusActivityResource
 from headmasters.models import HeadmasterProfile
 from school.models import School
@@ -46,7 +46,7 @@ def edu_plus_activity_add(request):
             sk_profile = None
     if request.method == 'POST':
         edu_plus_activity_form = EduPlusActivityForm(request.POST, files=request.FILES, prefix='EPA', user=request.user)
-        # meeting_topic_form = Meetingeduplus_topicsForm(request.POST, prefix='MTF')
+        # meeting_topic_form = MeetingmethodForm(request.POST, prefix='MTF')
         if edu_plus_activity_form.is_valid():
             edu_plus_activity = edu_plus_activity_form.save(commit=False)
             edu_plus_activity.school = profile.school
@@ -69,7 +69,7 @@ def edu_plus_activity_add(request):
 
     else:
         edu_plus_activity_form = EduPlusActivityForm(prefix='EPA', user=request.user)
-        # meeting_topic_form = Meetingeduplus_topicsForm(prefix='MTF')
+        # meeting_topic_form = MeetingmethodForm(prefix='MTF')
         #headmaster_form_details = HeadmasterDetailsForm(prefix='hf')
 
     return render(request, 'eduplus_activity/eduplus_activity_add.html', {
@@ -155,15 +155,15 @@ class EduplusActivityDetail(LoginRequiredMixin, generic.DetailView):
     template_name = 'eduplus_activity/eduplus_activity_detail.html'
 
 
-def save_eduplus_topics_form(request, form, template_name):
+def save_method_form(request, form, template_name):
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            eduplus_topics_list = EduplusTopics.objects.all()
-            data['html_eduplus_topics_list'] = render_to_string('eduplus_activity/partial_eduplus_topics_list.html',
-                                                          {'eduplustopics_list': eduplus_topics_list,
+            method_list = Method.objects.all()
+            data['html_method_list'] = render_to_string('eduplus_activity/partial_method_list.html',
+                                                          {'method_list': method_list,
                                                            'edu_strings':edu_strings,'common_strings':common_strings})
         else:
             data['form_is_valid'] = False
@@ -171,41 +171,41 @@ def save_eduplus_topics_form(request, form, template_name):
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
-def eduplus_topics_create(request):
+def method_create(request):
     data = dict()
 
     if request.method == 'POST':
-        form = EduplusTopicsForm(request.POST)
+        form = MethodForm(request.POST)
     else:
-        form = EduplusTopicsForm()
-    return save_eduplus_topics_form(request, form, 'eduplus_activity/eduplus_topics_form.html')
+        form = MethodForm()
+    return save_method_form(request, form, 'eduplus_activity/method_form.html')
 
-def eduplus_topics_update(request, pk):
-    eduplus_topics = get_object_or_404(EduplusTopics, pk=pk)
+def method_update(request, pk):
+    method = get_object_or_404(Method, pk=pk)
     if request.method == 'POST':
-        form = EduplusTopicsForm(request.POST, instance=eduplus_topics)
+        form = MethodForm(request.POST, instance=method)
     else:
-        form = EduplusTopicsForm(instance=eduplus_topics)
-    return save_eduplus_topics_form(request, form, 'eduplus_activity/eduplus_topics_update_form.html')
+        form = MethodForm(instance=method)
+    return save_method_form(request, form, 'eduplus_activity/method_update_form.html')
 
 @method_decorator(admin_login_required, name='dispatch')
 class EduplusTopicsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
-    model = models.EduplusTopics
+    model = models.Method
 
-def eduplus_topics_delete(request, pk):
-    eduplus_topics = get_object_or_404(EduplusTopics, pk=pk)
+def method_delete(request, pk):
+    method = get_object_or_404(Method, pk=pk)
     data = dict()
     if request.method == 'POST':
-        eduplus_topics.delete()
+        method.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
-        eduplus_topics_list = EduplusTopics.objects.all()
-        data['html_eduplus_topics_list'] = render_to_string('eduplus_activity/partial_eduplus_topics_list.html', {
-            'eduplustopics_list': eduplus_topics_list ,'edu_strings':edu_strings,'common_strings':common_strings
+        method_list = Method.objects.all()
+        data['html_method_list'] = render_to_string('eduplus_activity/partial_method_list.html', {
+            'method_list': method_list ,'edu_strings':edu_strings,'common_strings':common_strings
         })
     else:
-        context = {'eduplus_topics': eduplus_topics,'edu_strings':edu_strings,'common_strings':common_strings}
-        data['html_form'] = render_to_string('eduplus_activity/eduplus_topics_confirm_delete.html',
+        context = {'method': method,'edu_strings':edu_strings,'common_strings':common_strings}
+        data['html_form'] = render_to_string('eduplus_activity/method_confirm_delete.html',
             context,
             request=request,
         )
@@ -215,7 +215,7 @@ def eduplus_topics_delete(request, pk):
 def eduplus_activity_report_list(request):
     eduplus_activity_list = EduPlusActivity.objects.all()
     topic = Topics.objects.all()
-    method = EduplusTopics.objects.all()
+    method = Method.objects.all()
     paginator = Paginator(eduplus_activity_list, 10)
     page = request.GET.get('page')
     try:
