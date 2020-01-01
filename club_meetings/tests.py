@@ -36,13 +36,15 @@ class ClubMeetingsTest(TestCase):
         s1 = School(name='Mirpur School', school_id=123, division = self.division, district = self.district)
         s1.save()
         self.school = s1
-        s2 = ClubMeetings(date=timezone.now(), school=self.school, class_room='7', presence_guide_teacher='1',
-                         presence_skleader='1')
-        s2.save()
-        self.club_m = s2
         skleader = SkLeaderProfile(school=self.school, user=self.user, gender='M', student_class='6',
                                    roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
         skleader.save()
+        self.skleader = skleader
+        s2 = ClubMeetings(date=timezone.now(), school=self.school, class_room='7', presence_guide_teacher='1',
+                         presence_skleader='1', skleader = self.skleader)
+        s2.save()
+        self.club_m = s2
+
         s = SkMemberProfile(school=self.school, user=self.user, gender='M', student_class='6',
                             roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
 
@@ -87,19 +89,19 @@ class ClubMeetingsTest(TestCase):
         club_meeting_count = ClubMeetings.objects.count()
         topic = Topics.objects.exclude(name='')
         user = User.objects.filter(user_type='6')
-        instance = ClubMeetings.objects.create(date=timezone.now(), school=self.school, class_room='7', presence_guide_teacher='1',
+        instance = ClubMeetings.objects.create(date=timezone.now(), school=self.school, class_room='7', presence_guide_teacher='1', skleader = self.skleader,
                          presence_skleader='1')
         instance.topics.set(topic)
         instance.attendance.set(user)
         club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_report_list'), follow=True)
         self.assertEqual(ClubMeetings.objects.count(), club_meeting_count + 1)
         self.assertContains(response=club_meeting_response, status_code=200,
-                            text='<td>7</td>', html=True)
+                            text='<td>Mirpur School (123)</td>', html=True)
 
     def test__if_required_field_are_given__should_pass(self):
         topic = Topics.objects.exclude(name='')
         user = User.objects.filter(user_type='6')
-        instance = ClubMeetings.objects.create(school=self.school,class_room='105')
+        instance = ClubMeetings.objects.create(school=self.school,class_room='105', skleader = self.skleader)
 
         instance.topics.set(topic)
         instance.attendance.set(user)

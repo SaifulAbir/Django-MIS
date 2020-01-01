@@ -28,6 +28,8 @@ UPAZILA_NAME_TEST = 'Doulotpur'
 
 # Common Strings
 SAVE_BUTTON	= "Save"
+BACK_BUTTON	= "Back"
+EDIT_BUTTON	= "Edit"
 UPDATE_BUTTON = "Update"
 DELETE_BUTTON = "Delete"
 CLOSE_BUTTON = "Close"
@@ -35,6 +37,7 @@ SEARCH_BUTTON = "Search"
 PAGINATION_NULL_INFO_TEXT = 'Showing 0 to 0 of 0 entries'
 PAGINATION_INFO = 'Showing %s to %s of %s entries'
 LIST_ACTION_TEXT = 'Actions'
+LIST_ACTION_SINGULAR_TEXT = 'Action'
 PROFILE_FORM_TITLE = "Basic Information"
 USER_PROFILE_NAME = "Name"
 USER_PROFILE_USERNAME = "Username / Mobile Number"

@@ -1,4 +1,5 @@
 import base64
+from datetime import datetime
 import uuid
 
 from django.contrib import messages
@@ -10,7 +11,8 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views import generic
-
+import club_meetings.strings as club_meeting_strings
+from resources import strings as common_strings
 from accounts.decorators import headmaster_mentor_skleader_login_required, admin_login_required
 from accounts.models import User
 from club_meetings import models
@@ -20,6 +22,7 @@ from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
+from topics.models import Topics
 from .forms import ClubMeetingForm, EditClubMeetingForm
 
 
@@ -73,7 +76,7 @@ def club_meeting_add(request):
         #headmaster_form_details = HeadmasterDetailsForm(prefix='hf')
 
     return render(request, 'club_meetings/club_meeting_add.html', {
-        'club_meeting_form': club_meeting_form,
+        'club_meeting_form': club_meeting_form, 'club_meeting_strings':club_meeting_strings, 'common_strings':common_strings
         #'headmaster_form_details': headmaster_form_details,
     })
 
@@ -120,18 +123,27 @@ def club_meeting_update(request, pk):
     return render(request, 'club_meetings/club_meeting_add.html', {
         'club_meeting_form': club_meeting_form,
         'club_meeting': club_meeting,
-        'all_member': all_member
+        'all_member': all_member,
+        'club_meeting_strings':club_meeting_strings,
+        'common_strings':common_strings
     })
 
-@method_decorator(headmaster_mentor_skleader_login_required, name='dispatch')
 class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
     login_url = '/'
     context_object_name = "club_meeting_detail"
     model = models.ClubMeetings
     template_name = 'club_meetings/club_meeting_detail.html'
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context['club_meeting_strings'] = club_meeting_strings
+        context['common_strings'] = common_strings
+        return context
+
 @admin_login_required
 def clubmeetings_report_list(request):
+    topics = Topics.objects.all()
     clubmeetings_report = ClubMeetings.objects.all()
     paginator = Paginator(clubmeetings_report, 10)
     page = request.GET.get('page')
@@ -141,7 +153,7 @@ def clubmeetings_report_list(request):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    return render(request, 'club_meetings/club_meeting_report_list.html', {'clubmeetings_list': queryset})
+    return render(request, 'club_meetings/club_meeting_report_list.html', {'clubmeetings_list': queryset, 'club_meeting_strings':club_meeting_strings, 'common_strings':common_strings, 'topics':topics})
 
 def club_meeting_search_list(request, export='null'):
     data = dict()
@@ -149,13 +161,39 @@ def club_meeting_search_list(request, export='null'):
     name = request.GET.get('name_contains')
     division = request.GET.get('division_contains')
     district = request.GET.get('district_contains')
+    upazila = request.GET.get('upazila_contains')
+    union = request.GET.get('union_contains')
+    from_date = request.GET.get('fromdate_contains')
+    if from_date:
+        fromdate = datetime.strptime(from_date, '%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        fromdate = from_date
+
+    to_date = request.GET.get('todate_contains')
+    print(to_date)
+    if to_date:
+        todate = datetime.strptime(to_date, '%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        todate = to_date
+    topics = request.GET.get('topics_contains')
     if name != '' and name is not None:
         qs = qs.filter(school__name__icontains=name)
     if division != '' and division is not None:
         qs = qs.filter(school__division__name__icontains=division)
     if district != '' and district is not None:
         qs = qs.filter(school__district__name__icontains=district)
-
+    if upazila != '' and upazila is not None:
+        qs = qs.filter(school__upazilla__name__icontains=upazila)
+    if union != '' and union is not None:
+        qs = qs.filter(school__union__name__icontains=union)
+    if topics != '' and topics is not None:
+        qs = qs.filter(topics__name__icontains=topics)
+    if fromdate:
+        qs = qs.filter(date__gt=fromdate)
+    if todate and not fromdate:
+        qs = qs.filter(date__lt=todate)
+    if from_date and to_date :
+        qs = qs.filter(date__gte=fromdate, date__lte=todate)
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')
     try:
@@ -164,11 +202,11 @@ def club_meeting_search_list(request, export='null'):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    if name == '' and division == '' and district == '':
+    if name == '' and division == '' and district == '' and upazila== '' and union == '' and from_date == '' and to_date =='' and topics == '':
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('club_meetings/partial_club_meeting_report_list.html',
-                                         {'clubmeetings_list': queryset})
+                                         {'clubmeetings_list': queryset, 'club_meeting_strings':club_meeting_strings, 'common_strings':common_strings})
 
     if export != 'export':
         return JsonResponse(data)

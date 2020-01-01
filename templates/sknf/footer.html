@@ -47,7 +47,7 @@
     $(document).ready(function () {
         $('.sidebar-menu').tree();
         initDatepicker();
-        initSelect2(); })
+    })
 </script>
 <script>
     function readURL(input) {
@@ -79,18 +79,6 @@
             }
         });
 
-        $(function(){
-            $('#addMoreDoc').on('click', addRow);
-            $(document).on('click', '.removeDoc', function() {
-                var trIndex = $(this).closest("tr").index();
-                if(trIndex>1) {
-                    $(this).closest("tr").remove();
-                } else {
-                    alert("Sorry!! Can't remove first row!");
-                }
-            });
-        });
-
         var copydate = $('.copydate').val();
         $('.copydate').on('change', function() {
             var data = this.value;
@@ -100,6 +88,18 @@
             $('.pastedate').val(datestring);
         });
     });
+
+    function rowAddRemove(){
+        $('#addMoreDoc').on('click', addRow);
+        $(document).on('click', '.removeDoc', function() {
+            var trIndex = $(this).closest("tr").index();
+            if(trIndex>1) {
+                $(this).closest("tr").remove();
+            } else {
+                alert("Sorry!! Can't remove first row!");
+            }
+        });
+    };
 
     $(".js-genarate-password").click(function () {
         $("#modal-password-generator").modal("show");
