@@ -20,3 +20,6 @@ DESCRIPTION_REQUIRED_ERROR = "Description is required."
 TOPIC_REQUIRED_ERROR_NOTIFICATION = 'Select at least one topic.'
 METHOD_REQUIRED_ERROR_VALIDATION = 'Select method.'
 ATTENDANCE_REQUIRED_ERROR = 'Member attendance is required.'
+CROP_IMAGE_MODAL_TITLE = 'Crop the photo'
+CROP_IMAGE_BUTTON = 'Crop and upload'
+EDUPLUS_ACTIVITIES_DETAIL_TITLE = 'Eduplus Activity Info'

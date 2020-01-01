@@ -1,4 +1,4 @@
-<button type="submit" class="btn btn-primary export-eduplus-activity-report pull-right">Export CSV</button>
+<button type="submit" class="btn btn-primary export-eduplus-activity-report pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
 <table   id="example1" class="data-table eduplus-activity-search-table table table-bordered table-striped">
     <thead>
     <tr>
@@ -57,8 +57,8 @@
 
     </tfoot>
 </table>
-<p class="table-information">Showing {{ eduplusactivity_list.start_index }} to {{ eduplusactivity_list.end_index }} of {{ eduplusactivity_list.paginator.count }} entries</p>
-<ul class="pagination" style="float: right">
+<p class="table-information">{%format_values common_strings.PAGINATION_INFO eduplusactivity_list.start_index eduplusactivity_list.end_index eduplusactivity_list.paginator.count %}</p>
+<ul class="pagination">
 
     {% if eduplusactivity_list.has_previous %}
     <li><a class="paginator" href="?page={{ eduplusactivity_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
