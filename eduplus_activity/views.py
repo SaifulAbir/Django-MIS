@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -153,6 +154,11 @@ class EduplusActivityDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "eduplus_activity_detail"
     model = models.EduPlusActivity
     template_name = 'eduplus_activity/eduplus_activity_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["edu_strings"] = edu_strings
+        context["common_strings"] = common_strings
+        return context
 
 
 def save_method_form(request, form, template_name):
