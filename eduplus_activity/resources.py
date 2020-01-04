@@ -9,7 +9,7 @@ from division.models import Division
 from topics.models import Topics
 from unions.models import Union
 from upazillas.models import Upazilla
-from .models import School, EduPlusActivity, EduplusTopics
+from .models import School, EduPlusActivity, Method
 
 
 class EduPlusActivityResource(resources.ModelResource):
@@ -51,7 +51,7 @@ class EduPlusActivityResource(resources.ModelResource):
         attribute='school',
         widget=ForeignKeyWidget(School, 'union'))
     topic = fields.Field(column_name='Topics',
-            attribute='topics', widget=ManyToManyWidget(EduplusTopics, ',', 'name'))
+                         attribute='topics', widget=ManyToManyWidget(Method, ',', 'name'))
     method = fields.Field(column_name='Method', attribute='method')
     attendance = fields.Field(column_name='Attendance',
                          attribute='attendance', widget=ManyToManyWidget(User, ',', 'first_name'))

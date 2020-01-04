@@ -1,0 +1,22 @@
+
+{% for method in method_list %}
+<tr>
+
+   <td>{{ method.name }}</td>
+   <td align="center"><button type="button" style="margin-right:10px"
+               class="js-update-method"
+               data-url="{% url 'eduplus_activity:update_method' method.id %}">
+       <span class="fa fa-edit"> </span>
+   </button>
+       <button type="button"
+               class="js-delete-method"
+               data-url="{% url 'eduplus_activity:delete_method' method.id %}">
+           <span class="fa fa-trash"> </span>
+       </button>
+   </td>
+
+
+
+
+</tr>
+{% endfor %}

@@ -2,7 +2,7 @@
 {% block body_block %}
 
 <!-- Main content -->
-<section class="content-header" style="padding-top:60px">
+<section class="content-header" >
     <h1>
         {{ edu_strings.EDUPLUS_ACTIVITIES_LIST_TITLE }}
     </h1>
@@ -14,7 +14,7 @@
         <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
-                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                    <div id="alertdiv"  class="alert alert-success-customized">
                         <span>
                             {% for message in messages %}
                             {{ message }}
@@ -137,6 +137,15 @@
     </div>
     <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <style>
+        #alertdiv{
+            font-size:20px;
+            margin-top:15px;
+        }
+
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">

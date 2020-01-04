@@ -8,7 +8,7 @@ from school.models import School
 from skleaders.models import SkLeaderProfile
 from topics.models import Topics
 
-class EduplusTopics(models.Model):
+class Method(models.Model):
     name= models.CharField(max_length=128, unique=True)
     created_date = models.DateTimeField(default=timezone.now)
     objects = models.Manager
@@ -27,7 +27,7 @@ class EduPlusActivity(models.Model):
     attendance= models.ManyToManyField(User, related_name='member_profile')
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     topics = models.ManyToManyField(Topics)
-    method = models.ForeignKey(EduplusTopics, on_delete=models.CASCADE)
+    method = models.ForeignKey(Method, on_delete=models.CASCADE)
     description = models.TextField(max_length=200)
 
     def __str__(self):

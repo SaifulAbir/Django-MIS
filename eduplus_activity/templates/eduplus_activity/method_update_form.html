@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 
-<form action="{% url 'eduplus_activity:eduplus_update_topics' form.instance.pk %}" class="js-update-eduplus-topics-form" method='POST'>
+<form action="{% url 'eduplus_activity:update_method' form.instance.pk %}" class="js-update-method-form" method='POST'>
     {% csrf_token %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
