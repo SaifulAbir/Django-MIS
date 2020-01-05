@@ -29,6 +29,8 @@
 {% block extra_js %}
 <script type="text/javascript">
     $(function () {
+        $("#settings").addClass("menu-open");
+        $("#settings .treeview-menu").css("display", "block");
         $('#settings, .division-menu').addClass('active');
         var loadForm = function () {
             var btn = $(this);
