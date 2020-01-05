@@ -8,7 +8,7 @@ from django.utils import timezone
 from accounts.models import User
 from districts.models import District
 from division.models import Division
-from eduplus_activity.models import EduPlusActivity, EduplusTopics
+from eduplus_activity.models import EduPlusActivity, Method
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
@@ -84,7 +84,7 @@ class EduplusActivityTest(TestCase):
             s.full_clean()
 
     def test__if_required_data_is_given__should_pass(self):
-        topic = EduplusTopics.objects.exclude(name='')
+        topic = Method.objects.exclude(name='')
         user = User.objects.filter(user_type='6')
         instance = EduPlusActivity.objects.create(date=timezone.now(), school=self.school,presence_skleader=True, description='Nothing done')
 
@@ -117,7 +117,7 @@ class EduplusActivityTest(TestCase):
         logged_in = self.client.login(username='admin@example.com', password='12345')
         self.assertTrue(logged_in)
         eduplus_activity_count = EduPlusActivity.objects.count()
-        topic = EduplusTopics.objects.exclude(name='')
+        topic = Method.objects.exclude(name='')
         user = User.objects.filter(user_type='6')
         instance = EduPlusActivity.objects.create(date=timezone.now(), school=self.school, presence_skleader=True,
                                                   description='Nothing done')
@@ -167,17 +167,16 @@ class EduplusActivityTest(TestCase):
         self.assertContains(response=eduplus_activity_response, status_code=200,
                             text='<td>Mirpur School (123)</td>', html=True)
 
-class TopicTest(TestCase):
-
+class MethodTest(TestCase):
     def test__null_name__should_raise_error(self):
-        s = EduplusTopics(created_date=timezone.now())
+        s = Method(created_date=timezone.now())
         with self.assertRaises(ValidationError):
             s.full_clean()
 
     def test__uniqe_validation_added(self):
-        unique = EduplusTopics._meta.get_field('name').unique
+        unique = Method._meta.get_field('name').unique
         self.assertIn(str(unique),'True')
 
     def test__max_length_validation_added(self):
-        max_length = EduplusTopics._meta.get_field('name').max_length
+        max_length = Method._meta.get_field('name').max_length
         self.assertEquals(max_length, 128)

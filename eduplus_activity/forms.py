@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from accounts.models import User
-from eduplus_activity.models import EduPlusActivity, EduplusTopics
+from eduplus_activity.models import EduPlusActivity, Method
 from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
@@ -21,7 +21,7 @@ class EduPlusActivityForm(forms.ModelForm):
         required=True, error_messages={'required': edu_strings.TOPIC_REQUIRED_ERROR_NOTIFICATION})
     method = forms.ModelChoiceField(
         widget=forms.Select(attrs={'width': '5000px'}),
-        queryset = EduplusTopics.objects.all(),
+        queryset = Method.objects.all(),
         required=True, error_messages={'required': edu_strings.METHOD_REQUIRED_ERROR_VALIDATION}
     )
     attendance = forms.ModelMultipleChoiceField(
@@ -106,9 +106,9 @@ class EditEduPlusActivityForm(forms.ModelForm):
 #         model= MeetingTopics
 #         fields=["topics"]
 
-class EduplusTopicsForm(forms.ModelForm):
+class MethodForm(forms.ModelForm):
     class Meta:
-        model = EduplusTopics
+        model = Method
         fields = ['name']
         widgets = {
             'name': forms.TextInput(attrs={'style': ''}),

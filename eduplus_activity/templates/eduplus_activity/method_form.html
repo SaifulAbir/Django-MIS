@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 
-<form action="{% url 'eduplus_activity:create_eduplus_topics' %}" class="js-eduplus-topics-create-form" method='POST'>
+<form action="{% url 'eduplus_activity:create_method' %}" class="js-method-create-form" method='POST'>
     {% csrf_token %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -28,7 +28,7 @@
         {% endfor %}
     </div>
     <div class="modal-footer">
-        <input type="submit" value="Save" id="eduplus-topicsubmit" class="btn btn-primary form-submit"/>
+        <input type="submit" value="Save" id="method-submit" class="btn btn-primary form-submit"/>
 
     </div>
 </form>
