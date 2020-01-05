@@ -24,15 +24,15 @@
                     {% endif %}
                 </span>
                 <button type="button"
-                class="btn btn-primary pull-right js-class-orientation-create"
-                data-url="{% url 'class_orientation:create_class_orientation' %}">
+                class="btn btn-primary pull-right js-peer-education-create"
+                data-url="{% url 'peer_education:create_peer_education' %}">
             <span class="fa fa-plus"></span>
             New Peer Education
         </button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-                <table   id="example1" class=" class-orientation-table data-table table table-bordered table-striped">
+                <table   id="example1" class=" peer-education-table data-table table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th class="col-sm-3">Date</th>
@@ -42,14 +42,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% include 'class_orientation/partial_class_orientation_list.html' %}
+                    {% include 'peer_education/partial_peer_education_list.html' %}
 
                     </tbody>
                     <tfoot>
 
                     </tfoot>
                 </table>
-                {% include 'class_orientation/_modal.html' %}
+                {% include 'peer_education/_modal.html' %}
             </div>
         </div>
         <!-- /.content -->
@@ -66,10 +66,10 @@ $(function () {
             type: 'get',
             dataType: 'json',
             beforeSend: function () {
-                $("#modal-class-orientation").modal("show");
+                $("#modal-peer-education").modal("show");
             },
             success: function (data) {
-                $("#modal-class-orientation .modal-content").html(data.html_form);
+                $("#modal-peer-education .modal-content").html(data.html_form);
             }
         });
     };
@@ -85,18 +85,18 @@ $(function () {
       success: function (data) {
         if (data.form_is_valid) {
             $('#peerSubmit').prop('disabled', true);
-           if(formClass=="js-class-orientation-create-form"){
-              showAlert("Class Orientation Created!", "alert-success-customized")
+           if(formClass=="js-peer-education-create-form"){
+              showAlert("Peer Education Created!", "alert-success-customized")
            }
-           if(formClass=="js-class-orientation-update-form"){
-              showAlert("Class Orientation Updated!", "alert-success-customized")
+           if(formClass=="js-peer-education-update-form"){
+              showAlert("Peer Education Updated!", "alert-success-customized")
            }
 
-          $(".class-orientation-table tbody").html(data.html_class_orientation_list);  // <-- Replace the table body
-          $("#modal-class-orientation").modal("hide");  // <-- Close the modal
+          $(".peer-education-table tbody").html(data.html_peer_education_list);  // <-- Replace the table body
+          $("#modal-peer-education").modal("hide");  // <-- Close the modal
         }
         else {
-          $("#modal-class-orientation .modal-content").html(data.html_form);
+          $("#modal-peer-education .modal-content").html(data.html_form);
         }
         }
     });
@@ -111,12 +111,12 @@ $(function () {
   /* Binding */
 
   // Create Class Orientation
-  $(".js-class-orientation-create").click(loadForm);
-  $("#modal-class-orientation").on("submit", ".js-class-orientation-create-form", saveForm);
+  $(".js-peer-education-create").click(loadForm);
+  $("#modal-peer-education").on("submit", ".js-peer-education-create-form", saveForm);
 
   // Update district
-  $(".class-orientation-table").on("click", ".js-update-class_orientation", loadForm);
-  $("#modal-class-orientation").on("submit", ".js-class-orientation-update-form", saveForm);
+  $(".peer-education-table").on("click", ".js-update-peer-education", loadForm);
+  $("#modal-peer-education").on("submit", ".js-peer-education-update-form", saveForm);
 
 
 

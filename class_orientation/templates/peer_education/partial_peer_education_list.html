@@ -1,0 +1,23 @@
+
+{% for peer_education in peereducation_list %}
+<tr>
+
+    <td>{{ peer_education.created_date }}</td>
+    <td>{{ peer_education.get_place_display }}</td>
+    <td>
+    {% for topic in peer_education.topic.all %}
+        {% if forloop.last %}
+        {{topic.name}}
+        {% else %}
+        {{topic.name}},
+        {% endif %}
+    {% endfor %}
+    </td>
+    <td align="center"> <button type="button" style="margin-right:10px"
+                class="js-update-peer-education"
+                data-url="{% url 'peer_education:peer_education_update' peer_education.id %}">
+        <span class="fa fa-edit"></span>
+    </button>
+    </td>
+</tr>
+{% endfor %}

@@ -39,6 +39,33 @@
                 },
                 success: function (data) {
                     $("#modal-union .modal-content").html(data.html_form);
+                    var divisionId = $("#id_division").val();
+                    var districtId = $("#id_district").val();
+                    var upazilaId = $("#id_upazilla").val();
+                    if (divisionId || districtId || upazilaId) {
+                        $.ajax({
+                            url: '/unions/ajax/load-districts/',
+                            data: {
+                                'division': divisionId,
+                                'districtId': districtId
+                            },
+                            success: function (data) {
+                                $("#id_district").html(data);
+
+                            }
+                        });
+                        $.ajax({
+                            url: '/unions/ajax/load-upazillas/',
+                            data: {
+                                'district': districtId,
+                                'upazilaId': upazilaId
+                            },
+                            success: function (data) {
+                                $("#id_upazilla").html(data);
+
+                            }
+                        });
+                    }
                 }
             });
         };
