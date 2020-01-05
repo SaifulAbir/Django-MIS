@@ -33,22 +33,27 @@
 
 <script>
     $(function () {
+        $("#id_district").html("<option>---------</option>");
 
         $("#id_division").change(function () {
-      var url = $("#upazillaForm").attr("data-districts-url");
-      var divisionId = $(this).val();
+            var divisionId = $(this).val();
+            var url = $("#upazillaForm").attr("data-districts-url");
+            if(divisionId ==''){
+                $("#id_district").html('<option value="">---------</option>');
+            }
+            else{
+                $.ajax({
+                    url: url,
+                    data: {
+                        'division': divisionId
+                    },
+                    success: function (data) {
+                        $("#id_district").html(data);
+                    }
+                });
 
-      $.ajax({
-        url: url,
-        data: {
-          'division': divisionId
-        },
-        success: function (data) {
-          $("#id_district").html(data);
-        }
-      });
-
-    });
+            }
+        });
     });
 
     //for Disabling cache

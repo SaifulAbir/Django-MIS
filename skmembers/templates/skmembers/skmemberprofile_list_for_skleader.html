@@ -2,9 +2,9 @@
 {% block body_block %}
 
     <!-- Main content -->
-<section class="content-header" style="padding-top:60px">
+<section class="content-header" >
     <h1>
-        SK Member List
+        {{ sk_strings.SK_MEMBER_LIST_TITLE }}
     </h1>
 </section>
     <section class="content">
@@ -17,7 +17,7 @@
                    class="btn btn-primary pull-right"
                    href="{% url 'skmembers:skmember_add_for_skleader' %}">
                     <span class="fa fa-plus"></span>
-                    New SK Member
+                    {{ sk_strings.NEW_SKMEMBER_BUTTON }}
                 </a>
             </div>
             <!-- /.box-header -->
@@ -25,12 +25,12 @@
                 <table   id="example1" class=" data-table table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="col-sm-3">Name</th>
-                        <th class="col-sm-2">Username</th>
-                        <th class="col-sm-2">Mobile</th>
-                        <th class="col-sm-2">School</th>
-                        <th class="col-sm-2">Class</th>
-                        <th class="col-sm-1">Actions</th>
+                        <th class="col-sm-3">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</th>
+                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_USER_NAME }}</th>
+                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_MOBILE }}</th>
+                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_SCHOOL }}</th>
+                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_CLASS }}</th>
+                        <th class="col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -24,7 +24,8 @@ from skmembers.models import SkMemberProfile,SkmemberDetails
 from datetime import datetime
 from .resources import SkmemberResource
 from django.core.exceptions import ObjectDoesNotExist
-
+from resources import strings as common_strings
+from . import strings as sk_strings
 
 @admin_login_required
 def skmember_profile_view(request):
@@ -65,6 +66,8 @@ def skmember_profile_view(request):
     return render(request, 'skmembers/skmember_profile_add.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'sk_strings':sk_strings,
+        'common_strings': common_strings
     })
 
 @headmaster_mentor_skleader_login_required
@@ -111,6 +114,8 @@ def skmember_profile_view_skleader(request):
     return render(request, 'skmembers/skmember_profile_add_for_skleader.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'sk_strings':sk_strings,
+        'common_strings': common_strings
     })
 
 @headmaster_mentor_skleader_login_required
@@ -152,7 +157,9 @@ def skmember_update_for_skleader(request, pk):
         'skmember_details': skmember_details,
         'school_list': school_list,
         'headmaster': headmaster,
-        'skleader' : skleader
+        'skleader' : skleader,
+        'sk_strings':sk_strings,
+        'common_strings': common_strings
     })
 
 @method_decorator(admin_login_required, name='dispatch')
@@ -162,12 +169,16 @@ class SkmemberList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,])
         return queryset
+
     def get_context_data(self, **kwargs):
         context = super(SkmemberList, self).get_context_data(**kwargs)
         try:
             context['school_name'] =SkmemberDetails.objects.latest('from_date')
         except SkmemberDetails.DoesNotExist:
             context['current_schoxol_name'] = None
+
+        context['common_strings'] = common_strings
+        context['sk_strings'] = sk_strings
 
         return context
 
@@ -187,6 +198,15 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
         queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,],school_id=objSkLeader.school_id)
 
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(SkmemberListforSkLeader, self).get_context_data(**kwargs)
+        context['common_strings'] = common_strings
+        context['sk_strings'] = sk_strings
+
+        return context
+
+
 
 @admin_login_required
 def skmember_list(request,export='null'):
@@ -254,6 +274,8 @@ def skmember_update(request, pk):
         'pk': pk,
         'skmember_details': skmember_details,
         'school_list': school_list,
+        'common_strings': common_strings,
+        'sk_strings': sk_strings
     })
 
 
@@ -276,6 +298,8 @@ class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
         except SkLeaderProfile.DoesNotExist :
             context['skleader'] = None
 
+        context['common_strings'] = common_strings
+        context['sk_strings'] = sk_strings
 
         return context
 
