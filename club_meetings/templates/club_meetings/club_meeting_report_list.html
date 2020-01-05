@@ -141,7 +141,7 @@
                     {% endfor %}
 
                     {% if clubmeetings_list.paginator.num_pages > clubmeetings_list.number|add:'4' %}
-                    <li><a href="?page={{ clubmeetings_list.number|add:'5' }}">&hellip;</a></li>
+                    <li><a class="paginator" href="?page={{ clubmeetings_list.number|add:'5' }}">&hellip;</a></li>
                     {% endif %}
 
                     {% if clubmeetings_list.has_next %}
@@ -173,7 +173,7 @@
         $('#reports, .club-meeting-menu').addClass('active');
         $("#reports").addClass("menu-open");
         $("#reports .treeview-menu").css("display", "block");
-        var name, division, district, upazila, union, fromdate, todate, topics;
+        var school, division, district, upazila, union, fromdate, todate, topic;
         $('.club-meeting-search-table').dataTable({
             'lengthChange': false,
             'searching'   : false,
@@ -186,20 +186,20 @@
             $(".club-meeting-search-table").DataTable().destroy();
             fromdate_contains = $('#from-date').val();
             todate_contains = $('#to-date').val();
-            name_contains = $('#school-name').val();
+            school_contains = $('#school-name').val();
             division_contains = $('#division-name').val();
             district_contains = $('#district-name').val();
             upazila_contains = $('#upazila-name').val();
             union_contains = $('#union-name').val();
             topics_contains = $('#topics-name').val();
-            name = name_contains, division = division_contains, district = district_contains,
-                upazila=upazila_contains,union=union_contains,topics=topics_contains,
+            school = school_contains, division = division_contains, district = district_contains,
+                upazila=upazila_contains,union=union_contains,topic=topics_contains,
                 fromdate=fromdate_contains,todate=todate_contains;
             $.ajax({
                 type: 'GET',
                 url: '/club_meetings/club_meeting_search_list/',
                 data: {
-                    'name_contains': name_contains,
+                    'school_contains': school_contains,
                     'division_contains': division_contains,
                     'district_contains': district_contains,
                     'fromdate_contains': fromdate_contains,
@@ -224,7 +224,14 @@
                 }
             });
         });
-        pagination(".box-body", '/club_meetings/club_meeting_search_list/', name, division, district, '.box-body .club-meeting-search-table');
+        // pagination(".box-body", '/club_meetings/club_meeting_search_list/', name, division, district, '.box-body .club-meeting-search-table');
+        $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/club_meetings/club_meeting_search_list/'+addressValue;
+            paginator(".box-body", url, '.box-body .club-meeting-search-table', {'school':school, 'division':division,
+            'district':district, 'upazila':upazila, 'union':union, 'form_date':fromdate, 'to_date':todate, 'topic':topic});
+        });
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");

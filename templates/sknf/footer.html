@@ -297,6 +297,35 @@
             });
         });
     }
+    function paginator(id, url, tableId, opts) {
+        $.ajax({
+            type: 'get',
+            url: url,
+            data: {
+                'name_contains': opts['name'],
+                'school_contains': opts['school'],
+                'division_contains': opts['division'],
+                'district_contains': opts['district'],
+                'upazila_contains': opts['upazila'],
+                'union_contains': opts['union'],
+                'fromdate_contains': opts['form_date'],
+                'todate_contains': opts['to_date'],
+                'topics_contains': opts['topic']
+            },
+            success: function (data) {
+                $(id).html(data.html_list);
+                $(tableId).DataTable({
+                    'paging'      : false,
+                    'lengthChange': false,
+                    'searching'   : false,
+                    'ordering'    : false,
+                    'info'        : false,
+                    'autoWidth'   : false,
+                    'destroy'     : true
+                });
+            }
+        });
+    }
     // settings menubar
     $(function () {
         $("#settings").addClass("menu-open");

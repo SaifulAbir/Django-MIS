@@ -145,7 +145,7 @@ class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
 def clubmeetings_report_list(request):
     topics = Topics.objects.all()
     clubmeetings_report = ClubMeetings.objects.all()
-    paginator = Paginator(clubmeetings_report, 10)
+    paginator = Paginator(clubmeetings_report, 2)
     page = request.GET.get('page')
     try:
         queryset = paginator.page(page)
@@ -158,7 +158,7 @@ def clubmeetings_report_list(request):
 def club_meeting_search_list(request, export='null'):
     data = dict()
     qs = ClubMeetings.objects.all()
-    name = request.GET.get('name_contains')
+    name = request.GET.get('school_contains')
     division = request.GET.get('division_contains')
     district = request.GET.get('district_contains')
     upazila = request.GET.get('upazila_contains')
@@ -194,7 +194,7 @@ def club_meeting_search_list(request, export='null'):
         qs = qs.filter(date__lt=todate)
     if from_date and to_date :
         qs = qs.filter(date__gte=fromdate, date__lte=todate)
-    paginator = Paginator(qs, 10)
+    paginator = Paginator(qs, 2)
     page = request.GET.get('page')
     try:
         queryset = paginator.page(page)
