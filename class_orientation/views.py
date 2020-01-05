@@ -1,17 +1,18 @@
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
-
+import class_orientation.strings as peer_education_strings
+from resources import strings as common_strings
 from accounts.decorators import headmaster_mentor_skleader_login_required, admin_login_required
 from class_orientation.resources import PeerEducationResource
 from headmasters.models import HeadmasterProfile
 from skleaders.models import SkLeaderProfile
+from topics.models import Topics
 from .models import PeerEducation
 from .forms import PeerEducationForm
+from datetime import datetime
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -36,7 +37,7 @@ def peer_education_form(request, form, template_name):
                 profile = HeadmasterProfile.objects.get(user=request.user)
             peer_education_list = PeerEducation.objects.filter(school=profile.school)
             data['html_peer_education_list'] = render_to_string('peer_education/partial_peer_education_list.html',
-                                                            {'peereducation_list': peer_education_list})
+                                                                {'peereducation_list': peer_education_list})
         else:
             data['form_is_valid'] = False
     context = {'form': form}
@@ -118,6 +119,7 @@ def peer_education_update(request, pk):
 
 @admin_login_required
 def peer_education_report_list(request):
+    topics = Topics.objects.all()
     peer_education_list = PeerEducation.objects.all()
     paginator = Paginator(peer_education_list, 10)
     page = request.GET.get('page')
@@ -127,20 +129,62 @@ def peer_education_report_list(request):
         peer_education_report = paginator.page(1)
     except EmptyPage:
         peer_education_report = paginator.page(paginator.num_pages)
-    return render(request, 'peer_education/peer_education_report_list.html', {'peereducation_list': peer_education_report, 'num_pages': paginator.count,})
+    return render(request, 'peer_education/peer_education_report_list.html', {'peereducation_list': peer_education_report, 'num_pages': paginator.count,
+                                                                              'peer_education_strings': peer_education_strings,
+                                                                              'common_strings': common_strings, 'topics':topics
+                                                                              })
 
 def peer_education_search_list(request, export='null'):
     data = dict()
     qs = PeerEducation.objects.all()
-    name = request.GET.get('name_contains')
+    name = request.GET.get('school_contains')
     division = request.GET.get('division_contains')
     district = request.GET.get('district_contains')
+    upazila = request.GET.get('upazila_contains')
+    union = request.GET.get('union_contains')
+    from_date = request.GET.get('fromdate_contains')
+    if from_date:
+        fromdate = datetime.strptime(from_date, '%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        fromdate = from_date
+
+    to_date = request.GET.get('todate_contains')
+    print(to_date)
+    if to_date:
+        todate = datetime.strptime(to_date, '%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        todate = to_date
+    topics = request.GET.get('topics_contains')
+    if from_date:
+        fromdate = datetime.strptime(from_date, '%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        fromdate = from_date
+
+    to_date = request.GET.get('todate_contains')
+    print(to_date)
+    if to_date:
+        todate = datetime.strptime(to_date, '%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        todate = to_date
+    topics = request.GET.get('topics_contains')
     if name != '' and name is not None:
         qs = qs.filter(school__name__icontains=name)
     if division != '' and division is not None:
         qs = qs.filter(school__division__name__icontains=division)
     if district != '' and district is not None:
         qs = qs.filter(school__district__name__icontains=district)
+    if upazila != '' and upazila is not None:
+        qs = qs.filter(school__upazilla__name__icontains=upazila)
+    if union != '' and union is not None:
+        qs = qs.filter(school__union__name__icontains=union)
+    if topics != '' and topics is not None:
+        qs = qs.filter(topics__name__icontains=topics)
+    if fromdate:
+        qs = qs.filter(date__gt=fromdate)
+    if todate and not fromdate:
+        qs = qs.filter(date__lt=todate)
+    if from_date and to_date:
+        qs = qs.filter(date__gte=fromdate, date__lte=todate)
 
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')
@@ -150,11 +194,12 @@ def peer_education_search_list(request, export='null'):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    if name == '' and division == '' and district == '':
+    if name == '' and division == '' and district == '' and upazila== '' and union == '' and from_date == '' and to_date =='' and topics == '':
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('peer_education/partial_peer_education_report.html',
-                                                  {'peereducation_list': queryset})
+                                         {'peereducation_list': queryset, 'peer_education_strings': peer_education_strings,
+                                          'common_strings': common_strings})
     if export != 'export':
         return JsonResponse(data)
     else:

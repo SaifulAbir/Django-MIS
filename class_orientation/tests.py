@@ -42,33 +42,12 @@ class ClassOrientationTest(TestCase):
         self.peer_education = co
 
     def test__when_school_is_null__should_raise_error(self):
-        s = PeerEducation(created_date=timezone.now(), student_class='7', topic='asd', )
+        s = PeerEducation(created_date=timezone.now(), place='1', )
         with self.assertRaises(ValidationError):
             s.full_clean()
 
-    def test__when_topic_is_null__should_raise_error(self):
-        s = PeerEducation(created_date=timezone.now(), student_class='7', school=self.school, )
-        with self.assertRaises(ValidationError):
-            s.full_clean()
-
-    def test__when_topic_is_empty__should_raise_error(self):
-        s = PeerEducation(topic='', created_date=timezone.now(), student_class='7', school=self.school, )
-        with self.assertRaises(ValidationError):
-            s.full_clean()
-
-    def test__when_class_is_null__should_raise_error(self):
-        s = PeerEducation(created_date=timezone.now(), topic='asd', school=self.school, )
-        with self.assertRaises(ValidationError):
-            s.full_clean()
-
-    def test__128_plus_char_text_in_topic__should_raise_error(self):
-        s = PeerEducation(
-            topic="tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft"
-                 " tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg"
-                 " sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg"
-                 " sdfgsdg sgddft sdfgsdg sgddft tesg"
-                 " sdfgsdg sgddft sdfgsdg sgddft tesg"
-                 " sdfgsdg sgddft ", created_date=timezone.now(),student_class='7', school=self.school,)
+    def test__when_place_is_null__should_raise_error(self):
+        s = PeerEducation(created_date=timezone.now(), place='', school=self.school, )
         with self.assertRaises(ValidationError):
             s.full_clean()
 

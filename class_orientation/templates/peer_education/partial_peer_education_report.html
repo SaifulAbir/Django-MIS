@@ -1,22 +1,21 @@
 
-<button type="submit" class="btn btn-primary export-peer-education-report pull-right">Export CSV</button>
+<button type="submit" class="btn btn-primary export-peer-education-report pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
 <table   id="example1" class=" data-table peer-education-table table table-bordered table-striped">
     <thead>
     <tr>
-        <th class="col-sm-3">School</th>
-        <th class="col-sm-1">Date</th>
-        <th class="col-sm-2">Place</th>
-        <th class="col-sm-2">Topic</th>
-        <th class="col-sm-2">Division</th>
-        <th class="col-sm-2">District</th>
+        <th class="col-sm-1">{{peer_education_strings.PEER_EDUCATION_DATE_TEXT}}</th>
+        <th class="col-sm-3">{{peer_education_strings.PEER_EDUCATION_TOPICS_TEXT}}</th>
+        <th class="col-sm-1">{{peer_education_strings.PEER_EDUCATION_PLACE_TEXT}}</th>
+        <th class="col-sm-3">{{peer_education_strings.PEER_EDUCATION_SCHOOL_TEXT}}</th>
+        <th class="col-sm-2">{{peer_education_strings.PEER_EDUCATION_DIVISION_TEXT}}</th>
+        <th class="col-sm-1">{{peer_education_strings.PEER_EDUCATION_DISTRICT_TEXT}}</th>
+        <th class="col-sm-1">{{peer_education_strings.PEER_EDUCATION_UPAZILA_TEXT}}</th>
     </tr>
     </thead>
     <tbody>
     {% for peer_education in peereducation_list %}
     <tr>
-        <td>{{ peer_education.school }}</td>
-        <td>{{ peer_education.created_date }}</td>
-        <td>{{ peer_education.get_place_display }}</td>
+        <td>{{ peer_education.created_date|date:common_strings.DATE_FORMAT }}</td>
         <td>
             {% for topic in peer_education.topic.all %}
             {% if forloop.last %}
@@ -26,8 +25,11 @@
             {% endif %}
             {% endfor %}
         </td>
+        <td>{{ peer_education.get_place_display }}</td>
+        <td>{{ peer_education.school }}</td>
         <td>{{ peer_education.school.division }}</td>
         <td>{{ peer_education.school.district }}</td>
+        <td>{{ peer_education.school.upazilla }}</td>
     </tr>
     {% endfor %}
     </tbody>
@@ -35,7 +37,13 @@
 
     </tfoot>
 </table>
-<p class="table-information">Showing {{ peereducation_list.start_index }} to {{ peereducation_list.end_index }} of {{ peereducation_list.paginator.count }} entries</p>
+{% if peereducation_list %}
+<p class="table-information">{% format_values common_strings.PAGINATION_INFO peereducation_list.start_index  peereducation_list.end_index peereducation_list.paginator.count %}
+</p>
+{% else %}
+<p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+{% endif %}
+{% include 'peer_education/_modal.html' %}
 <ul class="pagination" style="float: right">
 
     {% if peereducation_list.has_previous %}
@@ -57,7 +65,7 @@
     {% endfor %}
 
     {% if peereducation_list.paginator.num_pages > peereducation_list.number|add:'4' %}
-    <li><a href="?page={{ peereducation_list.number|add:'5' }}">&hellip;</a></li>
+    <li><a class="paginator" href="?page={{ peereducation_list.number|add:'5' }}">&hellip;</a></li>
     {% endif %}
 
     {% if peereducation_list.has_next %}

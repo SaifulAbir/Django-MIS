@@ -116,13 +116,17 @@ def union_delete(request, pk):
 
 def load_districts(request):
     division_id = request.GET.get('division')
+    districtId = request.GET.get('districtId')
+    districtId = int(districtId)
     districts = District.objects.filter(division_id=division_id).order_by('name')
-    return render(request, 'unions/district_dropdown_list_options.html', {'districts': districts})
+    return render(request, 'unions/district_dropdown_list_options.html', {'districts': districts, 'districtId': districtId})
 
 def load_upazillas(request):
     district_id = request.GET.get('district')
+    upazilaId = request.GET.get('upazilaId')
+    upazilaId = int(upazilaId)
     upazillas = Upazilla.objects.filter(district_id=district_id).order_by('name')
-    return render(request, 'unions/upazilla_dropdown_list_options.html', {'upazillas': upazillas})
+    return render(request, 'unions/upazilla_dropdown_list_options.html', {'upazillas': upazillas, 'upazilaId':upazilaId})
 
 def load_unions(request):
     upazilla_id = request.GET.get('upazilla')
