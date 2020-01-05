@@ -18,4 +18,6 @@ urlpatterns = [
     path('eduplus_activity_search_list/', views.eduplus_activity_search_list, name = 'eduplus_activity_search_list'),
     path('eduplus_activity_search_list/<export>/', views.eduplus_activity_search_list, name = 'eduplus_activity_search_list_export'),
     path('pagination/', views.pagination, name = 'pagination'),
+    path('method_pagination/', views.method_pagination, name = 'method_pagination'),
+
 ]

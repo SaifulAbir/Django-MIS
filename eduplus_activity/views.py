@@ -167,8 +167,16 @@ def save_method_form(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            method_list = Method.objects.all()
-            data['html_method_list'] = render_to_string('eduplus_activity/partial_method_list.html',
+            methods = Method.objects.all()
+            paginator = Paginator(methods, 10)
+            page = request.GET.get('page')
+            try:
+                method_list = paginator.page(page)
+            except PageNotAnInteger:
+                method_list = paginator.page(1)
+            except EmptyPage:
+                method_list = paginator.page(paginator.num_pages)
+            data['html_list'] = render_to_string('eduplus_activity/partial_method_list.html',
                                                           {'method_list': method_list,
                                                            'edu_strings':edu_strings,'common_strings':common_strings})
         else:
@@ -198,6 +206,24 @@ def method_update(request, pk):
 class EduplusTopicsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.Method
+    paginate_by = 10
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        methods = Method.objects.all()
+        paginator = Paginator(methods, self.paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            method_list = paginator.page(page)
+        except PageNotAnInteger:
+            method_list = paginator.page(1)
+        except EmptyPage:
+            method_list = paginator.page(paginator.num_pages)
+
+        context['method_list'] = method_list
+        context["edu_strings"] = edu_strings
+        context["common_strings"] = common_strings
+        return context
 
 def method_delete(request, pk):
     method = get_object_or_404(Method, pk=pk)
@@ -205,8 +231,16 @@ def method_delete(request, pk):
     if request.method == 'POST':
         method.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
-        method_list = Method.objects.all()
-        data['html_method_list'] = render_to_string('eduplus_activity/partial_method_list.html', {
+        methods = Method.objects.all()
+        paginator = Paginator(methods, 10)
+        page = request.GET.get('page')
+        try:
+            method_list = paginator.page(page)
+        except PageNotAnInteger:
+            method_list = paginator.page(1)
+        except EmptyPage:
+            method_list = paginator.page(paginator.num_pages)
+        data['html_list'] = render_to_string('eduplus_activity/partial_method_list.html', {
             'method_list': method_list ,'edu_strings':edu_strings,'common_strings':common_strings
         })
     else:
@@ -316,5 +350,22 @@ def pagination(request):
         eduplus_activity_list = paginator.page(paginator.num_pages)
     data['html_list'] = render_to_string('eduplus_activity/partial_eduplus_activity_list.html', {
         'eduplus_activity_list': eduplus_activity_list, 'edu_strings':edu_strings, 'common_strings':common_strings
+    })
+    return JsonResponse(data)
+
+def method_pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    methods = Method.objects.all()
+    paginator = Paginator(methods, 10)
+    page = request.GET.get('page')
+    try:
+        method_list = paginator.page(page)
+    except PageNotAnInteger:
+        method_list = paginator.page(1)
+    except EmptyPage:
+        method_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('eduplus_activity/partial_method_list.html', {
+        'method_list': method_list, 'edu_strings':edu_strings, 'common_strings':common_strings
     })
     return JsonResponse(data)

@@ -1,7 +1,7 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 <section class="content-header" style="padding-top:60px">
-        <h1>Method List</h1>
+        <h1>{{ edu_strings.METHOD_LIST_PAGE_TITLE }}</h1>
  </section>
     <!-- Main content -->
     <section class="content">
@@ -16,30 +16,14 @@
                         class="btn btn-primary pull-right js-create-method"
                         data-url="{% url 'eduplus_activity:create_method' %}">
                     <span class="fa fa-plus"></span>
-                    New Method
+                    {{ edu_strings.METHOD_CREATE }}
                 </button>
             </div>
 
+            {% include 'eduplus_activity/modal.html' %}
             <!-- /.box-header -->
-            <div class="box-body table-responsive">
-                <table   id="example1" class=" data-table method-table table table-bordered table-striped">
-                    <thead>
-                    <tr>
-
-                        <th class="col-sm-10">Method Name</th>
-                        <th class="col-sm-2">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% include 'eduplus_activity/partial_method_list.html' %}
-
-                    </tbody>
-                    <tfoot>
-
-                    </tfoot>
-                </table>
-                {% include 'eduplus_activity/modal.html' %}
+            <div class="box-body table-responsive method-container">
+                {% include 'eduplus_activity/partial_method_list.html' %}
             </div>
         </div>
 </div>
@@ -88,7 +72,16 @@
                                 showAlert("Method Deleted!", "alert alert-danger-customized")
                             }
 
-                            $(".method-table tbody").html(data.html_method_list);  // <-- Replace the table body
+                            $(".method-container").html(data.html_list);  // <-- Replace the table body
+                            $('.method-table').DataTable({
+                                'paging'      : false,
+                                'lengthChange': false,
+                                'searching'   : false,
+                                'ordering'    : false,
+                                'info'        : false,
+                                'autoWidth'   : false,
+                                'destroy'     : true
+                            });
                             $("#modal-method").modal("hide");
                         }
                         else {
@@ -114,14 +107,16 @@
             $("#modal-method").on("submit", ".js-method-create-form", saveForm);
 
             // Update eduplus_topics
-            $(".method-table").on("click", ".js-update-method", loadForm);
+            $(".method-container").on("click", ".js-update-method", loadForm);
             $("#modal-method").on("submit", ".js-update-method-form", saveForm);
 
             // Delete eduplus_topics
-            $(".method-table").on("click", ".js-delete-method", loadForm);
+            $(".method-container").on("click", ".js-delete-method", loadForm);
             $("#modal-method").on("submit", ".js-method-delete-form", saveForm);
+            pagination(".method-container", '/eduplus_activity/method_pagination/', '', '', '.method-table');
 
         });
 
     </script>
 {% endblock %}
+
