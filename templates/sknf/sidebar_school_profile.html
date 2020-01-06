@@ -44,7 +44,7 @@
         {% if user.is_authenticated and user.user_type == 5 or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 %}
             <li>
                 <a href="{% url 'school:school_profile' profile.school.id %}">
-                    <i class="ion ion-home"></i> <span>Home</span>
+                    <i class="ion ion-home"></i> <span>{{school_strings.HOME_MENU_HOME}}</span>
                 </a>
             </li>
             <li>
@@ -61,8 +61,7 @@
             </li>
             <li>
                 <a href="{% url 'eduplus_activity:eduplus_activity_list' %}">
-                    <i class="ion ion-checkmark"></i> <span>{{school_strings.HOME_MENU_EDUPLUS_ACTIVITY}}</span>
-                    <i class="fa fa-book"></i> <span>Eduplus Activity</span>
+                    <i class="fa fa-book"></i> <span>{{school_strings.HOME_MENU_EDUPLUS_ACTIVITY}}</span>
 
                 </a>
             </li>

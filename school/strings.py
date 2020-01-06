@@ -9,4 +9,5 @@ HOME_MENU_CLUB_MEETING = 'Club Meetings'
 HOME_MENU_PEER_EDUCATION = 'Peer Education'
 HOME_MENU_EDUPLUS_ACTIVITY = 'Eduplus Activity'
 HOME_MENU_SKMEMBER = 'SK Members'
+HOME_MENU_HOME = 'Home'
 HOME_SCHOOL_POST_TITLE = "Posted on %d-%m-%y %H:%I %p"
