@@ -21,7 +21,7 @@
                     <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
                 {% endif %}
                 <h3 class="profile-username text-center">{{ headmaster_profile.user.first_name }}</h3>
-                <p class="text-muted text-center">Head Master</p>
+                <p class="text-muted text-center">{{school_strings.HOME_HEADMASTER_TITLE_TEXT}}</p>
             </div>
         </li>
 
@@ -34,7 +34,7 @@
                     <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
                 {% endif %}
                 <h3 class="profile-username text-center">{{ skleader.user.first_name }}</h3>
-                <p class="text-muted text-center">Sk Leader</p>
+                <p class="text-muted text-center">{{school_strings.HOME_SKLEADER_TITLE_TEXT}}</p>
                 {% endfor %}
             </div>
         </li>
@@ -44,34 +44,27 @@
         {% if user.is_authenticated and user.user_type == 5 or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 %}
             <li>
                 <a href="{% url 'club_meetings:club_meeting_list' %}">
-                    <i class="ion ion-checkmark"></i> <span>Club Meetings</span>
+                    <i class="ion ion-checkmark"></i> <span>{{school_strings.HOME_MENU_CLUB_MEETING}}</span>
 
                 </a>
             </li>
             <li>
                 <a href="{% url 'peer_education:peer_education_list' %}">
-                    <i class="ion ion-checkmark"></i> <span>Peer Education</span>
+                    <i class="ion ion-checkmark"></i> <span>{{school_strings.HOME_MENU_PEER_EDUCATION}}</span>
 
                 </a>
             </li>
             <li>
                 <a href="{% url 'eduplus_activity:eduplus_activity_list' %}">
-                    <i class="ion ion-checkmark"></i> <span>Eduplus Activity</span>
+                    <i class="ion ion-checkmark"></i> <span>{{school_strings.HOME_MENU_EDUPLUS_ACTIVITY}}</span>
 
                 </a>
             </li>
             <li class="skmembers">
                 <a href="{% url 'skmembers:skmember_list_for_sk_leader' %}">
-                    <i class="fa fa-users"></i> <span>SK Members</span>
+                    <i class="fa fa-users"></i> <span>{{school_strings.HOME_MENU_SKMEMBER}}</span>
                 </a>
             </li>
-        {% endif %}
-        {% if user.is_authenticated and user.user_type == 2 %}
-            {% comment %}<li>
-                <a href="{% url 'school:Sk_leaderApproval' %}">
-                    <i class="ion ion-checkmark"></i><span>SK Leader Approval</span>
-                </a>
-            </li>{% endcomment %}
         {% endif %}
     </ul>
 </section>

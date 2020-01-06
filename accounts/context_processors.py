@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-
+import school.strings as school_strings
 from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
-
+from resources import strings as common_strings
 
 def sidebar_context(request):
     if request.user.is_authenticated:
@@ -59,8 +59,9 @@ def sidebar_context(request):
             profile = None
         return {
             'profile': profile, 'headmaster_profile':headmaster_profile, 'skleader_list':skleader_list, 'skleader_meeting_eduplus':skleader_meeting_eduplus, 'APP_VERSION_NUMBER' : settings.APP_VERSION_NUMBER,
+            'school_strings':school_strings, 'common_strings':common_strings
         }
     else:
         return {
-            'profile': None, 'headmaster_profile':None, 'skleader_profile':None, 'skleader_meeting_eduplus':None, 'APP_VERSION_NUMBER' : settings.APP_VERSION_NUMBER
+            'profile': None, 'headmaster_profile':None, 'skleader_profile':None, 'skleader_meeting_eduplus':None, 'APP_VERSION_NUMBER' : settings.APP_VERSION_NUMBER, 'school_strings':school_strings, 'common_strings':common_strings
         }

@@ -1,11 +1,10 @@
 
 {% if school_post_list %}
 
-
 {% for school_post in school_post_list %}
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">Posted on {{school_post.created_date}}</h3>
+        <h3 class="box-title">{% format_date school_strings.HOME_SCHOOL_POST_TITLE school_post.created_date %}</h3>
         <a type="button" class="btn btn-primary btn-xs pull-right" href="http://www.facebook.com/sharer/sharer.php?u=http://{{request.get_host}}/school_post_detail/{{ school_post.id }}">
             <span class="fa fa-share"></span>
         </a>
@@ -13,16 +12,16 @@
     <div class="box-body">
         {% if school_post.post_image %}
         <div class="form-group">
-            <img style="max-width: 100%" src="{{ school_post.post_image.url }}" alt="">
+            <img class="school-post-image" src="{{ school_post.post_image.url }}" alt="">
         </div>
         {% endif %}
-        <div class="form-group" style="font-size:18px">
+        <div class="form-group school-post">
             {{school_post.text}}
         </div>
         {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
         <div class="timeline-footer">
-            <button class="btn btn-primary btn-xs" data-url="{% url 'school:school_post_update' school_post.pk %}" id="js-update-school-post">Edit</button>
-            <button class="btn btn-danger btn-xs" data-url="{% url 'school:school_post_delete' school_post.pk %}" id="js-delete-school-post">Delete</button>
+            <button class="btn btn-primary btn-xs" data-url="{% url 'school:school_post_update' school_post.pk %}" id="js-update-school-post">{{common_strings.EDIT_BUTTON}}</button>
+            <button class="btn btn-danger btn-xs" data-url="{% url 'school:school_post_delete' school_post.pk %}" id="js-delete-school-post">{{common_strings.DELETE_BUTTON}}</button>
         </div>
         {% endif %}
     </div>
@@ -30,4 +29,13 @@
 {% endfor %}
 
 {% endif %}
-
+{% block extra_css %}
+<style type="text/css">
+    .school-post{
+        font-size:18px;
+    }
+    .school-post-image{
+        max-width: 100%;
+    }
+</style>
+{% endblock %}

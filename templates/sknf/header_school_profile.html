@@ -6,7 +6,7 @@
 
     <a href="{% url 'school:school_profile' post_detail.school.id %}" class="logo" style="position:fixed;">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SK</b>NF</span>
+      <span class="logo-mini">{{common_strings.HEADER_SKNF_LOGO_TEXT}}</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
     </a>
@@ -15,14 +15,14 @@
   {% elif not user.is_authenticated or user.is_authenticated and user.user_type == 1 %}
     <a href="{% url 'accounts:dashboard' %}" class="logo" style="position:fixed;">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SK</b>NF</span>
+      <span class="logo-mini">{{common_strings.HEADER_SKNF_LOGO_TEXT}}</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
     </a>
   {% elif user.is_authenticated and user.user_type != 1 and profile.school.id %}
     <a href="{% url 'school:school_profile' profile.school.id %}" style="position:fixed;" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SK</b>NF</span>
+      <span class="logo-mini">{{common_strings.HEADER_SKNF_LOGO_TEXT}}</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
     </a>
@@ -93,8 +93,8 @@
               <li>
 
               <p style="text-transform: capitalize;padding: 10px 10px 10px 10px;margin-bottom: 0;">
-                <strong>Role</strong>: {{user.get_user_type_display}}<br />
-                <strong>Email</strong>: {{user.get_username}}
+                <strong>{{common_strings.PROFILE_ROLE_LABEL}}</strong> {{user.get_user_type_display}}<br />
+                <strong>{{common_strings.PROFILE_EMAIL_LABEL}}</strong> {{user.get_username}}
               </p>
 
 
@@ -106,35 +106,35 @@
                 <div class="pull-left">
                   {% if user.is_authenticated and user.user_type == 1 %}
                                 <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:admin_update' %}">Edit Profile
+                                   href="{% url 'accounts:admin_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
                                 </a>
                             {% elif user.is_authenticated and user.user_type == 2 %}
                                 <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:headmaster_update' %}">Edit Profile
+                                   href="{% url 'accounts:headmaster_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
                                 </a>
                             {% elif user.is_authenticated and user.user_type == 3 %}
                                 <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:headmaster_update' %}">Edit Profile
+                                   href="{% url 'accounts:headmaster_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
                                 </a>
                             {% elif user.is_authenticated and user.user_type == 4 %}
                                 <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:headmaster_update' %}">Edit Profile
+                                   href="{% url 'accounts:headmaster_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
                                 </a>
                             {% elif user.is_authenticated and user.user_type == 5 %}
                                 <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:skleader_update' %}">Edit Profile
+                                   href="{% url 'accounts:skleader_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
                                 </a>
                             {% endif %}
                 </div>
                 <div class="pull-right">
-                  <a href="{% url 'accounts:logout' %}" class="btn btn-primary btn-flat">Sign out</a>
+                  <a href="{% url 'accounts:logout' %}" class="btn btn-primary btn-flat">{{common_strings.SIGN_OUT_BUTTON}}</a>
                 </div>
               </li>
             </ul>
           </li>
             {% else %}
             <div class="pull-right" style="margin-right:10px; margin-top:8px">
-                  <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-flat">Sign in</a>
+                  <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-flat">{{common_strings.SIGN_IN_BUTTON}}</a>
                 </div>
             {% endif %}
           </ul>
