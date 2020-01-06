@@ -16,9 +16,9 @@
         <li>
             <div class="box-body box-profile">
                 {% if headmaster_profile.image %}
-                    <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
+                    <img class="profile-user-img img-size img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
                 {% else %}
-                    <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+                    <img class="profile-user-img img-size img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
                 {% endif %}
                 <h3 class="profile-username text-center">{{ headmaster_profile.user.first_name }}</h3>
                 <p class="text-muted text-center">{{school_strings.HOME_HEADMASTER_TITLE_TEXT}}</p>
@@ -29,9 +29,9 @@
             <div class="box-body box-profile">
                 {% for skleader in skleader_list%}
                 {% if skleader.image %}
-                    <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{skleader.image.url }}" alt="User profile picture">
+                    <img class="profile-user-img img-size img-responsive img-circle" src="{{skleader.image.url }}" alt="User profile picture">
                 {% else %}
-                    <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+                    <img class="profile-user-img img-size img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
                 {% endif %}
                 <h3 class="profile-username text-center">{{ skleader.user.first_name }}</h3>
                 <p class="text-muted text-center">{{school_strings.HOME_SKLEADER_TITLE_TEXT}}</p>
@@ -73,3 +73,12 @@
         {% endif %}
     </ul>
 </section>
+
+{% block extra_css %}
+<style type="text/css">
+  .img-size{
+      width: 80px;
+      height: 80px;
+  }
+</style>
+{% endblock %}
