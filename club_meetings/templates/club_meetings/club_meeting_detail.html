@@ -20,13 +20,13 @@
                         <div class="box-body">
                             <!-- School Name -->
                             <div class="form-group">
-                                <span>Date: </span><label>{{club_meeting_detail.date}}</label>
+                                <span>{{ club_meeting_strings.CLUB_MEETING_DATE_TEXT }}: </span><label>{{club_meeting_detail.date}}</label>
                             </div>
                             <div class="form-group">
                                 <span>Class: </span><label>{{club_meeting_detail.class_room}}</label>
                             </div>
                             <div class="form-group">
-                                <span>Presence of Guide Teacher: </span>
+                                <span>{{ club_meeting_strings.CLUB_MEETING_DETAIL_PRESENCE_OF_GUIDE_TEACHER }}: </span>
                                 {% if club_meeting_detail.presence_guide_teacher %}
                                 <label>Yes</label>
                                 {% else %}
