@@ -43,6 +43,11 @@
     <ul class="sidebar-menu" data-widget="tree">
         {% if user.is_authenticated and user.user_type == 5 or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 %}
             <li>
+                <a href="{% url 'school:school_profile' profile.school.id %}">
+                    <i class="ion ion-home"></i> <span>Home</span>
+                </a>
+            </li>
+            <li>
                 <a href="{% url 'club_meetings:club_meeting_list' %}">
                     <i class="ion ion-checkmark"></i> <span>Club Meetings</span>
 
@@ -56,7 +61,7 @@
             </li>
             <li>
                 <a href="{% url 'eduplus_activity:eduplus_activity_list' %}">
-                    <i class="ion ion-checkmark"></i> <span>Eduplus Activity</span>
+                    <i class="fa fa-book"></i> <span>Eduplus Activity</span>
 
                 </a>
             </li>
