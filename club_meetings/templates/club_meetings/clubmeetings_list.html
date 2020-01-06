@@ -2,9 +2,9 @@
 {% block body_block %}
 
 <!-- Main content -->
-<section class="content-header" style="padding-top:60px">
+<section class="content-header">
     <h1>
-        Club Meetings
+        {{ club_meeting_strings.CLUB_MEETING_LIST_TITLE }}
     </h1>
 </section>
 <section class="content">
@@ -14,7 +14,7 @@
         <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
-                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                    <div id="alertdiv" class="alert alert-success-customized">
                         <span>
                             {% for message in messages %}
                             {{ message }}
@@ -27,7 +27,7 @@
                class="btn btn-primary pull-right"
                href="{% url 'club_meetings:club_meeting_add' %}">
                 <span class="fa fa-plus"></span>
-                New Meeting
+                {{ club_meeting_strings.CLUB_MEETING_NEW_BUTTON }}
             </a>
         </div>
         <!-- /.box-header -->
@@ -35,9 +35,9 @@
             <table   id="example1" class="club-meeting-search-table data-table table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th class="col-sm-6">Date</th>
-                    <th class="col-sm-5">Class Room</th>
-                    <th class="col-sm-1">Actions</th>
+                    <th class="col-sm-6">{{ club_meeting_strings.CLUB_MEETING_DATE_TEXT }}</th>
+                    <th class="col-sm-5">{{ club_meeting_strings.CLUB_MEETING_CLASS_ROOM_TEXT }}</th>
+                    <th class="text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,7 +45,7 @@
                 <tr>
                     <td>{{club_meeting.date}}</td>
                     <td>{{ club_meeting.class_room }}</td>
-                    <td>
+                    <td align="center">
                         <a type="button"
                            class=""
                            href="{% url 'club_meetings:club_meeting_detail' club_meeting.pk %}">
@@ -53,7 +53,7 @@
 
                         </a>
                         <a type="button"
-                           class=""
+                           class="update-icon"
                            href="{% url 'club_meetings:club_meeting_update' club_meeting.pk %}">
                             <span class="fa fa-edit"></span>
 
@@ -107,6 +107,14 @@
     </div>
     <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <style>
+        #alertdiv{
+            font-size:20px;
+            margin-top:15px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 
 {% block extra_js %}

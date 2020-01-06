@@ -84,7 +84,7 @@ def club_meeting_add(request):
 class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.ClubMeetings
-    paginate_by = 2
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(ClubMeetingsList, self).get_context_data(**kwargs)
@@ -105,6 +105,7 @@ class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
 
         context['clubmeetings_list'] = clubmeetings_list
         context['common_strings'] = common_strings
+        context['club_meeting_strings'] = club_meeting_strings
         return context
 
 @headmaster_mentor_skleader_login_required
@@ -159,7 +160,7 @@ class ClubMeetingDetail(LoginRequiredMixin, generic.DetailView):
 def clubmeetings_report_list(request):
     topics = Topics.objects.all()
     clubmeetings_report = ClubMeetings.objects.all()
-    paginator = Paginator(clubmeetings_report, 2)
+    paginator = Paginator(clubmeetings_report, 10)
     page = request.GET.get('page')
     try:
         queryset = paginator.page(page)
@@ -208,7 +209,7 @@ def club_meeting_search_list(request, export='null'):
         qs = qs.filter(date__lt=todate)
     if from_date and to_date :
         qs = qs.filter(date__gte=fromdate, date__lte=todate)
-    paginator = Paginator(qs, 2)
+    paginator = Paginator(qs, 10)
     page = request.GET.get('page')
     try:
         queryset = paginator.page(page)
@@ -240,7 +241,7 @@ def pagination(request):
     elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
         profile = HeadmasterProfile.objects.get(user=request.user)
     clubmeetings = ClubMeetings.objects.filter(school=profile.school)
-    paginator = Paginator(clubmeetings, 2)
+    paginator = Paginator(clubmeetings, 10)
     page = request.GET.get('page')
     try:
         clubmeetings_list = paginator.page(page)
@@ -249,7 +250,7 @@ def pagination(request):
     except EmptyPage:
         clubmeetings_list = paginator.page(paginator.num_pages)
     data['html_list'] = render_to_string('club_meetings/partial_club_meeting_list.html', {
-        'clubmeetings_list': clubmeetings_list, 'common_strings':common_strings
+        'clubmeetings_list': clubmeetings_list, 'common_strings':common_strings, 'club_meeting_strings':club_meeting_strings
     })
     return JsonResponse(data)
 
