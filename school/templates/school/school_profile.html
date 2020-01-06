@@ -13,7 +13,7 @@
     {% if school_profile.image %}
     <img src="{{ school_profile.image.url }}" width="100%"class="jcrop-cover-holder"><br />
     {% else %}
-    <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}"width="100%" class="jcrop-cover-holder">
+    <img src="{% static 'sknf/images/school-profile-default.jpeg' %}" width="100%" class="jcrop-cover-holder">
     {% endif %}
     {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
     <div class="img-ctrl school-cover">
