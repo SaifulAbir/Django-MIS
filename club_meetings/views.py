@@ -84,7 +84,7 @@ def club_meeting_add(request):
 class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.ClubMeetings
-    paginate_by = 10
+    paginate_by = 2
 
     def get_context_data(self, **kwargs):
         context = super(ClubMeetingsList, self).get_context_data(**kwargs)
@@ -232,5 +232,24 @@ def club_meeting_search_list(request, export='null'):
         return response
 
 
-
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    if request.user.is_authenticated and request.user.user_type == 5:
+        profile = SkLeaderProfile.objects.get(user=request.user)
+    elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
+        profile = HeadmasterProfile.objects.get(user=request.user)
+    clubmeetings = ClubMeetings.objects.filter(school=profile.school)
+    paginator = Paginator(clubmeetings, 2)
+    page = request.GET.get('page')
+    try:
+        clubmeetings_list = paginator.page(page)
+    except PageNotAnInteger:
+        clubmeetings_list = paginator.page(1)
+    except EmptyPage:
+        clubmeetings_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('club_meetings/partial_club_meeting_list.html', {
+        'clubmeetings_list': clubmeetings_list, 'common_strings':common_strings
+    })
+    return JsonResponse(data)
 

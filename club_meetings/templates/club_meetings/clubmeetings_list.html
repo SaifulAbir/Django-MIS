@@ -32,7 +32,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-            <table   id="example1" class=" data-table table table-bordered table-striped">
+            <table   id="example1" class="club-meeting-search-table data-table table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th class="col-sm-6">Date</th>
@@ -107,4 +107,16 @@
     </div>
     <!-- /.content -->
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/club_meetings/pagination/'+addressValue;
+            paginator(".table-responsive", url, '.club-meeting-search-table', {'school':'', 'division':'',
+            'district':'', 'upazila':'', 'union':'', 'form_date':'', 'to_date':'', 'topic':''});
+        });
+</script>
 {% endblock %}
