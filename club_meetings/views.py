@@ -84,7 +84,7 @@ def club_meeting_add(request):
 class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.ClubMeetings
-    paginate_by = 2
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(ClubMeetingsList, self).get_context_data(**kwargs)
@@ -240,7 +240,7 @@ def pagination(request):
     elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
         profile = HeadmasterProfile.objects.get(user=request.user)
     clubmeetings = ClubMeetings.objects.filter(school=profile.school)
-    paginator = Paginator(clubmeetings, 2)
+    paginator = Paginator(clubmeetings, 10)
     page = request.GET.get('page')
     try:
         clubmeetings_list = paginator.page(page)

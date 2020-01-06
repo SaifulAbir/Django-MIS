@@ -35,12 +35,20 @@ def peer_education_form(request, form, template_name):
                 profile = SkLeaderProfile.objects.get(user=request.user)
             elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
                 profile = HeadmasterProfile.objects.get(user=request.user)
-            peer_education_list = PeerEducation.objects.filter(school=profile.school)
+            peer_educations = PeerEducation.objects.filter(school=profile.school)
+            paginator = Paginator(peer_educations, 10)
+            page = request.GET.get('page')
+            try:
+                peereducation_list = paginator.page(page)
+            except PageNotAnInteger:
+                peereducation_list = paginator.page(1)
+            except EmptyPage:
+                peereducation_list = paginator.page(paginator.num_pages)
             data['html_peer_education_list'] = render_to_string('peer_education/partial_peer_education_list.html',
-                                                                {'peereducation_list': peer_education_list})
+                                                                {'peereducation_list': peereducation_list, 'common_strings':common_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form, 'common_strings':common_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -80,14 +88,28 @@ class PeerEducationList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.PeerEducation
     template_name = 'peer_education/peereducation_list.html'
+    paginate_by = 10
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super(PeerEducationList, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated and self.request.user.user_type == 5:
             profile = SkLeaderProfile.objects.get(user=self.request.user)
         elif self.request.user.is_authenticated and self.request.user.user_type == 2 or self.request.user.user_type == 3 or self.request.user.user_type == 4:
             profile = HeadmasterProfile.objects.get(user=self.request.user)
-        queryset = PeerEducation.objects.filter(school=profile.school)
-        return queryset
+        peer_educations = PeerEducation.objects.filter(school=profile.school)
+        paginator = Paginator(peer_educations, self.paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            peereducation_list = paginator.page(page)
+        except PageNotAnInteger:
+            peereducation_list = paginator.page(1)
+        except EmptyPage:
+            peereducation_list = paginator.page(paginator.num_pages)
+
+        context['peereducation_list'] = peereducation_list
+        context['common_strings'] = common_strings
+        return context
 
 # @headmaster_mentor_skleader_login_required
 # def peer_education_update(request, pk):
@@ -208,3 +230,24 @@ def peer_education_search_list(request, export='null'):
         response = HttpResponse(dataset.csv, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="peer_education_list.csv"'
         return response
+
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    if request.user.is_authenticated and request.user.user_type == 5:
+        profile = SkLeaderProfile.objects.get(user=request.user)
+    elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
+        profile = HeadmasterProfile.objects.get(user=request.user)
+    peer_educations = PeerEducation.objects.filter(school=profile.school)
+    paginator = Paginator(peer_educations, 10)
+    page = request.GET.get('page')
+    try:
+        peereducation_list = paginator.page(page)
+    except PageNotAnInteger:
+        peereducation_list = paginator.page(1)
+    except EmptyPage:
+        peereducation_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('peer_education/partial_peer_education_list.html', {
+        'peereducation_list': peereducation_list, 'common_strings':common_strings
+    })
+    return JsonResponse(data)
