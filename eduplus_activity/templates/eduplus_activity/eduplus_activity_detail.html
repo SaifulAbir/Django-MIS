@@ -3,7 +3,7 @@
 {% load static %}
 <section class="content-header" style="padding-top:60px">
     <h1>
-        Eduplus Activity Info
+        {{ edu_strings.EDUPLUS_ACTIVITIES_DETAIL_TITLE }}
     </h1>
 </section>
 <!-- Main content -->
@@ -13,20 +13,20 @@
         <div class="col-md-12">
             <div class="box box-info">
                 <div class="box-header">
-                    <h3 class="box-title">Basic Information</h3>
+                    <h3 class="box-title">{{ edu_strings.EDUPLUS_ACTIVITIES_DETAIL_INFO_TITLE }}</h3>
                 </div>
                 <div class="row" style="padding-bottom:10px;">
                     <div class="col-md-6">
                         <div class="box-body">
                             <!-- School Name -->
                             <div class="form-group">
-                                <span>Date: </span><label>{{eduplus_activity_detail.date |date:"d M Y"}}</label>
+                                <span>{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_DATE }}: </span><label>{{eduplus_activity_detail.date |date:"d M Y"}}</label>
                             </div>
                             <div class="form-group">
-                                <span>Description: </span><label>{{eduplus_activity_detail.description}}</label>
+                                <span>{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_DESCRIPTION }}: </span><label>{{eduplus_activity_detail.description}}</label>
                             </div>
                             <div class="form-group">
-                                <label>Topics: </label>
+                                <label>{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_TOPICS }}: </label>
 <!--                                {% for topic in club_meeting_detail.topics.all %}-->
 <!--                                <input type="text" value="{{topic}}" class="form-control my-colorpicker1" readonly>-->
 <!--                                {% endfor %}-->
@@ -37,11 +37,11 @@
                                 </ul>
                             </div>
                             <div class="form-group">
-                                <label> Methods:</label>
-                                {{ eduplus_activity_detail.method }}
+                                <label> {{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_METHODS }}:</label>
+                                <ul><li> {{ eduplus_activity_detail.method }} </li></ul>
                             </div>
                             <div class="form-group">
-                                <label>Attendance: </label>
+                                <label>{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ATTENDANCE }}: </label>
 <!--                                {% for attendance in club_meeting_detail.attendance.all %}-->
 <!--                                <input type="text" value="{{attendance}}" class="form-control my-colorpicker1" readonly>-->
 <!--                                {% endfor %}-->
@@ -82,11 +82,13 @@
                        href="javascript:void(0)">
                         Back
                     </a>
+                    {% if user.user_type != 1 %}
                     <a type="button"
                        class="btn btn-primary pull-right"
                        href="{% url 'eduplus_activity:edu_plus_activity_update' eduplus_activity_detail.pk %}">
                         Edit
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

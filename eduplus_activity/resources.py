@@ -9,15 +9,24 @@ from division.models import Division
 from topics.models import Topics
 from unions.models import Union
 from upazillas.models import Upazilla
-from .models import School, EduPlusActivity, EduplusTopics
+from .models import School, EduPlusActivity, Method
 
 
 class EduPlusActivityResource(resources.ModelResource):
 
-    def dehydrate_date(self, EduPlusActivity):
-        date_string = str(EduPlusActivity.date)
-        if date_string :
-            return datetime.strptime(date_string, '%Y-%m-%d').strftime('%d-%m-%Y')
+    class Meta:
+        model = EduPlusActivity
+        exclude = ('id','presence_skleader','image','skleader','topics','method')
+        export_order = ('date','topic','method','school', 'attendance','division','district','upazila','union','description' )
+        widgets = {
+            'date': {'format': '%d.%m.%Y'},
+        }
+
+
+    def dehydrate_attendance(self, eduPlusActivity):
+        #EduPlusActivity.objects.fil
+        alldata = list(eduPlusActivity.attendance.all())
+        return len(alldata)
 
     school = fields.Field(
         column_name='School',
@@ -41,17 +50,19 @@ class EduPlusActivityResource(resources.ModelResource):
         column_name='Union',
         attribute='school',
         widget=ForeignKeyWidget(School, 'union'))
-    #club_establishment_date = fields.Field(column_name='Establishment Date')
-
     topic = fields.Field(column_name='Topics',
-            attribute='topics', widget=ManyToManyWidget(EduplusTopics, ',', 'name'))
+                         attribute='topics', widget=ManyToManyWidget(Method, ',', 'name'))
+    method = fields.Field(column_name='Method', attribute='method')
     attendance = fields.Field(column_name='Attendance',
                          attribute='attendance', widget=ManyToManyWidget(User, ',', 'first_name'))
+    date = fields.Field(column_name='Date',attribute='date')
+    description = fields.Field(column_name='Description',attribute='description')
 
 
 
 
-    class Meta:
-        model = EduPlusActivity
 
-        fields = ('date', 'school', 'attendance', 'topics', 'description')
+
+
+
+

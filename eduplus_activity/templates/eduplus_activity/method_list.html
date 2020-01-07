@@ -1,0 +1,120 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+<section class="content-header" >
+        <h1>{{ edu_strings.METHOD_LIST_PAGE_TITLE }}</h1>
+ </section>
+    <!-- Main content -->
+    <section class="content">
+<div class="box">
+        <!-- Main content -->
+
+            <div class="box-header">
+
+                <span id = "alert_placeholder"></span>
+                <button type="button"
+                        class="btn btn-primary pull-right js-create-method"
+                        data-url="{% url 'eduplus_activity:create_method' %}">
+                    <span class="fa fa-plus"></span>
+                    {{ edu_strings.METHOD_CREATE }}
+                </button>
+            </div>
+
+            {% include 'eduplus_activity/modal.html' %}
+            <!-- /.box-header -->
+            <div class="box-body table-responsive method-container">
+                {% include 'eduplus_activity/partial_method_list.html' %}
+            </div>
+</div>
+        <!-- /.content -->
+    </section>
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript">
+        $(function () {
+            $('#settings, .method-menu').addClass('active');
+            $("#settings").addClass("menu-open");
+            $("#settings .treeview-menu").css("display", "block");
+
+            var loadForm = function () {
+                var btn = $(this);
+                $.ajax({
+                    url: btn.attr("data-url"),
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#modal-method").modal("show");
+                    },
+                    success: function (data) {
+                        $("#modal-method .modal-content").html(data.html_form);
+                    }
+                });
+            };
+            var saveForm = function () {
+                var form = $(this);
+                var formClass = form.attr("class")
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: form.attr("method"),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.form_is_valid) {
+                            $('#methodubmit').prop('disabled', true);
+                            if(formClass=="js-method-create-form"){
+                                showAlert("Method Created!", "alert-success-customized")
+                            }
+                            if(formClass=="js-update-method-form"){
+                                showAlert("Method Updated!", "alert alert-success-customized")
+                            }
+                            if(formClass=="js-method-delete-form"){
+                                showAlert("Method Deleted!", "alert alert-danger-customized")
+                            }
+
+                            $(".method-container").html(data.html_list);  // <-- Replace the table body
+                            $('.method-table').DataTable({
+                                'paging'      : false,
+                                'lengthChange': false,
+                                'searching'   : false,
+                                'ordering'    : false,
+                                'info'        : false,
+                                'autoWidth'   : false,
+                                'destroy'     : true
+                            });
+                            $("#modal-method").modal("hide");
+                        }
+                        else {
+                            $("#modal-method .modal-content").html(data.html_form);
+                        }
+
+
+                    }
+                });
+                return false;
+            };
+
+        function showAlert(message,alerttype) {
+
+            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
+        }
+
+            /* Binding */
+
+            // Create eduplus_topics
+            $(".js-create-method").click(loadForm);
+            $("#modal-method").on("submit", ".js-method-create-form", saveForm);
+
+            // Update eduplus_topics
+            $(".method-container").on("click", ".js-update-method", loadForm);
+            $("#modal-method").on("submit", ".js-update-method-form", saveForm);
+
+            // Delete eduplus_topics
+            $(".method-container").on("click", ".js-delete-method", loadForm);
+            $("#modal-method").on("submit", ".js-method-delete-form", saveForm);
+            pagination(".method-container", '/eduplus_activity/method_pagination/', '', '', '.method-table');
+
+        });
+
+    </script>
+{% endblock %}
+

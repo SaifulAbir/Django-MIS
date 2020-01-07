@@ -1,10 +1,10 @@
 from django import forms
 
 from topics.models import Topics
-from .models import ClassOrientation, place_choice
+from .models import PeerEducation, place_choice
 
 
-class ClassOrientationForm(forms.ModelForm):
+class PeerEducationForm(forms.ModelForm):
     topic = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
@@ -13,5 +13,5 @@ class ClassOrientationForm(forms.ModelForm):
                                   widget=forms.RadioSelect(attrs={'class': 'radio'}))
     created_date = forms.DateField(label='Date',error_messages={'required': 'Date is required.'}, widget=forms.DateInput(format='%d-%m-%Y'), input_formats=('%d-%m-%Y',))
     class Meta:
-        model = ClassOrientation
+        model = PeerEducation
         fields = ['created_date', 'place', 'topic']

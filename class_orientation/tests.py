@@ -9,7 +9,7 @@ from districts.models import District
 from division.models import Division
 from skleaders.models import SkLeaderProfile
 from topics.models import Topics
-from.models import ClassOrientation,School
+from.models import PeerEducation,School
 
 class ClassOrientationTest(TestCase):
 
@@ -37,106 +37,85 @@ class ClassOrientationTest(TestCase):
                                    roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
         skleader.save()
         to = Topics.objects.all()
-        co = ClassOrientation.objects.create(created_date=timezone.now(), place='1', school=self.school )
+        co = PeerEducation.objects.create(created_date=timezone.now(), place='1', school=self.school)
         co.topic.set(to)
-        self.class_orientation = co
+        self.peer_education = co
 
     def test__when_school_is_null__should_raise_error(self):
-        s = ClassOrientation(created_date=timezone.now(),student_class='7', topic='asd', )
+        s = PeerEducation(created_date=timezone.now(), place='1', )
         with self.assertRaises(ValidationError):
             s.full_clean()
 
-    def test__when_topic_is_null__should_raise_error(self):
-        s = ClassOrientation(created_date=timezone.now(),student_class='7', school=self.school, )
-        with self.assertRaises(ValidationError):
-            s.full_clean()
-
-    def test__when_topic_is_empty__should_raise_error(self):
-        s = ClassOrientation(topic='', created_date=timezone.now(),student_class='7', school=self.school,)
-        with self.assertRaises(ValidationError):
-            s.full_clean()
-
-    def test__when_class_is_null__should_raise_error(self):
-        s = ClassOrientation(created_date=timezone.now(),topic='asd', school=self.school, )
-        with self.assertRaises(ValidationError):
-            s.full_clean()
-
-    def test__128_plus_char_text_in_topic__should_raise_error(self):
-        s = ClassOrientation(
-            topic="tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft"
-                 " tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg"
-                 " sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg sdfgsdg sgddft tesg"
-                 " sdfgsdg sgddft sdfgsdg sgddft tesg"
-                 " sdfgsdg sgddft sdfgsdg sgddft tesg"
-                 " sdfgsdg sgddft ", created_date=timezone.now(),student_class='7', school=self.school,)
+    def test__when_place_is_null__should_raise_error(self):
+        s = PeerEducation(created_date=timezone.now(), place='', school=self.school, )
         with self.assertRaises(ValidationError):
             s.full_clean()
 
     # view test
-    def test_class_orientation_add_page_status_code_content_type(self):
+    def test_peer_education_add_page_status_code_content_type(self):
         logged_in = self.client.login(email='test@example.com', password='12345')
         self.assertTrue(logged_in)
-        orientation_add_response = self.client.get('/class_orientation/add/', follow=True)
+        orientation_add_response = self.client.get('/peer_education/add/', follow=True)
         self.assertEquals(orientation_add_response.status_code, 200)
         self.assertEquals(orientation_add_response['Content-Type'], 'application/json')
 
-    def test_class_orientation_update_page_status_code_content_type(self):
+    def test_peer_education_update_page_status_code_content_type(self):
         logged_in = self.client.login(email='test@example.com', password='12345')
         self.assertTrue(logged_in)
-        orientation_update_response = self.client.get(reverse('class_orientation:class_orientation_update',
-                                                              args=(self.class_orientation.id,)), follow=True)
+        orientation_update_response = self.client.get(reverse('peer_education:peer_education_update',
+                                                              args=(self.peer_education.id,)), follow=True)
         self.assertEquals(orientation_update_response.status_code, 200)
         self.assertEquals(orientation_update_response['Content-Type'], 'application/json')
 
-    def test_when__request_for_class_orientation_report_list__should_return_class_orientation_list(self):
+    def test_when__request_for_peer_education_report_list__should_return_peer_education_list(self):
         logged_in = self.client.login(username='admin@example.com', password='12345')
         self.assertTrue(logged_in)
-        class_orientation_count = ClassOrientation.objects.count()
+        peer_education_count = PeerEducation.objects.count()
         topic = Topics.objects.exclude(name='')
-        instance = ClassOrientation.objects.create(created_date=timezone.now(), place='1', school=self.school)
+        instance = PeerEducation.objects.create(created_date=timezone.now(), place='1', school=self.school)
         instance.topic.set(topic)
-        class_orientation_response = self.client.get(reverse('class_orientation:class_orientation_report_list'), follow=True)
-        self.assertEqual(ClassOrientation.objects.count(), class_orientation_count + 1)
-        self.assertContains(response=class_orientation_response, status_code=200,
+        peer_education_response = self.client.get(reverse('peer_education:peer_education_report_list'), follow=True)
+        self.assertEqual(PeerEducation.objects.count(), peer_education_count + 1)
+        self.assertContains(response=peer_education_response, status_code=200,
                             text='<td>Mirpur School (123)</td>', html=True)
 
-    def test_when__search_for_class_orientation_report_list__should_return_report_list_page_status_code(self):
+    def test_when__search_for_peer_education_report_list__should_return_report_list_page_status_code(self):
         logged_in = self.client.login(username='admin@example.com', password='12345')
         self.assertTrue(logged_in)
-        class_orientation_response = self.client.get(reverse('class_orientation:class_orientation_search_list'), follow=True)
-        self.assertEquals(class_orientation_response.status_code, 200)
+        peer_education_response = self.client.get(reverse('peer_education:peer_education_search_list'), follow=True)
+        self.assertEquals(peer_education_response.status_code, 200)
 
-    def test_when__school_name_is_searched__should_return_respective_class_orientation_list(self):
+    def test_when__school_name_is_searched__should_return_respective_peer_education_list(self):
         logged_in = self.client.login(username='admin@example.com', password='12345')
         self.assertTrue(logged_in)
-        class_orientation_response = self.client.get(reverse('class_orientation:class_orientation_search_list'),
+        peer_education_response = self.client.get(reverse('peer_education:peer_education_search_list'),
                                                 data={'name_contains': 'Mirpur School'}, follow=True)
-        self.assertContains(response=class_orientation_response, status_code=200,
+        self.assertContains(response=peer_education_response, status_code=200,
                             text='<td>Mirpur School (123)</td>', html=True)
 
-    def test_when__division_name_is_searched__should_return_respective_class_orientation_list(self):
+    def test_when__division_name_is_searched__should_return_respective_peer_education_list(self):
         logged_in = self.client.login(username='admin@example.com', password='12345')
         self.assertTrue(logged_in)
-        class_orientation_response = self.client.get(reverse('class_orientation:class_orientation_search_list'),
+        peer_education_response = self.client.get(reverse('peer_education:peer_education_search_list'),
                                                 data={'division_contains': 'Dhaka'}, follow=True)
-        self.assertContains(response=class_orientation_response, status_code=200,
+        self.assertContains(response=peer_education_response, status_code=200,
                             text='<td>Dhaka</td>', html=True)
 
-    def test_when__district_name_is_searched__should_return_respective_class_orientation_list(self):
+    def test_when__district_name_is_searched__should_return_respective_peer_education_list(self):
         logged_in = self.client.login(username='admin@example.com', password='12345')
         self.assertTrue(logged_in)
-        class_orientation_response = self.client.get(reverse('class_orientation:class_orientation_search_list'),
+        peer_education_response = self.client.get(reverse('peer_education:peer_education_search_list'),
                                                 data={'district_contains': 'Gazipur'}, follow=True)
-        self.assertContains(response=class_orientation_response, status_code=200,
+        self.assertContains(response=peer_education_response, status_code=200,
                             text='<td>Gazipur</td>', html=True)
 
-    def test_when__all_are_searched__should_return_respective_class_orientation_list(self):
+    def test_when__all_are_searched__should_return_respective_peer_education_list(self):
         logged_in = self.client.login(username='admin@example.com', password='12345')
         self.assertTrue(logged_in)
-        class_orientation_response = self.client.get(reverse('class_orientation:class_orientation_search_list'),
+        peer_education_response = self.client.get(reverse('peer_education:peer_education_search_list'),
                                                 data={'name_contains': 'Mirpur School', 'division_contains': 'Dhaka',
                                                       'district_contains': 'Gazipur'}, follow=True)
-        self.assertContains(response=class_orientation_response, status_code=200,
+        self.assertContains(response=peer_education_response, status_code=200,
                             text='<td>Mirpur School (123)</td>', html=True)
 
 

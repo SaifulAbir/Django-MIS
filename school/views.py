@@ -1,6 +1,7 @@
 import base64
 import uuid
-
+import school.strings as school_strings
+from resources import strings as common_strings
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.base import ContentFile
@@ -182,13 +183,17 @@ def school_delete(request, pk):
 
 def load_districts(request):
     division_id = request.GET.get('division')
+    districtId = request.GET.get('districtId')
+    districtId = int(districtId)
     districts = District.objects.filter(division_id=division_id).order_by('name')
-    return render(request, 'school/district_dropdown_list_options.html', {'districts': districts})
+    return render(request, 'school/district_dropdown_list_options.html', {'districts': districts, 'districtId': districtId, })
 
 def load_upazillas(request):
     district_id = request.GET.get('district')
+    upazilaId = request.GET.get('upazilaId')
+    upazilaId = int(upazilaId)
     upazillas = Upazilla.objects.filter(district_id=district_id).order_by('name')
-    return render(request, 'school/upazilla_dropdown_list_options.html', {'upazillas': upazillas})
+    return render(request, 'school/upazilla_dropdown_list_options.html', {'upazillas': upazillas, 'upazilaId':upazilaId})
 
 def load_unions(request):
     upazilla_id = request.GET.get('upazilla')
@@ -316,7 +321,7 @@ def school_profile(request, pk):
     return render(request, 'school/school_profile.html', { 'school_profile' : school_profile, 'skleader_list' : skleader_list, 'profile' : profile, 'headmaster_profile':headmaster_profile,
                                                            'skmember_list': skmember_list, 'form':form, 'upload_head_user':upload_head_user, 'school_post_list':school_post_list,
                                                            'upload_guide_user':upload_guide_user, 'upload_both_user':upload_both_user, 'upload_skleader_user':upload_skleader_user,
-                                                           'post_form':post_form})
+                                                           'post_form':post_form, 'school_strings':school_strings, 'common_strings':common_strings})
 
 
 def school_post_detail_view(request, pk):

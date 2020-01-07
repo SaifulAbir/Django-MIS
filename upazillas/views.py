@@ -22,8 +22,8 @@ def save_upazilla_form(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            upazillas = Upazilla.objects.all()
-            paginator = Paginator(upazillas, 10)
+            upazilas = Upazilla.objects.all()
+            paginator = Paginator(upazilas, 10)
             page = request.GET.get('page')
             try:
                 upazila_list = paginator.page(page)
@@ -129,7 +129,7 @@ def pagination(request):
         upazila_list = paginator.page(1)
     except EmptyPage:
         upazila_list = paginator.page(paginator.num_pages)
-    data['html_list'] = render_to_string('division/partial_division_list.html', {
+    data['html_list'] = render_to_string('upazillas/partial_upazillas_list.html', {
         'upazila_list': upazila_list,'upazila_strings':upazila_strings,'common_strings':common_strings
     })
     return JsonResponse(data)

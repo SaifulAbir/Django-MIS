@@ -4,7 +4,7 @@ from django.utils import timezone
 from .models import Topics
 
 
-class DivisionTest(TestCase):
+class TopicTest(TestCase):
 
     def test__null_name__should_raise_error(self):
         s = Topics(created_date=timezone.now())

@@ -1,12 +1,12 @@
 {% load widget_tweaks %}
 {% load static %}
-<form action="{% url 'class_orientation:class_orientation_update' form.instance.pk %}" class="js-class-orientation-update-form" method='POST'>
+<form action="{% url 'peer_education:create_peer_education' %}" class="js-peer-education-create-form" method='POST' novalidate>
     {% csrf_token %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Update Peer Education Info</h4>
+        <h4 class="modal-title">{{ peer_education_strings.NEW_PEER_EDUCATION_BUTTON }}</h4>
     </div>
     <div class="modal-body">
         <div class="{% if form.non_field_errors %}text-danger{% endif %}">
@@ -24,10 +24,10 @@
             </div>
             {% if field.label == 'Date' %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {% render_field field placeholder=field.label class="form-control datepicker" %}
-            {% elif field.label == 'Student class' %}
+            {% render_field field placeholder=field.label class="form-control datepicker date-field" %}
+            {% elif field.label == 'Place' %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {% render_field field class="form-control" placeholder=field.label %}
+            {% render_field field class="" placeholder=field.label %}
             {% else %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% render_field field class="" placeholder=field.label %}
@@ -38,7 +38,7 @@
     </div>
     <div class="modal-footer">
 
-        <input type="submit" value="Update" id="id_username" class="btn btn-primary"/>
+        <input type="submit" value="Save" id="peerSubmit" class="btn btn-primary"/>
 
     </div>
 </form>
@@ -50,4 +50,10 @@
 
 </script>
 <!-- /.form group -->
-
+{% block extra_css %}
+<style type="text/css">
+    .date-field{
+        max-width: 50%;
+    }
+</style>
+{% endblock %}

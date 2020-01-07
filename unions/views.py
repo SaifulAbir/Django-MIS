@@ -24,7 +24,15 @@ def save_union_form(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            union_list = Union.objects.all()
+            unions = Union.objects.all()
+            paginator = Paginator(unions, 10)
+            page = request.GET.get('page')
+            try:
+                union_list = paginator.page(page)
+            except PageNotAnInteger:
+                union_list = paginator.page(1)
+            except EmptyPage:
+                union_list = paginator.page(paginator.num_pages)
             data['html_union_list'] = render_to_string('unions/partial_union_list.html',
                                                           {'union_list': union_list, 'union_strings':union_strings, 'common_strings':common_strings})
         else:
@@ -86,7 +94,15 @@ def union_delete(request, pk):
     if request.method == 'POST':
         union.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
-        union_list = Union.objects.all()
+        unions = Union.objects.all()
+        paginator = Paginator(unions, 10)
+        page = request.GET.get('page')
+        try:
+            union_list = paginator.page(page)
+        except PageNotAnInteger:
+            union_list = paginator.page(1)
+        except EmptyPage:
+            union_list = paginator.page(paginator.num_pages)
         data['html_union_list'] = render_to_string('unions/partial_union_list.html', {
             'union_list': union_list, 'union_strings':union_strings, 'common_strings':common_strings
         })
@@ -100,13 +116,19 @@ def union_delete(request, pk):
 
 def load_districts(request):
     division_id = request.GET.get('division')
+    districtId = request.GET.get('districtId')
+    if districtId:
+        districtId = int(districtId)
     districts = District.objects.filter(division_id=division_id).order_by('name')
-    return render(request, 'unions/district_dropdown_list_options.html', {'districts': districts})
+    return render(request, 'unions/district_dropdown_list_options.html', {'districts': districts, 'districtId': districtId})
 
 def load_upazillas(request):
     district_id = request.GET.get('district')
+    upazilaId = request.GET.get('upazilaId')
+    if upazilaId:
+        upazilaId = int(upazilaId)
     upazillas = Upazilla.objects.filter(district_id=district_id).order_by('name')
-    return render(request, 'unions/upazilla_dropdown_list_options.html', {'upazillas': upazillas})
+    return render(request, 'unions/upazilla_dropdown_list_options.html', {'upazillas': upazillas, 'upazilaId':upazilaId})
 
 def load_unions(request):
     upazilla_id = request.GET.get('upazilla')

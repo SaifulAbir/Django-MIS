@@ -7,7 +7,6 @@
 <section class="content">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">  </h3>
             <span id = "alert_placeholder"></span>
             <button type="button"
                     class="btn btn-primary pull-right js-create-union"
@@ -17,10 +16,10 @@
             </button>
         </div>
         <!-- /.box-header -->
-        <div class="box-body table-responsive">
+        <div class="box-body table-responsive union-container">
             {% include 'unions/partial_union_list.html' %}
-            {% include 'unions/_modal.html' %}
         </div>
+        {% include 'unions/_modal.html' %}
     </div>
     <!-- /.content -->
 </section>
@@ -28,6 +27,8 @@
 {% block extra_js %}
 <script type="text/javascript">
     $(function () {
+        $("#settings").addClass("menu-open");
+        $("#settings .treeview-menu").css("display", "block");
         $('#settings, .union-menu').addClass('active');
         var loadForm = function () {
             var btn = $(this);
@@ -40,6 +41,33 @@
                 },
                 success: function (data) {
                     $("#modal-union .modal-content").html(data.html_form);
+                    var divisionId = $("#id_division").val();
+                    var districtId = $("#id_district").val();
+                    var upazilaId = $("#id_upazilla").val();
+                    if (divisionId || districtId || upazilaId) {
+                        $.ajax({
+                            url: '/unions/ajax/load-districts/',
+                            data: {
+                                'division': divisionId,
+                                'districtId': districtId
+                            },
+                            success: function (data) {
+                                $("#id_district").html(data);
+
+                            }
+                        });
+                        $.ajax({
+                            url: '/unions/ajax/load-upazillas/',
+                            data: {
+                                'district': districtId,
+                                'upazilaId': upazilaId
+                            },
+                            success: function (data) {
+                                $("#id_upazilla").html(data);
+
+                            }
+                        });
+                    }
                 }
             });
         };
@@ -65,6 +93,15 @@
                             showAlert("Union Deleted!", "alert alert-danger-customized")
                         }
                         $(".union-container").html(data.html_union_list);  // <-- Replace the table body
+                        $('.union-table').DataTable({
+                            'paging'      : false,
+                            'lengthChange': false,
+                            'searching'   : false,
+                            'ordering'    : false,
+                            'info'        : false,
+                            'autoWidth'   : false,
+                            'destroy'     : true
+                        });
                         $("#modal-union").modal("hide");  // <-- Close the modal
                     }
                     else {
@@ -80,11 +117,11 @@
         $("#modal-union").on("submit", ".js-union-create-form", saveForm);
 
         // Update union
-        $(".union-table").on("click", ".js-update-union", loadForm);
+        $(".union-container").on("click", ".js-update-union", loadForm);
         $("#modal-union").on("submit", ".js-union-update-form", saveForm);
 
         // Delete union
-        $(".union-table").on("click", ".js-delete-union", loadForm);
+        $(".union-container").on("click", ".js-delete-union", loadForm);
         $("#modal-union").on("submit", ".js-union-delete-form", saveForm);
         pagination(".table-responsive", '/unions/pagination/', '', '', '.union-table');
 

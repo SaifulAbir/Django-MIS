@@ -9,3 +9,7 @@ def format(format, value):
 @register.simple_tag
 def format_values(format, *args):
     return format % args
+
+@register.simple_tag
+def format_date(format, value):
+    return value.strftime(format)

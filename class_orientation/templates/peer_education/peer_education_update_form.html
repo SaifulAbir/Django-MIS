@@ -1,12 +1,12 @@
 {% load widget_tweaks %}
 {% load static %}
-<form action="{% url 'class_orientation:create_class_orientation' %}" class="js-class-orientation-create-form" method='POST' novalidate>
+<form action="{% url 'peer_education:peer_education_update' form.instance.pk %}" class="js-peer-education-update-form" method='POST'>
     {% csrf_token %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">New Peer Education</h4>
+        <h4 class="modal-title">{{ peer_education_strings.UPDATE_PEER_EDUCATION_TITLE }}</h4>
     </div>
     <div class="modal-body">
         <div class="{% if form.non_field_errors %}text-danger{% endif %}">
@@ -25,9 +25,9 @@
             {% if field.label == 'Date' %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% render_field field placeholder=field.label class="form-control datepicker" %}
-            {% elif field.label == 'Place' %}
+            {% elif field.label == 'Student class' %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {% render_field field class="" placeholder=field.label %}
+            {% render_field field class="form-control" placeholder=field.label %}
             {% else %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% render_field field class="" placeholder=field.label %}
@@ -38,7 +38,7 @@
     </div>
     <div class="modal-footer">
 
-        <input type="submit" value="Save" id="peerSubmit" class="btn btn-primary"/>
+        <input type="submit" value="Update" id="id_username" class="btn btn-primary"/>
 
     </div>
 </form>

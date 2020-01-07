@@ -3,11 +3,11 @@
 {% load widget_tweaks %}
 {% load static %}
 <form method='POST' enctype="multipart/form-data" novalidate>
-    <section class="content-header" style="padding-top:60px">
+    <section class="content-header">
         {% if not club_meeting_form.instance.pk %}
-        <h1>Add New Club Meeting</h1>
+        <h1>{{ club_meeting_strings.CLUB_MEETING_ADD_TITLE }}</h1>
         {% else %}
-        <h1>Update Club Meeting Info</h1>
+        <h1></h1>
         {% endif %}
     </section>
     <!-- Main content -->
@@ -18,9 +18,9 @@
                 <div class="box box-info">
                     <div class="box-header with-border">
                         {% if not club_meeting_form.instance.pk %}
-                        <h3 class="box-title">Basic Information</h3>
+                        <h3 class="box-title">{{ club_meeting_strings.CLUB_MEETING_BASIC_INFO }}</h3>
                         {% else %}
-                        <h3 class="box-title">Basic Information</h3>
+                        <h3 class="box-title">{{ club_meeting_strings.CLUB_MEETING_BASIC_INFO }}</h3>
                         {% endif %}
                     </div>
                     <div class="row">
@@ -29,14 +29,13 @@
                                 <!-- Color Picker -->
                                 <span id = "alert_placeholder">
                                         {% if club_meeting_form.errors or meeting_topic_form.errors %}
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                        <div id="alertdiv"  class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in club_meeting_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                                 {% for field in meeting_topic_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                    <li class="help-block" >{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                             </span>
                                         </div>
@@ -44,26 +43,26 @@
                                     </span>
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="{{ club_meeting_form.date.id_for_label }}">{{ club_meeting_form.date.label }}</label>
+                                    <label for="{{ club_meeting_form.date.id_for_label }}">{{ club_meeting_strings.CLUB_MEETING_DATE_TEXT }}</label>
                                     {% render_field club_meeting_form.date class="form-control datepicker" placeholder=club_meeting_form.date.label %}
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="{{ club_meeting_form.class_room.id_for_label }}">Class Room</label>
+                                    <label for="{{ club_meeting_form.class_room.id_for_label }}">{{ club_meeting_strings.CLUB_MEETING_CLASS_ROOM_TEXT }}</label>
                                     {% render_field club_meeting_form.class_room class="form-control" placeholder=club_meeting_form.class_room.label %}
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="{{ club_meeting_form.presence_guide_teacher.id_for_label }}">Presence of Guide Teacher</label>
+                                    <label for="{{ club_meeting_form.presence_guide_teacher.id_for_label }}">{{ club_meeting_strings.CLUB_MEETING_DETAIL_PRESENCE_OF_GUIDE_TEACHER }}</label>
                                     {% render_field club_meeting_form.presence_guide_teacher class="" placeholder=club_meeting_form.presence_guide_teacher.label %}
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="{{ club_meeting_form.topics.id_for_label }}">Topics</label>
+                                    <label for="{{ club_meeting_form.topics.id_for_label }}">{{ club_meeting_strings.CLUB_MEETING_TOPICS_TEXT }}</label>
                                     {% render_field club_meeting_form.topics class="" placeholder=club_meeting_form.topics.label %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="{{ club_meeting_form.attendance.id_for_label }}">Attendance</label><br>
+                                    <label for="{{ club_meeting_form.attendance.id_for_label }}">{{ club_meeting_strings.CLUB_MEETING_ATTENDANCE_TEXT }}</label><br>
                                     {% render_field club_meeting_form.presence_skleader class="" placeholder=club_meeting_form.presence_skleader.label %}
                                     <label for="{{ club_meeting_form.presence_skleader.id_for_label }}">{{user.first_name}} (SK Leader)</label>
                                     {% if not club_meeting_form.instance.pk %}
@@ -87,11 +86,11 @@
                         <div class="col-md-6"><br />
                             <div class="from-group picture-align">
                                 {% if club_meeting_form.instance.pk and club_meeting.image %}
-                                <img style="border-radius: 5px; border: 2px solid #ccc;;" height="auto" width="100%" src="{{ club_meeting.image.url }}" class="jcrop-holder pull-right" alt="Pic"><br />
+                                <img height="auto" width="100%" src="{{ club_meeting.image.url }}" class="jcrop-holder pull-right" alt="Pic"><br />
                                 {% else %}
-                                <img style="border-radius: 5px; border: 2px solid #ccc;" height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
+                                <img height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
                                 {% endif %}
-                                <input type="file" accept="image/*" placeholder="Headmaster image" style="padding-top: 10px;padding-bottom: 10px;" class="img-preview pull-left" id="id_CMF-image">
+                                <input type="file" accept="image/*" placeholder="Headmaster image" class="img-preview pull-left" id="id_CMF-image">
                             </div>
                             <br>
                         </div>
@@ -111,6 +110,28 @@
 
     </section>
 </form>
+    {% block extra_css %}
+        <style>
+        #alertdiv{
+            font-size:15px;
+            margin-top:15px;
+            padding-top: 2px;
+            padding-bottom: 3px;
+        }
+        .help-block{
+            color:red;
+            margin-bottom: 5px;
+        }
+        .jcrop-holder{
+            border-radius: 5px;
+            border: 2px solid #ccc;
+        }
+        #id_CMF-image{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js%}
     <script src="{% static 'sknf/js/club-meeting-image-cropper.js' %}"></script>

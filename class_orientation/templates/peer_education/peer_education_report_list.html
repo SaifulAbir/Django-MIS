@@ -1,0 +1,225 @@
+{% extends 'sknf/base.html' %}
+{% block body_block %}
+
+<!-- Main content -->
+<section class="content-header">
+    <h1>
+        {{peer_education_strings.PEER_EDUCATION_LIST_TITLE}}
+    </h1>
+</section>
+<section class="content">
+
+    <!-- Main content -->
+    <form method="GET" class="search-form-peer-education">
+        <div class="box">
+            <div class="box-header">
+                <div class="main-box card-block search-box">
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <strong>{{ peer_education_strings.SEARCH_LABEL_PEER_EDUCATION_FROM_DATE }}</strong>
+                            <input class="form-control typehead tt-query datepicker" type="search" name="fromdate_contains" autocomplete="off" id="from-date" />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ peer_education_strings.SEARCH_LABEL_PEER_EDUCATION_TO_DATE }}</strong>
+                            <input class="form-control typehead tt-query datepicker" type="search" name="todate_contains" autocomplete="off" id="to-date"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{peer_education_strings.SEARCH_LABEL_PEER_EDUCATION_SCHOOL}}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="school_contains" autocomplete="off" id="school-name" />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{peer_education_strings.SEARCH_LABEL_PEER_EDUCATION_DIVISION}}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="division_contains" autocomplete="off" id="division-name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <strong>{{peer_education_strings.SEARCH_LABEL_PEER_EDUCATION_DISTRICT}}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="district_contains" autocomplete="off" id="district-name"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ peer_education_strings.SEARCH_LABEL_PEER_EDUCATION_UPAZILA }}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="upazila_contains" autocomplete="off" id="upazila-name"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ peer_education_strings.SEARCH_LABEL_PEER_EDUCATION_UNION }}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="union_contains" autocomplete="off" id="union-name"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ peer_education_strings.SEARCH_LABEL_PEER_EDUCATION_TOPIC }}</strong>
+                            <select class="form-control" type="search" name="topics_contains"  id="topics-name">
+                                <option value="">-----</option>
+                                {% for topic in topics %}
+                                <option>{{ topic.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button type="submit" class="btn btn-primary search-peer-education">{{ common_strings.SEARCH_BUTTON}}</button>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive peer-education-container">
+                <button type="submit" class="btn btn-primary export-peer-education-report pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
+                <table   id="example1" class="data-table peer-education-table table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-1">{{peer_education_strings.PEER_EDUCATION_DATE_TEXT}}</th>
+                        <th class="col-sm-3">{{peer_education_strings.PEER_EDUCATION_TOPICS_TEXT}}</th>
+                        <th class="col-sm-1">{{peer_education_strings.PEER_EDUCATION_PLACE_TEXT}}</th>
+                        <th class="col-sm-3">{{peer_education_strings.PEER_EDUCATION_SCHOOL_TEXT}}</th>
+                        <th class="col-sm-2">{{peer_education_strings.PEER_EDUCATION_DIVISION_TEXT}}</th>
+                        <th class="col-sm-1">{{peer_education_strings.PEER_EDUCATION_DISTRICT_TEXT}}</th>
+                        <th class="col-sm-1">{{peer_education_strings.PEER_EDUCATION_UPAZILA_TEXT}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for peer_education in peereducation_list %}
+                    <tr>
+                        <td>{{ peer_education.created_date|date:common_strings.DATE_FORMAT }}</td>
+                        <td>
+                            {% for topic in peer_education.topic.all %}
+                            {% if forloop.last %}
+                            {{topic.name}}
+                            {% else %}
+                            {{topic.name}},
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ peer_education.get_place_display }}</td>
+                        <td>{{ peer_education.school }}</td>
+                        <td>{{ peer_education.school.division }}</td>
+                        <td>{{ peer_education.school.district }}</td>
+                        <td>{{ peer_education.school.upazilla }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+                {% if peereducation_list %}
+                <p class="table-information">{% format_values common_strings.PAGINATION_INFO peereducation_list.start_index  peereducation_list.end_index peereducation_list.paginator.count %}
+                </p>
+                {% else %}
+                <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+                {% endif %}
+                {% include 'peer_education/_modal.html' %}
+                <ul class="pagination" style="float: right">
+
+                    {% if peereducation_list.has_previous %}
+                    <li><a class="paginator" href="?page={{ peereducation_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                    {% else %}
+                    <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+                    {% endif %}
+
+                    {% if peereducation_list.number|add:'-4' > 1 %}
+                    <li><a class="paginator" href="?page={{ peereducation_list.number|add:'-5' }}">&hellip;</a></li>
+                    {% endif %}
+
+                    {% for i in peereducation_list.paginator.page_range %}
+                    {% if peereducation_list.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% elif i > peereducation_list.number|add:'-5' and i < peereducation_list.number|add:'5' %}
+                    <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if peereducation_list.paginator.num_pages > peereducation_list.number|add:'4' %}
+                    <li><a class="paginator" href="?page={{ peereducation_list.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+
+                    {% if peereducation_list.has_next %}
+                    <li><a class="paginator" href="?page={{ peereducation_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                    {% else %}
+                    <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </form>
+    <!-- /.content -->
+</section>
+{% block extra_css %}
+<style>
+    .search-box{
+        border: 1px solid rgb(204, 204, 204);
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding-bottom: 0px;
+    }
+</style>
+{% endblock %}
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript">
+    $(function () {
+        $('#reports, .peer-education-menu').addClass('active');
+        $("#reports").addClass("menu-open");
+        $("#reports .treeview-menu").css("display", "block");
+        var school, division, district, upazila, union, fromdate, todate, topic;
+        $('.search-peer-education').on('click', function (event) {
+            event.preventDefault();
+            $(".peer-education-table").DataTable().destroy();
+            fromdate_contains = $('#from-date').val();
+            todate_contains = $('#to-date').val();
+            school_contains = $('#school-name').val();
+            division_contains = $('#division-name').val();
+            district_contains = $('#district-name').val();
+            upazila_contains = $('#upazila-name').val();
+            union_contains = $('#union-name').val();
+            topics_contains = $('#topics-name').val();
+            school = school_contains, division = division_contains, district = district_contains,
+                upazila=upazila_contains,union=union_contains,topic=topics_contains,
+                fromdate=fromdate_contains,todate=todate_contains;
+            $.ajax({
+                type: 'GET',
+                url: '/peer_education/peer_education_search_list/',
+                data: {
+                    'school_contains': school_contains,
+                    'division_contains': division_contains,
+                    'district_contains': district_contains,
+                    'fromdate_contains': fromdate_contains,
+                    'todate_contains':todate_contains,
+                    'upazila_contains':upazila_contains,
+                    'union_contains':union_contains,
+                    'topics_contains':topics_contains,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.form_is_valid) {
+
+                        $(".box-body").html(data.html_list);  // <-- Replace the table body
+                    }
+                    $(".box-body .peer-education-table").dataTable({
+                        'lengthChange': false,
+                        'searching'   : false,
+                        'info'        : false,
+                        'paging'      : false,
+                        'ordering'    : false,
+                    });
+                }
+            });
+        });
+        $('.peer-education-container').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/peer_education/peer_education_search_list/'+addressValue;
+            paginator(".peer-education-container", url, '.box-body .peer-education-table', {'school':school, 'division':division,
+                'district':district, 'upazila':upazila, 'union':union, 'form_date':fromdate, 'to_date':todate, 'topic':topic});
+        });
+        autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
+        autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
+        autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        $(".box").on('click', '.export-peer-education-report', function() {
+            $('.search-form-peer-education').prop('action', '/peer_education/peer_education_search_list/export')
+        });
+    });
+</script>
+{% endblock %}

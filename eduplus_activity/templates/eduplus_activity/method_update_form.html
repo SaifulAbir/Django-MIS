@@ -1,12 +1,12 @@
 {% load widget_tweaks %}
 
-<form action="{% url 'eduplus_activity:eduplus_update_topics' form.instance.pk %}" class="js-update-eduplus-topics-form" method='POST'>
+<form action="{% url 'eduplus_activity:update_method' form.instance.pk %}" class="js-update-method-form" method='POST'>
     {% csrf_token %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Update Eduplus Topic</h4>
+        <h4 class="modal-title">{{ edu_strings.METHOD_UPDATE_LIST_PAGE_TITLE }}</h4>
     </div>
     <div class="modal-body">
         <div class="{% if form.non_field_errors %}invalid{% endif %}">
@@ -27,8 +27,8 @@
 {% endfor %}
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <input type="submit" value="Update" class="btn btn-primary"/>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ common_strings.CLOSE_BUTTON }}</button>
+        <input type="submit" value="{{ common_strings.UPDATE_BUTTON }}" class="btn btn-primary"/>
 
     </div>
 </form>

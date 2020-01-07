@@ -6,9 +6,9 @@
     <form method='POST' enctype="multipart/form-data" novalidate>
         <section class="content-header" style="padding-top:60px">
             {% if not profile_form.instance.pk %}
-                <h1>Add New SK Member</h1>
+                <h1>{{ sk_strings.NEW_SKMEMBER_PAGE_TITLE }}</h1>
             {% else %}
-                <h1>Update SK Member Info</h1>
+                <h1>{{ sk_strings.UPDATE_SKMEMBER_PAGE_TITLE }}</h1>
             {% endif %}
         </section>
         <!-- Main content -->
@@ -19,9 +19,9 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             {% if not profile_form.instance.pk %}
-                                <h3 class="box-title">Basic Information</h3>
+                                <h3 class="box-title">{{ sk_strings.SK_MEMBER_BASIC_INFO }}</h3>
                             {% else %}
-                                <h3 class="box-title">Update Basic Information</h3>
+                                <h3 class="box-title">{{ sk_strings.UPDATE_SK_MEMBER_BASIC_INFO }}</h3>
                             {% endif %}
                         </div>
                         <div class="row">
@@ -29,14 +29,13 @@
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                         {% if user_form.errors or profile_form.errors %}
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                        <div id="alertdiv" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                                 {% for field in profile_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                    <li class="help-block" >{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                             </span>
                                         </div>
@@ -44,12 +43,12 @@
                                     </span>
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                        <label for="{{ user_form.first_name.id_for_label }}">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</label>
                                         {% render_field user_form.first_name class="form-control" placeholder="Name" %}
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">Username / Mobile Number</label>
+                                        <label for="{{ user_form.email.id_for_label }}">{{ sk_strings.SK_MEMBER_USERNAME_MOBILE }}</label>
                                         {% render_field user_form.email class="form-control" placeholder="Username / Mobile Number" %}
                                     </div>
 
@@ -59,7 +58,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.student_class.id_for_label }}">Class</label>
+                                        <label for="{{ profile_form.student_class.id_for_label }}">{{ sk_strings.SK_MEMBER_TABLE_HEADER_CLASS }}</label>
                                         {% render_field profile_form.student_class class="form-control" placeholder=profile_form.student_class.label %}
                                     </div>
 
@@ -80,13 +79,13 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if skmember_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skmember_profile.image.url }}" class="pull-right jcrop-holder " alt="Pic"><br />
+                                                <img width="220" src="{{ skmember_profile.image.url }}" class="pull-right jcrop-holder " alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder " alt="Pic"><br />
+                                                <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder " alt="Pic"><br />
                                             {% endif %}
                                         </div>
                                     </div>
-                                    <input type="file" accept="image/*" placeholder="Skleader image" style="margin-top: 10px;" class="img-preview pull-right" id="id_PF-image">
+                                    <input type="file" accept="image/*" placeholder="Skleader image"  class="img-preview pull-right" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
@@ -98,10 +97,10 @@
                                     <a type="button" style="margin-right: 5px;" onclick="goBack()"
                                        class="btn btn-warning pull-left"
                                        href="javascript:void(0)">
-                                        Back
+                                        {{ common_strings.BACK_BUTTON }}
                                     </a>
 
-                                    <input type="submit" value="Update" class="btn btn-primary pull-right"/>
+                                    <input type="submit" value="{{ common_strings.UPDATE_BUTTON }}" class="btn btn-primary pull-right"/>
                                 </div>
                             </div>
                         </div>
@@ -115,16 +114,16 @@
                 <div class="col-sm-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Update School Information</h3>
+                            <h3 class="box-title">{{ sk_strings.UPDATE_SCHOOL_INFO_TEXT }}</h3>
                         </div>
 
                         <div class="box-body required">
                             <span id="headmasterinfoajaxupdate"></span>
-                            <table class="table table-bordered mb-0" id="tb-doc" style="width: 100%">
+                            <table class="table table-bordered mb-0" id="tb-doc" >
                                 <tr>
-                                    <th>School</th>
-                                    <th>From</th>
-                                    <th>To</th>
+                                    <th>{{ sk_strings.SK_MEMBER_TABLE_HEADER_SCHOOL }}</th>
+                                    <th>{{ sk_strings.DATE_FROM }}</th>
+                                    <th>{{ sk_strings.DATE_TO }}</th>
                                     <th></th>
                                 </tr>
                                 {% if skmember_details %}
@@ -132,7 +131,7 @@
                                         <tr>
                                             <td width="50%">
                                                 <div class="form-group">
-                                                    <select name="school[]" placeholder="School" class="form-control school-headmaster select2" id="id_school2">
+                                                    <select disabled name="school[]" placeholder="School" class="form-control school-headmaster select2" id="id_school2">
                                                         <option value="">---------</option>
                                                         {% for school in school_list %}
                                                             {% if headmaster_detail.school.id ==  school.id %}
@@ -147,17 +146,14 @@
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.from_date|date:"d-m-Y" }}" type="text" name="from_date[]" class="form-control datepicker to-headmaster">
+                                                    <input disabled value="{{ headmaster_detail.from_date|date:"d-m-Y" }}" type="text" name="from_date[]" class="form-control datepicker to-headmaster">
                                                     {% comment %}<input type="text" name="from_date[]" class="form-control from-headmaster" id="id_hf-from_date">{% endcomment %}
                                                 </div>
                                             </td>
                                             <td width="22%">
                                                 <div class="form-group">
-                                                    <input value="{{ headmaster_detail.to_date|date:"d-m-Y" }}" type="text" name="to_date[]" class="form-control datepicker to-headmaster">
+                                                    <input disabled value="{{ headmaster_detail.to_date|date:"d-m-Y" }}" type="text" name="to_date[]" class="form-control datepicker to-headmaster">
                                                 </div>
-                                            </td>
-                                            <td class="width-50">
-                                                <a href="javascript:void(0);" class="removeDoc"><span class="fa fa-trash"></span></a>
                                             </td>
                                         </tr>
 
@@ -167,44 +163,28 @@
                                     <tr>
                                         <td width="50%">
                                             <div class="form-group">
-                                                <select name="school" placeholder="School" class="form-control school-headmaster select2" id="id_school1">
-                                                    <option value="">---------</option>
+                                                <select name="school" disabled="" placeholder="School" class="form-control school-headmaster select2" id="id_school1">
                                                     {% for school in school_list %}
-                                                        <option value="{{ school.id }}">{{ school.name }}</option>
+                                                        <option value="{{ school.id }}" >{{ school.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="text" name="from_date" class="form-control from-headmaster datepicker" id="id_hf-from_date1">
+                                                <input type="text" disabled name="from_date" class="form-control from-headmaster datepicker disabled" id="id_hf-from_date1">
                                             </div>
                                         </td>
                                         <td width="22%">
                                             <div class="form-group">
-                                                <input type="text" name="to_date" class="form-control to-headmaster datepicker" id="id_hf-to_date">
+                                                <input type="text" disabled name="to_date" class="form-control to-headmaster datepicker" id="id_hf-to_date">
                                             </div>
-                                        </td>
-                                        <td class="width-50">
-                                            <a href="javascript:void(0);" class="removeDoc"><span class="fa fa-trash"></span></a>
                                         </td>
                                     </tr>
                                 {% endif %}
 
                             </table>
                             <br />
-                            <div class="row">
-                                <div class="col-sm-1">
-                                    <button id="addMoreDoc" type="button" class="btn btn-info margin-top-4">
-                                        <i class="ft-plus"></i> Add Row
-                                    </button>
-                                </div>
-                                <div class="col-sm-11">
-                                    <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
-                                         class="pull-right loader" >
-                                    <input type="button" value="Update" class="btn btn-primary pull-right update-school" />
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -216,136 +196,34 @@
     {% include 'accounts/403.html' %}
     {% endif%}
 
+    {% block extra_css %}
+        <style>
+        #alertdiv{
+            font-size:15px;
+            margin-top:15px;
+            padding-top: 2px;
+            padding-bottom: 3px;
+        }
+
+        #id_PF-image{
+            margin-top: 10px;
+        }
+        .jcrop-holder{
+            border-radius: 5px;
+            border: 2px solid #ccc;
+        }
+        .help-block{
+            color:red;
+            margin-bottom: 5px;
+        }
+
+        </style>
+        {% endblock %}
+
 {% endblock %}
 {% block extra_js%}
     <script type="text/javascript">
 
-        $(function () {
-            $(".update-school").click(function () {
-                var school_headmaster = $('.school-headmaster').val();
-                var to_headmaster = $('.to-headmaster').val();
-                var from_headmaster = $('.from-headmaster').val();
-                var isValid = true;
-
-                $('#tb-doc tr td input, #tb-doc tr td select').not('#tb-doc tr:last-child td:nth-child(3) input').each(function () {
-                    if (!$(this).val()) {
-                        $(this).css("border", "1px solid red");
-                        isValid = false;
-                    }else {
-                        $(this).css("border", "1px solid #d2d6de");
-                    }
-                });
-
-
-
-                if (isValid){
-                    var startdate;
-                    var formvalid = true;
-
-                    $('#tb-doc tr td input').each(function () {
-                        dateval = $(this).val();
-                        if (!startdate) {
-                            startdate = $(this).val();
-                        }else {
-                            if(new Date(startdate) >= new Date(dateval))
-                            {
-                                $(this).css("border", "1px solid red");
-                                formvalid = false;
-                            }
-                        }
-                        startdate = dateval;
-                    });
-
-                    if (formvalid == false){
-                        return false;
-                    }
-
-                    var school = $('#tb-doc select[name^=school]').map(function(idx, elem) {
-                        return $(elem).val();
-                    }).get();
-
-                    var from_date = $('#tb-doc input[name^=from_date]').map(function(idx, elem) {
-                        return $(elem).val();
-                    }).get();
-
-                    var to_date = $('#tb-doc input[name^=to_date]').map(function(idx, elem) {
-                        return $(elem).val();
-                    }).get();
-
-                    school = school.toString();
-                    from_date = from_date.toString();
-                    to_date = to_date.toString();
-
-                    headmaster_id = {{ pk }}
-                        $.ajax({
-                            url: '/skmembers/skmember_school_details_update_for_skleader',
-                            data: {
-                                'school': school,
-                                'from_date': from_date,
-                                'to_date': to_date,
-                                'headmaster_id': headmaster_id,
-                            },
-                            beforeSend: function () {
-                                $('.update-school').hide()
-                                $('.loader').show()
-
-                            },
-                            success: function (data) {
-                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>School Information Successfully Updated.</span> </div>'
-                                $('#headmasterinfoajaxupdate').html(str);
-                                $('.loader').hide(1000)
-                                $('.update-school').show(1500)
-                            }
-                        });
-                }
-
-            });
-        });
-
-        function initDatepicker(){
-            $('.datepicker:not(".dp-inited")').datepicker({
-                'format' : 'dd-mm-yyyy'
-            }).addClass("dp-inited");
-           // $('.datepicker').datepicker('setDate', new Date());
-
-        }
-
-        function initSelect2(){
-            $(".select2").select2().addClass("s2-inited")
-        }
-
-        function addRow(){
-            var html = `<tr>
-                <td width="50%">
-                    <div class="form-group">
-                       <select name="school" placeholder="School" class="form-control school-headmaster select2">
-                            <option value="">---------</option>
-                            {% for school in school_list %}
-                                <option value="{{ school.id }}">{{ school.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </td>
-                <td width="22%">
-                    <div class="form-group">
-                        <input type="text" name="from_date" class="form-control from-headmaster datepicker" id="id_hf-from_date1">
-                    </div>
-                </td>
-                <td width="22%">
-                    <div class="form-group">
-                        <input type="text" name="to_date" class="form-control to-headmaster datepicker" id="id_hf-to_date">
-                    </div>
-                </td>
-                <td class="width-50">
-                    <a href="javascript:void(0);" class="removeDoc"><span class="fa fa-trash"></span></a>
-                </td>
-            </tr>`;
-
-            $("#tb-doc").append(html);
-            initDatepicker();
-            initSelect2();
-            $("form :input").attr("autocomplete", "off");
-        }
     </script>
 {% endblock %}
 

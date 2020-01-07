@@ -24,7 +24,8 @@ from skmembers.models import SkMemberProfile,SkmemberDetails
 from datetime import datetime
 from .resources import SkmemberResource
 from django.core.exceptions import ObjectDoesNotExist
-
+from resources import strings as common_strings
+from . import strings as sk_strings
 
 @admin_login_required
 def skmember_profile_view(request):
@@ -65,6 +66,8 @@ def skmember_profile_view(request):
     return render(request, 'skmembers/skmember_profile_add.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'sk_strings':sk_strings,
+        'common_strings': common_strings
     })
 
 @headmaster_mentor_skleader_login_required
@@ -111,6 +114,8 @@ def skmember_profile_view_skleader(request):
     return render(request, 'skmembers/skmember_profile_add_for_skleader.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'sk_strings':sk_strings,
+        'common_strings': common_strings
     })
 
 @headmaster_mentor_skleader_login_required
@@ -152,7 +157,9 @@ def skmember_update_for_skleader(request, pk):
         'skmember_details': skmember_details,
         'school_list': school_list,
         'headmaster': headmaster,
-        'skleader' : skleader
+        'skleader' : skleader,
+        'sk_strings':sk_strings,
+        'common_strings': common_strings
     })
 
 @method_decorator(admin_login_required, name='dispatch')
@@ -162,12 +169,16 @@ class SkmemberList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,])
         return queryset
+
     def get_context_data(self, **kwargs):
         context = super(SkmemberList, self).get_context_data(**kwargs)
         try:
             context['school_name'] =SkmemberDetails.objects.latest('from_date')
         except SkmemberDetails.DoesNotExist:
             context['current_schoxol_name'] = None
+
+        context['common_strings'] = common_strings
+        context['sk_strings'] = sk_strings
 
         return context
 
@@ -176,6 +187,7 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.SkMemberProfile
     template_name = 'skmembers/skmemberprofile_list_for_skleader.html'
+    paginate_by = 10
 
 
     def get_queryset(self):
@@ -187,6 +199,32 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
         queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,],school_id=objSkLeader.school_id)
 
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(SkmemberListforSkLeader, self).get_context_data(**kwargs)
+        loggedinuser = self.request.user.id
+        if self.request.user.is_authenticated and self.request.user.user_type == 5:
+            objSkLeader = SkLeaderProfile.objects.get(user_id=loggedinuser)
+        elif self.request.user.is_authenticated and self.request.user.user_type == 2 or self.request.user.user_type == 3 or self.request.user.user_type == 4:
+            objSkLeader = HeadmasterProfile.objects.get(user_id=loggedinuser)
+        skmembers = SkMemberProfile.objects.filter(user__user_type__in=[6, ], school_id=objSkLeader.school_id)
+        paginator = Paginator(skmembers, self.paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            skmemberprofile_list = paginator.page(page)
+        except PageNotAnInteger:
+            skmemberprofile_list = paginator.page(1)
+        except EmptyPage:
+            skmemberprofile_list = paginator.page(paginator.num_pages)
+
+        context['skmemberprofile_list'] = skmemberprofile_list
+        context['common_strings'] = common_strings
+        context['sk_strings'] = sk_strings
+
+        return context
+
+
 
 @admin_login_required
 def skmember_list(request,export='null'):
@@ -254,6 +292,8 @@ def skmember_update(request, pk):
         'pk': pk,
         'skmember_details': skmember_details,
         'school_list': school_list,
+        'common_strings': common_strings,
+        'sk_strings': sk_strings
     })
 
 
@@ -276,6 +316,8 @@ class SkMemberDetail(LoginRequiredMixin, generic.DetailView):
         except SkLeaderProfile.DoesNotExist :
             context['skleader'] = None
 
+        context['common_strings'] = common_strings
+        context['sk_strings'] = sk_strings
 
         return context
 
@@ -380,3 +422,20 @@ def skmember_search_list(request, export='null'):
         response = HttpResponse(dataset.csv, content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="skmember_list.csv"'
         return response
+
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    skmembers = SkMemberProfile.objects.all()
+    paginator = Paginator(skmembers, 10)
+    page = request.GET.get('page')
+    try:
+        skmemberprofile_list = paginator.page(page)
+    except PageNotAnInteger:
+        skmemberprofile_list = paginator.page(1)
+    except EmptyPage:
+        skmemberprofile_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('skmembers/partial_skmember_for_skleader_list.html', {
+        'skmemberprofile_list': skmemberprofile_list, 'sk_strings':sk_strings, 'common_strings':common_strings
+    })
+    return JsonResponse(data)

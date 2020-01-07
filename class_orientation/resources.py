@@ -7,10 +7,10 @@ from division.models import Division
 from topics.models import Topics
 from unions.models import Union
 from upazillas.models import Upazilla
-from .models import School, ClassOrientation
+from .models import School, PeerEducation
 
 
-class ClassOrientationResource(resources.ModelResource):
+class PeerEducationResource(resources.ModelResource):
 
     school = fields.Field(
         column_name='School',
@@ -32,13 +32,13 @@ class ClassOrientationResource(resources.ModelResource):
             attribute='topic', widget=ManyToManyWidget(Topics, ',', 'name'))
     place = fields.Field(column_name='Place', attribute='get_place_display')
 
-    def dehydrate_created_date(self, ClassOrientation):
-        date_string = str(ClassOrientation.created_date)
+    def dehydrate_created_date(self, PeerEducation):
+        date_string = str(PeerEducation.created_date)
         if date_string :
             return datetime.strptime(date_string, '%Y-%m-%d').strftime('%d-%m-%Y')
 
 
     class Meta:
-        model = ClassOrientation
+        model = PeerEducation
 
         fields = ('created_date', 'place', 'school' 'topic')

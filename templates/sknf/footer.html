@@ -47,7 +47,7 @@
     $(document).ready(function () {
         $('.sidebar-menu').tree();
         initDatepicker();
-        initSelect2(); })
+    })
 </script>
 <script>
     function readURL(input) {
@@ -79,18 +79,6 @@
             }
         });
 
-        $(function(){
-            $('#addMoreDoc').on('click', addRow);
-            $(document).on('click', '.removeDoc', function() {
-                var trIndex = $(this).closest("tr").index();
-                if(trIndex>1) {
-                    $(this).closest("tr").remove();
-                } else {
-                    alert("Sorry!! Can't remove first row!");
-                }
-            });
-        });
-
         var copydate = $('.copydate').val();
         $('.copydate').on('change', function() {
             var data = this.value;
@@ -100,6 +88,18 @@
             $('.pastedate').val(datestring);
         });
     });
+
+    function rowAddRemove(){
+        $('#addMoreDoc').on('click', addRow);
+        $(document).on('click', '.removeDoc', function() {
+            var trIndex = $(this).closest("tr").index();
+            if(trIndex>1) {
+                $(this).closest("tr").remove();
+            } else {
+                alert("Sorry!! Can't remove first row!");
+            }
+        });
+    };
 
     $(".js-genarate-password").click(function () {
         $("#modal-password-generator").modal("show");
@@ -246,6 +246,7 @@
     function pagination(id, url, name, division, district, tableId) {
         $(id).on('click', '.paginator', function (e) {
             e.preventDefault();
+            $("tableId").DataTable().destroy();
             var addressValue = $(this).attr("href");
             $.ajax({
                 type: 'get',
@@ -296,10 +297,37 @@
             });
         });
     }
+    function paginator(id, url, tableId, opts) {
+        $.ajax({
+            type: 'get',
+            url: url,
+            data: {
+                'name_contains': opts['name'],
+                'school_contains': opts['school'],
+                'division_contains': opts['division'],
+                'district_contains': opts['district'],
+                'upazila_contains': opts['upazila'],
+                'union_contains': opts['union'],
+                'fromdate_contains': opts['form_date'],
+                'todate_contains': opts['to_date'],
+                'topics_contains': opts['topic']
+            },
+            success: function (data) {
+                $(id).html(data.html_list);
+                $(tableId).DataTable({
+                    'paging'      : false,
+                    'lengthChange': false,
+                    'searching'   : false,
+                    'ordering'    : false,
+                    'info'        : false,
+                    'autoWidth'   : false,
+                    'destroy'     : true
+                });
+            }
+        });
+    }
     // settings menubar
     $(function () {
-        $("#settings").addClass("menu-open");
-        $("#settings .treeview-menu").css("display", "block");
         //for Disabling cache
         $("form :input").attr("autocomplete", "off");
         //for Disabling cache

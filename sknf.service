@@ -4,10 +4,10 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/home/ubuntu/projectsknf/run-aws.sh
+ExecStart=/home/ubuntu/projectsknf/start-aws.sh
 Restart=on-failure
 RestartSec=10
-KillMode=process
+KillMode=control-group
 
 [Install]
 WantedBy=multi-user.target

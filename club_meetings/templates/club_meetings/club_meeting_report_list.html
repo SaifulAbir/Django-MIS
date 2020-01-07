@@ -2,9 +2,9 @@
 {% block body_block %}
 
 <!-- Main content -->
-<section class="content-header" style="padding-top:60px">
+<section class="content-header">
     <h1>
-        Club Meeting List
+        {{club_meeting_strings.CLUB_MEETING_LIST_TITLE}}
     </h1>
 </section>
 <section class="content">
@@ -13,24 +13,51 @@
     <form method="GET" class="search-form-club-meeting">
         <div class="box">
             <div class="box-header">
-                <div class="main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <div class="main-box card-block search-box">
 
                     <div class="row">
-                        <div class="form-group col-sm-4">
-                            <strong>School</strong>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_FROM_DATE }}</strong>
+                            <input class="form-control typehead tt-query datepicker" type="search" name="fromdate_contains" autocomplete="off" id="from-date" />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_TO_DATE }}</strong>
+                            <input class="form-control typehead tt-query datepicker" type="search" name="todate_contains" autocomplete="off" id="to-date"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_SCHOOL}}</strong>
                             <input class="form-control typehead tt-query" type="search" name="school_contains" autocomplete="off" id="school-name" />
                         </div>
-                        <div class="form-group col-sm-4">
-                            <strong>Division</strong>
+                        <div class="form-group col-sm-3">
+                            <strong>{{club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_DIVISION}}</strong>
                             <input class="form-control typehead tt-query" type="search" name="division_contains" autocomplete="off" id="division-name"/>
                         </div>
-                        <div class="form-group col-sm-4">
-                            <strong>District</strong>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <strong>{{club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_DIVISION}}</strong>
                             <input class="form-control typehead tt-query" type="search" name="district_contains" autocomplete="off" id="district-name"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_UPAZILA }}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="upazila_contains" autocomplete="off" id="upazila-name"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_UNION }}</strong>
+                            <input class="form-control typehead tt-query" type="search" name="union_contains" autocomplete="off" id="union-name"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_TOPIC }}</strong>
+                            <select class="form-control" type="search" name="topics_contains"  id="topics-name">
+                                <option value="">-----</option>
+                                {% for topic in topics %}
+                                <option>{{ topic.name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary search-club-meeting">Search</button>
+                        <button type="submit" class="btn btn-primary search-club-meeting">{{ common_strings.SEARCH_BUTTON}}</button>
                     </div>
                     <div class="clearfix"></div>
 
@@ -39,24 +66,24 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-                <button type="submit" class="btn btn-primary export-club-meeting-report pull-right">Export CSV</button>
+                <button type="submit" class="btn btn-primary export-club-meeting-report pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
                 <table   id="example1" class="club-meeting-search-table table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="col-sm-1">Date</th>
-                        <th class="col-sm-2">Class Room</th>
-                        <th class="col-sm-3">School</th>
-                        <th class="col-sm-2">Topics</th>
-                        <th class="col-sm-2">Division</th>
-                        <th class="col-sm-2">District</th>
+                        <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_DATE_TEXT}}</th>
+                        <th class="col-sm-3">{{club_meeting_strings.CLUB_MEETING_TOPICS_TEXT}}</th>
+                        <th class="col-sm-2">{{club_meeting_strings.CLUB_MEETING_SCHOOL_TEXT}}</th>
+                        <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_ATTENDANCE_TEXT}}</th>
+                        <th class="col-sm-2">{{club_meeting_strings.CLUB_MEETING_DIVISION_TEXT}}</th>
+                        <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_DISTRICT_TEXT}}</th>
+                        <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_UPAZILA_TEXT}}</th>
+                        <th class="text-center col-sm-1">{{ common_strings.LIST_ACTION_SINGULAR_TEXT }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for club_meeting in clubmeetings_list %}
                     <tr>
-                        <td>{{club_meeting.date}}</td>
-                        <td>{{ club_meeting.class_room }}</td>
-                        <td>{{ club_meeting.school }}</td>
+                        <td>{{club_meeting.date|date:common_strings.DATE_FORMAT}}</td>
                         <td>
                             {% for topic in club_meeting.topics.all %}
                             {% if forloop.last %}
@@ -66,8 +93,19 @@
                             {% endif %}
                             {% endfor %}
                         </td>
+                        <td>{{ club_meeting.school }}</td>
+                        <td>{{club_meeting.attendance.all.count}}</td>
                         <td>{{ club_meeting.school.division }}</td>
                         <td>{{ club_meeting.school.district }}</td>
+                        <td>{{ club_meeting.school.upazilla }}</td>
+                        <td align="center">
+                            <a type="button"
+                               class=""
+                               href="{% url 'club_meetings:club_meeting_detail' club_meeting.pk %}">
+                                <span class="fa fa-eye"></span>
+
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
 
@@ -76,8 +114,13 @@
 
                     </tfoot>
                 </table>
-                <p class="table-information">Showing {{ clubmeetings_list.start_index }} to {{ clubmeetings_list.end_index }} of {{ clubmeetings_list.paginator.count }} entries</p>
-                <ul class="pagination" style="float: right">
+                {% if clubmeetings_list %}
+                <p class="table-information">{% format_values common_strings.PAGINATION_INFO clubmeetings_list.start_index  clubmeetings_list.end_index clubmeetings_list.paginator.count %}
+                </p>
+                {% else %}
+                <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+                {% endif %}
+                <ul class="pagination">
 
                     {% if clubmeetings_list.has_previous %}
                     <li><a class="paginator" href="?page={{ clubmeetings_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
@@ -98,7 +141,7 @@
                     {% endfor %}
 
                     {% if clubmeetings_list.paginator.num_pages > clubmeetings_list.number|add:'4' %}
-                    <li><a href="?page={{ clubmeetings_list.number|add:'5' }}">&hellip;</a></li>
+                    <li><a class="paginator" href="?page={{ clubmeetings_list.number|add:'5' }}">&hellip;</a></li>
                     {% endif %}
 
                     {% if clubmeetings_list.has_next %}
@@ -113,6 +156,16 @@
     </form>
     <!-- /.content -->
 </section>
+{% block extra_css %}
+<style>
+    .search-box{
+        border: 1px solid rgb(204, 204, 204);
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding-bottom: 0px;
+    }
+</style>
+{% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
@@ -120,7 +173,7 @@
         $('#reports, .club-meeting-menu').addClass('active');
         $("#reports").addClass("menu-open");
         $("#reports .treeview-menu").css("display", "block");
-        var name, division, district;
+        var school, division, district, upazila, union, fromdate, todate, topic;
         $('.club-meeting-search-table').dataTable({
             'lengthChange': false,
             'searching'   : false,
@@ -131,17 +184,29 @@
         $('.search-club-meeting').on('click', function (event) {
             event.preventDefault();
             $(".club-meeting-search-table").DataTable().destroy();
-            name_contains = $('#school-name').val();
+            fromdate_contains = $('#from-date').val();
+            todate_contains = $('#to-date').val();
+            school_contains = $('#school-name').val();
             division_contains = $('#division-name').val();
             district_contains = $('#district-name').val();
-            name = name_contains, division = division_contains, district = district_contains;
+            upazila_contains = $('#upazila-name').val();
+            union_contains = $('#union-name').val();
+            topics_contains = $('#topics-name').val();
+            school = school_contains, division = division_contains, district = district_contains,
+                upazila=upazila_contains,union=union_contains,topic=topics_contains,
+                fromdate=fromdate_contains,todate=todate_contains;
             $.ajax({
                 type: 'GET',
                 url: '/club_meetings/club_meeting_search_list/',
                 data: {
-                    'name_contains': name_contains,
+                    'school_contains': school_contains,
                     'division_contains': division_contains,
                     'district_contains': district_contains,
+                    'fromdate_contains': fromdate_contains,
+                    'todate_contains':todate_contains,
+                    'upazila_contains':upazila_contains,
+                    'union_contains':union_contains,
+                    'topics_contains':topics_contains,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 success: function (data) {
@@ -159,10 +224,19 @@
                 }
             });
         });
-        pagination(".box-body", '/club_meetings/club_meeting_search_list/', name, division, district, '.box-body .club-meeting-search-table');
+        // pagination(".box-body", '/club_meetings/club_meeting_search_list/', name, division, district, '.box-body .club-meeting-search-table');
+        $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/club_meetings/club_meeting_search_list/'+addressValue;
+            paginator(".box-body", url, '.box-body .club-meeting-search-table', {'school':school, 'division':division,
+            'district':district, 'upazila':upazila, 'union':union, 'form_date':fromdate, 'to_date':todate, 'topic':topic});
+        });
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        autoSuggesion('/load_previous_upazillas/', "input[name='upazila_contains']");
+        autoSuggesion('/load_previous_unions/', "input[name='union_contains']");
         // for club meeting search export
         $(".box").on('click', '.export-club-meeting-report', function() {
             $('.search-form-club-meeting').prop('action', '/club_meetings/club_meeting_search_list/export')

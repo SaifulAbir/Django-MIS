@@ -7,41 +7,30 @@
 <section class="content">
     <div class="box">
         <!-- Main content -->
-        <div class="box-body table-responsive">
-            <div class="box-header">
-                <h3 class="box-title"> </h3>
+        <div class="box-header">
 
-                <span id = "alert_placeholder"></span>
-                <button type="button"
-                        class="btn btn-primary pull-right js-create-division"
-                        data-url="{% url 'division:create_division' %}">
-                    <span class="fa fa-plus"></span>
-                    {{division_strings.NEW_DIVISION_TITLE_TEXT}}
-                </button>
-            </div>
-            {% include 'division/_modal.html' %}
-            <!-- /.box-header -->
-            <div class="box-body table-responsive division-container">
-                {% include 'division/partial_division_list.html' %}
-            </div>
+            <span id = "alert_placeholder"></span>
+            <button type="button"
+                    class="btn btn-primary pull-right js-create-division"
+                    data-url="{% url 'division:create_division' %}">
+                <span class="fa fa-plus"></span>
+                {{division_strings.NEW_DIVISION_TITLE_TEXT}}
+            </button>
+        </div>
+        {% include 'division/_modal.html' %}
+        <!-- /.box-header -->
+        <div class="box-body table-responsive division-container">
+            {% include 'division/partial_division_list.html' %}
         </div>
     </div>
     <!-- /.content -->
 </section>
-{% block extra_css %}
-<style type="text/css">
-    .content-header{
-        padding-top:60px;
-    }
-    .box-title{
-        display: inline-block;
-    }
-</style>
-{% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
     $(function () {
+        $("#settings").addClass("menu-open");
+        $("#settings .treeview-menu").css("display", "block");
         $('#settings, .division-menu').addClass('active');
         var loadForm = function () {
             var btn = $(this);

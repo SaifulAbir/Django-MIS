@@ -2,32 +2,32 @@ from django import forms
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from accounts.models import User
-from eduplus_activity.models import EduPlusActivity, EduplusTopics
+from eduplus_activity.models import EduPlusActivity, Method
 from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
-from resources import strings
+from . import strings as edu_strings
 from topics.models import Topics
 
 
 class EduPlusActivityForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     presence_skleader = forms.BooleanField(widget=forms.CheckboxInput(attrs={'checked': True}))
-    description = forms.CharField(error_messages={'required': strings.DESCRIPTION_REQUIRED_ERROR}, widget=forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}))
+    description = forms.CharField(error_messages={'required': edu_strings.DESCRIPTION_REQUIRED_ERROR}, widget=forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}))
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
-        required=True, error_messages={'required': 'Select at least one topic.'})
+        required=True, error_messages={'required': edu_strings.TOPIC_REQUIRED_ERROR_NOTIFICATION})
     method = forms.ModelChoiceField(
         widget=forms.Select(attrs={'width': '5000px'}),
-        queryset = EduplusTopics.objects.all(),
-        required=True, error_messages={'required': 'Select  method.'}
+        queryset = Method.objects.all(),
+        required=True, error_messages={'required': edu_strings.METHOD_REQUIRED_ERROR_VALIDATION}
     )
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(attrs={'checked': 'checked'}),
         queryset=None,
-        required=True, error_messages={'required': 'Member attendance is required.'})
+        required=True, error_messages={'required': edu_strings.ATTENDANCE_REQUIRED_ERROR})
     date = forms.DateField(label='dd-mm-yyyy',widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',), error_messages={'required': 'Date is required.'})
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
@@ -64,7 +64,7 @@ class EditEduPlusActivityForm(forms.ModelForm):
         queryset=Topics.objects.all(),
         required=False)
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    description = forms.CharField(error_messages={'required': 'Description is required.'},
+    description = forms.CharField(error_messages={'required': edu_strings.DESCRIPTION_REQUIRED_ERROR},
                                   widget=forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}))
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
@@ -106,9 +106,9 @@ class EditEduPlusActivityForm(forms.ModelForm):
 #         model= MeetingTopics
 #         fields=["topics"]
 
-class EduplusTopicsForm(forms.ModelForm):
+class MethodForm(forms.ModelForm):
     class Meta:
-        model = EduplusTopics
+        model = Method
         fields = ['name']
         widgets = {
             'name': forms.TextInput(attrs={'style': ''}),

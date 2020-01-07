@@ -1,13 +1,14 @@
 from django.urls import path
 from . import views
 
-app_name = 'class_orientation'
+app_name = 'peer_education'
 
 urlpatterns = [
-    path('add/',views.class_orientation_add, name='create_class_orientation'),
-    path('class_orientation_list/',views.ClubOrientationsList.as_view(), name='class_orientation_list'),
-    path('class_orientation_report/', views.class_orientation_report_list, name='class_orientation_report_list'),
-    path('update/<int:pk>/', views.class_orientation_update, name='class_orientation_update'),
-    path('class_orientation_search_list/', views.class_orientation_search_list, name = 'class_orientation_search_list'),
-    path('class_orientation_search_list/<export>/', views.class_orientation_search_list, name = 'class_orientation_search_list_export'),
+    path('add/',views.peer_education_add, name='create_peer_education'),
+    path('peer_education_list/',views.PeerEducationList.as_view(), name='peer_education_list'),
+    path('peer_education_report/', views.peer_education_report_list, name='peer_education_report_list'),
+    path('update/<int:pk>/', views.peer_education_update, name='peer_education_update'),
+    path('pagination/', views.pagination, name = 'pagination'),
+    path('peer_education_search_list/', views.peer_education_search_list, name = 'peer_education_search_list'),
+    path('peer_education_search_list/<export>/', views.peer_education_search_list, name = 'peer_education_search_list_export'),
 ]
