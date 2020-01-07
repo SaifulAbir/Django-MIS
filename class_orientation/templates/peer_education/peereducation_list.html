@@ -12,6 +12,7 @@
     <!-- Main content -->
     <div class="box">
         <div class="box-header">
+            {% include 'peer_education/_modal.html' %}
                 <span id = "alert_placeholder">
                     {% if messages %}
                     <div id="alertdiv" class="alert alert-success-customized">
@@ -31,12 +32,12 @@
             </button>
         </div>
         <!-- /.box-header -->
-        <div class="box-body table-responsive">
+        <div class="box-body table-responsive peer-education-box">
             {% include 'peer_education/partial_peer_education_list.html' %}
         </div>
 
     </div>
-    {% include 'peer_education/_modal.html' %}
+
     <!-- /.content -->
 </section>
     {% block extra_css %}
@@ -91,8 +92,17 @@
                             showAlert("Peer Education Updated!", "alert-success-customized")
                         }
 
-                        $(".box-body .table-responsive").html(data.html_peer_education_list);  // <-- Replace the table body
+                        $(".peer-education-box").html(data.html_peer_education_list);  // <-- Replace the table body
                         $("#modal-peer-education").modal("hide");  // <-- Close the modal
+                        $('.peer-education-table').DataTable({
+                            'paging'      : false,
+                            'lengthChange': false,
+                            'searching'   : false,
+                            'ordering'    : false,
+                            'info'        : false,
+                            'autoWidth'   : false,
+                            'destroy'     : true
+                        });
                     }
                     else {
                         $("#modal-peer-education .modal-content").html(data.html_form);
@@ -119,11 +129,11 @@
 
 
 
-        $('.name-field').validate({
-            rules : {
-                name : { greaterThanZero : true }
-            }
-        });
+        // $('.name-field').validate({
+        //     rules : {
+        //         name : { greaterThanZero : true }
+        //     }
+        // });
 
     });
 
