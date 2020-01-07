@@ -15,7 +15,7 @@
     <tbody>
     {% for club_meeting in clubmeetings_list %}
     <tr>
-        <td>{{club_meeting.date}}</td>
+        <td>{{club_meeting.date|date:common_strings.DATE_FORMAT}}</td>
         <td>
             {% for topic in club_meeting.topics.all %}
             {% if forloop.last %}
