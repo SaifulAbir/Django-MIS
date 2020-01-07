@@ -51,6 +51,21 @@ $(function () {
       },
       success: function (data) {
         $("#modal-upazilla .modal-content").html(data.html_form);
+        var divisionId = $("#id_division").val();
+            var districtId = $("#id_district").val();
+            if (divisionId || districtId) {
+                $.ajax({
+                    url: '/upazilla/ajax/load-districts/',
+                    data: {
+                        'division': divisionId,
+                        'districtId': districtId
+                    },
+                    success: function (data) {
+                        $("#id_district").html(data);
+
+                    }
+                });
+            }
       }
     });
   };
@@ -67,13 +82,13 @@ $(function () {
         if (data.form_is_valid) {
             $('#upazillaSubmit').prop('disabled', true);
           if(formClass=="js-upazilla-create-form"){
-              showAlert("Upazilla Created!", "alert-success-customized")
+              showAlert("Upazila Created!", "alert-success-customized")
            }
            if(formClass=="js-upazilla-update-form"){
-              showAlert("Upazilla Updated!", "alert-success-customized")
+              showAlert("Upazila Updated!", "alert-success-customized")
            }
            if(formClass=="js-upazilla-delete-form"){
-              showAlert("Upazilla Deleted!", "alert-danger-customized")
+              showAlert("Upazila Deleted!", "alert-danger-customized")
            }
           $(".upazila-container").html(data.html_list);
             $('.upazilla-table').DataTable({

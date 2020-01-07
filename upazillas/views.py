@@ -110,8 +110,12 @@ def upazilla_delete(request, pk):
 
 def load_districts(request):
     division_id = request.GET.get('division')
+    districtId = request.GET.get('districtId')
+    if districtId:
+        districtId = int(districtId)
     districts = District.objects.filter(division_id=division_id).order_by('name')
-    return render(request, 'upazillas/district_dropdown_list_options.html', {'districts': districts})
+    return render(request, 'upazillas/district_dropdown_list_options.html',
+                  {'districts': districts, 'districtId': districtId})
 
 def pagination(request):
     data = dict()
