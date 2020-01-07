@@ -183,17 +183,13 @@ def school_delete(request, pk):
 
 def load_districts(request):
     division_id = request.GET.get('division')
-    districtId = request.GET.get('districtId')
-    districtId = int(districtId)
     districts = District.objects.filter(division_id=division_id).order_by('name')
-    return render(request, 'school/district_dropdown_list_options.html', {'districts': districts, 'districtId': districtId, })
+    return render(request, 'school/district_dropdown_list_options.html', {'districts': districts })
 
 def load_upazillas(request):
     district_id = request.GET.get('district')
-    upazilaId = request.GET.get('upazilaId')
-    upazilaId = int(upazilaId)
     upazillas = Upazilla.objects.filter(district_id=district_id).order_by('name')
-    return render(request, 'school/upazilla_dropdown_list_options.html', {'upazillas': upazillas, 'upazilaId':upazilaId})
+    return render(request, 'school/upazilla_dropdown_list_options.html', {'upazillas': upazillas})
 
 def load_unions(request):
     upazilla_id = request.GET.get('upazilla')
