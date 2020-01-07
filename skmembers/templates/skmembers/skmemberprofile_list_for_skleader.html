@@ -102,3 +102,16 @@
     <!-- /.content -->
 </section>
 {% endblock %}
+{% block extra_js %}
+<script type="text/javascript">
+    $(function () {
+        $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/skmembers/pagination/'+addressValue;
+            paginator(".table-responsive", url, '.skmember-table', {'school':'', 'division':'',
+                'district':'', 'upazila':'', 'union':'', 'form_date':'', 'to_date':'', 'topic':''});
+        });
+    });
+</script>
+{% endblock %}
