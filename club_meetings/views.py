@@ -1,7 +1,7 @@
 import base64
 from datetime import datetime
 import uuid
-
+from resources import strings as common_strings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
@@ -84,14 +84,28 @@ def club_meeting_add(request):
 class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     model = models.ClubMeetings
+    paginate_by = 10
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super(ClubMeetingsList, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated and self.request.user.user_type == 5:
             profile = SkLeaderProfile.objects.get(user=self.request.user)
         elif self.request.user.is_authenticated and self.request.user.user_type == 2 or self.request.user.user_type == 3 or self.request.user.user_type == 4:
             profile = HeadmasterProfile.objects.get(user=self.request.user)
-        queryset = ClubMeetings.objects.filter(school=profile.school)
-        return queryset
+        clubmeetings = ClubMeetings.objects.filter(school=profile.school)
+        paginator = Paginator(clubmeetings, self.paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            clubmeetings_list = paginator.page(page)
+        except PageNotAnInteger:
+            clubmeetings_list = paginator.page(1)
+        except EmptyPage:
+            clubmeetings_list = paginator.page(paginator.num_pages)
+
+        context['clubmeetings_list'] = clubmeetings_list
+        context['common_strings'] = common_strings
+        return context
 
 @headmaster_mentor_skleader_login_required
 def club_meeting_update(request, pk):
@@ -218,5 +232,24 @@ def club_meeting_search_list(request, export='null'):
         return response
 
 
-
+def pagination(request):
+    data = dict()
+    data['form_is_valid'] = True  # This is just to play along with the existing code
+    if request.user.is_authenticated and request.user.user_type == 5:
+        profile = SkLeaderProfile.objects.get(user=request.user)
+    elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
+        profile = HeadmasterProfile.objects.get(user=request.user)
+    clubmeetings = ClubMeetings.objects.filter(school=profile.school)
+    paginator = Paginator(clubmeetings, 10)
+    page = request.GET.get('page')
+    try:
+        clubmeetings_list = paginator.page(page)
+    except PageNotAnInteger:
+        clubmeetings_list = paginator.page(1)
+    except EmptyPage:
+        clubmeetings_list = paginator.page(paginator.num_pages)
+    data['html_list'] = render_to_string('club_meetings/partial_club_meeting_list.html', {
+        'clubmeetings_list': clubmeetings_list, 'common_strings':common_strings
+    })
+    return JsonResponse(data)
 

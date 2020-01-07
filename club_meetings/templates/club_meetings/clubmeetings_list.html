@@ -1,17 +1,17 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 
-    <!-- Main content -->
+<!-- Main content -->
 <section class="content-header" style="padding-top:60px">
     <h1>
         Club Meetings
     </h1>
 </section>
-    <section class="content">
+<section class="content">
 
-        <!-- Main content -->
-        <div class="box">
-            <div class="box-header">
+    <!-- Main content -->
+    <div class="box">
+        <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
                     <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
@@ -23,52 +23,100 @@
                     </div>
                     {% endif %}
                 </span>
-                <a type="button"
-                   class="btn btn-primary pull-right"
-                   href="{% url 'club_meetings:club_meeting_add' %}">
-                    <span class="fa fa-plus"></span>
-                    New Meeting
-                </a>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive">
-                <table   id="example1" class=" data-table table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th class="col-sm-6">Date</th>
-                        <th class="col-sm-5">Class Room</th>
-                        <th class="col-sm-1">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for club_meeting in clubmeetings_list %}
-                        <tr>
-                            <td>{{club_meeting.date}}</td>
-                            <td>{{ club_meeting.class_room }}</td>
-                            <td>
-                                <a type="button"
-                                   class=""
-                                   href="{% url 'club_meetings:club_meeting_detail' club_meeting.pk %}">
-                                    <span class="fa fa-eye"></span>
-
-                                </a>
-                                <a type="button"
-                                   class=""
-                                   href="{% url 'club_meetings:club_meeting_update' club_meeting.pk %}">
-                                    <span class="fa fa-edit"></span>
-
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-
-                    </tbody>
-                    <tfoot>
-
-                    </tfoot>
-                </table>
-            </div>
+            <a type="button"
+               class="btn btn-primary pull-right"
+               href="{% url 'club_meetings:club_meeting_add' %}">
+                <span class="fa fa-plus"></span>
+                New Meeting
+            </a>
         </div>
-        <!-- /.content -->
-    </section>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+            <table   id="example1" class="club-meeting-search-table data-table table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class="col-sm-6">Date</th>
+                    <th class="col-sm-5">Class Room</th>
+                    <th class="col-sm-1">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for club_meeting in clubmeetings_list %}
+                <tr>
+                    <td>{{club_meeting.date}}</td>
+                    <td>{{ club_meeting.class_room }}</td>
+                    <td>
+                        <a type="button"
+                           class=""
+                           href="{% url 'club_meetings:club_meeting_detail' club_meeting.pk %}">
+                            <span class="fa fa-eye"></span>
+
+                        </a>
+                        <a type="button"
+                           class=""
+                           href="{% url 'club_meetings:club_meeting_update' club_meeting.pk %}">
+                            <span class="fa fa-edit"></span>
+
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+            {% if clubmeetings_list %}
+            <p class="table-information">{% format_values common_strings.PAGINATION_INFO clubmeetings_list.start_index  clubmeetings_list.end_index clubmeetings_list.paginator.count %}
+            </p>
+            {% else %}
+            <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+            {% endif %}
+            <ul class="pagination">
+
+                {% if clubmeetings_list.has_previous %}
+                <li><a class="paginator" href="?page={{ clubmeetings_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+                {% else %}
+                <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+                {% endif %}
+
+                {% if clubmeetings_list.number|add:'-4' > 1 %}
+                <li><a class="paginator" href="?page={{ clubmeetings_list.number|add:'-5' }}">&hellip;</a></li>
+                {% endif %}
+
+                {% for i in clubmeetings_list.paginator.page_range %}
+                {% if clubmeetings_list.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% elif i > clubmeetings_list.number|add:'-5' and i < clubmeetings_list.number|add:'5' %}
+                <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if clubmeetings_list.paginator.num_pages > clubmeetings_list.number|add:'4' %}
+                <li><a href="?page={{ clubmeetings_list.number|add:'5' }}">&hellip;</a></li>
+                {% endif %}
+
+                {% if clubmeetings_list.has_next %}
+                <li><a class="paginator" href="?page={{ clubmeetings_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+                {% else %}
+                <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <!-- /.content -->
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/club_meetings/pagination/'+addressValue;
+            paginator(".table-responsive", url, '.club-meeting-search-table', {'school':'', 'division':'',
+            'district':'', 'upazila':'', 'union':'', 'form_date':'', 'to_date':'', 'topic':''});
+        });
+</script>
 {% endblock %}

@@ -1,20 +1,20 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
 
-    <!-- Main content -->
-<section class="content-header" style="padding-top:60px">
+<!-- Main content -->
+<section class="content-header">
     <h1>
-        Peer Education
+        {{ peer_education_strings.PEER_EDUCATION_LIST_TITLE }}
     </h1>
 </section>
-    <section class="content">
+<section class="content">
 
-        <!-- Main content -->
-        <div class="box">
-            <div class="box-header">
+    <!-- Main content -->
+    <div class="box">
+        <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
-                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                    <div id="alertdiv" class="alert alert-success-customized">
                         <span>
                             {% for message in messages %}
                             {{ message }}
@@ -23,110 +23,109 @@
                     </div>
                     {% endif %}
                 </span>
-                <button type="button"
-                class="btn btn-primary pull-right js-peer-education-create"
-                data-url="{% url 'peer_education:create_peer_education' %}">
-            <span class="fa fa-plus"></span>
-            New Peer Education
-        </button>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive">
-                <table   id="example1" class=" peer-education-table data-table table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th class="col-sm-3">Date</th>
-                        <th class="col-sm-2">Place</th>
-                        <th class="col-sm-2">Topic</th>
-                        <th class="col-sm-1">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% include 'peer_education/partial_peer_education_list.html' %}
-
-                    </tbody>
-                    <tfoot>
-
-                    </tfoot>
-                </table>
-                {% include 'peer_education/_modal.html' %}
-            </div>
+            <button type="button"
+                    class="btn btn-primary pull-right js-peer-education-create"
+                    data-url="{% url 'peer_education:create_peer_education' %}">
+                <span class="fa fa-plus"></span>
+                {{ peer_education_strings.NEW_PEER_EDUCATION_BUTTON }}
+            </button>
         </div>
-        <!-- /.content -->
-    </section>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+            {% include 'peer_education/partial_peer_education_list.html' %}
+        </div>
+
+    </div>
+    {% include 'peer_education/_modal.html' %}
+    <!-- /.content -->
+</section>
+    {% block extra_css %}
+        <style>
+        #alertdiv{
+            font-size:20px;
+            margin-top:15px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
-$(function () {
+    $(function () {
+        $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/peer_education/pagination/'+addressValue;
+            paginator(".table-responsive", url, '.peer-education-table', {'school':'', 'division':'',
+            'district':'', 'upazila':'', 'union':'', 'form_date':'', 'to_date':'', 'topic':''});
+        });
+        var loadForm = function () {
+            var btn = $(this);
+            $.ajax({
+                url: btn.attr("data-url"),
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#modal-peer-education").modal("show");
+                },
+                success: function (data) {
+                    $("#modal-peer-education .modal-content").html(data.html_form);
+                }
+            });
+        };
 
-    var loadForm = function () {
-        var btn = $(this);
-        $.ajax({
-            url: btn.attr("data-url"),
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function () {
-                $("#modal-peer-education").modal("show");
-            },
-            success: function (data) {
-                $("#modal-peer-education .modal-content").html(data.html_form);
+        var saveForm = function () {
+            var form = $(this);
+            var formClass = form.attr("class")
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: form.attr("method"),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.form_is_valid) {
+                        $('#peerSubmit').prop('disabled', true);
+                        if(formClass=="js-peer-education-create-form"){
+                            showAlert("Peer Education Created!", "alert-success-customized")
+                        }
+                        if(formClass=="js-peer-education-update-form"){
+                            showAlert("Peer Education Updated!", "alert-success-customized")
+                        }
+
+                        $(".box-body .table-responsive").html(data.html_peer_education_list);  // <-- Replace the table body
+                        $("#modal-peer-education").modal("hide");  // <-- Close the modal
+                    }
+                    else {
+                        $("#modal-peer-education .modal-content").html(data.html_form);
+                    }
+                }
+            });
+            return false;
+        };
+
+        function showAlert(message,alerttype) {
+
+            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+        }
+
+        /* Binding */
+
+        // Create Class Orientation
+        $(".js-peer-education-create").click(loadForm);
+        $("#modal-peer-education").on("submit", ".js-peer-education-create-form", saveForm);
+
+        // Update district
+        $(".peer-education-table").on("click", ".js-update-peer-education", loadForm);
+        $("#modal-peer-education").on("submit", ".js-peer-education-update-form", saveForm);
+
+
+
+        $('.name-field').validate({
+            rules : {
+                name : { greaterThanZero : true }
             }
         });
-    };
 
-  var saveForm = function () {
-    var form = $(this);
-    var formClass = form.attr("class")
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-        if (data.form_is_valid) {
-            $('#peerSubmit').prop('disabled', true);
-           if(formClass=="js-peer-education-create-form"){
-              showAlert("Peer Education Created!", "alert-success-customized")
-           }
-           if(formClass=="js-peer-education-update-form"){
-              showAlert("Peer Education Updated!", "alert-success-customized")
-           }
-
-          $(".peer-education-table tbody").html(data.html_peer_education_list);  // <-- Replace the table body
-          $("#modal-peer-education").modal("hide");  // <-- Close the modal
-        }
-        else {
-          $("#modal-peer-education .modal-content").html(data.html_form);
-        }
-        }
     });
-    return false;
-  };
 
-  function showAlert(message,alerttype) {
-
-       $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-  }
-
-  /* Binding */
-
-  // Create Class Orientation
-  $(".js-peer-education-create").click(loadForm);
-  $("#modal-peer-education").on("submit", ".js-peer-education-create-form", saveForm);
-
-  // Update district
-  $(".peer-education-table").on("click", ".js-update-peer-education", loadForm);
-  $("#modal-peer-education").on("submit", ".js-peer-education-update-form", saveForm);
-
-
-
-  $('.name-field').validate({
-    rules : {
-        name : { greaterThanZero : true }
-    }
-});
-
-});
-
-  </script>
+</script>
 {% endblock %}
