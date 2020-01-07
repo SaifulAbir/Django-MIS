@@ -2,9 +2,9 @@
 {% block body_block %}
 
 <!-- Main content -->
-<section class="content-header" style="padding-top:60px">
+<section class="content-header">
     <h1>
-        Peer Education
+        {{ peer_education_strings.PEER_EDUCATION_LIST_TITLE }}
     </h1>
 </section>
 <section class="content">
@@ -14,7 +14,7 @@
         <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
-                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                    <div id="alertdiv" class="alert alert-success-customized">
                         <span>
                             {% for message in messages %}
                             {{ message }}
@@ -27,7 +27,7 @@
                     class="btn btn-primary pull-right js-peer-education-create"
                     data-url="{% url 'peer_education:create_peer_education' %}">
                 <span class="fa fa-plus"></span>
-                New Peer Education
+                {{ peer_education_strings.NEW_PEER_EDUCATION_BUTTON }}
             </button>
         </div>
         <!-- /.box-header -->
@@ -39,6 +39,14 @@
     {% include 'peer_education/_modal.html' %}
     <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <style>
+        #alertdiv{
+            font-size:20px;
+            margin-top:15px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">

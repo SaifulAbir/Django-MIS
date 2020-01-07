@@ -45,10 +45,10 @@ def peer_education_form(request, form, template_name):
             except EmptyPage:
                 peereducation_list = paginator.page(paginator.num_pages)
             data['html_peer_education_list'] = render_to_string('peer_education/partial_peer_education_list.html',
-                                                                {'peereducation_list': peereducation_list, 'common_strings':common_strings})
+                                                                {'peereducation_list': peereducation_list, 'common_strings':common_strings, 'peer_education_strings':peer_education_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form, 'common_strings':common_strings}
+    context = {'form': form, 'common_strings':common_strings, 'peer_education_strings':peer_education_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -60,28 +60,6 @@ def peer_education_add(request):
     else:
         form = PeerEducationForm()
     return peer_education_form(request, form, 'peer_education/peer_education_form.html')
-
-# @headmaster_mentor_skleader_login_required
-# def peer_education_add(request):
-#     if request.user.is_authenticated and request.user.user_type == 5:
-#         profile = SkLeaderProfile.objects.get(user=request.user)
-#     elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
-#         profile = HeadmasterProfile.objects.get(user=request.user)
-#     if request.method == 'POST':
-#         peer_education_form = PeerEducationForm(request.POST, prefix='COF')
-#         if peer_education_form.is_valid():
-#             peer_education = peer_education_form.save(commit=False)
-#             peer_education.school = profile.school
-#             peer_education.save()
-#             messages.success(request, 'Class Orientation Created!')
-#             return HttpResponseRedirect("/peer_education/peer_education_list/")
-#
-#     else:
-#         peer_education_form = PeerEducationForm(prefix='COF')
-#
-#     return render(request, 'peer_education/peer_education_form.html', {
-#         'peer_education_form': peer_education_form,
-#     })
 
 @method_decorator(headmaster_mentor_skleader_login_required, name='dispatch')
 class PeerEducationList(LoginRequiredMixin, generic.ListView):
@@ -109,25 +87,8 @@ class PeerEducationList(LoginRequiredMixin, generic.ListView):
 
         context['peereducation_list'] = peereducation_list
         context['common_strings'] = common_strings
+        context['peer_education_strings'] = peer_education_strings
         return context
-
-# @headmaster_mentor_skleader_login_required
-# def peer_education_update(request, pk):
-#     peer_education = get_object_or_404(PeerEducation, pk=pk)
-#     if request.method == 'POST':
-#         peer_education_form = PeerEducationForm(request.POST, instance=peer_education, prefix='COF')
-#         if peer_education_form.is_valid():
-#             peer_education = peer_education_form.save(commit=False)
-#             peer_education.save()
-#             messages.success(request, 'Class Orientation Updated!')
-#             return HttpResponseRedirect("/peer_education/peer_education_list/")
-#
-#     else:
-#         peer_education_form = PeerEducationForm(instance=peer_education, prefix='COF')
-#
-#     return render(request, 'peer_education/peer_education_form.html', {
-#         'peer_education_form': peer_education_form,
-#     })
 
 @headmaster_mentor_skleader_login_required
 def peer_education_update(request, pk):
@@ -248,6 +209,6 @@ def pagination(request):
     except EmptyPage:
         peereducation_list = paginator.page(paginator.num_pages)
     data['html_list'] = render_to_string('peer_education/partial_peer_education_list.html', {
-        'peereducation_list': peereducation_list, 'common_strings':common_strings
+        'peereducation_list': peereducation_list, 'common_strings':common_strings,'peer_education_strings':peer_education_strings
     })
     return JsonResponse(data)
