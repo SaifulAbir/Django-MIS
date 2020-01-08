@@ -9,6 +9,7 @@ import division.strings as division_strings
 from resources import strings as common_strings
 from accounts.decorators import admin_login_required
 from division.models import Division
+from sknf.helper import check_child_data_exist_on_delete
 from .forms import DivisionForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -84,16 +85,7 @@ def division_delete(request, pk):
     division = get_object_or_404(Division, pk=pk)
     data = dict()
     if request.method == 'POST':
-        try:
-            division.delete()
-            status = True
-        except ProtectedError as e:
-            status = False
-            # b = e.protected_objects
-            # for a in b:
-            #     print(a.name + ',')
-
-
+        status = check_child_data_exist_on_delete(division)
         data['form_is_valid'] = True  # This is just to play along with the existing code
         divisions = Division.objects.all()
         paginator = Paginator(divisions, 10)
