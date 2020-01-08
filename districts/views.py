@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 
 from accounts.decorators import admin_login_required
 from districts.models import District
+from sknf.helper import check_child_data_exist_on_delete
 from .forms import DistrictForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -86,7 +87,8 @@ def district_delete(request, pk):
     district = get_object_or_404(District, pk=pk)
     data = dict()
     if request.method == 'POST':
-        district.delete()
+        status = check_child_data_exist_on_delete(district)
+        data['status'] = status
         data['form_is_valid'] = True  # This is just to play along with the existing code
         districts = District.objects.all()
         paginator = Paginator(districts, 10)

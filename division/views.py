@@ -86,6 +86,7 @@ def division_delete(request, pk):
     data = dict()
     if request.method == 'POST':
         status = check_child_data_exist_on_delete(division)
+        data['status'] = status
         data['form_is_valid'] = True  # This is just to play along with the existing code
         divisions = Division.objects.all()
         paginator = Paginator(divisions, 10)
@@ -97,7 +98,7 @@ def division_delete(request, pk):
         except EmptyPage:
             division_list = paginator.page(paginator.num_pages)
 
-        data['status'] = status
+
         data['html_list'] = render_to_string('division/partial_division_list.html', {
             'division_list': division_list, 'division_strings':division_strings, 'common_strings':common_strings
         })

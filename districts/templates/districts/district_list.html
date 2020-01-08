@@ -61,12 +61,18 @@
                         if (data.form_is_valid) {
                             $('#districtSubmit').prop('disabled', true);
                             if(formClass=="js-district-create-form"){
-                                showAlert("District Created!", "alert-success-customized")
+                                showAlert("{{ district_strings.DISTRICT_CREATED_MSG }}", "alert-success-customized")
                             }
                             if(formClass=="js-district-update-form"){
-                                showAlert("District Updated!", "alert-success-customized")
+                                showAlert("{{ district_strings.DISTRICT_UPDATED_MSG }}", "alert-success-customized")
                             }
                             if(formClass=="js-district-delete-form"){
+                                status = data.status
+                                if (status=='true'){
+                                    showAlert("{{ district_strings.DISTRICT_DELETED_MSG }}", "alert alert-danger-customized")
+                                }else {
+                                    showAlert("{{ district_strings.DISTRICT_DELETED_WITH_CHILD_DATA_EXIST_MSG }}", "alert alert-danger-customized")
+                                }
                                 showAlert("District Deleted!", "alert-danger-customized")
                             }
 

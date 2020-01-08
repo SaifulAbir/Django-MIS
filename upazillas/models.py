@@ -9,8 +9,8 @@ from resources import strings
 
 
 class Upazilla(models.Model):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE, null=True)
-    district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
+    division = models.ForeignKey(Division, on_delete=models.PROTECT, null=True)
+    district = models.ForeignKey(District, on_delete=models.PROTECT, null=True)
     name = models.CharField(max_length=100, validators=[check_valid_chars])
     created_date = models.DateTimeField(default=timezone.now)
 
