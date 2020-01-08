@@ -35,7 +35,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <strong>{{club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_DIVISION}}</strong>
+                            <strong>{{club_meeting_strings.SEARCH_LABEL_CLUB_MEETING_DISTRICT}}</strong>
                             <input class="form-control typehead tt-query" type="search" name="district_contains" autocomplete="off" id="district-name"/>
                         </div>
                         <div class="form-group col-sm-3">
@@ -72,9 +72,9 @@
                     <tr>
                         <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_DATE_TEXT}}</th>
                         <th class="col-sm-3">{{club_meeting_strings.CLUB_MEETING_TOPICS_TEXT}}</th>
-                        <th class="col-sm-2">{{club_meeting_strings.CLUB_MEETING_SCHOOL_TEXT}}</th>
+                        <th class="col-sm-3">{{club_meeting_strings.CLUB_MEETING_SCHOOL_TEXT}}</th>
                         <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_ATTENDANCE_TEXT}}</th>
-                        <th class="col-sm-2">{{club_meeting_strings.CLUB_MEETING_DIVISION_TEXT}}</th>
+                        <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_DIVISION_TEXT}}</th>
                         <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_DISTRICT_TEXT}}</th>
                         <th class="col-sm-1">{{club_meeting_strings.CLUB_MEETING_UPAZILA_TEXT}}</th>
                         <th class="text-center col-sm-1">{{ common_strings.LIST_ACTION_SINGULAR_TEXT }}</th>
@@ -220,6 +220,9 @@
                         'info'        : false,
                         'paging'      : false,
                         'ordering'    : false,
+                        "language": {
+                            "emptyTable":     "No Result Found"
+                        }
                     });
                 }
             });

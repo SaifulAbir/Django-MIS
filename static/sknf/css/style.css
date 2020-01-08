@@ -390,5 +390,9 @@ ul#id_EPA-attendance {
     padding-left: 3px;
     margin-right:10px;
 }
+.form-control:focus {
+    border-color: #2a2a86 !important;
+    box-shadow: none;
+}
 /*Common Css*/
 
