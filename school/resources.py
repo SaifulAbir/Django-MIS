@@ -9,8 +9,8 @@ from upazillas.models import Upazilla
 from .models import School
 
 class SchoolResource(resources.ModelResource):
-    name = Field(attribute='name', column_name='School name')
     school_id = Field(attribute='school_id', column_name='EIIN')
+    name = Field(attribute='name', column_name='School name')
 
     division = fields.Field(
         column_name='Division',
