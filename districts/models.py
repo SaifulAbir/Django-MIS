@@ -9,7 +9,7 @@ from resources import strings
 
 
 class District(models.Model):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE, related_name='districts')
+    division = models.ForeignKey(Division, on_delete=models.PROTECT, related_name='districts')
     name = models.CharField(max_length=128,  validators=[check_valid_chars])
     created_date = models.DateTimeField(default=timezone.now)
 

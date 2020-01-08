@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import ProtectedError
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -8,6 +9,7 @@ import division.strings as division_strings
 from resources import strings as common_strings
 from accounts.decorators import admin_login_required
 from division.models import Division
+from sknf.helper import check_child_data_exist_on_delete
 from .forms import DivisionForm
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -83,7 +85,7 @@ def division_delete(request, pk):
     division = get_object_or_404(Division, pk=pk)
     data = dict()
     if request.method == 'POST':
-        division.delete()
+        status = check_child_data_exist_on_delete(division)
         data['form_is_valid'] = True  # This is just to play along with the existing code
         divisions = Division.objects.all()
         paginator = Paginator(divisions, 10)
@@ -94,6 +96,8 @@ def division_delete(request, pk):
             division_list = paginator.page(1)
         except EmptyPage:
             division_list = paginator.page(paginator.num_pages)
+
+        data['status'] = status
         data['html_list'] = render_to_string('division/partial_division_list.html', {
             'division_list': division_list, 'division_strings':division_strings, 'common_strings':common_strings
         })
