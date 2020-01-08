@@ -375,6 +375,7 @@ and (max-width : 480px) {
         height: 50px;
         color: #444;
         padding: 15px;
+        padding-right: 25px;
     }
     #form-wrapper{
         margin-right: 15px;
