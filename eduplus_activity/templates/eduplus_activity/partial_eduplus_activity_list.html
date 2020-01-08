@@ -28,13 +28,7 @@
         </td>
         <td>{{ eduplus_activity.method }}</td>
         <td>
-            {% for attendance in eduplus_activity.attendance.all %}
-            {% if forloop.last %}
-            {{attendance.first_name}}
-            {% else %}
-            {{attendance.first_name}},
-            {% endif %}
-            {% endfor %}
+            {{eduplus_activity.attendance.all.count}}
         </td>
         <td>{{ eduplus_activity.school }}</td>
         <td>{{ eduplus_activity.school.division }}</td>

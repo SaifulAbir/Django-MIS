@@ -4,7 +4,7 @@
     {% load static %}
     {% if headmaster.school == skmember_profile.school or skleader.school == skmember_profile.school %}
     <form method='POST' enctype="multipart/form-data" novalidate>
-        <section class="content-header" style="padding-top:60px">
+        <section class="content-header">
             {% if not profile_form.instance.pk %}
                 <h1>{{ sk_strings.NEW_SKMEMBER_PAGE_TITLE }}</h1>
             {% else %}
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="box box-body">
-                                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                    <a type="button" onclick="goBack()"
                                        class="btn btn-warning pull-left"
                                        href="javascript:void(0)">
                                         {{ common_strings.BACK_BUTTON }}

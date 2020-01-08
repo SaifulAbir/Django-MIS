@@ -176,7 +176,7 @@ def headmaster_profile_update(request):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
-            return redirect("accounts:profile")
+            return redirect("school:school_profile", pk= headmaster_profile.school_id)
     else:
         user_form = EditUserForm(instance=user_profile)
         profile_form = HeadmasterProfileForm(instance=headmaster_profile, prefix='PF')
@@ -219,7 +219,7 @@ def skleader_profile_update(request):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
-            return redirect("accounts:profile")
+            return redirect("school:school_profile", pk= skleader_profile.school_id)
     else:
         user_form = EditUserForm(instance=user_profile)
         profile_form = SkleaderProfileForm(instance=skleader_profile, prefix='PF')
