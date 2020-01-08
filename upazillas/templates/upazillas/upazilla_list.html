@@ -1,30 +1,30 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<section class="content-header">
+    <section class="content-header">
         <h1>{{ upazila_strings.UPAZILA_LIST_TITLE }} </h1>
- </section>
-<!-- Main content -->
-<section class="content">
-<!-- Main content -->
-<div class="box">
-    <div class="box-header">
-        <h3 style="display: inline-block;" class="box-title"></h3>
-        <span id = "alert_placeholder"></span>
-        <button type="button"
-                class="btn btn-primary pull-right js-create-upazilla"
-                data-url="{% url 'upazillas:create_upazilla' %}">
-            <span class="fa fa-plus"></span>
-            {{ upazila_strings.CREATE_UPAZILA_BUTTON_TEXT }}
-        </button>
-    </div>
-    <!-- /.box-header -->
-    {% include 'upazillas/_modal.html' %}
-    <div class="box-body table-responsive upazila-container">
-        {% include 'upazillas/partial_upazillas_list.html' %}
-    </div>
-</div>
-<!-- /.content -->
-</section>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Main content -->
+        <div class="box">
+            <div class="box-header">
+                <h3 style="display: inline-block;" class="box-title"></h3>
+                <span id = "alert_placeholder"></span>
+                <button type="button"
+                        class="btn btn-primary pull-right js-create-upazilla"
+                        data-url="{% url 'upazillas:create_upazilla' %}">
+                    <span class="fa fa-plus"></span>
+                    {{ upazila_strings.CREATE_UPAZILA_BUTTON_TEXT }}
+                </button>
+            </div>
+            <!-- /.box-header -->
+            {% include 'upazillas/_modal.html' %}
+            <div class="box-body table-responsive upazila-container">
+                {% include 'upazillas/partial_upazillas_list.html' %}
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
     {% block extra_css %}
         <style type="text/css">
             .content-header{
@@ -34,124 +34,124 @@
     {% endblock %}
 {% endblock %}
 {% block extra_js %}
-<script type="text/javascript">
-$(function () {
-    $('#settings, .upazilla-menu').addClass('active');
-    $("#settings").addClass("menu-open");
-    $("#settings .treeview-menu").css("display", "block");
+    <script type="text/javascript">
+        $(function () {
+            $('#settings, .upazilla-menu').addClass('active');
+            $("#settings").addClass("menu-open");
+            $("#settings .treeview-menu").css("display", "block");
 
-    var loadForm = function () {
-    var btn = $(this);
-    $.ajax({
-      url: btn.attr("data-url"),
-      type: 'get',
-      dataType: 'json',
-      beforeSend: function () {
-        $("#modal-upazilla").modal("show");
-      },
-      success: function (data) {
-        $("#modal-upazilla .modal-content").html(data.html_form);
-        var divisionId = $("#id_division").val();
-            var districtId = $("#id_district").val();
-            if (divisionId || districtId) {
+            var loadForm = function () {
+                var btn = $(this);
                 $.ajax({
-                    url: '/upazilla/ajax/load-districts/',
-                    data: {
-                        'division': divisionId,
-                        'districtId': districtId
+                    url: btn.attr("data-url"),
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#modal-upazilla").modal("show");
                     },
                     success: function (data) {
-                        $("#id_district").html(data);
+                        $("#modal-upazilla .modal-content").html(data.html_form);
+                        var divisionId = $("#id_division").val();
+                        var districtId = $("#id_district").val();
+                        if (divisionId || districtId) {
+                            $.ajax({
+                                url: '/upazilla/ajax/load-districts/',
+                                data: {
+                                    'division': divisionId,
+                                    'districtId': districtId
+                                },
+                                success: function (data) {
+                                    $("#id_district").html(data);
 
+                                }
+                            });
+                        }
                     }
                 });
+            };
+
+            var saveForm = function () {
+                var form = $(this);
+                var formClass = form.attr("class")
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: form.attr("method"),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.form_is_valid) {
+                            $('#upazillaSubmit').prop('disabled', true);
+                            if(formClass=="js-upazilla-create-form"){
+                                showAlert("{{ upazila_strings.UPAZILA_CREATED_MSG }}", "alert-success-customized")
+                            }
+                            if(formClass=="js-upazilla-update-form"){
+                                showAlert("{{ upazila_strings.UPAZILA_UPDATED_MSG }}", "alert-success-customized")
+                            }
+                            if(formClass=="js-upazilla-delete-form"){
+                                status = data.status
+                                if (status=='true'){
+                                    showAlert("{{ upazila_strings.UPAZILA_DELETED_MSG }}", "alert alert-danger-customized")
+                                }else {
+                                    showAlert("{{ upazila_strings.UPAZILA_DELETED_WITH_CHILD_DATA_EXIST_MSG }}", "alert alert-danger-customized")
+                                }
+                            }
+                            $(".upazila-container").html(data.html_list);
+                            $('.upazilla-table').DataTable({
+                                'paging'      : false,
+                                'lengthChange': false,
+                                'searching'   : false,
+                                'ordering'    : false,
+                                'info'        : false,
+                                'autoWidth'   : false,
+                                'destroy'     : true
+                            });// <-- Replace the table body
+                            $("#modal-upazilla").modal("hide");  // <-- Close the modal
+                        }
+                        else {
+                            $("#modal-upazilla .modal-content").html(data.html_form);
+                        }
+                    }
+                });
+                return false;
+            };
+
+            /* Binding */
+
+            function showAlert(message,alerttype) {
+
+                $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+
             }
-      }
-    });
-  };
 
-  var saveForm = function () {
-    var form = $(this);
-    var formClass = form.attr("class")
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-        if (data.form_is_valid) {
-            $('#upazillaSubmit').prop('disabled', true);
-          if(formClass=="js-upazilla-create-form"){
-              showAlert("Upazila Created!", "alert-success-customized")
-           }
-           if(formClass=="js-upazilla-update-form"){
-              showAlert("Upazila Updated!", "alert-success-customized")
-           }
-           if(formClass=="js-upazilla-delete-form"){
-              showAlert("Upazila Deleted!", "alert-danger-customized")
-           }
-          $(".upazila-container").html(data.html_list);
-            $('.upazilla-table').DataTable({
-                'paging'      : false,
-                'lengthChange': false,
-                'searching'   : false,
-                'ordering'    : false,
-                'info'        : false,
-                'autoWidth'   : false,
-                'destroy'     : true
-            });// <-- Replace the table body
-          $("#modal-upazilla").modal("hide");  // <-- Close the modal
-        }
-        else {
-          $("#modal-upazilla .modal-content").html(data.html_form);
-        }
-      }
-    });
-    return false;
-  };
+            // Create upazilla
+            $(".js-create-upazilla").click(loadForm);
+            $("#modal-upazilla").on("submit", ".js-upazilla-create-form", saveForm);
 
-  /* Binding */
+            // Update upazilla
+            $(".upazila-container").on("click", ".js-update-upazilla", loadForm);
+            $("#modal-upazilla").on("submit", ".js-upazilla-update-form", saveForm);
 
-  function showAlert(message,alerttype) {
+            // Delete upazilla
+            $(".upazila-container").on("click", ".js-delete-upazilla", loadForm);
+            $("#modal-upazilla").on("submit", ".js-upazilla-delete-form", saveForm);
+            pagination(".upazila-container", '/upazilla/pagination/', '', '', '.upazilla-table');
 
-            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
+            $("#id_division").change(function () {
+                var url = $("#upazillaForm").attr("data-districts-url");  // get the url of the `load_cities` view
+                var divisionId = $(this).val();  // get the selected country ID from the HTML input
 
-  }
+                $.ajax({                       // initialize an AJAX request
+                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                    data: {
+                        'division': divisionId       // add the country id to the GET parameters
+                    },
+                    success: function (data) {   // `data` is the return of the `load_cities` view function
+                        $("#id_district").html(data);  // replace the contents of the city input with the data that came from the server
+                    }
+                });
 
-  // Create upazilla
-  $(".js-create-upazilla").click(loadForm);
-  $("#modal-upazilla").on("submit", ".js-upazilla-create-form", saveForm);
+            });
 
-  // Update upazilla
-  $(".upazila-container").on("click", ".js-update-upazilla", loadForm);
-  $("#modal-upazilla").on("submit", ".js-upazilla-update-form", saveForm);
-
-  // Delete upazilla
-  $(".upazila-container").on("click", ".js-delete-upazilla", loadForm);
-  $("#modal-upazilla").on("submit", ".js-upazilla-delete-form", saveForm);
-  pagination(".upazila-container", '/upazilla/pagination/', '', '', '.upazilla-table');
-
-  $("#id_division").change(function () {
-      var url = $("#upazillaForm").attr("data-districts-url");  // get the url of the `load_cities` view
-      var divisionId = $(this).val();  // get the selected country ID from the HTML input
-
-      $.ajax({                       // initialize an AJAX request
-        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-        data: {
-          'division': divisionId       // add the country id to the GET parameters
-        },
-        success: function (data) {   // `data` is the return of the `load_cities` view function
-          $("#id_district").html(data);  // replace the contents of the city input with the data that came from the server
-        }
-      });
-
-    });
-
-});
-
-
-
-
-
-  </script>
+        });
+    </script>
 {% endblock %}
