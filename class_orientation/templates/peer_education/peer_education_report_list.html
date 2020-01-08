@@ -179,7 +179,7 @@
                 upazila=upazila_contains,union=union_contains,topic=topics_contains,
                 fromdate=fromdate_contains,todate=todate_contains;
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '/peer_education/peer_education_search_list/',
                 data: {
                     'school_contains': school_contains,
@@ -217,6 +217,8 @@
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        autoSuggesion('/load_previous_upazillas/', "input[name='upazila_contains']");
+        autoSuggesion('/load_previous_unions/', "input[name='union_contains']");
         $(".box").on('click', '.export-peer-education-report', function() {
             $('.search-form-peer-education').prop('action', '/peer_education/peer_education_search_list/export')
         });
