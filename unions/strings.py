@@ -12,3 +12,6 @@ UNION_LIST_TEXT = 'Union List'
 NEW_UNION_TITLE_TEXT = 'New Union'
 UPDATE_UNION_TITLE_TEXT = 'Update Union'
 DELETION_MESSEGE ="Are you sure you want to delete the union %s ?"
+UNION_CREATED_MSG = "Union Created!"
+UNION_UPDATED_MSG = "Union Updated!"
+UNION_DELETED_MSG = "Union Deleted!"
