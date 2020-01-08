@@ -16,7 +16,7 @@ class PeerEducation(models.Model):
     created_date = models.DateField(default=timezone.now)
     place = models.CharField(max_length=10, choices=place_choice, default='')
     topic = models.ManyToManyField(Topics)
-    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
+    school = models.ForeignKey(School, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.created_date

@@ -12,10 +12,10 @@ import club_meetings.strings as club_meeting_strings
 class ClubMeetings(models.Model):
     date = models.DateField(default=timezone.now)
     class_room= models.CharField(max_length=100)
-    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
+    school = models.ForeignKey(School, on_delete=models.PROTECT, null=True)
     presence_guide_teacher = models.BooleanField(default=False)
     presence_skleader = models.BooleanField(default=False)
-    skleader = models.ForeignKey(SkLeaderProfile, on_delete=models.CASCADE, null=True)
+    skleader = models.ForeignKey(SkLeaderProfile, on_delete=models.PROTECT, null=True)
     attendance= models.ManyToManyField(User, related_name='a_profile')
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     topics = models.ManyToManyField(Topics)
