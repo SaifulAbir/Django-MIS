@@ -12,6 +12,16 @@
                 <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
                     <div class="row">
                         <div class="col-sm-4">
+                            <div class="form-group">
+                                <strong>EIIN</strong>
+                                {% if school_id is not None %}
+                                <input class="form-control " type="search" name="school_id_contains" value="{{school_id}}" />
+                                {% else %}
+                                <input class="form-control " type="search" name="school_id_contains"  />
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="form-group ">
                                 <strong>Name</strong>
                                 {% if name is not None %}
@@ -20,16 +30,6 @@
                                 <input class="form-control" type="search" name="name_contains" />
                                 {% endif %}
 
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <strong>EIIN</strong>
-                                {% if school_id is not None %}
-                                <input class="form-control " type="search" name="school_id_contains" value="{{school_id}}" />
-                                {% else %}
-                                <input class="form-control " type="search" name="school_id_contains"  />
-                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-4">
