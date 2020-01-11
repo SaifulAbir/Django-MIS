@@ -2,10 +2,10 @@
 <table id="example1" class="dashboard-school-list table table-bordered table-striped">
     <thead>
     <tr>
-        <th class = "col-sm-4">Name</th>
-        <th class ="col-sm-2">EIIN</th>
-        <th class ="col-sm-2">Division</th>
-        <th class ="col-sm-2">District</th>
+        <th class = "col-sm-4">{{ school_strings.SCHOOL_LIST_NAME_TEXT }}</th>
+        <th class ="col-sm-2">{{ school_strings.SCHOOL_LIST_EIIN_TEXT }}</th>
+        <th class ="col-sm-2">{{ school_strings.SCHOOL_LIST_DIVISION_TEXT }}</th>
+        <th class ="col-sm-2">{{ school_strings.SCHOOL_LIST_DISTRICT_TEXT }}</th>
     </tr>
     </thead>
     <tbody>
@@ -21,8 +21,8 @@
     {% endfor %}
 </table>
 </table>
-<p class="table-information">Showing {{ school_list.start_index }} to {{ school_list.end_index }} of {{ school_list.paginator.count }} entries</p>
-<ul class="pagination" style="float: right">
+<p class="table-information">{% format_values common_strings.PAGINATION_INFO school_list.start_index school_list.end_index school_list.paginator.count %} entries</p>
+<ul class="pagination">
 
     {% if school_list.has_previous %}
     <li><a class="paginator" href="?page={{ school_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
