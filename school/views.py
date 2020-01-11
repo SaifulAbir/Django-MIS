@@ -200,6 +200,8 @@ def load_upazillas(request):
 def load_unions(request):
     upazilla_id = request.GET.get('upazilla')
     unionId = request.GET.get('unionId')
+    if unionId:
+        unionId = int(unionId)
     unions = Union.objects.filter(upazilla_id=upazilla_id).order_by('name')
     return render(request, 'school/union_dropdown_list_options.html', {'unions': unions, 'unionId':unionId})
 
