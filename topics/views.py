@@ -30,7 +30,7 @@ def save_topics_form(request, form, template_name):
                 topics_list = paginator.page(1)
             except EmptyPage:
                 topics_list = paginator.page(paginator.num_pages)
-            data['html_topics_list'] = render_to_string('topics/partial_topics_list.html',
+            data['html_list'] = render_to_string('topics/partial_topics_list.html',
                                                           {'topics_list': topics_list, 'topic_strings':topic_strings, 'common_strings':common_strings})
         else:
             data['form_is_valid'] = False
@@ -96,7 +96,7 @@ def topics_delete(request, pk):
             topics_list = paginator.page(1)
         except EmptyPage:
             topics_list = paginator.page(paginator.num_pages)
-        data['html_topics_list'] = render_to_string('topics/partial_topics_list.html', {
+        data['html_list'] = render_to_string('topics/partial_topics_list.html', {
             'topics_list': topics_list, 'topic_strings':topic_strings, 'common_strings':common_strings
         })
     else:
