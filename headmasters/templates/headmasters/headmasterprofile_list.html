@@ -8,7 +8,6 @@
     </h1>
 </section>
 <section class="content">
-
     <div class="box">
         <form method="GET" action="." class="search-form-headmaster">
             <div class="box-header">
@@ -37,8 +36,6 @@
                         <button type="submit" class="btn btn-primary search-headmaster">Search</button>
                     </div>
                     <div class="clearfix"></div>
-
-
                 </div>
             </div>
 
@@ -70,19 +67,23 @@
                     <thead>
                     <tr>
                         <th class="col-sm-2">Name</th>
-                        <th class="col-sm-2">Username</th>
-                        <th class="col-sm-4">School</th>
-                        <th class="col-sm-2">Mobile</th>
-                        <th class="col-sm-2">Actions</th>
+                        <th class="col-sm-1">Mobile</th>
+                        <th class="col-sm-2">School</th>
+                        <th class="col-sm-2">Division</th>
+                        <th class="col-sm-2">District</th>
+                        <th class="col-sm-2">Upazila</th>
+                        <th class="col-sm-1">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for headmaster in queryset %}
                     <tr>
                         <td>{{headmaster.user.first_name}}</td>
-                        <td>{{ headmaster.user.email }}</td>
-                        <td>{{ headmaster.school }}</td>
                         <td>{{ headmaster.mobile }}</td>
+                        <td>{{ headmaster.school }}</td>
+                        <td>{{ headmaster.school.division }}</td>
+                        <td>{{ headmaster.school.district }}</td>
+                        <td>{{ headmaster.school.upazilla }}</td>
                         <td align="center">
                             <a type="button" style="margin-right:10px"
                                href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
