@@ -5,13 +5,13 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Confirm Post Deletion</h4>
+        <h4 class="modal-title">{{ school_strings.POST_DELETION_MESSEGE }}</h4>
     </div>
     <div class="modal-body">
-        <p class="lead">Are you sure you want to delete this <strong>Post</strong>?</p>
+        <p class="lead">{{ school_strings.POST_DELETION_MESSEGE }}</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ common_strings.CLOSE_BUTTON }}</button>
+        <button type="submit" class="btn btn-danger">{{ common_strings.DELETE_BUTTON }}</button>
     </div>
 </form>
