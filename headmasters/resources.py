@@ -17,8 +17,24 @@ class HeadmasterResource(resources.ModelResource):
         column_name='School Name',
         attribute='school',
         widget=ForeignKeyWidget(School, 'name'))
+    #joining_date= Field(attribute='joining_date', column_name='Joining Date')
+    division = fields.Field(
+        column_name='Division',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'division'))
 
-    joining_date= Field(attribute='joining_date', column_name='Joining Date')
+    district = fields.Field(
+        column_name='District',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'district'))
+    upazila = fields.Field(
+        column_name='Upazila',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'upazilla'))
+    union = fields.Field(
+        column_name='Union',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'union'))
 
     def dehydrate_joining_date(self,headmaster):
         date_string = str(headmaster.joining_date)
@@ -30,6 +46,6 @@ class HeadmasterResource(resources.ModelResource):
 
     class Meta:
         model = HeadmasterProfile
-
-        fields = ('user','mobile','school','joining_date')
+        export_order = ('user','mobile','school','division','district','upazila','union')
+        fields = ('user','mobile','school')
 

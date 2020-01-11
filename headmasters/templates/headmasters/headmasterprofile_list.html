@@ -72,7 +72,7 @@
                         <th class="col-sm-2">Division</th>
                         <th class="col-sm-2">District</th>
                         <th class="col-sm-2">Upazila</th>
-                        <th class="col-sm-1">Actions</th>
+                        <th class="col-sm-1 text-center">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -85,12 +85,12 @@
                         <td>{{ headmaster.school.district }}</td>
                         <td>{{ headmaster.school.upazilla }}</td>
                         <td align="center">
-                            <a type="button" style="margin-right:10px"
+                            <a type="button" style="margin-right:10px" class="view-icon"
                                href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
                                 <span class="fa fa-eye"></span>
                             </a>
                             <a type="button"
-                               class=""
+                               class="update-icon"
                                href="{% url 'headmasters:headmaster_update' headmaster.pk %}">
                                 <span class="fa fa-edit"></span>
 
