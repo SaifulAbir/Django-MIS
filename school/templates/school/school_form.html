@@ -142,6 +142,13 @@
 
 </section>
 </form>
+{% block extra_css %}
+<style type="text/css">
+    .dropdown-menu{
+        z-index: 2000!important;
+    }
+</style>
+{% endblock %}
 {% endblock %}
 {% block extra_js%}
 <script>

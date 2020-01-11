@@ -2,10 +2,11 @@
 <table id="example1" class="school-search-table school-table table table-bordered table-striped">
     <thead>
     <tr>
-        <th class = "col-sm-5">{{ school_strings.SCHOOL_LIST_NAME_TEXT }}</th>
         <th class ="col-sm-2">{{ school_strings.SCHOOL_LIST_EIIN_TEXT }}</th>
+        <th class = "col-sm-3">{{ school_strings.SCHOOL_LIST_NAME_TEXT }}</th>
         <th class ="col-sm-2">{{ school_strings.SCHOOL_LIST_DIVISION_TEXT }}</th>
         <th class ="col-sm-2">{{ school_strings.SCHOOL_LIST_DISTRICT_TEXT }}</th>
+        <th class ="col-sm-2">{{ school_strings.SCHOOL_LIST_UPAZILA_TEXT }}</th>
         <th class ="text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
     </tr>
     </thead>
@@ -13,10 +14,11 @@
     {% for school in queryset %}
 
     <tr>
-        <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>
         <td>{{ school.school_id }}</td>
+        <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }}</a></td>
         <td>{{ school.division }}</td>
         <td>{{ school.district }}</td>
+        <td>{{ school.upazilla }}</td>
         <td id="ab" align="center">
             <a type="button"
                class="update-icon"
