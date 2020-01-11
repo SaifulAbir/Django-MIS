@@ -133,7 +133,7 @@ def admin_profile_update(request):
 
             user_update.save()
             update_session_auth_hash(request, user_update)
-            return redirect("accounts:profile")
+            return redirect("accounts:dashboard")
 
     else:
         user_form = EditUserForm(instance=user_profile, prefix='PF')
