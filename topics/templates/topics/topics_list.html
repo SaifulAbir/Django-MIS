@@ -64,7 +64,7 @@
                             showAlert("Topic Deleted!", "alert alert-danger-customized")
                         }
 
-                        $(".topic-container").html(data.html_topics_list);  // <-- Replace the table body
+                        $(".topic-container").html(data.html_list);  // <-- Replace the table body
                         $('.topics-table').DataTable({
                             'paging'      : false,
                             'lengthChange': false,
@@ -97,7 +97,13 @@
         // Delete topics
         $(".topic-container").on("click", ".js-delete-topics", loadForm);
         $("#modal-topics").on("submit", ".js-topics-delete-form", saveForm);
-
+        $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/topics/pagination/'+addressValue;
+            paginator(".box-body", url, '.box-body .topics-table', {'school':'', 'division':'',
+                'district':'', 'upazila':'', 'union':'', 'form_date':'', 'to_date':'', 'topic':''});
+        });
     });
 
 </script>
