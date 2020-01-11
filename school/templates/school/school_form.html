@@ -3,11 +3,11 @@
 {% load widget_tweaks %}
 {% load static %}
 <form method='POST' novalidate>
-<section class="content-header"style="padding-top:60px">
+<section class="content-header">
 {% if not form.instance.pk %}
-   <h1>Add New School</h1>
+   <h1>{{ school_strings.NEW_SCHOOL_PAGE_TITLE }}</h1>
 {% else %}
-    <h1>Update School Info</h1>
+    <h1>{{ school_strings.UPDATE_SCHOOL_PAGE_TITLE }}</h1>
 {% endif %}
 </section>
 <!-- Main content -->
@@ -18,20 +18,19 @@
             <div class="box box-info">
                 <div class="box-header with-border">
                     {% if not form.instance.pk %}
-                    <h3 class="box-title">Basic Information</h3>
+                    <h3 class="box-title">{{ school_strings.SCHOOL_INFO_BASIC_TITLE }}</h3>
                     {% else %}
-                    <h3 class="box-title">Basic Information</h3>
+                    <h3 class="box-title">{{ school_strings.SCHOOL_INFO_BASIC_TITLE }}</h3>
                     {% endif %}
                 </div>
                 <div class="box-body">
                     <!-- Color Picker -->
                     <span id = "alert_placeholder">
                         {% if form.errors %}
-                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                        <div id="alertdiv"class="alert alert-danger-error-message">
                             <span>
                                 {% for field in form %}
-                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                 {% endfor %}
                             </span>
                         </div>
@@ -45,13 +44,13 @@
                     <div class="row">
                         <div class="col-md-6">
                     <div class="form-group"  >
-                        <label for="{{ form.school_id.id_for_label }}" >EIIN</label>
+                        <label for="{{ form.school_id.id_for_label }}" >{{ school_strings.SCHOOL_LIST_EIIN_TEXT }}</label>
                         {% render_field form.school_id class="form-control" placeholder=form.school_id.label%}
                     </div>
                         </div>
                         <div class="col-md-6">
                     <div class="form-group">
-                        <label for="{{ form.club_establishment_date.id_for_label }}">Club Establishment Date</label>
+                        <label for="{{ form.club_establishment_date.id_for_label }}">{{ school_strings.SCHOOL_LIST_CLUB_ESTABLISHMENT_DATE_TEXT }}</label>
                         {% render_field form.club_establishment_date class="form-control datepicker" placeholder=form.club_establishment_date.label %}
                     </div>
                         </div>
@@ -72,7 +71,7 @@
             <div class="box box-info">
                 <div class="box-header with-border">
                     {% if not form.instance.pk %}
-                    <h3 class="box-title">Location</h3>
+                    <h3 class="box-title">{{ school_strings.SCHOOL_INFO_LOCATION_TITLE }}</h3>
                     </div>
                 <div class="box-body">
                     <!-- Color Picker -->
@@ -93,7 +92,7 @@
                         {% render_field form.union class="form-control" placeholder=form.union.label %}
                     </div>
                     {% else %}
-                    <h3 class="box-title">Location</h3>
+                    <h3 class="box-title">{{ school_strings.SCHOOL_INFO_LOCATION_TITLE }}</h3>
                     </div>
                 <div class="box-body">
                     <!-- Color Picker -->
@@ -127,22 +126,29 @@
                 <div class="col-md-12">
                     <div class="box box-body">
                         {% if not profile_form.instance.pk %}
-                            <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                            <a type="button" onclick="goBack()"
                                class="btn btn-warning pull-left"
                                href="javascript:void(0)">
-                                Back
+                                {{ common_strings.BACK_BUTTON }}
                             </a>
                         {% else %}
 
                         {% endif %}
 
-                        <input type="submit" value="Save" id="save-btn" class="btn btn-primary pull-right"/>
+                        <input type="submit" value="{{ common_strings.SAVE_BUTTON }}" id="save-btn" class="btn btn-primary pull-right"/>
                     </div>
                 </div>
             </div>
 
 </section>
 </form>
+{% block extra_css %}
+<style type="text/css">
+    .dropdown-menu{
+        z-index: 2000!important;
+    }
+</style>
+{% endblock %}
 {% endblock %}
 {% block extra_js%}
 <script>
@@ -152,12 +158,52 @@ $(function(){
     var titile = $(".content-header h1").html();
 
     if(titile == "Add New School"){
-        $("#id_district, #id_upazilla, #id_union").text('<option value="">---------</option>');
+        $("#id_district, #id_upazilla, #id_union").html('<option value="">---------</option>');
     }
+    if('{{ form.instance.pk}}'){
+        var divisionId = $("#id_division").val();
+        var districtId = $("#id_district").val();
+        var upazilaId = $("#id_upazilla").val();
+        var unionId = $("#id_union").val();
+        if (divisionId || districtId || upazilaId || unionId) {
+            $.ajax({
+                url: '/ajax/load-districts/',
+                data: {
+                    'division': divisionId,
+                    'districtId': districtId
+                },
+                success: function (data) {
+                    $("#id_district").html(data);
 
-    // if(title == "Update School Info"){
-    //     $("#id_district, #id_upazilla, #id_union").text('<option ></option>');
-    // }
+                }
+            });
+            $.ajax({
+                url: '/ajax/load-upazillas/',
+                data: {
+                    'district': districtId,
+                    'upazilaId': upazilaId
+                },
+                success: function (data) {
+                    $("#id_upazilla").html(data);
+
+                }
+            });
+            $.ajax({
+                url: '/ajax/load-unions/',
+                data: {
+                    'upazilla': upazilaId,
+                    'unionId': unionId
+                },
+                success: function (data) {
+                    $("#id_union").html(data);
+
+                }
+            });
+        }
+        else{
+            $("#id_district, #id_upazilla, #id_union").html('<option value="">---------</option>');
+        }
+    }
 
 
 
@@ -170,6 +216,8 @@ $(function(){
         },
         success: function (data) {
         $("#id_district").html(data);
+        $("#id_upazilla").html('<option value="">---------</option>');
+        $("#id_union").html('<option value="">---------</option>');
 
     }
 });
@@ -184,6 +232,7 @@ $(function(){
         },
         success: function (data) {
         $("#id_upazilla").html(data);
+        $("#id_union").html('<option value="">---------</option>');
 
     }
 });

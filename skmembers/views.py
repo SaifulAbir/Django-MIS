@@ -106,7 +106,7 @@ def skmember_profile_view_skleader(request):
             headmaster_details.skmember = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
-            messages.success(request, 'SK Member Created!')
+            messages.success(request, sk_strings.SK_MEMBER_CREATE_MSG)
             return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
         user_form = SkMemberUserForm(prefix='UF')
@@ -144,7 +144,7 @@ def skmember_update_for_skleader(request, pk):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            messages.success(request, 'SK Member Updated!')
+            messages.success(request, sk_strings.SK_MEMBER_UPDATE_MSG)
             return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)

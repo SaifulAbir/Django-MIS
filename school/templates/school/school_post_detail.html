@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Posted on {{post_detail.created_date}}</h3>
+                    <h3 class="box-title">{% format_date school_strings.HOME_SCHOOL_POST_TITLE post_detail.created_date %}</h3>
                 </div>
                 <div class="box-body">
                     {% if post_detail.post_image %}

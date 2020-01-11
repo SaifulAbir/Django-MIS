@@ -1,7 +1,7 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<section class="content-header" style="padding-top:60px">
-    <h1>Schools</h1>
+<section class="content-header">
+    <h1>{{ school_strings.SCHOOL_LIST_TITLE_TEXT }}</h1>
 </section>
 <!-- Main content -->
 <section class="content">
@@ -9,11 +9,11 @@
     <div class="box">
         <form method="GET" action="." class="search-form">
             <div class="box-header">
-                <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <div class="shop-search main-box card-block" >
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <strong>EIIN</strong>
+                                <strong>{{ school_strings.SCHOOL_LIST_EIIN_TEXT }}</strong>
                                 {% if school_id is not None %}
                                 <input class="form-control " type="search" name="school_id_contains" value="{{school_id}}" />
                                 {% else %}
@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <strong>Name</strong>
+                                <strong>{{ school_strings.SCHOOL_LIST_NAME_TEXT }}</strong>
                                 {% if name is not None %}
                                 <input class="form-control" type="search" name="name_contains" value= "{{name}}" />
                                 {% else %}
@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <strong>Division</strong>
+                                <strong>{{ school_strings.SCHOOL_LIST_DIVISION_TEXT }}</strong>
                                 {% if division is not None %}
                                 <input class="form-control "type="search" name="division_contains" value="{{division}}"/>
                                 {% else %}
@@ -47,7 +47,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <strong>District</strong>
+                                <strong>{{ school_strings.SCHOOL_LIST_DISTRICT_TEXT }}</strong>
                                 {% if district is not None %}
                                 <input class="form-control" type="search" name="district_contains" value="{{district}}" />
                                 {% else %}
@@ -58,7 +58,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <strong>Upazilla</strong>
+                                    <strong>{{ school_strings.SCHOOL_LIST_UPAZILA_TEXT }}</strong>
                                     {% if upazilla is not None %}
                                     <input class="form-control"type="search" name="upazilla_contains" value="{{upazilla}}"/>
                                     {% else %}
@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <strong>Union</strong>
+                                <strong>{{ school_strings.SCHOOL_LIST_UNION_TEXT }}</strong>
                                 {% if union is not None %}
                                 <input class="form-control" type="search" name="union_contains" value="{{union}}"/>
                                 {% else %}
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary search-school">Search</button>
+                        <button type="submit" class="btn btn-primary search-school">{{ common_strings.SEARCH_BUTTON }}</button>
 
                     </div>
                     <div class="clearfix"></div>
@@ -89,10 +89,10 @@
             </div>
 
             <div class="box-header">
-                <h3 style="display: inline-block;" class="box-title"> </h3>
+                <h3 class="box-title"> </h3>
                 <span id = "alert_placeholder">
                     {% if messages %}
-                        <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                        <div id="alertdiv" class="alert alert-success-customized">
                         <span>
                             {% for message in messages %}
                                 {{ message }}
@@ -106,9 +106,9 @@
                    class="btn btn-primary pull-right"
                    href="{% url 'school:create_school' %}">
                     <span class="fa fa-plus"></span>
-                    New School
+                    {{ school_strings.NEW_SCHOOL_BUTTON_TEXT }}
                 </a>
-                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-school pull-right">Export CSV</button>
+                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-school pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
 
 
 
@@ -125,6 +125,19 @@
     {% include 'school/_modal.html' %}
     <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <style>
+        .shop-search{
+            border: 1px solid rgb(204, 204, 204);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding-bottom: 0px;
+        }
+        .box-title{
+            display: inline-block;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
@@ -176,6 +189,9 @@
             'info'        : false,
             'paging'      : false,
             'ordering'    : false,
+            "language": {
+                "emptyTable":     "No Result Found"
+            }
         });
         $('.search-school').on('click', function (event) {
             event.preventDefault();
@@ -210,6 +226,9 @@
                         'info'        : false,
                         'paging'      : false,
                         'ordering'    : false,
+                        "language": {
+                            "emptyTable":     "No Result Found"
+                        }
                     });
                 }
             });
@@ -267,7 +286,10 @@
                         'ordering'    : false,
                         'info'        : false,
                         'autoWidth'   : false,
-                        'destroy'     : true
+                        'destroy'     : true,
+                        "language": {
+                            "emptyTable":     "No Result Found"
+                        }
                     });
                 }
             });
