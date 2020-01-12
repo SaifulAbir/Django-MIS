@@ -1,42 +1,42 @@
 <table   id="example1" class=" skmember-table data-table table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th class="col-sm-3">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</th>
-                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_USER_NAME }}</th>
-                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_MOBILE }}</th>
-                        <th class="col-sm-3">{{ sk_strings.SK_MEMBER_TABLE_HEADER_SCHOOL }}</th>
-                        <th class="col-sm-1">{{ sk_strings.SK_MEMBER_TABLE_HEADER_CLASS }}</th>
-                        <th class="col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for skmember in skmemberprofile_list %}
-                    <tr>
-                        <td>{{skmember.user.first_name}}</td>
-                        <td>{{ skmember.user.email }}</td>
-                        <td>{{ skmember.mobile }}</td>
-                        <td>{{ skmember.school }}</td>
-                        <td>{{ skmember.student_class }}</td>
-                        <td><a type="button"
-                               class=""
-                               href="{% url 'skmembers:skmember_detail' skmember.pk %}">
-                            <span class="fa fa-eye"></span>
-                        </a>
-                            <a type="button"
-                               class=""
-                               href="{% url 'skmembers:skmember_update_for_skleader' skmember.pk %}">
-                                <span class="fa fa-edit"></span>
+    <thead>
+    <tr>
+        <th class="col-sm-3">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</th>
+        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_USER_NAME }}</th>
+        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_MOBILE }}</th>
+        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_CLASS }}</th>
+        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_GENDER }}</th>
+        <th class="fixed-col text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for skmember in skmemberprofile_list %}
+    <tr>
+        <td>{{skmember.user.first_name}}</td>
+        <td>{{ skmember.user.email }}</td>
+        <td>{{ skmember.mobile }}</td>
+        <td>{{ skmember.student_class }}</td>
+        <td>{{ skmember.get_gender_display }}</td>
+        <td><a type="button"
+               class=""
+               href="{% url 'skmembers:skmember_detail' skmember.pk %}">
+            <span class="fa fa-eye"></span>
+        </a>
+            <a type="button"
+               class=""
+               href="{% url 'skmembers:skmember_update_for_skleader' skmember.pk %}">
+                <span class="fa fa-edit"></span>
 
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
 
-                    </tbody>
-                    <tfoot>
+    </tbody>
+    <tfoot>
 
-                    </tfoot>
-                </table>
+    </tfoot>
+</table>
 {% if skmemberprofile_list %}
 <p class="table-information">{% format_values common_strings.PAGINATION_INFO skmemberprofile_list.start_index  skmemberprofile_list.end_index skmemberprofile_list.paginator.count %}
 </p>
