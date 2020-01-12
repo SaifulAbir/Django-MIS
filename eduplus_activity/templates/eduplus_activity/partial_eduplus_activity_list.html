@@ -1,15 +1,11 @@
 <table   id="example1" class=" eduplus-table data-table table table-bordered table-striped">
     <thead>
     <tr>
-        <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_DATE }}</th>
-        <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_TOPICS }}</th>
-        <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_METHODS }}</th>
+        <th class="fixed-col col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_DATE }}</th>
+        <th class="col-sm-6">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_TOPICS }}</th>
+        <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_METHODS }}</th>
         <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ATTENDANCE }}</th>
-        <th class="col-sm-2">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_SCHOOL }}</th>
-        <th class="col-sm-1">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DIVISION }}</th>
-        <th class="col-sm-1">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DISTRICT }}</th>
-        <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_UPAZILA }}</th>
-        <th class="text-center col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ACTIONS }}</th>
+        <th class="fixed-col text-center col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ACTIONS }}</th>
 
     </tr>
     </thead>
@@ -30,10 +26,6 @@
         <td>
             {{eduplus_activity.attendance.all.count}}
         </td>
-        <td>{{ eduplus_activity.school }}</td>
-        <td>{{ eduplus_activity.school.division }}</td>
-        <td>{{ eduplus_activity.school.district }}</td>
-        <td>{{ eduplus_activity.school.upazilla }}</td>
 
         <td align="center">
             <a type="button"

@@ -400,3 +400,7 @@ ul#id_EPA-attendance {
     font-size: 18px;
     font-weight: bold;
 }
+
+.fixed-col{
+    min-width: 100px;
+}
