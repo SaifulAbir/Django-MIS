@@ -47,4 +47,12 @@ DATE_FORMAT = "d-m-Y"
 EXPORT_CSV_BUTTON_TEXT = "Export CSV"
 VALIDATION_CHAR_ERROR_MESSEGE = 'Invalid Validation'
 FUTURE_DATE_VALIDATION_ERROR_MESSEGE = 'This Date cannot be in the future.'
+CROP_PHOTO_TITLE = 'Crop the photo'
+CROP_UPLOAD_BUTTON = 'Crop and upload'
+EDIT_PROFILE_BUTTON = 'Edit Profile'
+SIGN_OUT_BUTTON = 'Sign out'
+SIGN_IN_BUTTON = 'Sign in'
+PROFILE_ROLE_LABEL = 'Role:'
+PROFILE_EMAIL_LABEL = 'Email:'
+HEADER_SKNF_LOGO_TEXT = 'SKNF'
 # Common Strings

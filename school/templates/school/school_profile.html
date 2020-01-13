@@ -4,13 +4,8 @@
 {% load widget_tweaks %}
 
 <!-- =============================================== -->
-
-<!-- Content Wrapper. Contains page content -->
-
-<!-- Content Header (Page header) -->
-<section class="content-header" style=" padding-top: 60px;">
-
-    <h1 style ="display:inline-block;">{{ school_profile.name }}</h1>
+<section class="content-header">
+    <h1 class="header-school-title">{{ school_profile.name }}</h1>
 </section>
 
 <!-- Main content -->
@@ -18,16 +13,16 @@
     {% if school_profile.image %}
     <img src="{{ school_profile.image.url }}" width="100%"class="jcrop-cover-holder"><br />
     {% else %}
-    <img src="{% static 'sknf/images/sknf-admin-bg.jpg' %}"width="100%" class="jcrop-cover-holder">
+    <img src="{% static 'sknf/images/school-profile-default.jpeg' %}" width="100%" class="jcrop-cover-holder">
     {% endif %}
     {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
-    <div class="img-ctrl" style="position:absolute;z-index:99;bottom:25px;right:25px;">
-        <form method='POST' style =" display:inline-block;float:right;" enctype="multipart/form-data" novalidate>
+    <div class="img-ctrl school-cover">
+        <form method='POST' class="school-cover-form" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <div style =" display:inline-block;">
                 <input type="file" accept="image/*" placeholder="SkMember image" class="img-preview" style="display:none" id="id_image">
-                <input type="button" style="display: inline-block;" value="Change" class="btn btn-primary" id="btn_change" onclick="changePic();">
-                <input type="submit" style="display: none;" name="one_picture" value="Upload" id="btn_upload" class="btn btn-primary"/>
+                <input type="button" value="Change" class="btn btn-primary change-button" id="btn_change" onclick="changePic();">
+                <input type="submit" name="one_picture" value="Upload" id="btn_upload" class="btn btn-primary"/>
             </div>
             {% render_field form.cover_image_base64 %}
         </form>
@@ -38,30 +33,30 @@
 
     <div class="box-body box-profile">
         {% if headmaster_profile.image %}
-        <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
+        <img class="profile-user-img profile-img-size img-responsive img-circle" src="{{headmaster_profile.image.url }}" alt="User profile picture">
         {% else %}
-        <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+        <img class="profile-user-img img-responsive profile-img-size img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
         {% endif %}
         <h3 class="profile-username text-center">
             <font color="black">
                 {{ headmaster_profile.user.first_name }}
             </font>
         </h3>
-        <p class="text-muted text-center"><font color="black">Head Master</font></p>
+        <p class="text-muted text-center"><font color="black">{{school_strings.HOME_HEADMASTER_TITLE_TEXT}}</font></p>
     </div>
     <div class="box-body box-profile">
         {% for skleader in skleader_list%}
         {% if skleader.image %}
         <div class="col-xs"align="center">
-            <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{{skleader.image.url }}" alt="User profile picture">
+            <img class="profile-user-img img-responsive profile-img-size img-circle" src="{{skleader.image.url }}" alt="User profile picture">
             <h3 class="profile-username text-center"><font color="black">{{ skleader.user.first_name }}</font></h3>
-            <p class="text-muted text-center"><font color="black">Sk Leader</font></p>
+            <p class="text-muted text-center"><font color="black">{{school_strings.HOME_SKLEADER_TITLE_TEXT}}</font></p>
         </div>
         {% else %}
         <div class="col-xs"align="center">
-            <img style="width: 80px; height: 80px;" class="profile-user-img img-responsive img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
+            <img class="profile-user-img img-responsive profile-img-size img-circle" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="User profile picture">
             <h3 class="profile-username text-center"><font color="black">{{ skleader.user.first_name }}</font></h3>
-            <p class="text-muted text-center"><font color="black">Sk Leader</font></p>
+            <p class="text-muted text-center"><font color="black">{{school_strings.HOME_SKLEADER_TITLE_TEXT}}</font></p>
         </div>
         {% endif %}
         {% endfor %}
@@ -75,9 +70,8 @@
             <div class="box box-widget">
                 <div class="box-header with-border">
                     <div class="user-block">
-                        <h4>Members</h4>
+                        <h4>{{school_strings.HOME_MEMBER_TITLE_TEXT}}</h4>
                     </div>
-
                 </div>
                 <div class="box-body">
                     <div class="row">
@@ -85,12 +79,12 @@
                         {% for skmember in skmember_list %}
                         {% if skmember.image %}
                         <div class="col-xs-6"align="center">
-                            <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
+                            <img class="image-responsive sk-member-image" align="center" src="{{ skmember.image.url }}" alt="Photo">
                             <p><strong>{{skmember.user}}</strong></p>
                         </div>
                         {% else %}
                         <div class="col-xs-6" align="center">
-                            <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
+                            <img class="image-responsive sk-member-image" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
                             <p><strong>{{skmember.user}}</strong></p>
                         </div>
                         {% endif %}
@@ -108,37 +102,36 @@
         <div class="col-sm-9">
             <section class="content">
                 {% if user.is_authenticated and user.user_type == 1 or upload_head_user or upload_guide_user or upload_both_user or upload_skleader_user %}
-                <div class="row" style="margin-top: -15px;">
+                <div class="row post-row">
                     <div class="box box-info">
                         <form method='POST' enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="box-body">
                                 <div id="image_preview">
-                                    <img style="max-width: 100%" class="jcrop-holder" src="" alt="">
+                                    <img class="jcrop-holder image-holder" src="" alt="">
                                 </div><br />
                                 <!-- Color Picker -->
                                 <span id = "alert_placeholder">
                         {% if post_form.errors %}
-                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                        <div id="alertdiv" class="alert alert-danger-error-message">
                             <span>
                                 {% for field in post_form %}
-                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                 {% endfor %}
                             </span>
                         </div>
                         {% endif %}
                     </span>
                                 <div class="form-group" >
-                                    {% render_field post_form.text class="form-control" placeholder='What is on your mind?' %}
+                                    {% render_field post_form.text class="form-control" %}
                                 </div>
-                                <div class="form-group" style="left:25px;display: inline-block;">
-                                    <input type="file"  accept="image/*" placeholder="" style="display:none" class="" id="id_post_image">
-                                    <input type="button" style="display: inline-block;position:relative;width:40px;" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image" onclick="choosePic();" style="position:absolute;z-index:99;bottom:35px;left:22px;cursor: pointer;color:#fff;"></span>
+                                <div class="form-group post-image">
+                                    <input type="file"  accept="image/*" placeholder="" class="" id="id_post_image">
+                                    <input type="button" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image image-icon" onclick="choosePic();"></span>
                                 </div>
                                 {% render_field post_form.image_base64 %}
                                 <!-- /.box-footer -->
-                                <input type="submit" value="Post" style="display: inline-block;position:relative;" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
+                                <input type="submit" value="Post" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
                             </div>
                         </form>
                     </div>
@@ -164,9 +157,8 @@
             <div class="box box-widget">
                 <div class="box-header with-border">
                     <div class="user-block">
-                        <h4>Members</h4>
+                        <h4>{{school_strings.HOME_MEMBER_TITLE_TEXT}}</h4>
                     </div>
-
                 </div>
                 <div class="box-body">
                     <div class="row">
@@ -174,21 +166,17 @@
                         {% for skmember in skmember_list %}
                         {% if skmember.image %}
                         <div class="col-xs-6"align="center">
-                            <img class="image-responsive" align="center" style="height:80px; width:80px;" src="{{ skmember.image.url }}" alt="Photo">
+                            <img class="image-responsive sk-member-image" align="center" src="{{ skmember.image.url }}" alt="Photo">
                             <p><strong>{{skmember.user}}</strong></p>
                         </div>
                         {% else %}
                         <div class="col-xs-6" align="center">
-                            <img class="image-responsive"  style="height:80px; width:80px;" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
+                            <img class="image-responsive sk-member-image" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
                             <p><strong>{{skmember.user}}</strong></p>
                         </div>
                         {% endif %}
-
                         {% endfor %}
-
-
                     </div>
-
                 </div>
             </div>
 
@@ -200,216 +188,285 @@
 
 
 
-
-
+{% block extra_css %}
+<style type="text/css">
+    .sk-member-image{
+        height:80px;
+        width:80px;
+    }
+    .header-school-title{
+        display: inline-block;
+    }
+    .school-cover{
+        position:absolute;
+        z-index:99;
+        bottom:25px;
+        right:25px;
+    }
+    .school-cover-form{
+        display:inline-block;
+        float:right
+    }
+    .change-button{
+        display: inline-block;
+    }
+    #btn_upload{
+        display: none;
+    }
+    .profile-img-size{
+        height:80px;
+        width:80px;
+    }
+    .post-row{
+        margin-top: -15px;
+    }
+    .image-holder{
+        max-width: 100%
+    }
+    #alertdiv{
+        font-size:15px;
+        margin-top:15px;
+        padding-top: 2px;
+        padding-bottom: 3px;
+    }
+    .help-block{
+        color:red;
+        margin-bottom: 5px;
+    }
+    .post-image{
+        left:25px;
+        display: inline-block;
+    }
+    #id_post_image{
+        display: none;
+    }
+    #btn-choose{
+        display: inline-block;
+        position:relative;
+        width:40px;
+    }
+    .image-icon{
+        position:absolute;
+        z-index:99;
+        bottom:35px;
+        left:22px;
+        cursor: pointer;
+        color:#fff;
+    }
+    #save-btn{
+        display: inline-block;
+        position:relative;
+    }
+</style>
+{% endblock %}
 {% endblock %}
 
 {% block extra_js %}
 <script>
-function changePic(){
-    $('#id_image').click();
-    $("#id_image").on("change", function(){
-        if($("#id_image").val()){
-            $('#btn_change').hide();
-            $('#btn_upload').show();
-        }
-    });
-}
-function choosePic(){
-    $('#id_post_image').click();
-    $("#id_post_image").on("change", function(){
-        if($("#id_post_image").val()){
+    function changePic(){
+        $('#id_image').click();
+        $("#id_image").on("change", function(){
+            if($("#id_image").val()){
+                $('#btn_change').hide();
+                $('#btn_upload').show();
+            }
+        });
+    }
+    function choosePic(){
+        $('#id_post_image').click();
+        $("#id_post_image").on("change", function(){
+            if($("#id_post_image").val()){
 
-        }
-    });
-}
+            }
+        });
+    }
 
 
 </script>
 <script>
-$(function () {
+    $(function () {
 
-  /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
-  $("#id_post_image").on('change',function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
+        /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+        $("#id_post_image").on('change',function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $("#school-post-image").attr("src", e.target.result);
-                $("#modalSchoolPostCrop").modal("show");
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-});
-
-/* SCRIPTS TO HANDLE THE CROPPER BOX */
-var $image = $("#school-post-image");
-var cropBoxData;
-var canvasData;
-$("#modalSchoolPostCrop").on("shown.bs.modal", function () {
-  $image.cropper({
-    viewMode: 1,
-    aspectRatio: 16/9,
-    ready: function () {
-      $image.cropper("setCanvasData", canvasData);
-      $image.cropper("setCropBoxData", cropBoxData);
-    }
-  });
-}).on("hidden.bs.modal", function () {
-  cropBoxData = $image.cropper("getCropBoxData");
-  canvasData = $image.cropper("getCanvasData");
-  $image.cropper("destroy");
-});
-
-// Enable zoom in button
-$(".js-zoom-in").click(function () {
-  $image.cropper("zoom", 0.1);
-});
-
-// Enable zoom out button
-$(".js-zoom-out").click(function () {
-  $image.cropper("zoom", -0.1);
-});
-
-  /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
-  $(".js-crop-and-upload-post").click(function () {
-    var imageData = $('#school-post-image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
-    if($('#modal-school-post').hasClass('in')){
-        $('.jcrop-holder-post-edit').attr('src', imageData);
-        $("#id_image_base").val(imageData);
-    }
-    else{
-        $('.jcrop-holder').attr('src', imageData);
-        $("#id_image_base64").val(imageData);
-    }
-
-    $("#modalSchoolPostCrop").modal('hide');
-    $("#id_post_image").val("");
-  });
-});
-  </script>
-<script>
-$(function () {
-  /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
-  $("#id_image").on('change',function () {
-          if (this.files && this.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-          $("#image").attr("src", e.target.result);
-          $("#modalCoverCrop").modal("show");
-        }
-        reader.readAsDataURL(this.files[0]);
-      }
-});
-
-/* SCRIPTS TO HANDLE THE CROPPER BOX */
-var $image = $("#image");
-var cropBoxData;
-var canvasData;
-$("#modalCoverCrop").on("shown.bs.modal", function () {
-  $image.cropper({
-    viewMode: 1,
-    aspectRatio: 16/6,
-    minCropBoxWidth: 200,
-    minCropBoxHeight: 200,
-
-    ready: function () {
-      $image.cropper("setCanvasData", canvasData);
-      $image.cropper("setCropBoxData", cropBoxData);
-    }
-  });
-}).on("hidden.bs.modal", function () {
-  cropBoxData = $image.cropper("getCropBoxData");
-  canvasData = $image.cropper("getCanvasData");
-  $image.cropper("destroy");
-});
-
-// Enable zoom in button
-$(".js-zoom-in").click(function () {
-  $image.cropper("zoom", 0.1);
-});
-
-// Enable zoom out button
-$(".js-zoom-out").click(function () {
-  $image.cropper("zoom", -0.1);
-});
-
-  /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
-  $(".js-crop-and-upload-cover").click(function () {
-    var imageData = $('#image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
-    $('.jcrop-cover-holder').attr('src', imageData);
-    $("#id_cover_image_base64").val(imageData);
-    $("#modalCoverCrop").modal('hide');
-    $("#id_image").val("");
-  });
-
-  var loadForm = function () {
-        var btn = $(this);
-        $.ajax({
-            url: btn.attr("data-url"),
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function () {
-                $("#modal-school-post").modal("show");
-            },
-            success: function (data) {
-                $("#modal-school-post .modal-content").html(data.html_form);
+                reader.onload = function (e) {
+                    $("#school-post-image").attr("src", e.target.result);
+                    $("#modalSchoolPostCrop").modal("show");
+                }
+                reader.readAsDataURL(this.files[0]);
             }
         });
-    };
 
-  var saveForm = function () {
-    var form = $(this);
-    var formClass = form.attr("class")
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-        if (data.form_is_valid) {
-          $("#school-post").html(data.html_school_post_list);
-          $("#modal-school-post").modal("hide");  // <-- Close the modal
-        }
-        else {
-          $("#modal-school-post .modal-content").html(data.html_form);
-        }
-        }
+        /* SCRIPTS TO HANDLE THE CROPPER BOX */
+        var $image = $("#school-post-image");
+        var cropBoxData;
+        var canvasData;
+        $("#modalSchoolPostCrop").on("shown.bs.modal", function () {
+            $image.cropper({
+                viewMode: 1,
+                aspectRatio: 16/9,
+                ready: function () {
+                    $image.cropper("setCanvasData", canvasData);
+                    $image.cropper("setCropBoxData", cropBoxData);
+                }
+            });
+        }).on("hidden.bs.modal", function () {
+            cropBoxData = $image.cropper("getCropBoxData");
+            canvasData = $image.cropper("getCanvasData");
+            $image.cropper("destroy");
+        });
+
+// Enable zoom in button
+        $(".js-zoom-in").click(function () {
+            $image.cropper("zoom", 0.1);
+        });
+
+// Enable zoom out button
+        $(".js-zoom-out").click(function () {
+            $image.cropper("zoom", -0.1);
+        });
+
+        /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+        $(".js-crop-and-upload-post").click(function () {
+            var imageData = $('#school-post-image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
+            if($('#modal-school-post').hasClass('in')){
+                $('.jcrop-holder-post-edit').attr('src', imageData);
+                $("#id_image_base").val(imageData);
+            }
+            else{
+                $('.jcrop-holder').attr('src', imageData);
+                $("#id_image_base64").val(imageData);
+            }
+
+            $("#modalSchoolPostCrop").modal('hide');
+            $("#id_post_image").val("");
+        });
     });
-    return false;
-  };
+</script>
+<script>
+    $(function () {
+        /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+        $("#id_image").on('change',function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
 
-  var updateForm = function () {
-    var form = $(this);
-    var formClass = form.attr("class")
-    $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
-      dataType: 'json',
-      success: function (data) {
-          $("#modal-school-post").modal("hide");  // <-- Close the modal
-          location.reload();
-        if (data.form_is_valid) {
-          $("#school-post").html(data.html_school_post_list);
+                reader.onload = function (e) {
+                    $("#image").attr("src", e.target.result);
+                    $("#modalCoverCrop").modal("show");
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
 
-        }
-        else {
-          $("#modal-school-post .modal-content").html(data.html_form);
-        }
-        }
+        /* SCRIPTS TO HANDLE THE CROPPER BOX */
+        var $image = $("#image");
+        var cropBoxData;
+        var canvasData;
+        $("#modalCoverCrop").on("shown.bs.modal", function () {
+            $image.cropper({
+                viewMode: 1,
+                aspectRatio: 16/6,
+                minCropBoxWidth: 200,
+                minCropBoxHeight: 200,
+
+                ready: function () {
+                    $image.cropper("setCanvasData", canvasData);
+                    $image.cropper("setCropBoxData", cropBoxData);
+                }
+            });
+        }).on("hidden.bs.modal", function () {
+            cropBoxData = $image.cropper("getCropBoxData");
+            canvasData = $image.cropper("getCanvasData");
+            $image.cropper("destroy");
+        });
+
+// Enable zoom in button
+        $(".js-zoom-in").click(function () {
+            $image.cropper("zoom", 0.1);
+        });
+
+// Enable zoom out button
+        $(".js-zoom-out").click(function () {
+            $image.cropper("zoom", -0.1);
+        });
+
+        /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+        $(".js-crop-and-upload-cover").click(function () {
+            var imageData = $('#image').cropper('getCroppedCanvas').toDataURL('image/jpeg', 0.5) ;
+            $('.jcrop-cover-holder').attr('src', imageData);
+            $("#id_cover_image_base64").val(imageData);
+            $("#modalCoverCrop").modal('hide');
+            $("#id_image").val("");
+        });
+
+        var loadForm = function () {
+            var btn = $(this);
+            $.ajax({
+                url: btn.attr("data-url"),
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#modal-school-post").modal("show");
+                },
+                success: function (data) {
+                    $("#modal-school-post .modal-content").html(data.html_form);
+                }
+            });
+        };
+
+        var saveForm = function () {
+            var form = $(this);
+            var formClass = form.attr("class")
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: form.attr("method"),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.form_is_valid) {
+                        $("#school-post").html(data.html_school_post_list);
+                        $("#modal-school-post").modal("hide");  // <-- Close the modal
+                    }
+                    else {
+                        $("#modal-school-post .modal-content").html(data.html_form);
+                    }
+                }
+            });
+            return false;
+        };
+
+        var updateForm = function () {
+            var form = $(this);
+            var formClass = form.attr("class")
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                type: form.attr("method"),
+                dataType: 'json',
+                success: function (data) {
+                    $("#modal-school-post").modal("hide");  // <-- Close the modal
+                    location.reload();
+                    if (data.form_is_valid) {
+                        $("#school-post").html(data.html_school_post_list);
+
+                    }
+                    else {
+                        $("#modal-school-post .modal-content").html(data.html_form);
+                    }
+                }
+            });
+            return false;
+        };
+
+        // Delete school post
+        $("#school-post").on("click", "#js-delete-school-post", loadForm);
+        $("#modal-school-post").on("submit", ".js-school-post-delete-form", saveForm);
+
+        // Update school post
+        $("#school-post").on("click", "#js-update-school-post", loadForm);
+        $("#modal-school-post").on("submit", ".js-school-post-update-form", updateForm);
     });
-    return false;
-  };
-
-  // Delete school post
-  $("#school-post").on("click", "#js-delete-school-post", loadForm);
-  $("#modal-school-post").on("submit", ".js-school-post-delete-form", saveForm);
-
-  // Update school post
-  $("#school-post").on("click", "#js-update-school-post", loadForm);
-  $("#modal-school-post").on("submit", ".js-school-post-update-form", updateForm);
-});
-  </script>
+</script>
 {% endblock %}

@@ -2,143 +2,170 @@
 <header class="main-header">
 
     <!-- Logo -->
-  {% if post_detail %}
+    {% if post_detail %}
 
-    <a href="{% url 'school:school_profile' post_detail.school.id %}" class="logo" style="position:fixed;">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SK</b>NF</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
+    <a href="{% url 'school:school_profile' post_detail.school.id %}" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">{{common_strings.HEADER_SKNF_LOGO_TEXT}}</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
     </a>
 
 
-  {% elif not user.is_authenticated or user.is_authenticated and user.user_type == 1 %}
-    <a href="{% url 'accounts:dashboard' %}" class="logo" style="position:fixed;">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SK</b>NF</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
+    {% elif not user.is_authenticated or user.is_authenticated and user.user_type == 1 %}
+    <a href="{% url 'accounts:dashboard' %}" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">{{common_strings.HEADER_SKNF_LOGO_TEXT}}</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
     </a>
-  {% elif user.is_authenticated and user.user_type != 1 and profile.school.id %}
-    <a href="{% url 'school:school_profile' profile.school.id %}" style="position:fixed;" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>SK</b>NF</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
+    {% elif user.is_authenticated and user.user_type != 1 and profile.school.id %}
+    <a href="{% url 'school:school_profile' profile.school.id %}" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">{{common_strings.HEADER_SKNF_LOGO_TEXT}}</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b></b><img src="{% static 'sknf/images/sknf.png' %}" alt="SKNF"></span>
     </a>
-  {% endif %}
+    {% endif %}
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-fixed-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" style="position:fixed;">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
 
 
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
 
-          <!-- Notifications: style can be found in dropdown.less -->
-
-
+                <!-- Notifications: style can be found in dropdown.less -->
 
 
 
-          <!-- Tasks: style can be found in dropdown.less -->
-
-          <!-- User Account: style can be found in dropdown.less -->
-            {% if user.is_authenticated and user.user_type == 1 or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 or user.user_type == 5 %}
-            <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              {% if user.is_authenticated and user.user_type == 1 and profile.image %}
-              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 2 and profile.image %}
-              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 3 and profile.image %}
-              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 4 and profile.image %}
-              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 5 and profile.image %}
-              <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
-              {% else %}
-              <img src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="user-image" alt="User Image">
-              {% endif %}
-              <span class="hidden-xs">{{ user.first_name }}</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header" style="height: auto; padding-bottom: 4px;">
-                {% if user.is_authenticated and user.user_type == 1 and profile.image %}
-              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
-                {% elif user.is_authenticated and user.user_type == 2 and profile.image %}
-              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 3 and profile.image %}
-              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
-                {% elif user.is_authenticated and user.user_type == 4 and profile.image %}
-              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
-              {% elif user.is_authenticated and user.user_type == 5 and profile.image %}
-              <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
-              {% else %}
-              <img src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="img-circle" alt="User Image">
-              {% endif %}
-
-                <p style="margin-top: 3px; margin-bottom: 0;">
-                  {{ user.first_name }}
-                </p>
-              </li>
-              <li>
-
-              <p style="text-transform: capitalize;padding: 10px 10px 10px 10px;margin-bottom: 0;">
-                <strong>Role</strong>: {{user.get_user_type_display}}<br />
-                <strong>Email</strong>: {{user.get_username}}
-              </p>
 
 
-<!--              <p class="text-muted"></p>-->
+                <!-- Tasks: style can be found in dropdown.less -->
 
-            </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  {% if user.is_authenticated and user.user_type == 1 %}
-                                <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:admin_update' %}">Edit Profile
-                                </a>
-                            {% elif user.is_authenticated and user.user_type == 2 %}
-                                <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:headmaster_update' %}">Edit Profile
-                                </a>
-                            {% elif user.is_authenticated and user.user_type == 3 %}
-                                <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:headmaster_update' %}">Edit Profile
-                                </a>
-                            {% elif user.is_authenticated and user.user_type == 4 %}
-                                <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:headmaster_update' %}">Edit Profile
-                                </a>
-                            {% elif user.is_authenticated and user.user_type == 5 %}
-                                <a type="button" class="btn btn-primary btn-flat" style="float:right;"
-                                   href="{% url 'accounts:skleader_update' %}">Edit Profile
-                                </a>
+                <!-- User Account: style can be found in dropdown.less -->
+                {% if user.is_authenticated and user.user_type == 1 or user.user_type == 2 or user.user_type == 3 or user.user_type == 4 or user.user_type == 5 %}
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {% if user.is_authenticated and user.user_type == 1 and profile.image %}
+                        <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
+                        {% elif user.is_authenticated and user.user_type == 2 and profile.image %}
+                        <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
+                        {% elif user.is_authenticated and user.user_type == 3 and profile.image %}
+                        <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
+                        {% elif user.is_authenticated and user.user_type == 4 and profile.image %}
+                        <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
+                        {% elif user.is_authenticated and user.user_type == 5 and profile.image %}
+                        <img src="{{ profile.image.url }}" class="user-image" alt="User Image">
+                        {% else %}
+                        <img src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="user-image" alt="User Image">
+                        {% endif %}
+                        <span class="hidden-xs">{{ user.first_name }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header user-info-box">
+                            {% if user.is_authenticated and user.user_type == 1 and profile.image %}
+                            <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
+                            {% elif user.is_authenticated and user.user_type == 2 and profile.image %}
+                            <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
+                            {% elif user.is_authenticated and user.user_type == 3 and profile.image %}
+                            <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
+                            {% elif user.is_authenticated and user.user_type == 4 and profile.image %}
+                            <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
+                            {% elif user.is_authenticated and user.user_type == 5 and profile.image %}
+                            <img src="{{ profile.image.url }}" class="img-circle" alt="User Image">
+                            {% else %}
+                            <img src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="img-circle" alt="User Image">
                             {% endif %}
-                </div>
-                <div class="pull-right">
-                  <a href="{% url 'accounts:logout' %}" class="btn btn-primary btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-            {% else %}
-            <div class="pull-right" style="margin-right:10px; margin-top:8px">
-                  <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-flat">Sign in</a>
-                </div>
-            {% endif %}
-          </ul>
 
-      </div>
+                            <p style="margin-top: 3px; margin-bottom: 0;">
+                                {{ user.first_name }}
+                            </p>
+                        </li>
+                        <li>
+
+                            <p class="user-info">
+                                <strong>{{common_strings.PROFILE_ROLE_LABEL}}</strong> {{user.get_user_type_display}}<br />
+                                <strong>{{common_strings.PROFILE_EMAIL_LABEL}}</strong> {{user.get_username}}
+                            </p>
+
+
+                            <!--              <p class="text-muted"></p>-->
+
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                {% if user.is_authenticated and user.user_type == 1 %}
+                                <a type="button" class="btn btn-primary btn-flat edit-profile"
+                                   href="{% url 'accounts:admin_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
+                                </a>
+                                {% elif user.is_authenticated and user.user_type == 2 %}
+                                <a type="button" class="btn btn-primary btn-flat edit-profile"
+                                   href="{% url 'accounts:headmaster_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
+                                </a>
+                                {% elif user.is_authenticated and user.user_type == 3 %}
+                                <a type="button" class="btn btn-primary btn-flat edit-profile"
+                                   href="{% url 'accounts:headmaster_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
+                                </a>
+                                {% elif user.is_authenticated and user.user_type == 4 %}
+                                <a type="button" class="btn btn-primary btn-flat edit-profile"
+                                   href="{% url 'accounts:headmaster_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
+                                </a>
+                                {% elif user.is_authenticated and user.user_type == 5 %}
+                                <a type="button" class="btn btn-primary btn-flat edit-profile"
+                                   href="{% url 'accounts:skleader_update' %}">{{common_strings.EDIT_PROFILE_BUTTON}}
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="pull-right">
+                                <a href="{% url 'accounts:logout' %}" class="btn btn-primary btn-flat">{{common_strings.SIGN_OUT_BUTTON}}</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                {% else %}
+                <div class="pull-right signin-btn">
+                    <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-flat">{{common_strings.SIGN_IN_BUTTON}}</a>
+                </div>
+                {% endif %}
+            </ul>
+
+        </div>
     </nav>
-  </header>
+</header>
+
+{% block extra_css %}
+<style type="text/css">
+    .user-info{
+        text-transform: capitalize;
+        padding: 10px 10px 10px 10px;
+        margin-bottom: 0;
+    }
+    .signin-btn{
+        margin-right:10px;
+        margin-top:8px;
+    }
+    .edit-profile{
+        float:right;
+    }
+    .user-info-box{
+        height: auto!important;
+        padding-bottom: 4px!important;
+    }
+    .logo{
+        position:fixed!important;
+    }
+    .sidebar-toggle{
+        position:fixed!important;
+    }
+</style>
+{% endblock %}
