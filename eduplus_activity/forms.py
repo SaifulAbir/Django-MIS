@@ -62,7 +62,7 @@ class EditEduPlusActivityForm(forms.ModelForm):
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
-        required=False)
+        required=True, error_messages={'required': 'Select at least one topic.'})
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField(error_messages={'required': edu_strings.DESCRIPTION_REQUIRED_ERROR},
                                   widget=forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}))

@@ -35,15 +35,27 @@
             <table   id="example1" class="club-meeting-search-table data-table table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th class="col-sm-6">{{ club_meeting_strings.CLUB_MEETING_DATE_TEXT }}</th>
-                    <th class="col-sm-5">{{ club_meeting_strings.CLUB_MEETING_CLASS_ROOM_TEXT }}</th>
-                    <th class="text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
+                    <th class="fixed-col col-sm-1 ">{{ club_meeting_strings.CLUB_MEETING_DATE_TEXT }}</th>
+                    <th class="col-sm-6">{{club_meeting_strings.CLUB_MEETING_TOPICS_TEXT}}</th>
+                    <th class="col-sm-2">{{club_meeting_strings.CLUB_MEETING_ATTENDANCE_TEXT}}</th>
+                    <th class="col-sm-2">{{ club_meeting_strings.CLUB_MEETING_CLASS_ROOM_TEXT }}</th>
+                    <th class="text-center fixed-col col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for club_meeting in clubmeetings_list %}
                 <tr>
-                    <td>{{club_meeting.date}}</td>
+                    <td>{{club_meeting.date | date:common_strings.DATE_FORMAT}}</td>
+                    <td>
+                        {% for topic in club_meeting.topics.all %}
+                        {% if forloop.last %}
+                        {{topic.name}}
+                        {% else %}
+                        {{topic.name}},
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{club_meeting.attendance.all.count}}</td>
                     <td>{{ club_meeting.class_room }}</td>
                     <td align="center">
                         <a type="button"
@@ -107,24 +119,25 @@
     </div>
     <!-- /.content -->
 </section>
-    {% block extra_css %}
-        <style>
-        #alertdiv{
-            font-size:20px;
-            margin-top:15px;
-        }
-        </style>
-        {% endblock %}
+{% block extra_css %}
+<style>
+    #alertdiv{
+        font-size:20px;
+        margin-top:15px;
+    }
+
+</style>
+{% endblock %}
 {% endblock %}
 
 {% block extra_js %}
 <script type="text/javascript">
     $('.box-body').on('click', '.paginator', function (e) {
-            e.preventDefault();
-            var addressValue = $(this).attr("href");
-            var url = '/club_meetings/pagination/'+addressValue;
-            paginator(".table-responsive", url, '.club-meeting-search-table', {'school':'', 'division':'',
+        e.preventDefault();
+        var addressValue = $(this).attr("href");
+        var url = '/club_meetings/pagination/'+addressValue;
+        paginator(".table-responsive", url, '.club-meeting-search-table', {'school':'', 'division':'',
             'district':'', 'upazila':'', 'union':'', 'form_date':'', 'to_date':'', 'topic':''});
-        });
+    });
 </script>
 {% endblock %}

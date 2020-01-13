@@ -10,14 +10,13 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.template import loader
 from django.core.mail import send_mail
-import resources.strings as common_strings
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden, JsonResponse
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 import base64, uuid
 from django.shortcuts import render, redirect
-
+from resources import strings as common_strings
 
 
 # Create your views here.
@@ -57,9 +56,9 @@ def index(request):
     if request.is_ajax():
         data['form_is_valid'] = True
         data['html_list'] = render_to_string('school/partial_school_list_dashboard.html',
-                                             {'school_list': school_list})
+                                             {'school_list': school_list, 'common_strings':common_strings})
         return JsonResponse(data)
-    context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list,
+    context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list, 'common_strings':common_strings,
                'school_total': school_total, 'headmaster_total': headmaster_total, 'skleader_total': skleader_total, 'skmember_total': skmember_total}
     return render(request, 'sknf/index.html', context)
 

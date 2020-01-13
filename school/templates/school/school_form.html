@@ -160,12 +160,12 @@
         if(titile == "Add New School"){
             $("#id_district, #id_upazilla, #id_union").html('<option value="">---------</option>');
         }
-        if("{{ form.instance.pk}}"){
+        if("{{ form.instance.pk}}") {
             var divisionId = $("#id_division").val();
             var districtId = $("#id_district").val();
             var upazilaId = $("#id_upazilla").val();
             var unionId = $("#id_union").val();
-            if (divisionId || districtId || upazilaId || unionId) {
+            if (divisionId && districtId) {
                 $.ajax({
                     url: '/ajax/load-districts/',
                     data: {
@@ -174,9 +174,25 @@
                     },
                     success: function (data) {
                         $("#id_district").html(data);
+                        $("#id_union").html('<option value="">---------</option>');
 
                     }
                 });
+            }
+            else if(divisionId){
+                $.ajax({
+                    url: '/ajax/load-districts/',
+                    data: {
+                        'division': divisionId,
+                    },
+                    success: function (data) {
+                        $("#id_district").html(data);
+                        $("#id_upazilla, #id_union").html('<option value="">---------</option>');
+
+                    }
+                });
+            }
+            if (districtId && upazilaId){
                 $.ajax({
                     url: '/ajax/load-upazillas/',
                     data: {
@@ -188,6 +204,21 @@
 
                     }
                 });
+            }
+            else if(districtId){
+                $.ajax({
+                    url: '/ajax/load-upazillas/',
+                    data: {
+                        'district': districtId,
+                    },
+                    success: function (data) {
+                        $("#id_upazilla").html(data);
+                        $("#id_union").html('<option value="">---------</option>');
+
+                    }
+                });
+            }
+            if(upazilaId && unionId) {
                 $.ajax({
                     url: '/ajax/load-unions/',
                     data: {
@@ -200,9 +231,21 @@
                     }
                 });
             }
-            else{
-                $("#id_district, #id_upazilla, #id_union").html('<option value="">---------</option>');
+            else if(upazilaId){
+                $.ajax({
+                    url: '/ajax/load-unions/',
+                    data: {
+                        'upazilla': upazilaId,
+                    },
+                    success: function (data) {
+                        $("#id_union").html(data);
+
+                    }
+                });
             }
+            if(!divisionId && !districtId && !upazilaId && !unionId){
+                 $("#id_district, #id_upazilla, #id_union").html('<option value="">---------</option>');
+             }
         }
 
 

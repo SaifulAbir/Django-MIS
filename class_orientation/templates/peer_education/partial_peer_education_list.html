@@ -1,17 +1,17 @@
 <table   id="example1" class=" peer-education-table data-table table table-bordered table-striped">
     <thead>
     <tr>
-        <th class="col-sm-4">{{ peer_education_strings.PEER_EDUCATION_DATE_TEXT }}</th>
+        <th class="fixed-col col-sm-1">{{ peer_education_strings.PEER_EDUCATION_DATE_TEXT }}</th>
         <th class="col-sm-3">{{ peer_education_strings.PEER_EDUCATION_PLACE_TEXT }}</th>
-        <th class="col-sm-3">{{ peer_education_strings.PEER_EDUCATION_TOPICS_TEXT }}</th>
-        <th class="text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
+        <th class="col-sm-7">{{ peer_education_strings.PEER_EDUCATION_TOPICS_TEXT }}</th>
+        <th class="fixed-col text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
     </tr>
     </thead>
     <tbody>
     {% for peer_education in peereducation_list %}
     <tr>
 
-        <td>{{ peer_education.created_date }}</td>
+        <td>{{ peer_education.created_date | date:common_strings.DATE_FORMAT }}</td>
         <td>{{ peer_education.get_place_display }}</td>
         <td>
             {% for topic in peer_education.topic.all %}
