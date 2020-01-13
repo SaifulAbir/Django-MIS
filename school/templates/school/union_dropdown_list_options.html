@@ -1,4 +1,8 @@
 <option value="">---------</option>
 {% for union in unions %}
-<option value="{{ union.pk }}">{{ union.name }}</option>
+    {% if unionId == union.pk %}
+    <option selected value="{{ union.pk }}">{{ union.name }}</option>
+    {% else %}
+    <option value="{{ union.pk }}">{{ union.name }}</option>
+    {% endif %}
 {% endfor %}

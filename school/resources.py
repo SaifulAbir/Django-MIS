@@ -9,8 +9,8 @@ from upazillas.models import Upazilla
 from .models import School
 
 class SchoolResource(resources.ModelResource):
-    name = Field(attribute='name', column_name='School name')
     school_id = Field(attribute='school_id', column_name='EIIN')
+    name = Field(attribute='name', column_name='School Name')
 
     division = fields.Field(
         column_name='Division',
@@ -31,13 +31,8 @@ class SchoolResource(resources.ModelResource):
             column_name='Union',
             attribute='union',
             widget=ForeignKeyWidget(Union, 'name'))
-    #club_establishment_date = fields.Field(column_name='Establishment Date')
 
-    def dehydrate_club_establishment_date(self,school):
-        date_string = str(school.club_establishment_date)
-        if date_string :
-            return datetime.strptime(date_string, '%Y-%m-%d').strftime('%d-%m-%Y')
-
+    address = fields.Field(column_name= 'Address')
 
     class Meta:
         model = School

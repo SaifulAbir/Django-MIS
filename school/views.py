@@ -57,10 +57,10 @@ def save_school_form(request, form, template_name):
             data['form_is_valid'] = True
             school_list = School.objects.all()
             data['html_school_list'] = render_to_string('school/partial_school_list.html',
-                                                          {'school_list': school_list})
+                                                          {'school_list': school_list,'school_strings':school_strings,'common_strings':common_strings})
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form,'school_strings':school_strings,'common_strings':common_strings}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -105,7 +105,7 @@ def school_list(request, export='null'):
         queryset = paginator.page(paginator.num_pages)
     if export != 'export':
         return render(request, 'school/school_list.html', {'queryset': queryset,'name':name,'school_id':school_id,'division':division,
-                                                       'district':district,'upazilla':upazilla,'union':union})
+                                                       'district':district,'upazilla':upazilla,'union':union,'school_strings':school_strings,'common_strings':common_strings})
     else:
         resource = SchoolResource()
         dataset = resource.export(qs)
@@ -147,7 +147,7 @@ def school_list_search_list(request, export='null'):
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('school/partial_school_list.html',
-                                                {'queryset': queryset})
+                                                {'queryset': queryset,'school_strings':school_strings,'common_strings':common_strings})
 
     if export != 'export':
         return JsonResponse(data)
@@ -171,10 +171,10 @@ def school_delete(request, pk):
         data['form_is_valid'] = True  # This is just to play along with the existing code
         school_list = School.objects.all()
         data['html_school_list'] = render_to_string('school/school_list.html', {
-            'school_list': school_list
+            'school_list': school_list,'school_strings':school_strings,'common_strings':common_strings
         })
     else:
-        context = {'school': school}
+        context = {'school': school,'school_strings':school_strings,'common_strings':common_strings}
         data['html_form'] = render_to_string('school/school_confirm_delete.html',
             context,
             request=request,
@@ -183,18 +183,27 @@ def school_delete(request, pk):
 
 def load_districts(request):
     division_id = request.GET.get('division')
+    districtId = request.GET.get('districtId')
+    if districtId:
+        districtId = int(districtId)
     districts = District.objects.filter(division_id=division_id).order_by('name')
-    return render(request, 'school/district_dropdown_list_options.html', {'districts': districts })
+    return render(request, 'school/district_dropdown_list_options.html', {'districts': districts, 'districtId': districtId })
 
 def load_upazillas(request):
     district_id = request.GET.get('district')
+    upazilaId = request.GET.get('upazilaId')
+    if upazilaId:
+        upazilaId = int(upazilaId)
     upazillas = Upazilla.objects.filter(district_id=district_id).order_by('name')
-    return render(request, 'school/upazilla_dropdown_list_options.html', {'upazillas': upazillas})
+    return render(request, 'school/upazilla_dropdown_list_options.html', {'upazillas': upazillas, 'upazilaId':upazilaId})
 
 def load_unions(request):
     upazilla_id = request.GET.get('upazilla')
+    unionId = request.GET.get('unionId')
+    if unionId:
+        unionId = int(unionId)
     unions = Union.objects.filter(upazilla_id=upazilla_id).order_by('name')
-    return render(request, 'school/union_dropdown_list_options.html', {'unions': unions})
+    return render(request, 'school/union_dropdown_list_options.html', {'unions': unions, 'unionId':unionId})
 
 def school_profile(request, pk):
     school_profile = get_object_or_404(School, pk=pk)
@@ -330,7 +339,7 @@ def school_post_detail_view(request, pk):
         skleader_profile = SkLeaderProfile.objects.filter(school__id=post_detail.school.id, user__user_type=5).latest('school__id')
     except SkLeaderProfile.DoesNotExist:
         skleader_profile = None
-    return render(request, "school/school_post_detail.html", {'post_detail': post_detail, 'headmaster_profile': headmaster_profile, 'skleader_profile':skleader_profile})
+    return render(request, "school/school_post_detail.html", {'post_detail': post_detail, 'headmaster_profile': headmaster_profile, 'skleader_profile':skleader_profile,'school_strings':school_strings,'common_strings':common_strings})
 
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
@@ -355,10 +364,10 @@ def school_post_delete(request, pk):
         data['form_is_valid'] = True  # This is just to play along with the existing code
         school_post_list = SchoolPost.objects.all()
         data['html_school_post_list'] = render_to_string('school/partial_school_post_list.html', {
-            'school_post_list': school_post_list
+            'school_post_list': school_post_list,'school_strings':school_strings,'common_strings':common_strings
         })
     else:
-        context = {'school_post_delete': school_post}
+        context = {'school_post_delete': school_post,'school_strings':school_strings,'common_strings':common_strings}
         data['html_form'] = render_to_string('school/schoolpost_confirm_delete.html',
             context,
             request=request,
@@ -390,7 +399,7 @@ def school_post_update(request, pk):
             data['form_is_valid'] = False
     else:
         form = SchoolUpdatePostForm(instance=school_post)
-        context = {'post_form': form}
+        context = {'post_form': form, 'school_strings':school_strings,'common_strings':common_strings}
         data['html_form'] = render_to_string('school/school_post_update_form.html', context, request=request)
     return JsonResponse(data)
 

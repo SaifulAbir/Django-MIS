@@ -1,8 +1,8 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    <section class="content-header"style="padding-top:60px">
+    <section class="content-header">
         <h1>
-            School Info
+            {{ school_strings.SCHOOL_INFO_PAGE_TITLE }}
         </h1>
     </section>
 
@@ -11,19 +11,19 @@
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h3 class="box-title">Basic Information</h3>
+                        <h3 class="box-title">{{ school_strings.SCHOOL_INFO_BASIC_TITLE }}</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
-                            <label>Name:</label>
+                            <label>{{ school_strings.SCHOOL_LIST_NAME_TEXT }}:</label>
                             <input disabled type="text" value="{{school_detail.name}}" class="form-control my-colorpicker1">
                         </div>
                         <div class="form-group">
-                            <label>EIIN:</label>
+                            <label>{{ school_strings.SCHOOL_LIST_EIIN_TEXT }}:</label>
                             <input type="text" value="{{school_detail.school_id}}" class="form-control my-colorpicker1" readonly>
                         </div>
                         <div class="form-group">
-                            <label>Address:</label>
+                            <label>{{ school_strings.SCHOOL_LIST_ADDRESS_TEXT }}:</label>
                             <input type="text" value="{{school_detail.address}}" class="form-control my-colorpicker1" rows= "4.5" , style = "height:7.7em", readonly>
                         </div>
                     </div>
@@ -33,25 +33,25 @@
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h3 class="box-title">Location</h3>
+                        <h3 class="box-title">{{ school_strings.SCHOOL_INFO_LOCATION_TITLE }}</h3>
                     </div>
                     <div class="box-body">
                         <!-- School Division -->
                         <div class="form-group">
-                            <label>Division:</label>
+                            <label>{{ school_strings.SCHOOL_LIST_DIVISION_TEXT }}:</label>
                             <input type="text" value="{{school_detail.division}}" class="form-control my-colorpicker1" readonly>
                         </div>
                         <!-- /.form group -->
                         <div class="form-group">
-                            <label>District:</label>
+                            <label>{{ school_strings.SCHOOL_LIST_DISTRICT_TEXT }}:</label>
                             <input type="text" value="{{school_detail.district}}" class="form-control my-colorpicker1" readonly>
                         </div>
                         <div class="form-group">
-                            <label>Upazilla:</label>
+                            <label>{{ school_strings.SCHOOL_LIST_UPAZILA_TEXT }}:</label>
                             <input type="text" value="{{school_detail.upazilla}}" class="form-control my-colorpicker1" readonly>
                         </div>
                         <div class="form-group">
-                            <label>Union:</label>
+                            <label>{{ school_strings.SCHOOL_LIST_UNION_TEXT }}:</label>
                             <input type="text" value="{{school_detail.union}}" class="form-control my-colorpicker1" readonly>
                         </div>
                     </div>
@@ -64,12 +64,12 @@
                     <a type="button" style="margin-right: 5px;" onclick="goBack()"
                        class="btn btn-warning pull-left"
                        href="javascript:void(0)">
-                        Back
+                        {{ common_strings.BACK_BUTTON }}
                     </a>
                     <a type="button"
                        class="btn btn-primary pull-right"
                        href="{% url 'school:update_school' school_detail.pk %}">
-                        Edit
+                        {{ common_strings.EDIT_BUTTON }}
                     </a>
                 </div>
             </div>
