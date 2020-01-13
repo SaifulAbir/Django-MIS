@@ -3,11 +3,11 @@
 {% load widget_tweaks %}
 {% load static %}
 <form method='POST' enctype="multipart/form-data" id="formUpload" novalidate>
-    <section class="content-header"style="padding-top:60px">
+    <section class="content-header">
         {% if not user_form.instance.pk %}
-        <h1>Add New Headmaster/Guide Teacher</h1>
+        <h1>{{ headmaster_strings.HEADMASTER_NEW_PAGE_TITLE }}</h1>
         {% else %}
-        <h1>Update Headmaster Info</h1>
+        <h1>{{ headmaster_strings.HEADMASTER_UPDATE_PAGE_TITLE }}</h1>
         {% endif %}
     </section>
     <!-- Main content -->
@@ -17,26 +17,25 @@
                 <div class="box box-info">
                     <div class="box-header with-border">
                         {% if not form.instance.pk %}
-                        <h3 class="box-title">Basic Information</h3>
+                        <h3 class="box-title">{{ headmaster_strings.HEADMASTER_BASIC_INFO }}</h3>
                         {% else %}
-                        <h3 class="box-title">Basic Information</h3>
+                        <h3 class="box-title">{{ headmaster_strings.HEADMASTER_BASIC_INFO }}</h3>
                         {% endif %}
 
                     </div>
 
-                        <div class="row" style="padding-bottom: 10px;">
+                        <div class="row" >
                             <div class="col-sm-6">
                                 <div class="box-body">
                                 <span id = "alert_placeholder">
                                     {% if user_form.errors or profile_form.errors %}
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                        padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                        <div id="alertdiv"class="alert alert-danger-error-message">
                                         <span>
                                             {% for field in user_form %}
-                                                <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                <li class="help-block" >{{ field.errors|striptags }}</li>
                                             {% endfor %}
                                             {% for field in profile_form %}
-                                                <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                <li class="help-block">{{ field.errors|striptags }}</li>
                                             {% endfor %}
                                         </span>
                                     </div>
@@ -44,7 +43,7 @@
                                 </span>
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                    <label for="{{ user_form.first_name.id_for_label }}">{{ headmaster_strings.NAME_TEXT }}</label>
                                     {% render_field user_form.first_name class="form-control" placeholder="Name" %}
                                 </div>
 
@@ -70,12 +69,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="{{ user_form.confirm_password.id_for_label }}">Confirm Password</label>
-                                    {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
+                                    <label for="{{ user_form.confirm_password.id_for_label }}">{{ headmaster_strings.CONFIRM_PASSWORD_TEXT }}</label>
+                                    {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=headmaster_strings.CONFIRM_PASSWORD_TEXT %}
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="{{ user_form.user_type.id_for_label }}">User Type</label>
+                                    <label for="{{ user_form.user_type.id_for_label }}">{{ headmaster_strings.USER_TYPE_TEXT }}</label>
                                     {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
                                 </div>
                                 {% include 'sknf/_password_generator_modal.html' %}
@@ -85,10 +84,11 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <div class="col-sm-12">
-                                        <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
+                                        <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
                                     </div>
                                 </div>
-                                <input type="file" accept="image/*" placeholder="Image" style="margin-top: 10px;" class="pull-right img-preview" required="" id="id_PF-image">
+                                <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
+                                <input type="file" accept="image/*" placeholder="Image" class="pull-right img-preview" required="" id="id_PF-image" data-input="false" data-buttonText="Your label here.">
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
             <div class="col-sm-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">School Information</h3>
+                        <h3 class="box-title">{{ headmaster_strings.HEADMASTER_SCHOOL_INFO }}</h3>
                     </div>
                     <div class="box-body required">
                         <div class="row">
@@ -114,7 +114,7 @@
 
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
+                                    <label for="{{ profile_form.joining_date.id_for_label }}">{{ headmaster_strings.FROM_TEXT }}</label>
                                     <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
                                     <div style="display: none">
                                         {% render_field profile_form.joining_date class="form-control pastedate" %}
@@ -123,20 +123,20 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="id_hf-from_date">To</label>
+                                    <label for="id_hf-from_date">{{ headmaster_strings.TO_TEXT }}</label>
                                     <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                    <a type="button" onclick="goBack()"
                                        class="btn btn-warning pull-left"
                                        href="javascript:void(0)">
-                                        Back
+                                        {{ common_strings.BACK_BUTTON }}
                                     </a>
 
-                                    <input type="submit" value="Save" id="save-btn" class="btn btn-primary pull-right"/>
+                                    <input type="submit" value="{{ common_strings.SAVE_BUTTON }}" id="save-btn" class="btn btn-primary pull-right"/>
                             </div>
                         </div>
                     </div>

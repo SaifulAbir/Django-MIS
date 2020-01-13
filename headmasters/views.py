@@ -6,7 +6,8 @@ from django.core.files.base import ContentFile
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
-
+from . import strings as headmaster_strings
+from resources import strings as common_strings
 # Create your views here.
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
@@ -67,6 +68,8 @@ def headmaster_profile_view(request):
     return render(request, 'headmasters/headmaster_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'headmaster_strings': headmaster_strings,
+        'common_strings':common_strings
         #'headmaster_form_details': headmaster_form_details,
     })
 
@@ -77,6 +80,12 @@ class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "headmaster_detail"
     model = models.HeadmasterProfile
     template_name = 'headmasters/headmaster_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["headmaster_strings"] = headmaster_strings
+        context["common_strings"] = common_strings
+        return context
 
 
 @admin_login_required
@@ -98,7 +107,7 @@ def headmaster_list(request, export='null'):
         queryset = paginator.page(paginator.num_pages)
     if export != 'export':
         return render(request, 'headmasters/headmasterprofile_list.html',
-                      {'queryset': queryset, 'name': name, 'school': school,})
+                      {'queryset': queryset, 'name': name, 'school': school,'headmaster_strings':headmaster_strings,'common_strings':common_strings})
     else:
         resource = HeadmasterResource()
         dataset = resource.export(qs)
@@ -152,6 +161,8 @@ def headmaster_update(request, pk):
         'headmaster_details': headmaster_details,
         'school_list': school_list,
         'pk': pk,
+        'headmaster_strings':headmaster_strings,
+        'common_strings':common_strings
     })
 
 @admin_login_required
@@ -191,10 +202,6 @@ def headermaster_school_details_update(request):
     time.sleep(1)
     return HttpResponse('ok')
 
-def headmaster_home(request):
-    obj_head = HeadmasterProfile.objects.filter(pk=request.user.id)
-
-    return render(request, 'headmasters/headmaster_home.html')
 
 def headmaster_search_list(request, export='null'):
     data = dict()
@@ -219,7 +226,7 @@ def headmaster_search_list(request, export='null'):
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('headmasters/partial_headmaster_list.html',
-                                                {'queryset': queryset})
+                                                {'queryset': queryset,'headmaster_strings':headmaster_strings,'common_strings':common_strings})
 
     if export != 'export':
         return JsonResponse(data)

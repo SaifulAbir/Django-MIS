@@ -3,8 +3,8 @@
     {% load widget_tweaks %}
     {% load static %}
     <form method='POST' enctype="multipart/form-data" novalidate>
-        <section class="content-header"style="padding-top:60px">
-            <h1>Update Headmaster/ Guide Teacher Info</h1>
+        <section class="content-header">
+            <h1>{{ headmaster_strings.HEADMASTER_UPDATE_PAGE_TITLE }}</h1>
         </section>
         <!-- Main content -->
         <section class="content">
@@ -13,21 +13,20 @@
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Update Basic Information</h3>
+                            <h3 class="box-title">{{ headmaster_strings.HEADMASTER_BASIC_INFO }}</h3>
                         </div>
-                        <div class="row" style="padding-bottom: 10px;">
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                         {% if user_form.errors or profile_form.errors %}
-                                            <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                            <div id="alertdiv" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                                 {% for field in profile_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                    <li class="help-block" >{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                             </span>
                                         </div>
@@ -35,7 +34,7 @@
                                     </span>
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                        <label for="{{ user_form.first_name.id_for_label }}">{{ headmaster_strings.NAME_TEXT }}</label>
                                         {% render_field user_form.first_name class="form-control" placeholder="Name" %}
                                     </div>
                                     <div class="form-group">
@@ -54,12 +53,12 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.confirm_password.id_for_label }}">Confirm Password</label>
-                                        {% render_field user_form.confirm_password class="form-control" placeholder=user_form.confirm_password.label %}
+                                        <label for="{{ user_form.confirm_password.id_for_label }}">{{ headmaster_strings.CONFIRM_PASSWORD_TEXT }}</label>
+                                        {% render_field user_form.confirm_password class="form-control" placeholder=headmaster_strings.CONFIRM_PASSWORD_TEXT %}
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.user_type.id_for_label }}">User Type</label>
+                                        <label for="{{ user_form.user_type.id_for_label }}">{{ headmaster_strings.USER_TYPE_TEXT }}</label>
                                         {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
                                     </div>
                                 </div>
@@ -69,13 +68,14 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if headmaster_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ headmaster_profile.image.url }}" class="pull-right jcrop-holder" alt="Pic"><br />
+                                                <img width="220" src="{{ headmaster_profile.image.url }}" class="pull-right jcrop-holder" alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
+                                                <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
                                             {% endif %}
 
                                         </div>
                                     </div>
+                                    <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
                                     <input type="file" accept="image/*" placeholder="Headmaster image" style="margin-top: 10px;" class="pull-right img-preview" id="id_PF-image">
                                 </div>
                             </div>
@@ -97,13 +97,13 @@
 
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
+                                                    <label for="{{ profile_form.joining_date.id_for_label }}">{{ headmaster_strings.FROM_TEXT }}</label>
                                                     {% render_field profile_form.joining_date type="date" class="form-control" placeholder="Name" %}
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label for="id_hf-from_date2">To</label>
+                                                    <label for="id_hf-from_date2">{{ headmaster_strings.TO_TEXT }}</label>
                                                     <input type="text" name="hf-from_date" readonly class="form-control" required="" id="id_hf-from_date2"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
                                                 </div>
                                             </div>
@@ -115,12 +115,12 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="box box-body">
-                                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                    <a type="button" onclick="goBack()"
                                        class="btn btn-warning pull-left"
                                        href="javascript:void(0)">
-                                        Back
+                                        {{ common_strings.BACK_BUTTON }}
                                     </a>
-                                    <input type="submit" value="Update" class="btn btn-primary pull-right"/>
+                                    <input type="submit" value="{{ headmaster_strings.UPDATE_BASIC_INFO_BUTTON }}" class="btn btn-primary pull-right"/>
                                 </div>
                             </div>
                         </div>
@@ -132,9 +132,9 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             {% if not profile_form.instance.pk %}
-                                <h3 class="box-title">School Information</h3>
+                                <h3 class="box-title">{{ headmaster_strings.HEADMASTER_SCHOOL_INFO }}</h3>
                             {% else %}
-                                <h3 class="box-title">Update School Information</h3>
+                                <h3 class="box-title">{{ headmaster_strings.HEADMASTER_SCHOOL_INFO }}</h3>
                             {% endif %}
                         </div>
 
@@ -142,11 +142,11 @@
                             <span id="headmasterinfoajaxupdate">
 
                             </span>
-                            <table class="table table-bordered mb-0" id="tb-doc" style="width: 100%">
+                            <table class="table table-bordered mb-0" id="tb-doc" >
                                 <tr>
-                                    <th>School</th>
-                                    <th>From</th>
-                                    <th>To</th>
+                                    <th>{{ headmaster_strings.SCHOOL_TEXT }}</th>
+                                    <th>{{ headmaster_strings.FROM_TEXT }}</th>
+                                    <th>{{ headmaster_strings.TO_TEXT }}</th>
                                     <th></th>
                                 </tr>
                                 {% if headmaster_details %}
@@ -215,13 +215,13 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <button id="addMoreDoc" type="button" class="btn btn-info margin-top-4">
-                                        <i class="ft-plus"></i> Add Row
+                                        <i class="ft-plus"></i> {{ common_strings.ADD_ROW_BUTTON }}
                                     </button>
                                 </div>
                                 <div class="col-sm-11">
                                     <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
                                          class="pull-right loader" >
-                                    <input type="button" value="Update" class="btn btn-primary pull-right update-school" />
+                                    <input type="button" value="{{ headmaster_strings.UPDATE_SCHOOL_INFO_BUTTON }}" class="btn btn-primary pull-right update-school" />
                                 </div>
                             </div>
                         </div>

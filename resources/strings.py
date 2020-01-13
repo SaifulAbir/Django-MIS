@@ -33,6 +33,8 @@ UPDATE_BUTTON = "Update"
 DELETE_BUTTON = "Delete"
 CLOSE_BUTTON = "Close"
 SEARCH_BUTTON = "Search"
+SELECT_IMAGE_BUTTON = 'Select Image'
+ADD_ROW_BUTTON = 'Add Row'
 PAGINATION_NULL_INFO_TEXT = 'Showing 0 to 0 of 0 entries'
 PAGINATION_INFO = 'Showing %s to %s of %s entries'
 LIST_ACTION_TEXT = 'Actions'
@@ -56,4 +58,5 @@ SIGN_IN_BUTTON = 'Sign in'
 PROFILE_ROLE_LABEL = 'Role:'
 PROFILE_EMAIL_LABEL = 'Email:'
 HEADER_SKNF_LOGO_TEXT = 'SKNF'
+
 # Common Strings

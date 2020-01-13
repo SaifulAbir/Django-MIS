@@ -2,20 +2,20 @@
 {% block body_block %}
 
 <!-- Main content -->
-<section class="content-header"style="padding-top:60px">
+<section class="content-header">
     <h1>
-        Headmasters/Guide Teachers
+        {{ headmaster_strings.HEADMASTER_LIST_PAGE_TITLE }}
     </h1>
 </section>
 <section class="content">
     <div class="box">
         <form method="GET" action="." class="search-form-headmaster">
             <div class="box-header">
-                <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <div class="shop-search main-box card-block">
 
                     <div class="row">
                         <div class="form-group col-sm-5">
-                            <strong>Name</strong>
+                            <strong>{{ headmaster_strings.NAME_TEXT }}</strong>
                             {% if name is not None %}
                             <input class="form-control" type="search" value="{{name}}" name="name_contains" />
                             {% else %}
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="form-group col-sm-5">
-                            <strong>School</strong>
+                            <strong>{{ headmaster_strings.SCHOOL_TEXT }}</strong>
                             {% if school is not None %}
                             <input class="form-control " type="search" value="{{school}}" name="school_contains" />
                             {% else %}
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary search-headmaster">Search</button>
+                        <button type="submit" class="btn btn-primary search-headmaster">{{ common_strings.SEARCH_BUTTON }}</button>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -44,7 +44,7 @@
             <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
-                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                    <div id="alertdiv" class="alert alert-success-customized">
                         <span>
                             {% for message in messages %}
                             {{ message }}
@@ -57,22 +57,22 @@
                    class="btn btn-primary pull-right"
                    href="{% url 'headmasters:headmaster_profile' %}">
                     <span class="fa fa-plus"></span>
-                    New Headmaster
+                    {{ headmaster_strings.NEW_HEADMASTER_BUTTON }}
                 </a>
-                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-headmaster pull-right">Export CSV</button>
+                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-headmaster pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
                 <table   id="example1" class=" headmaster-search-table table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="col-sm-2">Name</th>
-                        <th class="col-sm-1">Mobile</th>
-                        <th class="col-sm-2">School</th>
-                        <th class="col-sm-2">Division</th>
-                        <th class="col-sm-2">District</th>
-                        <th class="col-sm-2">Upazila</th>
-                        <th class="col-sm-1 text-center">Actions</th>
+                        <th class="col-sm-3">{{ headmaster_strings.NAME_TEXT }}</th>
+                        <th class="col-sm-1">{{ headmaster_strings.MOBILE_TEXT }}</th>
+                        <th class="col-sm-4">{{ headmaster_strings.SCHOOL_TEXT }}</th>
+                        <th class="col-sm-1">{{ headmaster_strings.DIVISION_TEXT }}</th>
+                        <th class="col-sm-1">{{ headmaster_strings.DISTRICT_TEXT }}</th>
+                        <th class="col-sm-1">{{ headmaster_strings.UPAZILA_TEXT }}</th>
+                        <th class="fixed-col col-sm-1 text-center">{{ common_strings.LIST_ACTION_TEXT }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -104,7 +104,7 @@
 
                     </tfoot>
                 </table>
-                <p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
+                <p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index queryset.end_index queryset.paginator.count %}</p>
                 <ul class="pagination" style="float: right">
 
                     {% if queryset.has_previous %}
@@ -142,6 +142,16 @@
 
     <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <style>
+        .shop-search{
+            border: 1px solid rgb(204, 204, 204);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding-bottom: 0px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 
 {% block extra_js %}
@@ -181,6 +191,9 @@
                         'info': false,
                         'paging': false,
                         'ordering'    : false,
+                        "language": {
+                            "emptyTable":     "No Result Found"
+                        }
                     });
                 }
             });
