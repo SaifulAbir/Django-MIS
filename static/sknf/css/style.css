@@ -396,3 +396,7 @@ ul#id_EPA-attendance {
 }
 /*Common Css*/
 
+.sidebar-menu>li a span {
+    font-size: 18px;
+    font-weight: bold;
+}

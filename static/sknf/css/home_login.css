@@ -511,3 +511,7 @@ and (max-width : 480px) {
         float: right;
     }
 }
+.sidebar-menu>li a span {
+    font-size: 18px;
+    font-weight: bold;
+}

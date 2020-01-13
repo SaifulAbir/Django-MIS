@@ -37,7 +37,7 @@
                   <p>Schools</p>
                </div>
                <div class="icon">
-                  <i class="ion ion-home"></i>
+                  <i class="fa fa-university"></i>
                </div>
             </div>
                </a>
@@ -49,7 +49,7 @@
                   <p>Headmasters</p>
                </div>
                <div class="icon">
-                  <i class="ion ion-person"></i>
+                  <i class="fa fa-user"></i>
                </div>
             </div>
             </a>
@@ -61,11 +61,12 @@
                   <p>SK Leaders</p>
                </div>
                <div class="icon">
-                  <i class="fa fa-user"></i>
+                  <i class="fa fa-user-plus"></i>
                </div>
             </div>
             </a>
 
+            <a href="{% url 'skmembers:skmember_list' %}">
             <div class="small-box bg-yellow">
                <div class="inner">
                   <h3>{{skmember_total}}</h3>
@@ -73,9 +74,10 @@
                   <br>
                </div>
                <div class="icon">
-                  <i class="fa fa-user"></i>
+                  <i class="fa fa-users"></i>
                </div>
             </div>
+            </a>
 
       </div>
    </div>
