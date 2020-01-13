@@ -57,7 +57,7 @@ class User(AbstractUser):
     email_verifiaction_code = models.CharField(max_length=100, null=True, blank=True, default='')
     email_verified = models.CharField(max_length=1, null=True, blank=True, default=0)
     email = models.CharField(_(account_strings.USER_EMAIL_TEXT), unique=True, max_length=254 )  # changes email to unique and blank to false
-    first_name = models.CharField(_(account_strings.USER_FIRST_NAME_TEXT), max_length=40, blank=True)
+    first_name = models.CharField(_(account_strings.USER_FIRST_NAME_TEXT), max_length=40)
     USERNAME_FIELD = account_strings.USERNAME_FIELD_TEXT
     REQUIRED_FIELDS = []  # removes email from REQUIRED_FIELDS
 
