@@ -1,0 +1,75 @@
+<table   id="example1" class=" skmember-table data-table table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-3">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</th>
+                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_USER_NAME }}</th>
+                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_MOBILE }}</th>
+                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_SCHOOL }}</th>
+                        <th class="col-sm-2">{{ sk_strings.SK_MEMBER_TABLE_HEADER_CLASS }}</th>
+                        <th class="col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for skmember in skmemberprofile_list %}
+                    <tr>
+                        <td>{{skmember.user.first_name}}</td>
+                        <td>{{ skmember.user.email }}</td>
+                        <td>{{ skmember.mobile }}</td>
+                        <td>{{ skmember.school }}</td>
+                        <td>{{ skmember.student_class }}</td>
+                        <td><a type="button"
+                               class=""
+                               href="{% url 'skmembers:skmember_detail' skmember.pk %}">
+                            <span class="fa fa-eye"></span>
+                        </a>
+                            <a type="button"
+                               class=""
+                               href="{% url 'skmembers:skmember_update_for_skleader' skmember.pk %}">
+                                <span class="fa fa-edit"></span>
+
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+{% if skmemberprofile_list %}
+<p class="table-information">{% format_values common_strings.PAGINATION_INFO skmemberprofile_list.start_index  skmemberprofile_list.end_index skmemberprofile_list.paginator.count %}
+</p>
+{% else %}
+<p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+{% endif %}
+<ul class="pagination">
+
+    {% if skmemberprofile_list.has_previous %}
+    <li><a class="paginator" href="?page={{ skmemberprofile_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+    {% endif %}
+
+    {% if skmemberprofile_list.number|add:'-4' > 1 %}
+    <li><a class="paginator" href="?page={{ skmemberprofile_list.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% for i in skmemberprofile_list.paginator.page_range %}
+    {% if skmemberprofile_list.number == i %}
+    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% elif i > skmemberprofile_list.number|add:'-5' and i < skmemberprofile_list.number|add:'5' %}
+    <li><a class="paginator" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if skmemberprofile_list.paginator.num_pages > skmemberprofile_list.number|add:'4' %}
+    <li><a href="?page={{ skmemberprofile_list.number|add:'5' }}">&hellip;</a></li>
+    {% endif %}
+
+    {% if skmemberprofile_list.has_next %}
+    <li><a class="paginator" href="?page={{ skmemberprofile_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+    {% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+    {% endif %}
+</ul>

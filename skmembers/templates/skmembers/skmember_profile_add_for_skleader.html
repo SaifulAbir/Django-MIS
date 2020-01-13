@@ -42,18 +42,14 @@
                                         {% endif %}
                                     </span>
                                     {% csrf_token %}
-                                    <div class="form-group" style="display: none;">
-                                        <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                        {% render_field profile_form.school class="form-control" placeholder=profile_form.school.label %}
-                                    </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                        <label for="{{ user_form.first_name.id_for_label }}">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</label>
                                         {% render_field user_form.first_name class="form-control" placeholder="Name" %}
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">Username / Mobile Number</label>
+                                        <label for="{{ user_form.email.id_for_label }}">{{ sk_strings.SK_MEMBER_USERNAME_MOBILE }}</label>
                                         {% render_field user_form.email class="form-control" placeholder="Username / Mobile Number" %}
                                     </div>
 
@@ -63,7 +59,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.student_class.id_for_label }}">Class</label>
+                                        <label for="{{ profile_form.student_class.id_for_label }}">{{ sk_strings.SK_MEMBER_TABLE_HEADER_CLASS }}</label>
                                         {% render_field profile_form.student_class class="form-control" placeholder=profile_form.student_class.label %}
                                     </div>
 
