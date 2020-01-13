@@ -59,7 +59,7 @@ class EditClubMeetingForm(forms.ModelForm):
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
-        required=False)
+        required=True, error_messages={'required': 'Select at least one topic.'})
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
