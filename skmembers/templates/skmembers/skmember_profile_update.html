@@ -28,7 +28,7 @@
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                         {% if user_form.errors or profile_form.errors %}
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                                            <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                                             padding-bottom: 3px;" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         {% render_field profile_form.image_base64 %}
-            {% include 'sknf/_crop_modal.html' %}
+                        {% include 'sknf/_crop_modal.html' %}
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="box box-body">
@@ -221,6 +221,18 @@
                 var to_headmaster = $('.to-headmaster').val();
                 var from_headmaster = $('.from-headmaster').val();
                 var isValid = true;
+                var dateval;
+                var startdate;
+                var arraystartdate;
+                var arraydateval;
+                var start;
+                var end;
+                var today = getCurrentDate();
+                var lastInputFieldValueSelector = $('#tb-doc tr:last-child td:nth-child(3) input').val();
+                var arraylastInputFieldValue = lastInputFieldValueSelector.split("-");
+                var lastInputFieldValue = arraylastInputFieldValue[2]+arraylastInputFieldValue[1]+arraylastInputFieldValue[0]
+                var lastInputFieldValue = parseInt(lastInputFieldValue);
+                today = parseInt(today);
 
                 $('#tb-doc tr td input, #tb-doc tr td select').not('#tb-doc tr:last-child td:nth-child(3) input').each(function () {
                     if (!$(this).val()) {
@@ -234,7 +246,7 @@
 
 
                 if (isValid){
-                    var startdate;
+
                     var formvalid = true;
 
                     $('#tb-doc tr td input').each(function () {
@@ -242,14 +254,27 @@
                         if (!startdate) {
                             startdate = $(this).val();
                         }else {
-                            if(new Date(startdate) >= new Date(dateval))
+                            arraystartdate = startdate.split("-");
+                            arraydateval = dateval.split("-");
+                            start = arraystartdate[2]+arraystartdate[1]+arraystartdate[0];
+                            end = arraydateval[2]+arraydateval[1]+arraydateval[0];
+
+                            if(start >= end)
                             {
                                 $(this).css("border", "1px solid red");
                                 formvalid = false;
+                            }else {
+                                $(this).css("border", "1px solid #d2d6de");
                             }
                         }
                         startdate = dateval;
                     });
+
+                    if(lastInputFieldValue > today)
+                    {
+                        $('#tb-doc tr:last-child td:nth-child(3) input').css("border", "1px solid red");
+                        formvalid = false;
+                    }
 
                     if (formvalid == false){
                         return false;
@@ -302,7 +327,7 @@
             $('.datepicker:not(".dp-inited")').datepicker({
                 'format' : 'dd-mm-yyyy'
             }).addClass("dp-inited");
-           // $('.datepicker').datepicker('setDate', new Date());
+            // $('.datepicker').datepicker('setDate', new Date());
 
         }
 
