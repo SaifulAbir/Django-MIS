@@ -3,11 +3,11 @@
 {% load widget_tweaks %}
 {% load static %}
 <form method='POST' enctype="multipart/form-data" novalidate>
-    <section class="content-header" style="padding-top:60px">
+    <section class="content-header">
         {% if not edu_plus_activity_form.instance.pk %}
-        <h1>New Eduplus Activity</h1>
+        <h1>{{ edu_strings.NEW_EDUPLUS_ACTIVITY_TEXT }}</h1>
         {% else %}
-        <h1>Update Eduplus Activity Info</h1>
+        <h1>{{ edu_strings.UPDATE_EDUPLUS_ACTIVITY_TEXT }}</h1>
         {% endif %}
     </section>
     <!-- Main content -->
@@ -18,9 +18,9 @@
                 <div class="box box-info">
                     <div class="box-header with-border">
                         {% if not edu_plus_activity_form.instance.pk %}
-                        <h3 class="box-title">Basic Information</h3>
+                        <h3 class="box-title">{{ common_strings.PROFILE_FORM_TITLE }}</h3>
                         {% else %}
-                        <h3 class="box-title">Basic Information</h3>
+                        <h3 class="box-title">{{ common_strings.PROFILE_FORM_TITLE }}</h3>
                         {% endif %}
                     </div>
                     <div class="row">
@@ -29,11 +29,10 @@
                                 <!-- Color Picker -->
                                 <span id = "alert_placeholder">
                                         {% if edu_plus_activity_form.errors %}
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                        <div id="alertdiv" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in edu_plus_activity_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                             </span>
                                         </div>
@@ -41,23 +40,23 @@
                                     </span>
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="{{ edu_plus_activity_form.date.id_for_label }}">Date</label>
+                                    <label for="{{ edu_plus_activity_form.date.id_for_label }}">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_DATE }}</label>
                                     {% render_field edu_plus_activity_form.date class="form-control datepicker" placeholder=edu_plus_activity_form.date.label %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="{{ edu_plus_activity_form.description.id_for_label }}">Describe what you did in the play</label>
+                                    <label for="{{ edu_plus_activity_form.description.id_for_label }}">{{ edu_strings.EDUPLUS_ACTIVITY_LABEL_DESCRIPTION }}</label>
                                     {% render_field edu_plus_activity_form.description class="form-control" %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="{{ edu_plus_activity_form.topics.id_for_label }}">Topics</label>
+                                    <label for="{{ edu_plus_activity_form.topics.id_for_label }}">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_TOPICS }}</label>
                                     {% render_field edu_plus_activity_form.topics class="" placeholder=edu_plus_activity_form.topics.label %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="{{ edu_plus_activity_form.method.id_for_label }}">Methods</label>
+                                    <label for="{{ edu_plus_activity_form.method.id_for_label }}">{{ edu_strings.EDUPLUS_ACTIVITY_LABEL_METHOD }}</label>
                                     {% render_field edu_plus_activity_form.method class="" placeholder=edu_plus_activity_form.method.label %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="{{ edu_plus_activity_form.attendance.id_for_label }}">Attendance</label><br>
+                                    <label for="{{ edu_plus_activity_form.attendance.id_for_label }}">{{ edu_strings.EDUPLUS_ACTIVITY_LABEL_ATTENDANCE }}</label><br>
                                     {% render_field edu_plus_activity_form.presence_skleader class="" placeholder=edu_plus_activity_form.presence_skleader.label %}
                                     <label for="{{ edu_plus_activity_form.presence_skleader.id_for_label }}">{{skleader_meeting_eduplus.user.first_name}} (SK Leader)</label>
                                     {% if not edu_plus_activity_form.instance.pk %}
@@ -81,11 +80,11 @@
                         <div class="col-md-6"><br />
                             <div class="from-group picture-align">
                                 {% if edu_plus_activity_form.instance.pk and eduplus_activity.image %}
-                                <img style="border-radius: 5px; border: 2px solid #ccc;;" height="auto" width="100%" src="{{ eduplus_activity.image.url }}" class="jcrop-holder pull-right" alt="Pic"><br />
+                                <img height="auto" width="100%" src="{{ eduplus_activity.image.url }}" class="jcrop-holder pull-right" alt="Pic"><br />
                                 {% else %}
-                                <img style="border-radius: 5px; border: 2px solid #ccc;" height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
+                                <img height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
                                 {% endif %}
-                                <input type="file" accept="image/*" placeholder="Headmaster image" style="padding-top: 10px;padding-bottom: 10px;" class="img-preview pull-left" id="id_EPA-image">
+                                <input type="file" accept="image/*" placeholder="Headmaster image" class="img-preview pull-left" id="id_EPA-image">
                             </div>
                             <br>
                         </div>
@@ -98,22 +97,38 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-body">
-                    <input type="submit" value="Save" id="save-btn" class="btn btn-primary pull-right"/>
+                    <input type="submit" value="{{ common_strings.SAVE_BUTTON }}" id="save-btn" class="btn btn-primary pull-right"/>
                 </div>
             </div>
         </div>
 
     </section>
 </form>
-
-    {% block extra_css %}
-        <style type="text/css">
-        #id_EPA-method{
-            width: 60%;
-        }
-
-        </style>
-    {% endblock %}
+{% block extra_css %}
+<style type="text/css">
+    #id_EPA-method{
+        width: 60%;
+    }
+    #alertdiv{
+        font-size:15px;
+        margin-top:15px;
+        padding-top: 2px;
+        padding-bottom: 3px;
+    }
+    .help-block{
+        color:red;
+        margin-bottom: 5px;
+    }
+    .jcrop-holder{
+        border-radius: 5px;
+        border: 2px solid #ccc;
+    }
+    .img-preview{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+</style>
+{% endblock %}
 {% endblock %}
 {% block extra_js%}
 <script src="{% static 'sknf/js/eduplus-activity-image-cropper.js' %}"></script>
