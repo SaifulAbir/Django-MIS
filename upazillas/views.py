@@ -89,7 +89,7 @@ def upazilla_delete(request, pk):
         upazilla.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
         upazilas = Upazilla.objects.all()
-        paginator = Paginator(upazilas, 5)
+        paginator = Paginator(upazilas, 10)
         page = request.GET.get('page')
         try:
             upazila_list = paginator.page(page)
@@ -109,12 +109,13 @@ def upazilla_delete(request, pk):
     return JsonResponse(data)
 
 def load_districts(request):
-    districtId = request.GET.get('districtId')
     division_id = request.GET.get('division')
+    districtId = request.GET.get('districtId')
     if districtId:
         districtId = int(districtId)
     districts = District.objects.filter(division_id=division_id).order_by('name')
-    return render(request, 'upazillas/district_dropdown_list_options.html', {'districts': districts, 'districtId': districtId})
+    return render(request, 'upazillas/district_dropdown_list_options.html',
+                  {'districts': districts, 'districtId': districtId})
 
 def pagination(request):
     data = dict()

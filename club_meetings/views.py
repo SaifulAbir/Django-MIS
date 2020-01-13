@@ -204,9 +204,9 @@ def club_meeting_search_list(request, export='null'):
     if topics != '' and topics is not None:
         qs = qs.filter(topics__name__icontains=topics)
     if fromdate:
-        qs = qs.filter(date__gt=fromdate)
+        qs = qs.filter(date__gte=fromdate)
     if todate and not fromdate:
-        qs = qs.filter(date__lt=todate)
+        qs = qs.filter(date__lte=todate)
     if from_date and to_date :
         qs = qs.filter(date__gte=fromdate, date__lte=todate)
     paginator = Paginator(qs, 10)

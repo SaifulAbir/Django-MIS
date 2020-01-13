@@ -33,26 +33,24 @@
 
 <script>
     $(function () {
-        $("#id_district").html("<option>---------</option>");
+        if(!$('#modal-upazilla').hasClass('in')){
+            $("#id_district").html('<option value="">---------</option>');
+        }
 
         $("#id_division").change(function () {
-            var divisionId = $(this).val();
             var url = $("#upazillaForm").attr("data-districts-url");
-            if(divisionId ==''){
-                $("#id_district").html('<option value="">---------</option>');
-            }
-            else{
-                $.ajax({
-                    url: url,
-                    data: {
-                        'division': divisionId
-                    },
-                    success: function (data) {
-                        $("#id_district").html(data);
-                    }
-                });
+            var divisionId = $(this).val();
 
-            }
+            $.ajax({
+                url: url,
+                data: {
+                    'division': divisionId
+                },
+                success: function (data) {
+                    $("#id_district").html(data);
+                }
+            });
+
         });
     });
 

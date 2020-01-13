@@ -92,12 +92,6 @@ WSGI_APPLICATION = 'sknf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-"""DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -174,4 +168,4 @@ EMAIL_HOST_PASSWORD = 'rashed016'
 EMAIL_USE_TLS = True
 SESSION_COOKIE_AGE = 6000
 IMPORT_EXPORT_USE_TRANSACTIONS = True
-APP_VERSION_NUMBER = 0.6
+APP_VERSION_NUMBER = 0.8

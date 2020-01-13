@@ -106,6 +106,7 @@ def skmember_profile_view_skleader(request):
             headmaster_details.skmember = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
+            messages.success(request, 'SK Member Created!')
             return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
         user_form = SkMemberUserForm(prefix='UF')
@@ -143,7 +144,7 @@ def skmember_update_for_skleader(request, pk):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            # messages.success(request, 'SK Member Updated!')
+            messages.success(request, 'SK Member Updated!')
             return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)
@@ -425,8 +426,13 @@ def skmember_search_list(request, export='null'):
 
 def pagination(request):
     data = dict()
+    loggedinuser = request.user.id
     data['form_is_valid'] = True  # This is just to play along with the existing code
-    skmembers = SkMemberProfile.objects.all()
+    if request.user.is_authenticated and request.user.user_type == 5:
+        objSkLeader = SkLeaderProfile.objects.get(user_id=loggedinuser)
+    elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
+        objSkLeader = HeadmasterProfile.objects.get(user_id=loggedinuser)
+    skmembers = SkMemberProfile.objects.filter(user__user_type__in=[6, ], school_id=objSkLeader.school_id)
     paginator = Paginator(skmembers, 10)
     page = request.GET.get('page')
     try:

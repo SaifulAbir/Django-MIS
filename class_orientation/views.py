@@ -120,36 +120,22 @@ def peer_education_report_list(request):
 def peer_education_search_list(request, export='null'):
     data = dict()
     qs = PeerEducation.objects.all()
-    name = request.GET.get('school_contains')
-    division = request.GET.get('division_contains')
-    district = request.GET.get('district_contains')
-    upazila = request.GET.get('upazila_contains')
-    union = request.GET.get('union_contains')
-    from_date = request.GET.get('fromdate_contains')
+    name = request.POST.get('school_contains')
+    division = request.POST.get('division_contains')
+    district = request.POST.get('district_contains')
+    upazila = request.POST.get('upazila_contains')
+    union = request.POST.get('union_contains')
+    from_date = request.POST.get('fromdate_contains')
     if from_date:
         fromdate = datetime.strptime(from_date, '%d-%m-%Y').strftime('%Y-%m-%d')
     else:
         fromdate = from_date
-
-    to_date = request.GET.get('todate_contains')
-    print(to_date)
+    to_date = request.POST.get('todate_contains')
     if to_date:
         todate = datetime.strptime(to_date, '%d-%m-%Y').strftime('%Y-%m-%d')
     else:
         todate = to_date
-    topics = request.GET.get('topics_contains')
-    if from_date:
-        fromdate = datetime.strptime(from_date, '%d-%m-%Y').strftime('%Y-%m-%d')
-    else:
-        fromdate = from_date
-
-    to_date = request.GET.get('todate_contains')
-    print(to_date)
-    if to_date:
-        todate = datetime.strptime(to_date, '%d-%m-%Y').strftime('%Y-%m-%d')
-    else:
-        todate = to_date
-    topics = request.GET.get('topics_contains')
+    topics = request.POST.get('topics_contains')
     if name != '' and name is not None:
         qs = qs.filter(school__name__icontains=name)
     if division != '' and division is not None:
@@ -160,14 +146,14 @@ def peer_education_search_list(request, export='null'):
         qs = qs.filter(school__upazilla__name__icontains=upazila)
     if union != '' and union is not None:
         qs = qs.filter(school__union__name__icontains=union)
-    if topics != '' and topics is not None:
-        qs = qs.filter(topics__name__icontains=topics)
+    if topics!= '' and topics is not None:
+        qs = qs.filter(topic__name__icontains=topics)
     if fromdate:
-        qs = qs.filter(date__gt=fromdate)
+        qs = qs.filter(created_date__gte=fromdate)
     if todate and not fromdate:
-        qs = qs.filter(date__lt=todate)
+        qs = qs.filter(created_date__lte=todate)
     if from_date and to_date:
-        qs = qs.filter(date__gte=fromdate, date__lte=todate)
+        qs = qs.filter(created_date__gte=fromdate, created_date__lte=todate)
 
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')

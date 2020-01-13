@@ -38,8 +38,8 @@
                     <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_DATE }}</th>
                     <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_TOPICS }}</th>
                     <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_METHODS }}</th>
-                    <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ATTENDANCE }}</th>
-                    <th class="col-sm-2">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_SCHOOL }}</th>
+                    <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ATTENDANCE }}</th>
+                    <th class="col-sm-3">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_SCHOOL }}</th>
                     <th class="col-sm-1">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DIVISION }}</th>
                     <th class="col-sm-1">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DISTRICT }}</th>
                     <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_UPAZILA }}</th>
@@ -62,13 +62,7 @@
                     </td>
                     <td>{{ eduplus_activity.method }}</td>
                     <td>
-                        {% for attendance in eduplus_activity.attendance.all %}
-                            {% if forloop.last %}
-                                {{attendance.first_name}}
-                            {% else %}
-                                {{attendance.first_name}},
-                            {% endif %}
-                        {% endfor %}
+                        {{eduplus_activity.attendance.all.count}}
                     </td>
                     <td>{{ eduplus_activity.school }}</td>
                     <td>{{ eduplus_activity.school.division }}</td>

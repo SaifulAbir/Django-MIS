@@ -81,8 +81,8 @@
                     <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_DATE }}</th>
                     <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_TOPICS }}</th>
                     <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_METHODS }}</th>
-                    <th class="col-sm-2">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ATTENDANCE }}</th>
-                    <th class="col-sm-2">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_SCHOOL }}</th>
+                    <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_ATTENDANCE }}</th>
+                    <th class="col-sm-3">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_SCHOOL }}</th>
                     <th class="col-sm-1">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DIVISION }}</th>
                     <th class="col-sm-1">{{ edu_strings.SEARCH_LABEL_EDUPLUS_ACTIVITIES_DISTRICT }}</th>
                     <th class="col-sm-1">{{ edu_strings.TABLE_HEADER_EDUPLUS_ACTIVITIES_UPAZILA }}</th>
@@ -188,6 +188,9 @@
             'info'        : false,
             'paging'      : false,
             'ordering'    : false,
+            "language": {
+                "emptyTable":     "No Result Found"
+            }
         });
         $('.search-eduplus-activity').on('click', function (event) {
             event.preventDefault();

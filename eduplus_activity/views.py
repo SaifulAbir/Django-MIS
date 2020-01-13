@@ -306,9 +306,9 @@ def eduplus_activity_search_list(request, export='null'):
     if method != '' and method is not None:
         qs = qs.filter(method__name__icontains=method)
     if fromdate:
-        qs = qs.filter(date__gt=fromdate)
+        qs = qs.filter(date__gte=fromdate)
     if todate and not fromdate:
-        qs = qs.filter(date__lt=todate)
+        qs = qs.filter(date__lte=todate)
     if from_date and to_date :
         qs = qs.filter(date__gte=fromdate, date__lte=todate)
 
