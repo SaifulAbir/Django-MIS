@@ -14,14 +14,16 @@
             {{ error }}
             {% endfor %}
         </div>
-
         {% for field in form %}
-        <div class="form-group">
             <div class="{% if field.errors %} invalid{% endif %}">
                 {% for error in field.errors %}
                 <p class="text-danger">{{ error }}</p>
                 {% endfor %}
             </div>
+        {% endfor %}
+
+        {% for field in form %}
+        <div class="form-group">
             {% if field.label == 'Date' %}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% render_field field placeholder=field.label class="form-control datepicker" %}
