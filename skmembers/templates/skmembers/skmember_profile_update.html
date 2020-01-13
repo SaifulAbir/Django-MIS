@@ -313,6 +313,9 @@
                             success: function (data) {
                                 var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>School Information Successfully Updated.</span> </div>'
                                 $('#headmasterinfoajaxupdate').html(str);
+                                $("#headmasterinfoajaxupdate").fadeTo(2000, 500).slideUp(500, function() {
+                                    $("#headmasterinfoajaxupdate").slideUp(500);
+                                });
                                 $('.loader').hide(1000)
                                 $('.update-school').show(1500)
                             }

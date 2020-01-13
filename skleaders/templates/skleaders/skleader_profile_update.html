@@ -353,6 +353,9 @@
                                 $('#headmasterinfoajaxupdate').html(str);
                                 $('.loader').hide(1000)
                                 $('.update-school').show(1500)
+                                $("#headmasterinfoajaxupdate").fadeTo(2000, 500).slideUp(500, function() {
+                                    $("#headmasterinfoajaxupdate").slideUp(500);
+                                });
                             }
                         });
                 }
