@@ -51,6 +51,8 @@ def headmaster_profile_view(request):
             # end of image cropping code
 
             profile.save()
+            user.username = profile.mobile
+            user.save()
             headmaster_details = HeadmasterDetails()
             headmaster_details.school = profile_form.cleaned_data["school"]
             headmaster_details.headmaster = profile
