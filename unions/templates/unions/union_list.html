@@ -84,13 +84,13 @@
                     if (data.form_is_valid) {
                         $('#unionSubmit').prop('disabled', true);
                         if(formClass=="js-union-create-form"){
-                            showAlert("Union Created!", "alert-success-customized")
+                            showAlert("{{ union_strings.UNION_CREATED_MSG }}", "alert-success-customized")
                         }
                         if(formClass=="js-union-update-form"){
-                            showAlert("Union Updated!", "alert-success-customized")
+                            showAlert("{{ union_strings.UNION_UPDATED_MSG }}", "alert-success-customized")
                         }
                         if(formClass=="js-union-delete-form"){
-                            showAlert("Union Deleted!", "alert alert-danger-customized")
+                            showAlert("{{ union_strings.UNION_DELETED_MSG }}", "alert alert-danger-customized")
                         }
                         $(".union-container").html(data.html_union_list);  // <-- Replace the table body
                         $('.union-table').DataTable({
@@ -128,3 +128,4 @@
     });
 </script>
 {% endblock %}
+
