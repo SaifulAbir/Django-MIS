@@ -242,17 +242,15 @@
                 var from_headmaster = $('.from-headmaster').val();
                 var isValid = true;
                 var start;
+                var today;
                 var end;
                 var arraystartdate;
                 var lastInputFieldValueSelector;
                 var arraydateval;
                 var arraylastInputFieldValue;
                 var lastInputFieldValue;
-                var today = new Date();
-                var dd = String(today.getDate()).padStart(2, '0');
-                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = today.getFullYear();
-                today = yyyy + mm + dd;
+                today = getCurrentDate();
+
 
                 $('#tb-doc tr td input, #tb-doc tr td select').not('#tb-doc tr:last-child td:nth-child(3) input').each(function () {
                     if (!$(this).val()) {
@@ -279,12 +277,10 @@
                         }else {
                             arraystartdate = startdate.split("-");
                             arraydateval = dateval.split("-");
-                            start = arraystartdate[2]+'-'+arraystartdate[1]+'-'+arraystartdate[0];
-                            end = arraydateval[2]+'-'+arraydateval[1]+'-'+arraydateval[0];
+                            start = arraystartdate[2]+arraystartdate[1]+arraystartdate[0];
+                            end = arraydateval[2]+arraydateval[1]+arraydateval[0];
 
-                            start=start.replace(/-/g, '');
-                            end=end.replace(/-/g, '');
-                            if(start >= end && end <=today)
+                            if(start >= end)
                             {
                                 $(this).css("border", "1px solid red");
                                 formvalid = false;
