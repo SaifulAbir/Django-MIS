@@ -30,8 +30,7 @@ class SkUserForm(forms.ModelForm):
         ('9', '9'),
 
         ("10", '10'),)
-
-    email = forms.EmailField(error_messages={'required': 'Email is required.'})
+    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
 
     password = forms.CharField(error_messages={'required': 'Password is required.'},
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
@@ -54,7 +53,7 @@ class SkUserForm(forms.ModelForm):
         return cleaned_data
 
 class EditSkUserForm(forms.ModelForm):
-    email = forms.EmailField(error_messages={'required': 'Email is required.'})
+    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=SkUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
@@ -81,15 +80,14 @@ class SkLeaderProfileForm(forms.ModelForm):
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
 
-    roll = forms.CharField(error_messages={'required': 'Roll is required.'},
-                           widget=forms.TextInput(attrs={'type':'number'}))
+    roll = forms.CharField(required=False, widget=forms.TextInput(attrs={'type':'number'}))
 
-    student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
+    student_class = forms.ChoiceField(required=False,
                                       choices=SkUserForm.class_choice, widget=forms.Select())
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     school = forms.ModelChoiceField(error_messages={'required': 'School is required.'}, queryset=School.objects.all())
-    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
+    gender = forms.ChoiceField(required=False, choices=GENDER_CHOICES)
 
     class Meta:
         model = SkLeaderProfile
@@ -114,12 +112,12 @@ class EditSkLeaderProfileForm(forms.ModelForm):
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
 
-    roll = forms.CharField(error_messages={'required': 'Roll is required.'},
+    roll = forms.CharField(required=False,
                            widget=forms.TextInput(attrs={'type':'number'}))
 
-    student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
+    student_class = forms.ChoiceField(required=False,
                                       choices=SkUserForm.class_choice, widget=forms.Select())
-    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
+    gender = forms.ChoiceField(required=False, choices=GENDER_CHOICES)
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
 
