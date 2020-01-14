@@ -17,7 +17,7 @@ class UserForm(forms.ModelForm):
         (3, 'Guide Teacher'),
         (4, 'both'),
     )
-    email = forms.EmailField(error_messages={'required': 'Email is required.'})
+    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
     password = forms.CharField(error_messages={'required': 'Password is required.'}, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(error_messages={'required': 'Confirm password is required.'}, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(error_messages={'required': 'User type is required.'}, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
@@ -36,7 +36,6 @@ class UserForm(forms.ModelForm):
         return cleaned_data
 
 class EditUserForm(forms.ModelForm):
-    email = forms.EmailField(error_messages={'required': 'Email is required.'})
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(error_messages={'required': 'User type is required.'}, choices=UserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
