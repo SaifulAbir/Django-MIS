@@ -217,6 +217,12 @@
             $("#modalCrop").modal('hide');
             $("#id_PF-image").val("");
         });
+
+        $('.close').click(function() {
+            $("#id_PF-image").val("");
+
+        });
+
     });
     function autoSuggesion(url, id) {
         var previousItems = new Bloodhound({
