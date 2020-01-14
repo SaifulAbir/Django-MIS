@@ -20,9 +20,9 @@ GENDER_CHOICES = (
     )
 class SkLeaderProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='skleader_profile')
-    mobile = models.CharField(max_length=11)
-    student_class = models.CharField(max_length=10,choices=class_choice)
-    roll = models.CharField(max_length=128)
+    mobile = models.CharField(max_length=11, blank=True, null=True)
+    student_class = models.CharField(max_length=10,choices=class_choice, blank=True, null=True)
+    roll = models.CharField(max_length=128, blank=True, null=True)
     school = models.ForeignKey(School, on_delete=models.PROTECT, null=True)
     emergency_contact_person = models.CharField(max_length=200, blank=True, null=True)
     emergency_contact_number = models.CharField(max_length=20, blank=True, null=True)
