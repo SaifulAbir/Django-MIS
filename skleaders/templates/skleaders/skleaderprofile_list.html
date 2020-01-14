@@ -185,7 +185,7 @@
 {% block extra_js %}
 <script>
     $(function () {
-        var name, school;
+        var name, school, mobile, division, district, upazila, union;
         $('.skleader-search-table').dataTable({
             'lengthChange': false,
             'searching': false,
@@ -199,7 +199,13 @@
             $(".skleader-search-table").DataTable().destroy();
             name_contains = $("input[name='name_contains']").val();
             school_contains = $("input[name='school_contains']").val();
-            name = name_contains, school = school_contains;
+            mobile_contains = $("input[name='mobile_contains']").val();
+            division_contains = $("input[name='division_contains']").val();
+            district_contains = $("input[name='district_contains']").val();
+            upazila_contains = $("input[name='upazila_contains']").val();
+            union_contains = $("input[name='union_contains']").val();
+            name = name_contains, school = school_contains, mobile = mobile_contains, division = division_contains,
+            district = district_contains, upazila = upazila_contains, union = union_contains;
             $.ajax({
                 type: 'GET',
                 url: '/skleaders/search_skleader_list/',
