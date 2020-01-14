@@ -212,6 +212,11 @@
                 data: {
                     'name_contains': name_contains,
                     'school_contains': school_contains,
+                    'mobile_contains': mobile_contains,
+                    'division_contains': division_contains,
+                    'district_contains': district_contains,
+                    'upazila_contains': upazila_contains,
+                    'union_contains': union_contains,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 success: function (data) {
@@ -232,8 +237,19 @@
         // auto suggesion
         autoSuggesion('/load_previous_users/', "input[name='name_contains']");
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
-        // auto suggesion
-        pagination(".box-body", '/skleaders/search_skleader_list/', name, school, '.box-body .skleader-search-table');
+        autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
+        autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        autoSuggesion('/load_previous_upazillas/', "input[name='upazila_contains']");
+        autoSuggesion('/load_previous_unions/', "input[name='union_contains']");
+        autoSuggesion('/load_previous_skleader_mobile/', "input[name='mobile_contains']");
+
+        $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/skleaders/search_skleader_list/'+addressValue;
+            paginator(".table-responsive", url, '.skleader-search-table', {'name': name, 'school':school, 'division':division,
+                'district':district, 'upazila':upazila, 'union':union, 'form_date':'', 'to_date':'', 'topic':'','mobile':mobile});
+        });
     });
     //for skleader search export
     $(".export-skleader").click(function() {
