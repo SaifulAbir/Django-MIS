@@ -4,11 +4,7 @@
     {% load static %}
     <form method='POST' enctype="multipart/form-data" novalidate>
         <section class="content-header"style="padding-top:60px">
-            {% if not profile_form.instance.pk %}
-                <h1>Add New SK Leader</h1>
-            {% else %}
-                <h1>Update SK Leader Info</h1>
-            {% endif %}
+            <h1>Add New SK Leader</h1>
         </section>
         <section class="content">
             <div class="row">
@@ -27,7 +23,7 @@
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                     {% if user_form.errors or profile_form.errors %}
-                                    <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
+                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                                         padding-bottom: 3px;" class="alert alert-danger-error-message">
                                         <span>
                                             {% for field in user_form %}
@@ -164,9 +160,13 @@
 
         </section>
     </form>
-{% include 'sknf/_modal_show_image_error.html' %}
-{% include 'sknf/_crop_modal.html' %}
+    {% include 'sknf/_modal_show_image_error.html' %}
+    {% include 'sknf/_crop_modal.html' %}
 {% endblock %}
 {% block extra_js%}
-
+    <script>
+        var currentDate;
+        currentDate = getCurrentDate(true);
+        $('.datepicker').val(currentDate);
+    </script>
 {% endblock %}
