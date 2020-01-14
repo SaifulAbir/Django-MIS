@@ -193,6 +193,11 @@ def skleader_search_list(request, export='null'):
     qs = SkLeaderProfile.objects.filter(user__user_type__in=[5])
     name = request.GET.get('name_contains')
     school = request.GET.get('school_contains')
+    mobile = request.GET.get('mobile_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    upazila = request.GET.get('upazila_contains')
+    union = request.GET.get('union_contains')
 
     if name != '' and name is not None:
         qs = qs.filter(user__first_name__icontains=name)
@@ -216,7 +221,7 @@ def skleader_search_list(request, export='null'):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    if name == '' and school == '':
+    if name == '' and school == '' and mobile == '' and division == '' and district == '' and upazila == '' and union == '':
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('skleaders/partial_skleader_list.html',
