@@ -47,7 +47,8 @@ def skleader_profile_view(request):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
-
+            user.username = profile.mobile
+            user.save()
             headmaster_details = SkleaderDetails()
             headmaster_details.school = profile_form.cleaned_data["school"]
             headmaster_details.skleader = profile
@@ -136,6 +137,8 @@ def skleader_update(request, pk):
             # end of image cropping code
 
             profile.save()
+            user.username = profile.mobile
+            user.save()
             messages.success(request, 'SK Leader Updated!')
             return HttpResponseRedirect("/skleaders/skleader_list/")
     else:
