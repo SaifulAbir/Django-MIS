@@ -324,6 +324,9 @@ def search_school_list(request):
 def load_previous_school(request):
     previous_schools = list(School.objects.values_list('name', flat=True))
     return JsonResponse(previous_schools, safe=False)
+def load_previous_headmaster_mobile(request):
+    previous_headmaster_mobile = list(HeadmasterProfile.objects.values_list('mobile', flat=True))
+    return JsonResponse(previous_headmaster_mobile, safe=False)
 def load_previous_eiin(request):
     previous_eiins = list(School.objects.values_list('school_id', flat=True))
     return JsonResponse(previous_eiins, safe=False)
