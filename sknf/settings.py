@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'sknf.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sknf_test',
+        'NAME': 'sknf',
         'USER': 'root',
         'PASSWORD': 'password',
         'HOST': 'localhost',
