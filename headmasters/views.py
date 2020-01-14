@@ -141,6 +141,8 @@ def headmaster_update(request, pk):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
+            user.username = profile.mobile
+            user.save()
             messages.success(request, 'Headmaster Updated!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
