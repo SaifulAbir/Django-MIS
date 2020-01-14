@@ -12,7 +12,7 @@ import resources.strings as common_strings
 
 class PrettyAuthenticationForm(forms.Form):
 
-    email = forms.CharField(widget=forms.TextInput(attrs={'class': account_strings.CLASS_FORM_CONTROL, 'placeholder': account_strings.USER_NAME_PLACEHOLDER}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': account_strings.CLASS_FORM_CONTROL, 'placeholder': account_strings.USER_NAME_PLACEHOLDER}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': account_strings.CLASS_FORM_CONTROL, 'placeholder': account_strings.PASSWORD_PLACEHOLDER}))
 
     # def clean(self):

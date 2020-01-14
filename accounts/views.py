@@ -241,9 +241,9 @@ def home_login(request):
     if request.method == 'POST':
         form = PrettyAuthenticationForm(data=request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('email')
+            username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=email, password=password)
+            user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
                 if next_destination:
