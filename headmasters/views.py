@@ -52,6 +52,8 @@ def headmaster_profile_view(request):
             # end of image cropping code
 
             profile.save()
+            user.username = profile.mobile
+            user.save()
             headmaster_details = HeadmasterDetails()
             headmaster_details.school = profile_form.cleaned_data["school"]
             headmaster_details.headmaster = profile
@@ -148,6 +150,8 @@ def headmaster_update(request, pk):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
+            user.username = profile.mobile
+            user.save()
             messages.success(request, 'Headmaster Updated!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
