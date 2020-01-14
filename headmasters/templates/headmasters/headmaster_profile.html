@@ -1,33 +1,14 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-{% load widget_tweaks %}
-{% load static %}
-<form method='POST' enctype="multipart/form-data" id="formUpload" novalidate>
-    <section class="content-header">
-        {% if not user_form.instance.pk %}
-        <h1>{{ headmaster_strings.HEADMASTER_NEW_PAGE_TITLE }}</h1>
-        {% else %}
-        <h1>{{ headmaster_strings.HEADMASTER_UPDATE_PAGE_TITLE }}</h1>
-        {% endif %}
-    </section>
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        {% if not form.instance.pk %}
-                        <h3 class="box-title">{{ headmaster_strings.HEADMASTER_BASIC_INFO }}</h3>
-                        {% else %}
-                        <h3 class="box-title">{{ headmaster_strings.HEADMASTER_BASIC_INFO }}</h3>
-                        {% endif %}
-
-                    </div>
     {% load widget_tweaks %}
     {% load static %}
     <form method='POST' enctype="multipart/form-data" id="formUpload" novalidate>
-        <section class="content-header"style="padding-top:60px">
-            <h1>Add New Headmaster/Guide Teacher</h1>
+        <section class="content-header">
+            {% if not user_form.instance.pk %}
+                <h1>{{ headmaster_strings.HEADMASTER_NEW_PAGE_TITLE }}</h1>
+            {% else %}
+                <h1>{{ headmaster_strings.HEADMASTER_UPDATE_PAGE_TITLE }}</h1>
+            {% endif %}
         </section>
         <!-- Main content -->
         <section class="content">
@@ -35,116 +16,121 @@
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Basic Information</h3>
+                            {% if not form.instance.pk %}
+                                <h3 class="box-title">{{ headmaster_strings.HEADMASTER_BASIC_INFO }}</h3>
+                            {% else %}
+                                <h3 class="box-title">{{ headmaster_strings.HEADMASTER_BASIC_INFO }}</h3>
+                            {% endif %}
+
                         </div>
+                        {% load widget_tweaks %}
 
                         <div class="row" >
                             <div class="col-sm-6">
                                 <div class="box-body">
                                 <span id = "alert_placeholder">
                                     {% if user_form.errors or profile_form.errors %}
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                        padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                        <div id="alertdiv" class="alert alert-danger-error-message">
                                         <span>
                                             {% for field in user_form %}
-                                                <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                <li class="help-block">{{ field.errors|striptags }}</li>
                                             {% endfor %}
                                             {% for field in profile_form %}
-                                                <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                <li class="help-block" >{{ field.errors|striptags }}</li>
                                             {% endfor %}
                                         </span>
                                     </div>
                                     {% endif %}
                                 </span>
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="{{ user_form.first_name.id_for_label }}">{{ headmaster_strings.NAME_TEXT }}</label>
-                                    {% render_field user_form.first_name class="form-control" placeholder="Name" %}
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="{{ user_form.email.id_for_label }}">Username / Mobile Number</label>
-                                    {% render_field user_form.email class="form-control" placeholder="Username / Mobile Number" %}
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="{{ profile_form.mobile.id_for_label }}">{{ profile_form.mobile.label }}</label>
-                                    {% render_field profile_form.mobile class="form-control" placeholder=profile_form.mobile.label %}
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
-                                    {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
-                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                    <button type="button"
-                                            class="btn btn-primary pull-right js-genarate-password">
-                                        Genarate Password
-                                    </button>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="{{ user_form.confirm_password.id_for_label }}">{{ headmaster_strings.CONFIRM_PASSWORD_TEXT }}</label>
-                                    {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=headmaster_strings.CONFIRM_PASSWORD_TEXT %}
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="{{ user_form.user_type.id_for_label }}">{{ headmaster_strings.USER_TYPE_TEXT }}</label>
-                                    {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
-                                </div>
-                                {% include 'sknf/_password_generator_modal.html' %}
-                            </div>
-                        </div>
-                        <div class="col-sm-6"><br />
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <div class="col-sm-12">
-                                        <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="{{ user_form.first_name.id_for_label }}">{{ headmaster_strings.NAME_TEXT }}</label>
+                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ user_form.email.id_for_label }}">{{ headmaster_strings.EMAIL_TEXT }}</label>
+                                        {% render_field user_form.email class="form-control" placeholder=headmaster_strings.EMAIL_TEXT %}
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.mobile.id_for_label }}">{{ profile_form.mobile.label }}</label>
+                                        {% render_field profile_form.mobile class="form-control" placeholder=profile_form.mobile.label %}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ user_form.password.id_for_label }}">{{ user_form.password.label }}</label>
+                                        {% render_field user_form.password class="form-control" id="generated-pass" placeholder=user_form.password.label %}
+                                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        <button type="button"
+                                                class="btn btn-primary pull-right js-genarate-password">
+                                            {{ headmaster_strings.GENERATE_PASSWORD }}
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ user_form.confirm_password.id_for_label }}">{{ headmaster_strings.CONFIRM_PASSWORD_TEXT }}</label>
+                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=headmaster_strings.CONFIRM_PASSWORD_TEXT %}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="{{ user_form.user_type.id_for_label }}">{{ headmaster_strings.USER_TYPE_TEXT }}</label>
+                                        {% render_field user_form.user_type class="" placeholder=user_form.user_type.label %}
+                                    </div>
+                                    {% include 'sknf/_password_generator_modal.html' %}
                                 </div>
-                                <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
-                                <input type="file" accept="image/*" placeholder="Image" class="pull-right img-preview" required="" id="id_PF-image" data-input="false" data-buttonText="Your label here.">
+                            </div>
+                            <div class="col-sm-6"><br />
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12">
+                                            <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder" alt="Pic"><br />
+                                        </div>
+                                    </div>
+                                    <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
+                                    <input type="file" accept="image/*" placeholder="Image" class="pull-right img-preview" required="" id="id_PF-image" data-input="false" data-buttonText="Your label here.">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% render_field profile_form.image_base64 %}
+            {% render_field profile_form.image_base64 %}
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ headmaster_strings.HEADMASTER_SCHOOL_INFO }}</h3>
-                    </div>
-                    <div class="box-body required">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                    {% render_field profile_form.school class="form-control customer-select2" placeholder=profile_form.school.label %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{{ headmaster_strings.HEADMASTER_SCHOOL_INFO }}</h3>
+                        </div>
+                        <div class="box-body required">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
+                                        {% render_field profile_form.school class="form-control customer-select2" placeholder=profile_form.school.label %}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="{{ profile_form.joining_date.id_for_label }}">{{ headmaster_strings.FROM_TEXT }}</label>
-                                    <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
-                                    <div style="display: none">
-                                        {% render_field profile_form.joining_date class="form-control pastedate" %}
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="{{ profile_form.joining_date.id_for_label }}">{{ headmaster_strings.FROM_TEXT }}</label>
+                                        <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
+                                        <div style="display: none">
+                                            {% render_field profile_form.joining_date class="form-control pastedate" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="id_hf-from_date">{{ headmaster_strings.TO_TEXT }}</label>
+                                        <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="id_hf-from_date">{{ headmaster_strings.TO_TEXT }}</label>
-                                    <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
                                     <a type="button" onclick="goBack()"
                                        class="btn btn-warning pull-left"
                                        href="javascript:void(0)">
@@ -152,19 +138,19 @@
                                     </a>
 
                                     <input type="submit" value="{{ common_strings.SAVE_BUTTON }}" id="save-btn" class="btn btn-primary pull-right"/>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
 
-    </section>
-</form>
-{% include 'sknf/_modal_show_image_error.html' %}
-{% include 'sknf/_crop_modal.html' %}
+        </section>
+    </form>
+    {% include 'sknf/_modal_show_image_error.html' %}
+    {% include 'sknf/_crop_modal.html' %}
 {% endblock %}
 {% block extra_js%}
     <script>
