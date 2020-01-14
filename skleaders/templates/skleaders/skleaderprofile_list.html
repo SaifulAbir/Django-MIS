@@ -12,7 +12,7 @@
             <div class="box-header">
                 <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
                     <div class="row">
-                        <div class="form-group col-sm-5">
+                        <div class="form-group col-sm-4">
                             <strong>Name</strong>
                             {% if name is not None %}
                             <input class="form-control" type="search" value="{{name}}" name="name_contains" />
@@ -20,12 +20,55 @@
                             <input class="form-control" type="search" name="name_contains"/>
                             {% endif %}
                         </div>
-                        <div class="form-group col-sm-5">
+                        <div class="form-group col-sm-4">
                             <strong>School</strong>
                             {% if school is not None %}
                             <input class="form-control " type="search" value="{{school}}" name="school_contains" />
                             {% else %}
                             <input class="form-control " type="search" name="school_contains"/>
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <strong>Mobile</strong>
+                            {% if school is not None %}
+                                <input class="form-control " type="search" value="" name="mobile_contains" />
+                            {% else %}
+                                <input class="form-control " type="search" name="mobile_contains" />
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <strong>Division</strong>
+                            {% if name is not None %}
+                                <input class="form-control" type="search" value="" name="division_contains" />
+                            {% else %}
+                                <input class="form-control" type="search" name="division_contains"/>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group col-sm-3">
+                            <strong>District</strong>
+                            {% if school is not None %}
+                                <input class="form-control " type="search" value="" name="district_contains" />
+                            {% else %}
+                                <input class="form-control " type="search" name="district_contains" />
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>Upazila</strong>
+                            {% if school is not None %}
+                                <input class="form-control " type="search" value="" name="upazila_contains" />
+                            {% else %}
+                                <input class="form-control " type="search" name="upazila_contains" />
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>Union</strong>
+                            {% if school is not None %}
+                                <input class="form-control " type="search" value="" name="union_contains" />
+                            {% else %}
+                                <input class="form-control " type="search" name="union_contains" />
                             {% endif %}
                         </div>
                     </div>

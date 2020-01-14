@@ -198,6 +198,16 @@ def skleader_search_list(request, export='null'):
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
+    if mobile != '' and mobile is not None:
+        qs = qs.filter(mobile__icontains=mobile)
+    if division != '' and division is not None:
+        qs = qs.filter(school__division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(school__district__name__icontains=district)
+    if upazila != '' and upazila is not None:
+        qs = qs.filter(school__upazilla__name__icontains=upazila)
+    if union != '' and union is not None:
+        qs = qs.filter(school__union__name__icontains=union)
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')
     try:
