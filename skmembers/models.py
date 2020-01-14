@@ -20,7 +20,7 @@ class SkMemberProfile(models.Model):
     student_class = models.CharField(max_length=10, choices=class_choice)
     roll = models.CharField(max_length=128)
     school = models.ForeignKey(School, on_delete=models.PROTECT, blank=True, null=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     joining_date = models.DateField(null=False, blank=False, default=timezone.now)
 

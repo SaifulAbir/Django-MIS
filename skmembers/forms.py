@@ -20,14 +20,14 @@ class SkMemberUserForm(forms.ModelForm):
         ('9', '9'),
         ("10", '10'),
     )
-    email = forms.EmailField(error_messages={'required': 'Email is required.'})
+    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
     user_type = forms.ChoiceField(required=False, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     class Meta:
         model = User
         fields = ('first_name', 'email', 'user_type',)
 
 class EditSkMemberUserForm(forms.ModelForm):
-
+    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
     user_type = forms.ChoiceField(required=False, choices=SkMemberUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
 
     class Meta:
@@ -40,14 +40,14 @@ class SkMemberProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    roll = forms.CharField(error_messages={'required': 'Roll is required.', },
+    roll = forms.CharField(required=False,
                            widget=forms.TextInput(attrs={'type':'number'}))
-    student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
+    student_class = forms.ChoiceField(required=False,
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.','max_length': 'Moblie Number can not exceed 11 digits'},
+    mobile = forms.CharField(required=False, error_messages={'max_length': 'Moblie Number can not exceed 11 digits'},
                              widget=forms.TextInput(attrs={'type':'number'}))
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
-    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
+    gender = forms.ChoiceField(required=False, choices=GENDER_CHOICES)
     class Meta:
         model = SkMemberProfile
         fields = ('mobile', 'image', 'student_class','joining_date', 'roll', 'school', 'gender', 'image_base64')
@@ -63,12 +63,12 @@ class SkMemberProfileFormSkleader(forms.ModelForm):
 
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    roll = forms.CharField(error_messages={'required': 'Roll is required.'},
+    roll = forms.CharField(required=False,
                            widget=forms.TextInput(attrs={'type':'number'}))
-    student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
+    student_class = forms.ChoiceField(required=False,
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
-    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
+    mobile = forms.CharField(required=False, error_messages={'max_length': 'Moblie Number can not exceed 11 digits'}, widget=forms.TextInput(attrs={'type':'number'}))
+    gender = forms.ChoiceField(required=False, choices=GENDER_CHOICES)
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
     class Meta:
         model = SkMemberProfile
@@ -85,12 +85,12 @@ class SkMemberProfileFormForSkleader(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     image = forms.ImageField(label=_('SkMember image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    roll = forms.CharField(error_messages={'required': 'Roll is required.'},
+    roll = forms.CharField(required=False,
                            widget=forms.TextInput(attrs={'type':'number'}))
-    student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
+    student_class = forms.ChoiceField(required=False,
                                       choices=SkMemberUserForm.class_choice, widget=forms.Select())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
-    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
+    mobile = forms.CharField(required=False,error_messages={'max_length': 'Moblie Number can not exceed 11 digits'}, widget=forms.TextInput(attrs={'type':'number'}))
+    gender = forms.ChoiceField(required=False, choices=GENDER_CHOICES)
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
     class Meta:
         model = SkMemberProfile
@@ -105,16 +105,16 @@ class SkMemberProfileFormForSkleader(forms.ModelForm):
 
 class EditSkMemberProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.'})
+    mobile = forms.CharField(required=False,error_messages={'max_length': 'Moblie Number can not exceed 11 digits'}, widget=forms.TextInput(attrs={'type':'number'}))
 
     joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
 
-    roll = forms.CharField(error_messages={'required': 'Roll is required.'},
+    roll = forms.CharField(required=False,
                            widget=forms.TextInput(attrs={'type':'number'}))
 
-    student_class = forms.ChoiceField(error_messages={'required': 'Class is required.'},
+    student_class = forms.ChoiceField(required=False,
                                       choices=SkUserForm.class_choice, widget=forms.Select())
-    gender = forms.ChoiceField(error_messages={'required': 'Gender is required.'}, choices=GENDER_CHOICES)
+    gender = forms.ChoiceField(required=False, choices=GENDER_CHOICES)
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
 
