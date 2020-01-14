@@ -53,7 +53,7 @@ class User(AbstractUser):
 
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=6)
     image = models.ImageField(upload_to=account_strings.USER_IMAGE_TEXT, default='')
-    username = None
+    username = models.CharField(max_length=150)
     email_verifiaction_code = models.CharField(max_length=100, null=True, blank=True, default='')
     email_verified = models.CharField(max_length=1, null=True, blank=True, default=0)
     email = models.CharField(_(account_strings.USER_EMAIL_TEXT), unique=True, max_length=254 )  # changes email to unique and blank to false
