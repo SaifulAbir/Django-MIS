@@ -33,6 +33,7 @@ urlpatterns = [
     path('load_previous_unions/', load_previous_union, name='load_previous_unions'),
     path('load_previous_users/', load_previous_user, name='load_previous_users'),
     path('load_previous_headmaster_mobile/', load_previous_headmaster_mobile, name='load_previous_headmaster_mobile'),
+    path('load_previous_skmember_mobile/', load_previous_skmember_mobile, name='load_previous_skmember_mobile'),
 
 ]
 
