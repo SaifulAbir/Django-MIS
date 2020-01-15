@@ -148,7 +148,11 @@
 
                     </tfoot>
                 </table>
-                <p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index queryset.end_index queryset.paginator.count %}</p>
+                {% if queryset %}
+                    <p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index queryset.end_index queryset.paginator.count %}</p>
+                {% else %}
+                    <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+                {% endif %}
                 <ul class="pagination" style="float: right">
 
                     {% if queryset.has_previous %}
@@ -254,7 +258,7 @@
             });
         });
         // auto suggesion
-        autoSuggesion('/load_previous_users/', "input[name='name_contains']");
+        autoSuggesion('/load_previous_headmaster/', "input[name='name_contains']");
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
         autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
         autoSuggesion('/load_previous_districts/', "input[name='district_contains']");

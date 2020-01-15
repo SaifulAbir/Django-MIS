@@ -34,6 +34,9 @@ urlpatterns = [
     path('load_previous_users/', load_previous_user, name='load_previous_users'),
     path('load_previous_headmaster_mobile/', load_previous_headmaster_mobile, name='load_previous_headmaster_mobile'),
     path('load_previous_skleader_mobile/', load_previous_skleader_mobile, name='load_previous_skleader_mobile'),
+    path('load_previous_headmaster/', load_previous_headmaster, name='load_previous_headmaster'),
+    path('load_previous_skleader/', load_previous_skleader, name='load_previous_skleader'),
+    path('load_previous_skmember/', load_previous_skmember, name='load_previous_skmember'),
 
 ]
 
