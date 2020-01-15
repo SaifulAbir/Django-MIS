@@ -317,7 +317,8 @@
                 'union_contains': opts['union'],
                 'fromdate_contains': opts['form_date'],
                 'todate_contains': opts['to_date'],
-                'topics_contains': opts['topic']
+                'topics_contains': opts['topic'],
+                'mobile_contains' : opts['mobile']
             },
             success: function (data) {
                 $(id).html(data.html_list);
