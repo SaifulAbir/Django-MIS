@@ -345,3 +345,12 @@ def load_previous_union(request):
 def load_previous_user(request):
     previous_users = list(User.objects.values_list('first_name', flat=True))
     return JsonResponse(previous_users, safe=False)
+def load_previous_headmaster(request):
+    previous_users = list(User.objects.filter(user_type=2).order_by('-id').values_list('first_name', flat=True))
+    return JsonResponse(previous_users, safe=False)
+def load_previous_skleader(request):
+    previous_users = list(User.objects.filter(user_type=5).order_by('-id').values_list('first_name', flat=True))
+    return JsonResponse(previous_users, safe=False)
+def load_previous_skmember(request):
+    previous_users = list(User.objects.filter(user_type=6).order_by('-id').values_list('first_name', flat=True))
+    return JsonResponse(previous_users, safe=False)
