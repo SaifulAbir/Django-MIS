@@ -70,8 +70,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-
-                        <input type="button" value="Delete" id="btnDeleteEvent" onclick="clickSaveEvent()" class="btn btn-danger pull-left"/>
+                        <input style="display: none;" type="button" value="Delete" id="btnDeleteEvent" onclick="clickSaveEvent()" class="btn btn-danger pull-left"/>
                         <input type="button" value="Save" id="btnSaveEvent" onclick="clickSaveEvent()" class="btn btn-primary form-submit"/>
                     </div>
                 </div>
@@ -116,20 +115,17 @@
                     {% comment %}alert('Event: ' + calEvent.title);
                     alert('View: ' + view.name);{% endcomment %}
                     $('.modal-title').html('Event Details');
-
+                    $('#btnDeleteEvent').show();
                     var startDateWithTime = calEvent.start.format('DD-MM-YYYY h:mm A')
                     var endDateWithTime = calEvent.end.format('DD-MM-YYYY h:mm A')
                     $("#id_start").datetimepicker('disable');
                     $("#id_end").datetimepicker('disable');
                     $( "#id_title" ).prop( "disabled", true );
-
                     $('#id_title').val(calEvent.title);
                     $('#eventId').val(calEvent.id);
                     $('#id_start').val(startDateWithTime);
                     $('#id_end').val(endDateWithTime);
                     $('#btnSaveEvent').val('Edit');
-
-
                     $("#modal-event").modal("show");
 
                 },
@@ -183,7 +179,7 @@
             $('#id_end').val(end);
 
             eventAllInputFieldEnabled();
-
+            $('#btnDeleteEvent').hide();
             $("#id_start" ).prop( "disabled", false );
             $("#id_end" ).prop( "disabled", false );
             $("#id_title" ).prop( "disabled", false );

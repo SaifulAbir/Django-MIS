@@ -154,7 +154,9 @@
         $(function () {
             var currentDate;
             currentDate = getCurrentDate(true);
-            $('.datepicker, #id_PF-joining_date').val(currentDate);
+            $('.datepicker').val(currentDate);
+            var currentStandardDate = getCurrentDateStandard()
+            $('#id_PF-joining_date').val(currentStandardDate);
 
             $('#id_UF-user_type_0').prop("checked", true);
 
