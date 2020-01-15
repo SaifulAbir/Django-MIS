@@ -12,7 +12,8 @@ import time
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views import generic
-
+from . import strings as skleader_strings
+from resources import strings as common_strings
 from accounts.decorators import admin_login_required
 from accounts.models import User
 from school.models import School
@@ -65,6 +66,8 @@ def skleader_profile_view(request):
     return render(request, 'skleaders/skleader_profile_add.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'skleader_strings' :skleader_strings,
+        'common_strings' : common_strings
     })
 
 @admin_login_required
@@ -87,7 +90,8 @@ def skleader_list(request, export='null'):
         queryset = paginator.page(paginator.num_pages)
     if export != 'export':
         return render(request, 'skleaders/skleaderprofile_list.html',
-                      {'queryset': queryset, 'name': name, 'school': school,})
+                      {'queryset': queryset, 'name': name, 'school': school,'skleader_strings' :skleader_strings,
+                       'common_strings' : common_strings})
     else:
         resource = SkleaderResource()
         dataset = resource.export(qs)
@@ -102,6 +106,12 @@ class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "skleader_detail"
     model = models.SkLeaderProfile
     template_name = 'skleaders/skleader_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["skleader_strings"] = skleader_strings
+        context["common_strings"] = common_strings
+        return context
 
 @admin_login_required
 def skleader_update(request, pk):
@@ -152,6 +162,8 @@ def skleader_update(request, pk):
         'pk': pk,
         'skleader_details': skleader_details,
         'school_list': school_list,
+        'skleader_strings' :skleader_strings,
+        'common_strings' : common_strings
     })
 
 @admin_login_required
@@ -225,7 +237,8 @@ def skleader_search_list(request, export='null'):
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('skleaders/partial_skleader_list.html',
-                                                {'queryset': queryset})
+                                                {'queryset': queryset,'skleader_strings' :skleader_strings,
+                                                 'common_strings' : common_strings})
 
     if export != 'export':
         return JsonResponse(data)

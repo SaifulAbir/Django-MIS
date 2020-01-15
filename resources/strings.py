@@ -56,4 +56,6 @@ SIGN_IN_BUTTON = 'Sign in'
 PROFILE_ROLE_LABEL = 'Role:'
 PROFILE_EMAIL_LABEL = 'Email:'
 HEADER_SKNF_LOGO_TEXT = 'SKNF'
+UPDATE_BASIC_INFO_BUTTON= 'Update Basic Information'
+UPDATE_DETAIL_INFO_BUTTON= 'Update Detail Information'
 # Common Strings

@@ -3,11 +3,11 @@
     {% load widget_tweaks %}
     {% load static %}
     <form method='POST' enctype="multipart/form-data">
-        <section class="content-header" style="padding-top:60px">
+        <section class="content-header" >
             {% if not profile_form.instance.pk %}
-                <h1>Add New Skleader</h1>
+                <h1>{{ skleader_strings.NEW_SKLEADER_PAGE_TITLE }}</h1>
             {% else %}
-                <h1>Update SK Leader Info</h1>
+                <h1>{{ skleader_strings.UPDATE_SKLEADER_PAGE_TITLE }}</h1>
             {% endif %}
         </section>
         <!-- Main content -->
@@ -18,24 +18,23 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             {% if not profile_form.instance.pk %}
-                                <h3 class="box-title">Basic Information</h3>
+                                <h3 class="box-title">{{ skleader_strings.BASIC_INFO_TEXT }}</h3>
                             {% else %}
-                                <h3 class="box-title">Update Basic Information</h3>
+                                <h3 class="box-title">{{ skleader_strings.BASIC_INFO_TEXT }}</h3>
                             {% endif %}
                         </div>
-                        <div class="row" style="padding-bottom: 10px;">
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                         {% if user_form.errors or profile_form.errors %}
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                        <div id="alertdiv" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                                 {% for field in profile_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                             </span>
                                         </div>
@@ -43,12 +42,12 @@
                                     </span>
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                        <label for="{{ user_form.first_name.id_for_label }}">{{ skleader_strings.NAME_TEXT }}</label>
                                         {% render_field user_form.first_name class="form-control" placeholder="Name" %}
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">Username / Mobile Number</label>
+                                        <label for="{{ user_form.email.id_for_label }}">{{ skleader_strings.EMAIL_TEXT }}</label>
                                         {% render_field user_form.email class="form-control" placeholder="Username / Mobile Number" %}
                                     </div>
 
@@ -58,7 +57,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.student_class.id_for_label }}">Class</label>
+                                        <label for="{{ profile_form.student_class.id_for_label }}">{{ skleader_strings.CLASS_TEXT }}</label>
                                         {% render_field profile_form.student_class class="form-control" placeholder=profile_form.student_class.label %}
                                     </div>
 
@@ -73,8 +72,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.emergency_contact_person.id_for_label }}">{{ profile_form.emergency_contact_person.label }}</label>
-                                        {% render_field profile_form.emergency_contact_person class="form-control" placeholder=profile_form.emergency_contact_person.label %}
+                                        <label for="{{ profile_form.emergency_contact_person.id_for_label }}">{{ skleader_strings.EMERGENCY_CONTACT_PERSON }}</label>
+                                        {% render_field profile_form.emergency_contact_person class="form-control" placeholder=skleader_strings.EMERGENCY_CONTACT_PERSON %}
                                         <div class="{% if profile_form.emergency_contact_person.errors %} invalid{% endif %}">
                                             {% for error in profile_form.emergency_contact_person.errors %}
                                                 <p class="help-block">{{ error }}</p>
@@ -83,8 +82,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.emergency_contact_number.id_for_label }}">{{ profile_form.emergency_contact_number.label }}</label>
-                                        {% render_field profile_form.emergency_contact_number class="form-control" placeholder=profile_form.emergency_contact_number.label %}
+                                        <label for="{{ profile_form.emergency_contact_number.id_for_label }}">{{ skleader_strings.EMERGENCY_CONTACT_NUMBER }}</label>
+                                        {% render_field profile_form.emergency_contact_number class="form-control" placeholder=skleader_strings.EMERGENCY_CONTACT_NUMBER %}
                                         <div class="{% if profile_form.emergency_contact_number.errors %} invalid{% endif %}">
                                             {% for error in profile_form.emergency_contact_number.errors %}
                                                 <p class="help-block">{{ error }}</p>
@@ -98,13 +97,13 @@
                                         <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         <button type="button"
                                                 class="btn btn-primary pull-right js-genarate-password">
-                                            Genarate Password
+                                            {{ common_strings.GENERATE_PASSWORD_BUTTON }}
                                         </button>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.confirm_password.id_for_label }}">{{ user_form.confirm_password.label }}</label>
-                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
+                                        <label for="{{ user_form.confirm_password.id_for_label }}">{{ common_strings.USER_PROFILE_CONFIRM_PASSWORD }}</label>
+                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=common_strings.USER_PROFILE_CONFIRM_PASSWORD %}
                                     </div>
                                 </div>
                             </div>
@@ -113,13 +112,14 @@
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
                                             {% if skleader_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skleader_profile.image.url }}" class="pull-right jcrop-holder " alt="Pic"><br />
+                                                <img width="220" src="{{ skleader_profile.image.url }}" class="pull-right jcrop-holder " alt="Pic"><br />
                                             {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder " alt="Pic"><br />
+                                                <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right jcrop-holder " alt="Pic"><br />
                                             {% endif %}
                                         </div>
                                     </div>
-                                    <input type="file" accept="image/*" placeholder="Skleader image" style="margin-top: 10px;" class="img-preview pull-right" id="id_PF-image">
+                                    <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
+                                    <input type="file" accept="image/*" placeholder="Skleader image" class="img-preview pull-right" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
@@ -127,13 +127,13 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="box box-body">
-                                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                    <a type="button" onclick="goBack()"
                                        class="btn btn-warning pull-left"
                                        href="javascript:void(0)">
-                                        Back
+                                        {{ common_strings.BACK_BUTTON }}
                                     </a>
 
-                                    <input type="submit" value="Update" class="btn btn-primary pull-right"/>
+                                    <input type="submit" value="{{ common_strings.UPDATE_BASIC_INFO_BUTTON }}" class="btn btn-primary pull-right"/>
                                 </div>
                             </div>
                         </div>
@@ -147,16 +147,16 @@
                 <div class="col-sm-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Update School Information</h3>
+                            <h3 class="box-title">{{ skleader_strings.SCHOOL_INFO_TEXT }}</h3>
                         </div>
 
                         <div class="box-body required">
                             <span id="headmasterinfoajaxupdate"></span>
-                            <table class="table table-bordered mb-0" id="tb-doc" style="width: 100%">
+                            <table class="table table-bordered mb-0" id="tb-doc" >
                                 <tr>
-                                    <th>School</th>
-                                    <th>From</th>
-                                    <th>To</th>
+                                    <th>{{ skleader_strings.SCHOOL_TEXT }}</th>
+                                    <th>{{ skleader_strings.FROM_TEXT }}</th>
+                                    <th>{{ skleader_strings.TO_TEXT }}</th>
                                     <th></th>
                                 </tr>
                                 {% if skleader_details %}
@@ -228,13 +228,13 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <button id="addMoreDoc" type="button" class="btn btn-info margin-top-4">
-                                        <i class="ft-plus"></i> Add Row
+                                        <i class="ft-plus"></i> {{ skleader_strings.ADD_ROW_BUTTON }}
                                     </button>
                                 </div>
                                 <div class="col-sm-11">
                                     <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
                                          class="pull-right loader" >
-                                    <input type="button" value="Update" class="btn btn-primary pull-right update-school" />
+                                    <input type="button" value="{{ common_strings.UPDATE_DETAIL_INFO_BUTTON }}" class="btn btn-primary pull-right update-school" />
                                 </div>
                             </div>
                         </div>

@@ -7,6 +7,8 @@ from accounts.models import User
 from school.models import School
 from skleaders.models import SkLeaderProfile, GENDER_CHOICES
 from django.utils.translation import ugettext_lazy as _
+from . import strings as skleader_strings
+from resources import strings as common_strings
 
 
 
@@ -30,12 +32,12 @@ class SkUserForm(forms.ModelForm):
         ('9', '9'),
 
         ("10", '10'),)
-    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
+    first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
 
-    password = forms.CharField(error_messages={'required': 'Password is required.'},
+    password = forms.CharField(error_messages={'required': skleader_strings.PASSWORD_REQUIRED},
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
-    confirm_password = forms.CharField(error_messages={'required': 'Confirm password is required.'},
+    confirm_password = forms.CharField(error_messages={'required': skleader_strings.CONFIRM_PASSWORD_REQUIRED},
                                        widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     class Meta:
@@ -48,12 +50,12 @@ class SkUserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match")
+            self.add_error('confirm_password', skleader_strings.PASSWORD_NOT_MATCHED)
 
         return cleaned_data
 
 class EditSkUserForm(forms.ModelForm):
-    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
+    first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=SkUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
@@ -67,18 +69,18 @@ class EditSkUserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match")
+            self.add_error('confirm_password', skleader_strings.PASSWORD_NOT_MATCHED)
 
         return cleaned_data
 
 
 class SkLeaderProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.',
-                                             'max_length': 'Moblie Number can not exceed 11 digits'},
+    mobile = forms.CharField(error_messages={'required': skleader_strings.MOBILE_REQUIRED,
+                                             'max_length': skleader_strings.MOBILE_LENGTH_EXCEED},
                              widget=forms.TextInput(attrs={'type':'number'}))
 
-    joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
+    joining_date = forms.DateField(error_messages={'required': skleader_strings.FROM_DATE_REQUIRED})
 
     roll = forms.CharField(required=False, widget=forms.TextInput(attrs={'type':'number'}))
 
@@ -86,7 +88,7 @@ class SkLeaderProfileForm(forms.ModelForm):
                                       choices=SkUserForm.class_choice, widget=forms.Select())
     image = forms.ImageField(label=_('Skleader image'), required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    school = forms.ModelChoiceField(error_messages={'required': 'School is required.'}, queryset=School.objects.all())
+    school = forms.ModelChoiceField(error_messages={'required': skleader_strings.SCHOOL_REQUIRED}, queryset=School.objects.all())
     gender = forms.ChoiceField(required=False, choices=GENDER_CHOICES)
 
     class Meta:
@@ -100,17 +102,17 @@ class SkLeaderProfileForm(forms.ModelForm):
         if image:
 
             if image.size > 1 * 1024 * 1024:
-                raise ValidationError("Image file too large ( > 1mb )")
+                raise ValidationError(skleader_strings.IMAGE_SIZE_EXCEED)
 
             return image
 
 class EditSkLeaderProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.',
-                                             'max_length': 'Moblie Number can not exceed 11 digits'},
+    mobile = forms.CharField(error_messages={'required': skleader_strings.MOBILE_REQUIRED,
+                                             'max_length': skleader_strings.MOBILE_LENGTH_EXCEED},
                              widget=forms.TextInput(attrs={'type':'number'}))
 
-    joining_date = forms.DateField(error_messages={'required': 'From date is required.'})
+    joining_date = forms.DateField(error_messages={'required': skleader_strings.FROM_DATE_REQUIRED})
 
     roll = forms.CharField(required=False,
                            widget=forms.TextInput(attrs={'type':'number'}))
@@ -130,5 +132,5 @@ class EditSkLeaderProfileForm(forms.ModelForm):
         image = self.cleaned_data.get('image', False)
         if image:
             if image.size > 1 * 1024 * 1024:
-                raise ValidationError("Image file too large ( > 1mb )")
+                raise ValidationError(skleader_strings.IMAGE_SIZE_EXCEED)
             return image

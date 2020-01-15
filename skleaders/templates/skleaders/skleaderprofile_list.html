@@ -2,8 +2,8 @@
 {% block body_block %}
 
 <!-- Main content -->
-<section class="content-header"style="padding-top:60px">
-    <h1>SK Leaders</h1>
+<section class="content-header">
+    <h1>{{ skleader_strings.SKLEADER_LIST_PAGE_TITLE }}</h1>
 </section>
 <section class="content">
 
@@ -13,7 +13,7 @@
                 <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <strong>Name</strong>
+                            <strong>{{ skleader_strings.NAME_TEXT }}</strong>
                             {% if name is not None %}
                             <input class="form-control" type="search" value="{{name}}" name="name_contains" />
                             {% else %}
@@ -21,7 +21,7 @@
                             {% endif %}
                         </div>
                         <div class="form-group col-sm-4">
-                            <strong>School</strong>
+                            <strong>{{ skleader_strings.SCHOOL_TEXT }}</strong>
                             {% if school is not None %}
                             <input class="form-control " type="search" value="{{school}}" name="school_contains" />
                             {% else %}
@@ -29,7 +29,7 @@
                             {% endif %}
                         </div>
                         <div class="form-group col-sm-4">
-                            <strong>Mobile</strong>
+                            <strong>{{ skleader_strings.MOBILE_TEXT }}</strong>
                             {% if school is not None %}
                                 <input class="form-control " type="search" value="" name="mobile_contains" />
                             {% else %}
@@ -39,7 +39,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <strong>Division</strong>
+                            <strong>{{ skleader_strings.DIVISION_TEXT }}</strong>
                             {% if name is not None %}
                                 <input class="form-control" type="search" value="" name="division_contains" />
                             {% else %}
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group col-sm-3">
-                            <strong>District</strong>
+                            <strong>{{ skleader_strings.DISTRICT_TEXT }}</strong>
                             {% if school is not None %}
                                 <input class="form-control " type="search" value="" name="district_contains" />
                             {% else %}
@@ -56,7 +56,7 @@
                             {% endif %}
                         </div>
                         <div class="form-group col-sm-3">
-                            <strong>Upazila</strong>
+                            <strong>{{ skleader_strings.UPAZILA_TEXT }}</strong>
                             {% if school is not None %}
                                 <input class="form-control " type="search" value="" name="upazila_contains" />
                             {% else %}
@@ -64,7 +64,7 @@
                             {% endif %}
                         </div>
                         <div class="form-group col-sm-3">
-                            <strong>Union</strong>
+                            <strong>{{ skleader_strings.UNION_TEXT }}</strong>
                             {% if school is not None %}
                                 <input class="form-control " type="search" value="" name="union_contains" />
                             {% else %}
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary search-skleader">Search</button>
+                        <button type="submit" class="btn btn-primary search-skleader">{{ common_strings.SEARCH_BUTTON }}</button>
                     </div>
                     <div class="clearfix"></div>
 
@@ -85,7 +85,7 @@
             <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
-                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                    <div id="alertdiv" class="alert alert-success-customized">
                         <span>
                             {% for message in messages %}
                             {{ message }}
@@ -98,31 +98,33 @@
                    class="btn btn-primary pull-right"
                    href="{% url 'skleaders:skleader_add' %}">
                     <span class="fa fa-plus"></span>
-                    New SK Leader
+                    {{ skleader_strings.NEW_SKLEADER_PAGE_TITLE }}
                 </a>
-                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-skleader pull-right">Export CSV</button>
+                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-skleader pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
                 <table   id="example1" class=" skleader-search-table table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="col-sm-2">Name</th>
-                        <th class="col-sm-2">Username</th>
-                        <th class="col-sm-3">School</th>
-                        <th class="col-sm-2">Mobile</th>
-                        <th class="col-sm-1">Class</th>
-                        <th class="col-sm-2">Actions</th>
+                        <th class="col-sm-3">{{ skleader_strings.NAME_TEXT }}</th>
+                        <th class="col-sm-2">{{ skleader_strings.MOBILE_TEXT }}</th>
+                        <th class="col-sm-3">{{ skleader_strings.SCHOOL_TEXT }}</th>
+                        <th class="col-sm-1">{{ skleader_strings.DIVISION_TEXT }}</th>
+                        <th class="col-sm-1">{{ skleader_strings.DISTRICT_TEXT }}</th>
+                        <th class="col-sm-1">{{ skleader_strings.UPAZILA_TEXT }}</th>
+                        <th class="fixed-col text-center col-sm-1">{{ common_strings.LIST_ACTION_TEXT }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for skleader in queryset %}
                     <tr>
                         <td>{{skleader.user.first_name}}</td>
-                        <td>{{ skleader.user.email }}</td>
-                        <td>{{ skleader.school }}</td>
                         <td>{{ skleader.mobile }}</td>
-                        <td>{{ skleader.student_class }}</td>
+                        <td>{{ skleader.school }}</td>
+                        <td>{{ skleader.school.division }}</td>
+                        <td>{{ skleader.school.district }}</td>
+                        <td>{{ skleader.school.upazilla }}</td>
                         <td align="center"><a type="button" style="margin-right:10px"
                                               class=""
                                               href="{% url 'skleaders:skleader_detail' skleader.pk %}">
@@ -143,8 +145,13 @@
 
                     </tfoot>
                 </table>
-                <p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
-                <ul class="pagination" style="float: right">
+                {% if queryset %}
+                    <p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index  queryset.end_index queryset.paginator.count %}
+                    </p>
+                {% else %}
+                    <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+                {% endif %}
+                <ul class="pagination">
 
                     {% if queryset.has_previous %}
                     <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
@@ -230,6 +237,9 @@
                         'info': false,
                         'paging': false,
                         'ordering'    : false,
+                        "language": {
+                            "emptyTable":     "No Result Found"
+                        }
                     });
                 }
             });
