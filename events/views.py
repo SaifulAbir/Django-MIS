@@ -16,12 +16,27 @@ def create_event(request):
 
 @admin_login_required
 def add_event(request):
+
+    eventId = request.POST.get('eventId')
     title = request.POST.get('title')
     start = request.POST.get('start')
     end = request.POST.get('end')
     start_date = datetime.strptime(start, '%d-%m-%Y %H:%M %p').strftime('%Y-%m-%d %H:%M:%S')
     end_date = datetime.strptime(end, '%d-%m-%Y %H:%M %p').strftime('%Y-%m-%d %H:%M:%S')
-    if title and start:
-        event = Event(title=title,start_date=start_date,end_date=end_date)
-        event.save()
+    if eventId:
+        evenObj = Event.objects.get(id=eventId)
+        evenObj.title = title
+        evenObj.start_date = start_date
+        evenObj.end_date = end_date
+        evenObj.save()
+    else:
+        if title and start:
+            event = Event(title=title,start_date=start_date,end_date=end_date)
+            event.save()
+    return HttpResponse('ok')
+
+@admin_login_required
+def delete_event(request):
+    eventId = request.POST.get('eventId')
+    Event.objects.filter(id=eventId).delete()
     return HttpResponse('ok')

@@ -144,9 +144,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </section>
     </form>
     {% include 'sknf/_modal_show_image_error.html' %}
@@ -157,7 +154,7 @@
         $(function () {
             var currentDate;
             currentDate = getCurrentDate(true);
-            $('.datepicker').val(currentDate);
+            $('.datepicker, #id_PF-joining_date').val(currentDate);
 
             $('#id_UF-user_type_0').prop("checked", true);
 
