@@ -12,27 +12,33 @@ class SkmemberResource(resources.ModelResource):
         widget=ForeignKeyWidget(User, 'first_name'))
 
     mobile= Field(attribute='mobile', column_name='Mobile Number')
-    student_class= Field(attribute='student_class', column_name='Class')
-    roll= Field(attribute='roll', column_name='Roll')
 
 
     school= fields.Field(
         column_name='School Name',
         attribute='school',
         widget=ForeignKeyWidget(School, 'name'))
+    division = fields.Field(
+        column_name='Division',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'division'))
 
-    joining_date= Field(attribute='joining_date', column_name='Joining Date')
-
-    def dehydrate_joining_date(self,skmember):
-        date_string = str(skmember.joining_date)
-        if date_string :
-            return datetime.strptime(date_string, '%Y-%m-%d').strftime('%d-%m-%Y')
-
-
+    district = fields.Field(
+        column_name='District',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'district'))
+    upazila = fields.Field(
+        column_name='Upazila',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'upazilla'))
+    union = fields.Field(
+        column_name='Union',
+        attribute='school',
+        widget=ForeignKeyWidget(School, 'union'))
 
 
     class Meta:
         model = SkMemberProfile
 
-        fields = ('user','mobile','student_class','roll','school','joining_date')
+        fields = ('user','mobile','school')
 

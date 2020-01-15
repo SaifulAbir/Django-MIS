@@ -396,11 +396,26 @@ def skmember_search_list(request, export='null'):
     qs = SkMemberProfile.objects.filter(user__user_type__in=[6])
     name = request.GET.get('name_contains')
     school = request.GET.get('school_contains')
+    mobile = request.GET.get('mobile_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    upazila = request.GET.get('upazila_contains')
+    union = request.GET.get('union_contains')
 
     if name != '' and name is not None:
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
+    if mobile != '' and mobile is not None:
+        qs = qs.filter(mobile__icontains=mobile)
+    if division != '' and division is not None:
+        qs = qs.filter(school__division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(school__district__name__icontains=district)
+    if upazila != '' and upazila is not None:
+        qs = qs.filter(school__upazilla__name__icontains=upazila)
+    if union != '' and union is not None:
+        qs = qs.filter(school__union__name__icontains=union)
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')
     try:
@@ -409,7 +424,7 @@ def skmember_search_list(request, export='null'):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    if name == '' and school == '':
+    if name == '' and school == '' and mobile =='' and division == '' and district == '' and upazila == '' and union=='':
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('skmembers/partial_skmember_list.html',
