@@ -51,7 +51,12 @@
 
     </tfoot>
 </table>
-<p class="table-information">{%format_values common_strings.PAGINATION_INFO eduplusactivity_list.start_index eduplusactivity_list.end_index eduplusactivity_list.paginator.count %}</p>
+{% if eduplusactivity_list %}
+    <p class="table-information">{%format_values common_strings.PAGINATION_INFO eduplusactivity_list.start_index eduplusactivity_list.end_index eduplusactivity_list.paginator.count %}
+    </p>
+{% else %}
+    <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+{% endif %}
 <ul class="pagination">
 
     {% if eduplusactivity_list.has_previous %}

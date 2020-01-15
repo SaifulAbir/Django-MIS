@@ -12,7 +12,8 @@ import time
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views import generic
-
+from . import strings as skleader_strings
+from resources import strings as common_strings
 from accounts.decorators import admin_login_required
 from accounts.models import User
 from school.models import School
@@ -47,7 +48,8 @@ def skleader_profile_view(request):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
-
+            user.username = profile.mobile
+            user.save()
             headmaster_details = SkleaderDetails()
             headmaster_details.school = profile_form.cleaned_data["school"]
             headmaster_details.skleader = profile
@@ -64,6 +66,8 @@ def skleader_profile_view(request):
     return render(request, 'skleaders/skleader_profile_add.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'skleader_strings' :skleader_strings,
+        'common_strings' : common_strings
     })
 
 @admin_login_required
@@ -86,7 +90,8 @@ def skleader_list(request, export='null'):
         queryset = paginator.page(paginator.num_pages)
     if export != 'export':
         return render(request, 'skleaders/skleaderprofile_list.html',
-                      {'queryset': queryset, 'name': name, 'school': school,})
+                      {'queryset': queryset, 'name': name, 'school': school,'skleader_strings' :skleader_strings,
+                       'common_strings' : common_strings})
     else:
         resource = SkleaderResource()
         dataset = resource.export(qs)
@@ -101,6 +106,12 @@ class SkleaderDetail(LoginRequiredMixin, generic.DetailView):
     context_object_name = "skleader_detail"
     model = models.SkLeaderProfile
     template_name = 'skleaders/skleader_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["skleader_strings"] = skleader_strings
+        context["common_strings"] = common_strings
+        return context
 
 @admin_login_required
 def skleader_update(request, pk):
@@ -136,6 +147,8 @@ def skleader_update(request, pk):
             # end of image cropping code
 
             profile.save()
+            user.username = profile.mobile
+            user.save()
             messages.success(request, 'SK Leader Updated!')
             return HttpResponseRedirect("/skleaders/skleader_list/")
     else:
@@ -149,6 +162,8 @@ def skleader_update(request, pk):
         'pk': pk,
         'skleader_details': skleader_details,
         'school_list': school_list,
+        'skleader_strings' :skleader_strings,
+        'common_strings' : common_strings
     })
 
 @admin_login_required
@@ -190,11 +205,26 @@ def skleader_search_list(request, export='null'):
     qs = SkLeaderProfile.objects.filter(user__user_type__in=[5])
     name = request.GET.get('name_contains')
     school = request.GET.get('school_contains')
+    mobile = request.GET.get('mobile_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    upazila = request.GET.get('upazila_contains')
+    union = request.GET.get('union_contains')
 
     if name != '' and name is not None:
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
+    if mobile != '' and mobile is not None:
+        qs = qs.filter(mobile__icontains=mobile)
+    if division != '' and division is not None:
+        qs = qs.filter(school__division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(school__district__name__icontains=district)
+    if upazila != '' and upazila is not None:
+        qs = qs.filter(school__upazilla__name__icontains=upazila)
+    if union != '' and union is not None:
+        qs = qs.filter(school__union__name__icontains=union)
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')
     try:
@@ -203,11 +233,12 @@ def skleader_search_list(request, export='null'):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    if name == '' and school == '':
+    if name == '' and school == '' and mobile == '' and division == '' and district == '' and upazila == '' and union == '':
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('skleaders/partial_skleader_list.html',
-                                                {'queryset': queryset})
+                                                {'queryset': queryset,'skleader_strings' :skleader_strings,
+                                                 'common_strings' : common_strings})
 
     if export != 'export':
         return JsonResponse(data)
