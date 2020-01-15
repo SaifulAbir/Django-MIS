@@ -7,6 +7,8 @@ from django.shortcuts import render
 # Create your views here.
 from accounts.decorators import admin_login_required
 from events.models import Event
+from events.resources import EventResource
+
 
 @admin_login_required
 def create_event(request):
@@ -40,3 +42,11 @@ def delete_event(request):
     eventId = request.POST.get('eventId')
     Event.objects.filter(id=eventId).delete()
     return HttpResponse('ok')
+
+def event_list(request):
+    resource = EventResource()
+    dataset = resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="event_list.csv"'
+    return response
+
