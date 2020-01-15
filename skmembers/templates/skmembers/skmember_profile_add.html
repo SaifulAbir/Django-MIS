@@ -1,150 +1,166 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    {% load widget_tweaks %}
-    {% load static %}
-    <form method='POST' enctype="multipart/form-data" novalidate>
-        <section class="content-header" style="padding-top:60px">
-            <h1>Add New SK Member</h1>
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <!-- left column -->
-                <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            {% if not profile_form.instance.pk %}
-                                <h3 class="box-title">Basic Information</h3>
-                            {% else %}
-                                <h3 class="box-title">Basic Information</h3>
-                            {% endif %}
-                        </div>
-                        <div class="row" style="padding-bottom: 10px;">
-                            <div class="col-md-6">
-                                <div class="box-body">
-                                    <!-- Color Picker -->
-                                    <span id = "alert_placeholder">
+{% load widget_tweaks %}
+{% load static %}
+<form method='POST' enctype="multipart/form-data" novalidate>
+    <section class="content-header">
+        <h1>{{sk_strings.NEW_SKMEMBER_PAGE_TITLE}}</h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        {% if not profile_form.instance.pk %}
+                        <h3 class="box-title">{{common_strings.PROFILE_FORM_TITLE}}</h3>
+                        {% else %}
+                        <h3 class="box-title">{{common_strings.PROFILE_FORM_TITLE}}</h3>
+                        {% endif %}
+                    </div>
+                    <div class="row" style="padding-bottom: 10px;">
+                        <div class="col-md-6">
+                            <div class="box-body">
+                                <!-- Color Picker -->
+                                <span id = "alert_placeholder">
                                         {% if user_form.errors or profile_form.errors %}
-                                            <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                            padding-bottom: 3px;" class="alert alert-danger-error-message">
+                                            <div id="alertdiv" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                                 {% for field in profile_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                             </span>
                                         </div>
                                         {% endif %}
                                     </span>
-                                    {% csrf_token %}
+                                {% csrf_token %}
 
 
-                                    <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">Email</label>
-                                        {% render_field user_form.email class="form-control" placeholder="Email" %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.mobile.id_for_label }}">{{ profile_form.mobile.label }}</label>
-                                        {% render_field profile_form.mobile class="form-control" placeholder=profile_form.mobile.label %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.student_class.id_for_label }}">Class</label>
-                                        {% render_field profile_form.student_class class="form-control" placeholder=profile_form.student_class.label %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.roll.id_for_label }}">{{ profile_form.roll.label }}</label>
-                                        {% render_field profile_form.roll class="form-control" placeholder=profile_form.roll.label %}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.gender.id_for_label }}">{{ profile_form.gender.label }}</label>
-                                        {% render_field profile_form.gender class="form-control" placeholder=profile_form.gender.label %}
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6"><br />
                                 <div class="form-group">
+                                    <label for="{{ user_form.first_name.id_for_label }}">{{sk_strings.NAME_TEXT}}</label>
+                                    {% render_field user_form.first_name class="form-control" placeholder=sk_strings.NAME_TEXT %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ user_form.email.id_for_label }}">{{sk_strings.EMAIL_TEXT}}</label>
+                                    {% render_field user_form.email class="form-control" placeholder=sk_strings.EMAIL_TEXT %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ profile_form.mobile.id_for_label }}">{{ profile_form.mobile.label }}</label>
+                                    {% render_field profile_form.mobile class="form-control" placeholder=profile_form.mobile.label %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ profile_form.student_class.id_for_label }}">{{sk_strings.CLASS_TEXT}}</label>
+                                    {% render_field profile_form.student_class class="form-control" placeholder=profile_form.student_class.label %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ profile_form.roll.id_for_label }}">{{ profile_form.roll.label }}</label>
+                                    {% render_field profile_form.roll class="form-control" placeholder=profile_form.roll.label %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{ profile_form.gender.id_for_label }}">{{ profile_form.gender.label }}</label>
+                                    {% render_field profile_form.gender class="form-control" placeholder=profile_form.gender.label %}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6"><br />
+                            <div class="form-group">
+                                <div class="col-sm-12">
                                     <div class="col-sm-12">
-                                        <div class="col-sm-12">
-                                            {% if profile_form.instance.pk and skmember_profile.image %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skmember_profile.image.url }}" class="preview-show pull-right" alt="Pic"><br />
-                                            {% else %}
-                                                <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
-                                            {% endif %}
-                                        </div>
+                                        {% if profile_form.instance.pk and skmember_profile.image %}
+                                        <img width="220" src="{{ skmember_profile.image.url }}" class="preview-show pull-right" alt="Pic"><br />
+                                        {% else %}
+                                        <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
+                                        {% endif %}
                                     </div>
-                                    <input type="file" accept="image/*" placeholder="SkMember image" style="margin-top: 10px;" class="img-preview pull-right" id="id_PF-image">
                                 </div>
+                                <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
+                                <input type="file" accept="image/*" placeholder="SkMember image" class="img-preview pull-right" id="id_PF-image">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {% render_field profile_form.image_base64 %}
-            {% include 'sknf/_crop_modal.html' %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">School Information</h3>
+        </div>
+        {% render_field profile_form.image_base64 %}
+        {% include 'sknf/_crop_modal.html' %}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ sk_strings.NEW_SCHOOL_INFO_TEXT }}</h3>
+                    </div>
+                    <div class="box-body required">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
+                                    {% render_field profile_form.school required='true' class="form-control customer-select2" placeholder=profile_form.school.label %}
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="{{ profile_form.joining_date.id_for_label }}">{{ sk_strings.DATE_FROM }}</label>
+                                    <input type="text" class="datepicker copydate form-control"  placeholder="dd-mm-yyyy"/>
+                                    <div style="display: none">
+                                        {% render_field profile_form.joining_date class="form-control pastedate" %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="id_hf-from_date">{{ sk_strings.DATE_TO }}</label>
+                                    <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
+                                </div>
+                            </div>
                         </div>
-                        <div class="box-body required">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                        {% render_field profile_form.school required='true' class="form-control customer-select2" placeholder=profile_form.school.label %}
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
-                                        <input type="text" class="datepicker copydate form-control"  placeholder="dd-mm-yyyy"/>
-                                        <div style="display: none">
-                                            {% render_field profile_form.joining_date class="form-control pastedate" %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="id_hf-from_date">To</label>
-                                        <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="">
-                                <a type="button" style="margin-right: 5px;" onclick="goBack()"
-                                   class="btn btn-warning pull-left"
-                                   href="javascript:void(0)">
-                                    Back
-                                </a>
+                        <div class="">
+                            <a type="button" onclick="goBack()"
+                               class="btn btn-warning pull-left"
+                               href="javascript:void(0)">
+                                {{ common_strings.BACK_BUTTON }}
+                            </a>
 
-                                <input type="submit" id="save-btn" value="Save" class="btn btn-primary pull-right"/>
-                            </div>
+                            <input type="submit" id="save-btn" value="{{ common_strings.SAVE_BUTTON }}" class="btn btn-primary pull-right"/>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-        </section>
-    </form>
+    </section>
+</form>
+{% block extra_css %}
+<style>
+    .help-block{
+        color:red;
+        margin-bottom: 5px;
+    }
+    .jcrop-holder{
+        border-radius: 5px;
+        border: 2px solid #ccc;
+    }
+    #id_PF-image{
+        margin-top: 10px;
+    }
+
+</style>
+{% endblock %}
 {% endblock %}
 {% block extra_js%}
-    <script>
-        var currentDate;
-        currentDate = getCurrentDate(true);
-        $('.datepicker').val(currentDate);
-    </script>
+<script>
+    var currentDate;
+    currentDate = getCurrentDate(true);
+    $('.datepicker').val(currentDate);
+</script>
 {% endblock %}
 
 <!-- /.form group -->

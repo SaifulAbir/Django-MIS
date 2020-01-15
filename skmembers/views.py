@@ -247,7 +247,8 @@ def skmember_list(request,export='null'):
         queryset = paginator.page(paginator.num_pages)
     if export != 'export':
         return render(request, 'skmembers/skmemberprofile_list.html',
-                      {'queryset': queryset, 'name': name, 'school': school, })
+                      {'queryset': queryset, 'name': name, 'school': school, 'common_strings': common_strings,
+        'sk_strings': sk_strings})
     else:
         resource = SkmemberResource()
         dataset = resource.export(qs)

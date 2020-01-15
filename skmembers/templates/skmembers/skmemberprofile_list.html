@@ -4,7 +4,7 @@
 <!-- Main content -->
 <section class="content-header">
     <h1>
-        SK Members
+        {{sk_strings.SK_MEMBER_LIST_TITLE}}
     </h1>
 </section>
 <section class="content">
@@ -12,10 +12,10 @@
     <div class="box">
         <form method="GET" action="." class="search-form-skmember">
             <div class="box-header">
-                <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <div class="shop-search main-box card-block">
                     <div class="row">
                         <div class="form-group col-sm-4">
-                            <strong>Name</strong>
+                            <strong>{{sk_strings.NAME_TEXT}}</strong>
                             {% if name is not None %}
                             <input class="form-control" value="" type="search" name="name_contains" />
                             {% else %}
@@ -24,7 +24,7 @@
 
                         </div>
                         <div class="form-group col-sm-4">
-                            <strong>School</strong>
+                            <strong>{{sk_strings.SCHOOL_TEXT}}</strong>
                             {% if school is not None %}
                             <input class="form-control " type="search" value="" name="school_contains" />
                             {% else %}
@@ -32,52 +32,52 @@
                             {% endif%}
                         </div>
                         <div class="form-group col-sm-4">
-                            <strong>Mobile</strong>
+                            <strong>{{sk_strings.MOBILE_TEXT}}</strong>
                             {% if school is not None %}
-                                <input class="form-control " type="search" value="" name="mobile_contains" />
+                            <input class="form-control " type="search" value="" name="mobile_contains" />
                             {% else %}
-                                <input class="form-control " type="search" name="mobile_contains" />
+                            <input class="form-control " type="search" name="mobile_contains" />
                             {% endif %}
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <strong>Division</strong>
+                            <strong>{{sk_strings.DIVISION_TEXT}}</strong>
                             {% if name is not None %}
-                                <input class="form-control" type="search" value="" name="division_contains" />
+                            <input class="form-control" type="search" value="" name="division_contains" />
                             {% else %}
-                                <input class="form-control" type="search" name="division_contains"/>
+                            <input class="form-control" type="search" name="division_contains"/>
                             {% endif %}
                         </div>
 
                         <div class="form-group col-sm-3">
-                            <strong>District</strong>
+                            <strong>{{sk_strings.DISTRICT_TEXT}}</strong>
                             {% if school is not None %}
-                                <input class="form-control " type="search" value="" name="district_contains" />
+                            <input class="form-control " type="search" value="" name="district_contains" />
                             {% else %}
-                                <input class="form-control " type="search" name="district_contains" />
+                            <input class="form-control " type="search" name="district_contains" />
                             {% endif %}
                         </div>
                         <div class="form-group col-sm-3">
-                            <strong>Upazila</strong>
+                            <strong>{{sk_strings.UPAZILA_TEXT}}</strong>
                             {% if school is not None %}
-                                <input class="form-control " type="search" value="" name="upazila_contains" />
+                            <input class="form-control " type="search" value="" name="upazila_contains" />
                             {% else %}
-                                <input class="form-control " type="search" name="upazila_contains" />
+                            <input class="form-control " type="search" name="upazila_contains" />
                             {% endif %}
                         </div>
                         <div class="form-group col-sm-3">
-                            <strong>Union</strong>
+                            <strong>{{sk_strings.UNION_TEXT}}</strong>
                             {% if school is not None %}
-                                <input class="form-control " type="search" value="" name="union_contains" />
+                            <input class="form-control " type="search" value="" name="union_contains" />
                             {% else %}
-                                <input class="form-control " type="search" name="union_contains" />
+                            <input class="form-control " type="search" name="union_contains" />
                             {% endif %}
                         </div>
                     </div>
 
                     <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary search-skmember">Search</button>
+                        <button type="submit" class="btn btn-primary search-skmember">{{common_strings.SEARCH_BUTTON}}</button>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -101,34 +101,36 @@
                    class="btn btn-primary pull-right"
                    href="{% url 'skmembers:skmember_add' %}">
                     <span class="fa fa-plus"></span>
-                    New SK Member
+                    {{sk_strings.NEW_SKMEMBER_BUTTON}}
                 </a>
-                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-skmember pull-right">Export CSV</button>
+                <button type="submit" class="btn btn-primary export-skmember pull-right">{{common_strings.EXPORT_CSV_BUTTON_TEXT}}</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
                 <table   id="example1" class=" skmember-search-table table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="col-sm-3">Name</th>
-                        <th class="col-sm-2">Username</th>
-                        <th class="col-sm-2">Mobile</th>
-                        <th class="col-sm-3">School</th>
-                        <th class="col-sm-1">Class</th>
-                        <th class="col-sm-1">Actions</th>
+                        <th class="col-sm-2">{{ sk_strings.NAME_TEXT }}</th>
+                        <th class="col-sm-2">{{ sk_strings.MOBILE_TEXT }}</th>
+                        <th class="col-sm-4">{{ sk_strings.SCHOOL_TEXT }}</th>
+                        <th class="col-sm-1">{{ sk_strings.DIVISION_TEXT }}</th>
+                        <th class="col-sm-1">{{ sk_strings.DISTRICT_TEXT }}</th>
+                        <th class="col-sm-1">{{ sk_strings.UPAZILA_TEXT }}</th>
+                        <th class="fixed-col col-sm-1 text-center">{{ common_strings.LIST_ACTION_TEXT }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for skmember in queryset %}
                     <tr>
                         <td>{{skmember.user.first_name}}</td>
-                        <td>{{ skmember.user.email }}</td>
                         <td>{{ skmember.mobile }}</td>
                         <td>{{ skmember.school }}</td>
-                        <td>{{ skmember.student_class }}</td>
+                        <td>{{ skmember.school.division }}</td>
+                        <td>{{ skmember.school.district }}</td>
+                        <td>{{ skmember.school.upazilla }}</td>
                         <td align="center">
-                            <a type="button" style="margin-right:10px"
-                               class=""
+                            <a type="button"
+                               class="detail-icon"
                                href="{% url 'skmembers:skmember_detail' skmember.pk %}">
                                 <span class="fa fa-eye"></span>
                             </a>
@@ -147,8 +149,8 @@
 
                     </tfoot>
                 </table>
-                <p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
-                <ul class="pagination" style="float: right">
+                <p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index queryset.end_index queryset.paginator.count %}</p>
+                <ul class="pagination">
 
                     {% if queryset.has_previous %}
                     <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
@@ -184,6 +186,22 @@
     </div>
     <!-- /.content -->
 </section>
+{% block extra_css %}
+<style>
+    .shop-search{
+        border: 1px solid rgb(204, 204, 204);
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding-bottom: 0px;
+    }
+    .export-skmember{
+        margin-right: 5px;
+    }
+    .detail-icon{
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script>
@@ -195,6 +213,9 @@
             'info': false,
             'paging': false,
             'ordering'    : false,
+            "language": {
+                            "emptyTable":     "No Result Found"
+                        }
         });
 
         $('.search-skmember').on('click', function (event) {
@@ -233,6 +254,9 @@
                         'info': false,
                         'paging': false,
                         'ordering'    : false,
+                        "language": {
+                            "emptyTable":     "No Result Found"
+                        }
                     });
                 }
             });
