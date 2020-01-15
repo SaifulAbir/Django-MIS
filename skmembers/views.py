@@ -429,7 +429,7 @@ def skmember_search_list(request, export='null'):
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('skmembers/partial_skmember_list.html',
-                                                {'queryset': queryset})
+                                                {'queryset': queryset, 'sk_strings':sk_strings, 'common_strings':common_strings})
 
     if export != 'export':
         return JsonResponse(data)
