@@ -144,6 +144,10 @@
         var currentDate;
         currentDate = getCurrentDate(true);
         $('.datepicker').val(currentDate);
+
+        var currentStandardDate = getCurrentDateStandard()
+        $('#id_PF-joining_date').val(currentStandardDate);
+
     </script>
 {% endblock %}
 
