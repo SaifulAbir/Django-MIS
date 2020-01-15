@@ -149,7 +149,11 @@
 
                     </tfoot>
                 </table>
+                {% if queryset %}
                 <p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index queryset.end_index queryset.paginator.count %}</p>
+                {% else %}
+                <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+                {% endif %}
                 <ul class="pagination">
 
                     {% if queryset.has_previous %}
@@ -214,8 +218,8 @@
             'paging': false,
             'ordering'    : false,
             "language": {
-                            "emptyTable":     "No Result Found"
-                        }
+                "emptyTable":     "No Result Found"
+            }
         });
 
         $('.search-skmember').on('click', function (event) {
