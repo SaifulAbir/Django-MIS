@@ -16,13 +16,13 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             {% if not profile_form.instance.pk %}
-                                <h3 class="box-title">Basic Information</h3>
+                                <h3 class="box-title">{{ skleader_strings.BASIC_INFO_TEXT }}</h3>
                             {% else %}
-                                <h3 class="box-title">Basic Information</h3>
+                                <h3 class="box-title">{{ skleader_strings.BASIC_INFO_TEXT }}</h3>
                             {% endif %}
                         </div>
 
-                        <div class="row" style="padding-bottom: 10px;">
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
@@ -42,12 +42,12 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">{{ skleader_strings.NAME_TEXT }}</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                        {% render_field user_form.first_name class="form-control" placeholder=skleader_strings.NAME_TEXT %}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="{{ user_form.email.id_for_label }}">{{ skleader_strings.EMAIL_TEXT }}</label>
-                                        {% render_field user_form.email class="form-control" placeholder="Email" %}
+                                        {% render_field user_form.email class="form-control" placeholder=skleader_strings.EMAIL_TEXT %}
                                     </div>
 
                                     <div class="form-group">

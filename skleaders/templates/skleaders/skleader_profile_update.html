@@ -43,12 +43,12 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">{{ skleader_strings.NAME_TEXT }}</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                        {% render_field user_form.first_name class="form-control" placeholder=skleader_strings.NAME_TEXT %}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="{{ user_form.email.id_for_label }}">{{ skleader_strings.EMAIL_TEXT }}</label>
-                                        {% render_field user_form.email class="form-control" placeholder="Username / Mobile Number" %}
+                                        {% render_field user_form.email class="form-control" placeholder=skleader_strings.EMAIL_TEXT %}
                                     </div>
 
                                     <div class="form-group">
@@ -232,8 +232,8 @@
                                     </button>
                                 </div>
                                 <div class="col-sm-11">
-                                    <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
-                                         class="pull-right loader" >
+                                    <img src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
+                                         class="pull-right loader loader-detail" >
                                     <input type="button" value="{{ common_strings.UPDATE_DETAIL_INFO_BUTTON }}" class="btn btn-primary pull-right update-school" />
                                 </div>
                             </div>
@@ -246,6 +246,16 @@
     </form>
 {% include 'sknf/_modal_show_image_error.html' %}
 {% include 'sknf/_crop_modal.html' %}
+    {% block extra_css %}
+        <style>
+        .loader-detail{
+            position: relative;
+            display: none;
+            width: 50px;
+            top: -6px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js%}
     <script type="text/javascript">
@@ -349,7 +359,7 @@
 
                             },
                             success: function (data) {
-                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>School Information Successfully Updated.</span> </div>'
+                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>{{ skleader_strings.SCHOOL_INFORMATION_UPDATE_MESSAGE }}</span> </div>'
                                 $('#headmasterinfoajaxupdate').html(str);
                                 $('.loader').hide(1000)
                                 $('.update-school').show(1500)

@@ -40,6 +40,7 @@ IMAGE_FILE_ONLY = "Image files only"
 IMAGE_FILE_SIZE_EXCEED = "Image file too large ( > 1mb )"
 HEADMASTER_CREATED = 'Headmaster Created!'
 HEADMASTER_UPDATED = 'Headmaster Updated!'
+SCHOOL_INFORMATION_UPDATE_MESSAGE = 'School Information Successfully Updated.'
 
 HEADMASTER_VERBOSE_NAME = 'Headmaster'
 HEADMASTER_VERBOSE_NAME_PLURAL = 'Headmasters'

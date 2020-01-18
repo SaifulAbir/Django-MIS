@@ -15,8 +15,8 @@ from resources import strings as common_strings
 
 class SkUserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
-        (5, 'skLeader'),
-        (6, 'skMember'),
+        (5, skleader_strings.SK_LEADER),
+        (6, skleader_strings.SK_MEMBER),
     )
 
     class_choice = (
