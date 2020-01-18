@@ -8,3 +8,6 @@ TOPIC_LIST_TEXT = 'Topic List'
 NEW_TOPIC_TITLE_TEXT = 'New Topic'
 UPDATE_TOPIC_TITLE_TEXT = 'Update Topic'
 DELETION_MESSEGE ="Are you sure you want to delete the topic %s ?"
+TOPIC_CREATED_MSG = 'Topic Created!'
+TOPIC_UPDATED_MSG = 'Topic Updated!'
+TOPIC_DELETED_MSG = 'Topic Deleted!'
