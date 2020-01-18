@@ -28,9 +28,9 @@ class EduPlusActivityForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(attrs={'checked': 'checked'}),
         queryset=None,
         required=True, error_messages={'required': edu_strings.ATTENDANCE_REQUIRED_ERROR})
-    date = forms.DateField(label='dd-mm-yyyy',widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',), error_messages={'required': 'Date is required.'})
-    image = forms.ImageField(label=_('Headmaster image'), required=False,
-                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    date = forms.DateField(label=edu_strings.DATE_LABEL_TEXT,widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',), error_messages={'required': edu_strings.DATE_REQUIRED_ERROR})
+    image = forms.ImageField(required=False,
+                             error_messages={'invalid': _(edu_strings.IMAGE_REQUIRED_ERROR)}, widget=forms.FileInput)
     class Meta:
         model= EduPlusActivity
         fields=["date", "image", "topics", "presence_skleader",'method', "attendance", 'image_base64', 'description']
@@ -62,7 +62,7 @@ class EditEduPlusActivityForm(forms.ModelForm):
     topics = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
-        required=True, error_messages={'required': 'Select at least one topic.'})
+        required=True, error_messages={'required': edu_strings.TOPIC_REQUIRED_ERROR_NOTIFICATION})
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField(error_messages={'required': edu_strings.DESCRIPTION_REQUIRED_ERROR},
                                   widget=forms.Textarea(attrs={'rows': 4.5, 'cols': 15, 'style': 'height:7.51em;'}))
@@ -71,8 +71,8 @@ class EditEduPlusActivityForm(forms.ModelForm):
         queryset=User.objects.filter(user_type=6),
         required=False)
     date = forms.DateField(widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',))
-    image = forms.ImageField(label=_('Headmaster image'), required=False,
-                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image = forms.ImageField( required=False,
+                             error_messages={'invalid': _(edu_strings.IMAGE_REQUIRED_ERROR)}, widget=forms.FileInput)
     class Meta:
         model= EduPlusActivity
         fields=["date", "description", "image", "topics","method", "presence_skleader", "attendance", 'image_base64']
@@ -111,5 +111,5 @@ class MethodForm(forms.ModelForm):
         model = Method
         fields = ['name']
         widgets = {
-            'name': forms.TextInput(attrs={'style': ''}),
+            'name': forms.TextInput(),
         }
