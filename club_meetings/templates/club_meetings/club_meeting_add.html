@@ -71,12 +71,12 @@
                                 </div>
                                 <ul id="id_CMF-attendance">
                                     {% for club in club_meeting.attendance.all %}
-                                    <li><label for="id_CMF-attendance_0"><input type="checkbox" name="CMF-attendance" value="{{club.id}}" placeholder="Attendance" class="" checked="">
+                                    <li><label for="id_CMF-attendance_0"><input type="checkbox" name="CMF-attendance" value="{{club.id}}" class="" checked="">
                                         {{club.first_name}}</label>
                                     </li>
                                     {% endfor %}
                                             {% for member in all_member %}
-                                    <li><label for="id_CMF-attendance_0"><input type="checkbox" name="CMF-attendance" value="{{member.id}}" placeholder="Attendance" class="">
+                                    <li><label for="id_CMF-attendance_0"><input type="checkbox" name="CMF-attendance" value="{{member.id}}"class="">
                                         {{member.first_name}}</label>
                                     </li>
                                     {% endfor %}
@@ -104,7 +104,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-body">
-                    <input type="submit" value="Save" id="save-btn" class="btn btn-primary pull-right"/>
+                    <input type="submit" value="{{ common_strings.SAVE_BUTTON }}" id="save-btn" class="btn btn-primary pull-right"/>
                 </div>
             </div>
         </div>

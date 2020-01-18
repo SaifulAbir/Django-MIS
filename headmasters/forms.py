@@ -13,9 +13,9 @@ from django.utils.translation import ugettext_lazy as _
 
 class UserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
-        (2, 'headmaster'),
-        (3, 'Guide Teacher'),
-        (4, 'both'),
+        (2, headmaster_strings.HEADMASTER),
+        (3, headmaster_strings.GUIDE_TEACHER),
+        (4, headmaster_strings.BOTH),
     )
     first_name = forms.CharField(error_messages={'required': headmaster_strings.NAME_REQUIRED})
     password = forms.CharField(error_messages={'required': headmaster_strings.PASSWORD_REQUIRED}, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
@@ -36,7 +36,7 @@ class UserForm(forms.ModelForm):
         return cleaned_data
 
 class EditUserForm(forms.ModelForm):
-    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
+    first_name = forms.CharField(error_messages={'required': headmaster_strings.NAME_REQUIRED})
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(error_messages={'required': headmaster_strings.USER_TYPE_REQUIRED}, choices=UserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
@@ -58,10 +58,10 @@ class EditUserForm(forms.ModelForm):
 class HeadmasterProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
 
-    image = forms.ImageField(label=_('Headmaster image'), required=False,
-                                    error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image = forms.ImageField(required=False,
+                                    error_messages={'invalid': _(headmaster_strings.IMAGE_FILE_ONLY)}, widget=forms.FileInput)
     joining_date = DateField(error_messages={'required': headmaster_strings.FROM_DATE_REQUIRED})
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.','max_length': headmaster_strings.MOBILE_LENGTH_EXCEED},
+    mobile = forms.CharField(error_messages={'required': headmaster_strings.MOBILE_REQUIRED,'max_length': headmaster_strings.MOBILE_LENGTH_EXCEED},
                              widget=forms.TextInput(attrs={'type':'number'}))
     school = forms.ModelChoiceField(error_messages={'required': headmaster_strings.SCHOOL_REQUIRED}, queryset=School.objects.all())
 
