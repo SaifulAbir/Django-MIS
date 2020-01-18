@@ -107,7 +107,6 @@ class SkleaderProfileTest(TestCase):
         s.save()
         s1=self.client.login(username='01712121211', password='12345')
         response = self.client.get('/skleaders/skleader_list/',{'school_contains':'mirpur'},follow=True)
-        print(response.content)
         self.assertContains(response = response, status_code=200,  text='<td>Mirpur School (123)</td>', html=True)
 
 
