@@ -93,7 +93,6 @@
                 height: 650,
                 events: [
                     {% for i in event_list %}
-
                         {
                             id: "{{ i.id }}",
                             title: "{{ i.title }}",
@@ -104,9 +103,6 @@
                     {% endfor %}
                 ],
                 eventClick: function(calEvent, jsEvent, view) {
-
-                    {% comment %}alert('Event: ' + calEvent.title);
-                    alert('View: ' + view.name);{% endcomment %}
                     $('.modal-title').html('Event Details');
                     $('#btnDeleteEvent').show();
                     var startDateWithTime = calEvent.start.format('DD-MM-YYYY h:mm A')
@@ -180,6 +176,7 @@
 
             $('#event-error').html('');
             $('#event-error').removeClass('alert alert-danger-error-message');
+            console.log('yes');
             $("#modal-event").modal("show");
         }
         function saveEvent(start, end, title){
@@ -231,6 +228,15 @@
             title = $('#id_title').val();
             start = $('#id_start').val();
             end = $('#id_end').val();
+
+            var data = {
+                'title': 'Test',
+                'start': '2020-01-25',
+                'end': '2020-01-24'
+            }
+
+
+            ('#calendar').fullCalendar('updateEvent', data);
             if(title){
                 $.ajax({
                     type: 'POST',
@@ -245,7 +251,6 @@
                     success: function (data) {
                         $('#btnSaveEvent').prop('disabled', true);
                         $("#modal-event").modal('hide');
-                        location.reload();
                     }
                 });
             }
