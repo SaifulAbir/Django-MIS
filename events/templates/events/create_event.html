@@ -1,33 +1,22 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    <section class="content-header"style="padding-top:60px">
-
-    </section>
-
+    <section class="content-header"style="padding-top:60px"></section>
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="">
-                <!-- /. box -->
-
-            </div>
-            <!-- /.col -->
+            <div class=""></div>
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-body no-padding">
                         <div class="box-header">
                             <form action="/events/event_list" method="get">
-                                <button type="submit" class="btn btn-primary search-headmaster pull-right" autocomplete="off">Export</button>
+                                <button type="submit" class="btn btn-primary search-headmaster pull-right" autocomplete="off">Export event list</button>
                             </form>
                         </div>
-                        <!-- THE CALENDAR -->
                         <div id="calendar"></div>
                     </div>
-                    <!-- /.box-body -->
                 </div>
-                <!-- /. box -->
             </div>
-            <!-- /.col -->
         </div>
     </section>
     <form method="POST" id="submitForm">
@@ -39,7 +28,6 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">New Event</h4>
-
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
