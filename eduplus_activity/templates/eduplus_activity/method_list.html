@@ -61,13 +61,13 @@
                         if (data.form_is_valid) {
                             $('#methodubmit').prop('disabled', true);
                             if(formClass=="js-method-create-form"){
-                                showAlert("Method Created!", "alert-success-customized")
+                                showAlert("{{ edu_strings.METHOD_CREATED_MSG }}", "alert-success-customized")
                             }
                             if(formClass=="js-update-method-form"){
-                                showAlert("Method Updated!", "alert alert-success-customized")
+                                showAlert("{{ edu_strings.METHOD_UPDATED_MSG }}", "alert alert-success-customized")
                             }
                             if(formClass=="js-method-delete-form"){
-                                showAlert("Method Deleted!", "alert alert-danger-customized")
+                                showAlert("{{ edu_strings.METHOD_DELETED_MSG }}", "alert alert-danger-customized")
                             }
 
                             $(".method-container").html(data.html_list);  // <-- Replace the table body
@@ -78,7 +78,10 @@
                                 'ordering'    : false,
                                 'info'        : false,
                                 'autoWidth'   : false,
-                                'destroy'     : true
+                                'destroy'     : true,
+                                "language": {
+                                "emptyTable":     "No Result Found"
+                            }
                             });
                             $("#modal-method").modal("hide");
                         }
@@ -91,12 +94,6 @@
                 });
                 return false;
             };
-
-        function showAlert(message,alerttype) {
-
-            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-
-        }
 
             /* Binding */
 

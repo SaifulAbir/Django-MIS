@@ -367,7 +367,7 @@ ul#id_EPA-attendance {
     border-radius: 5px;
     border: 2px solid #ccc;
 }
-#id_PF-image, #id_CMF-image{
+#id_PF-image, #id_CMF-image, #id_EPA-image{
     margin-top: 10px;
     padding-bottom:10px;
     display: None;
