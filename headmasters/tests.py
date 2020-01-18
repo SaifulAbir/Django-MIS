@@ -2,12 +2,12 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
 from django.utils import timezone
-from .models import School,User,HeadmasterProfile,HeadmasterDetails
+from .models import School, User, HeadmasterProfile, HeadmasterDetails
 
 
 class HeadMasterProfileTest(TestCase):
     def setUp(self):
-        s1= User(user_type=2, email='head@gmail.com',)
+        s1= User(user_type=2, email='head@gmail.com', username='01712096800')
         s1.save()
         self.user=s1
 
@@ -15,7 +15,7 @@ class HeadMasterProfileTest(TestCase):
         s2.save()
         self.school=s2
 
-        user = User.objects.create(email='a@g.com')
+        user = User.objects.create(username='01712096801')
         user.set_password('12345')
         user.user_type = 1
         user.save()
@@ -57,7 +57,7 @@ class HeadMasterProfileTest(TestCase):
         s = HeadmasterProfile(user=self.user,school=self.school,joining_date=timezone.now(),image='1.png',mobile='0181543421')
         s.save()
 
-        s1=self.client.login(email='a@g.com', password='12345')
+        s1=self.client.login(username='01712096801', password='12345')
         response = self.client.get('/headmasters/headmaster_list/',{'school_contains':'mirpur'},follow=True)
         self.assertContains(response = response, status_code=200,  text='<td>Mirpur School (123)</td>', html=True)
 
@@ -93,10 +93,6 @@ class HeadmasterDetailsTest(TestCase):
         blank = HeadmasterDetails._meta.get_field('headmaster').blank
         self.assertEquals(blank, False)
 
-    def test__when_From_date_is_null__should_raise_error(self):
-        s = HeadmasterDetails(school=self.school,headmaster=self.headmaster)
-        with self.assertRaises(ValidationError):
-            s.full_clean()
 
     def test__when_to_date_is_null___should_pass(self):
         time = timezone.now()
