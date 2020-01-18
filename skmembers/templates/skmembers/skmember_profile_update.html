@@ -3,7 +3,7 @@
     {% load widget_tweaks %}
     {% load static %}
     <form method='POST' enctype="multipart/form-data" novalidate>
-        <section class="content-header" style="padding-top:60px">
+        <section class="content-header">
             {% if not profile_form.instance.pk %}
                 <h1>{{sk_strings.NEW_SKMEMBER_PAGE_TITLE}}</h1>
             {% else %}
@@ -23,7 +23,7 @@
                                 <h3 class="box-title">{{sk_strings.UPDATE_SK_MEMBER_BASIC_INFO}}</h3>
                             {% endif %}
                         </div>
-                        <div class="row" style="padding-bottom: 10px;">
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
@@ -31,10 +31,10 @@
                                             <div id="alertdiv" class="alert alert-danger-error-message">
                                             <span>
                                                 {% for field in user_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                    <li class="help-block" >{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                                 {% for field in profile_form %}
-                                                    <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                    <li class="help-block">{{ field.errors|striptags }}</li>
                                                 {% endfor %}
                                             </span>
                                         </div>
@@ -119,7 +119,7 @@
 
                         <div class="box-body required">
                             <span id="headmasterinfoajaxupdate"></span>
-                            <table class="table table-bordered mb-0" id="tb-doc" style="width: 100%">
+                            <table class="table table-bordered mb-0" id="tb-doc">
                                 <tr>
                                     <th>{{sk_strings.SCHOOL_TEXT}}</th>
                                     <th>{{sk_strings.DATE_FROM}}</th>
@@ -199,8 +199,8 @@
                                     </button>
                                 </div>
                                 <div class="col-sm-11">
-                                    <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
-                                         class="pull-right loader" >
+                                    <img  src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
+                                         class="pull-right loader loader-detail" >
                                     <input type="button" value="{{ sk_strings.UPDATE_SCHOOL_INFO_BUTTON }}" class="btn btn-primary pull-right update-school" />
                                 </div>
                             </div>
@@ -211,6 +211,16 @@
             </div>
         </section>
     </form>
+    {% block extra_css %}
+        <style>
+        .loader-detail{
+            position: relative;
+            display: none;
+            width: 50px;
+            top: -6px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js%}
     <script type="text/javascript">
@@ -311,7 +321,7 @@
 
                             },
                             success: function (data) {
-                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>School Information Successfully Updated.</span> </div>'
+                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>{{ sk_strings.SCHOOL_INFO_UPDATED_MESSAGE }}</span> </div>'
                                 $('#headmasterinfoajaxupdate').html(str);
                                 $("#headmasterinfoajaxupdate").fadeTo(2000, 500).slideUp(500, function() {
                                     $("#headmasterinfoajaxupdate").slideUp(500);

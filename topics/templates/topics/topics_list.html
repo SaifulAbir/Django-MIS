@@ -55,13 +55,13 @@
                     if (data.form_is_valid) {
                         $('#topicSubmit').prop('disabled', true);
                         if(formClass=="js-topics-create-form"){
-                            showAlert("Topic Created!", "alert-success-customized")
+                            showAlert("{{topic_strings.TOPIC_CREATED_MSG}}", "alert-success-customized")
                         }
                         if(formClass=="js-update-topics-form"){
-                            showAlert("Topic Updated!", "alert alert-success-customized")
+                            showAlert("{{topic_strings.TOPIC_UPDATED_MSG}}", "alert alert-success-customized")
                         }
                         if(formClass=="js-topics-delete-form"){
-                            showAlert("Topic Deleted!", "alert alert-danger-customized")
+                            showAlert("{{topic_strings.TOPIC_DELETED_MSG}}", "alert alert-danger-customized")
                         }
 
                         $(".topic-container").html(data.html_list);  // <-- Replace the table body
@@ -72,7 +72,10 @@
                             'ordering'    : false,
                             'info'        : false,
                             'autoWidth'   : false,
-                            'destroy'     : true
+                            'destroy'     : true,
+                            "language": {
+                                "emptyTable":     "No Result Found"
+                            }
                         });
                         $("#modal-topics").modal("hide");
                     }

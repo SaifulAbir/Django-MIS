@@ -5,7 +5,7 @@
 {% if user.is_authenticated and user.user_type == 1 %}
 <section class="content-header">
     <h1>
-        SK Member Info
+        {{ sk_strings.SK_MEMBER_INFO_TITLE }}
     </h1>
 </section>
 <!-- Main content -->
@@ -15,58 +15,61 @@
         <div class="col-md-12">
             <div class="box box-info">
                 <div class="box-header">
-                    <h3 class="box-title">Basic Information</h3>
+                    <h3 class="box-title">{{ sk_strings.SKMEMBER_BASIC_INFO }}</h3>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="box-body">
                             <!-- School Name -->
                             <div class="form-group">
-                                <label>Name:</label>
+                                <label>{{ sk_strings.NAME_TEXT }}:</label>
                                 <input disabled type="text" value="{{skmember_detail.user.first_name}}" class="form-control my-colorpicker1">
                             </div>
                             <!-- /.form group -->
                             <div class="form-group">
-                                <label>Username:</label>
+                                <label>{{ sk_strings.EMAIL_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.user.email}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Mobile:</label>
+                                <label>{{ sk_strings.MOBILE_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.mobile}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>User Type:</label>
+                                <label>{{ sk_strings.USER_TYPE_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.user.get_user_type_display}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>School:</label>
+                                <label>{{ sk_strings.SCHOOL_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.school.name}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Class:</label>
+                                <label>{{ sk_strings.CLASS_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.student_class}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Roll:</label>
+                                <label>{{ sk_strings.ROLL_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.roll}}" class="form-control my-colorpicker1" readonly>
                             </div>
 
                         </div>
                     </div>
                     <div class="col-md-6">
+                    <div class="box-body">
                         <div class="form-group">
-                            <div class="col-sm-12">
-                                <div class="col-sm-12">
-                                    <label style="padding-left: 218px;">Profile Picture:</label>
+                            <div class="row-sm-12">
+                                <div class="row-sm-12">
+                                    <label class="center-block text-right">{{ sk_strings.PROFILE_PIC_TEXT }}:</label>
                                     {% if skmember_detail.image %}
-                                    <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skmember_detail.image.url }}" class="pull-right" alt="Pic"><br />
+                                        <img width="220" src="{{ skmember_detail.image.url }}" class="pull-right" alt="Pic"><br />
                                     {% else %}
-                                    <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                        <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -76,7 +79,7 @@
     <div class="row">
             <div class="col-md-12">
                 <div class="box box-body">
-                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                    <a type="button"onclick="goBack()"
                        class="btn btn-warning pull-left"
                        href="javascript:void(0)">
                         Back
@@ -85,12 +88,12 @@
                     <a type="button"
                        class="btn btn-primary pull-right"
                        href="{% url 'skmembers:skmember_update' skmember_detail.pk %}">
-                        Edit</a>
+                        {{ common_strings.EDIT_BUTTON }}</a>
                     {% else %}
                     <a type="button"
                        class="btn btn-primary pull-right"
                        href="{% url 'skmembers:skmember_update_for_skleader' skmember_detail.pk %}">
-                        Edit
+                        {{ common_strings.EDIT_BUTTON }}
                     </a>
                     {% endif %}
                 </div>
@@ -99,9 +102,9 @@
 
 </section>
 {% elif headmaster.school == skmember_detail.school or skleader.school == skmember_detail.school  %}
-<section class="content-header" style="padding-top:60px">
+<section class="content-header" >
     <h1>
-        SK Member Info
+        {{ sk_strings.SK_MEMBER_INFO_TITLE }}
     </h1>
 </section>
 <!-- Main content -->
@@ -111,39 +114,39 @@
         <div class="col-md-12">
             <div class="box box-info">
                 <div class="box-header">
-                    <h3 class="box-title">Basic Information</h3>
+                    <h3 class="box-title">{{ sk_strings.SKMEMBER_BASIC_INFO }}</h3>
                 </div>
-                <div class="row" style="padding-bottom: 10px;">
+                <div class="row">
                     <div class="col-md-6">
                         <div class="box-body">
                             <!-- School Name -->
                             <div class="form-group">
-                                <label>Name:</label>
+                                <label>{{ sk_strings.NAME_TEXT }}:</label>
                                 <input disabled type="text" value="{{skmember_detail.user.first_name}}" class="form-control my-colorpicker1">
                             </div>
                             <!-- /.form group -->
                             <div class="form-group">
-                                <label>Email:</label>
+                                <label>{{ sk_strings.EMAIL_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.user.email}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Mobile:</label>
+                                <label>{{ sk_strings.MOBILE_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.mobile}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>User Type:</label>
+                                <label>{{ sk_strings.USER_TYPE_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.user.get_user_type_display}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>School:</label>
+                                <label>{{ sk_strings.SCHOOL_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.school.name}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Class:</label>
+                                <label>{{ sk_strings.CLASS_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.student_class}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Roll:</label>
+                                <label>{{ sk_strings.ROLL_TEXT }}:</label>
                                 <input type="text" value="{{skmember_detail.roll}}" class="form-control my-colorpicker1" readonly>
                             </div>
 
@@ -153,11 +156,11 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="col-sm-12">
-                                    <label class="center-block text-right">Profile Picture:</label>
+                                    <label class="center-block text-right">{{ sk_strings.PROFILE_PIC_TEXT }}:</label>
                                     {% if skmember_detail.image %}
-                                    <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{{ skmember_detail.image.url }}" class="pull-right" alt="Pic"><br />
+                                    <img width="220" src="{{ skmember_detail.image.url }}" class="pull-right" alt="Pic"><br />
                                     {% else %}
-                                    <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
+                                    <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="pull-right" alt="Pic"><br />
                                     {% endif %}
                                 </div>
                             </div>
@@ -172,7 +175,7 @@
     <div class="row">
             <div class="col-md-12">
                 <div class="box box-body">
-                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                    <a type="button" onclick="goBack()"
                        class="btn btn-warning pull-left"
                        href="javascript:void(0)">
                         Back
@@ -181,12 +184,12 @@
                     <a type="button"
                        class="btn btn-primary pull-right"
                        href="{% url 'skmembers:skmember_update' skmember_detail.pk %}">
-                        Edit</a>
+                        {{ common_strings.EDIT_BUTTON }}</a>
                     {% else %}
                     <a type="button"
                        class="btn btn-primary pull-right"
                        href="{% url 'skmembers:skmember_update_for_skleader' skmember_detail.pk %}">
-                        Edit
+                        {{ common_strings.EDIT_BUTTON }}
                     </a>
                     {% endif %}
                 </div>
