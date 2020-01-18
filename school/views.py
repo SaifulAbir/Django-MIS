@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse
-
+from sknf.helper import check_child_data_exist_on_delete
 from accounts.decorators import admin_login_required
 from districts.models import District
 from headmasters.models import HeadmasterProfile
@@ -33,14 +33,14 @@ class CreateSchool(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
     login_url = '/'
     form_class = SchoolForm
     model = School
-    success_message = "School Created!"
+    success_message = school_strings.SCHOOL_CREATED_MSG
 
 @method_decorator(admin_login_required, name='dispatch')
 class SchoolUpdate(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
     login_url = '/'
     form_class = SchoolForm
     model = models.School
-    success_message = "School Updated!"
+    success_message = school_strings.SCHOOL_UPDATED_MSG
 
 @method_decorator(admin_login_required, name='dispatch')
 class SchoolDetail(LoginRequiredMixin, generic.DetailView):
@@ -167,11 +167,12 @@ def school_delete(request, pk):
     school = get_object_or_404(School, pk=pk)
     data = dict()
     if request.method == 'POST':
-        school.delete()
+        status = check_child_data_exist_on_delete(school)
+        data['status'] = status
         data['form_is_valid'] = True  # This is just to play along with the existing code
         school_list = School.objects.all()
-        data['html_school_list'] = render_to_string('school/school_list.html', {
-            'school_list': school_list,'school_strings':school_strings,'common_strings':common_strings
+        data['html_school_list'] = render_to_string('school/partial_school_list.html', {
+            'queryset': school_list,'school_strings':school_strings,'common_strings':common_strings
         })
     else:
         context = {'school': school,'school_strings':school_strings,'common_strings':common_strings}
@@ -344,9 +345,6 @@ def school_post_detail_view(request, pk):
 # def image(request,pk):
 #     img= HeadmasterProfile.objects.get(pk=pk)
 #     return render(request, 'school/school_profile.html'),  {'img': img}
-
-def Sk_leaderApproval(request):
-    return render(request, 'school/Sk_leaderApproval.html')
 
 
 def export(request):
