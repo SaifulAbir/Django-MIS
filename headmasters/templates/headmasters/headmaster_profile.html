@@ -45,7 +45,7 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">{{ headmaster_strings.NAME_TEXT }}</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                        {% render_field user_form.first_name class="form-control" placeholder=headmaster_strings.NAME_TEXT %}
                                     </div>
 
                                     <div class="form-group">
@@ -89,7 +89,7 @@
                                         </div>
                                     </div>
                                     <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
-                                    <input type="file" accept="image/*" placeholder="Image" class="pull-right img-preview" required="" id="id_PF-image" data-input="false" data-buttonText="Your label here.">
+                                    <input type="file" accept="image/*" placeholder="Image" class="pull-right img-preview" required="" id="id_PF-image" data-input="false">
                                 </div>
                             </div>
                         </div>

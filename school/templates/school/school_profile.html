@@ -9,7 +9,7 @@
 </section>
 
 <!-- Main content -->
-<section class="content" style="position:relative">
+<section class="content">
     {% if school_profile.image %}
     <img src="{{ school_profile.image.url }}" width="100%"class="jcrop-cover-holder"><br />
     {% else %}
@@ -20,7 +20,7 @@
         <form method='POST' class="school-cover-form" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <div style =" display:inline-block;">
-                <input type="file" accept="image/*" placeholder="SkMember image" class="img-preview" style="display:none" id="id_image">
+                <input type="file" accept="image/*" placeholder="SkMember image" class="img-preview cover-image" id="id_image">
                 <input type="button" value="Change" class="btn btn-primary change-button" id="btn_change" onclick="changePic();">
                 <input type="submit" name="one_picture" value="Upload" id="btn_upload" class="btn btn-primary"/>
             </div>
@@ -131,7 +131,7 @@
                                 </div>
                                 {% render_field post_form.image_base64 %}
                                 <!-- /.box-footer -->
-                                <input type="submit" value="Post" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
+                                <input type="submit" value="{{school_strings.SCHOOL_POST_BUTTON}}" name="school_post" id="save-btn" class="btn btn-primary pull-right"/>
                             </div>
                         </form>
                     </div>
@@ -256,6 +256,12 @@
     #save-btn{
         display: inline-block;
         position:relative;
+    }
+    .content{
+        position:relative;
+    }
+    .cover-image{
+        display:none!important;
     }
 </style>
 {% endblock %}

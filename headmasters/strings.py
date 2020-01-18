@@ -22,6 +22,9 @@ UNION_TEXT = 'Union'
 NEW_HEADMASTER_BUTTON = 'New Headmaster'
 EMAIL_TEXT = 'Email'
 GENERATE_PASSWORD ='Genarate Password'
+HEADMASTER = 'headmaster'
+GUIDE_TEACHER = 'Guide Teacher'
+BOTH = 'both'
 
 #alert messages
 NAME_REQUIRED = 'Name is required.'
@@ -30,9 +33,14 @@ CONFIRM_PASSWORD_REQUIRED = 'Confirm password is required.'
 USER_TYPE_REQUIRED = 'User type is required.'
 PASSWORD_NOT_MATCHED = "Password does not match."
 SCHOOL_REQUIRED = 'School is required.'
+MOBILE_REQUIRED = 'Mobile is required.'
 MOBILE_LENGTH_EXCEED = 'Moblie Number can not exceed 11 digits'
 FROM_DATE_REQUIRED = 'From date is required.'
+IMAGE_FILE_ONLY = "Image files only"
 IMAGE_FILE_SIZE_EXCEED = "Image file too large ( > 1mb )"
+HEADMASTER_CREATED = 'Headmaster Created!'
+HEADMASTER_UPDATED = 'Headmaster Updated!'
+SCHOOL_INFORMATION_UPDATE_MESSAGE = 'School Information Successfully Updated.'
 
 HEADMASTER_VERBOSE_NAME = 'Headmaster'
 HEADMASTER_VERBOSE_NAME_PLURAL = 'Headmasters'

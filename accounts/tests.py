@@ -7,7 +7,7 @@ from .models import User
 class UserTest(TestCase):
     def test__when_Every_field_is_valid___should_pass(self):
         time = timezone.now()
-        s = User(image='1.jpg', email='A@g.com', password=123)
+        s = User(image='1.jpg',username='01234567891', email='A@g.com', password=123,first_name='admin')
         try:
             s.full_clean()
         except:

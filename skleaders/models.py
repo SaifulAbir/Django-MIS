@@ -15,8 +15,8 @@ class_choice=(
 )
 GENDER_CHOICES = (
         ('', '--Select--'),
-        ('M', 'Male'),
-        ('F', 'Female'),
+        ('M', strings.MALE),
+        ('F', strings.FEMALE),
     )
 class SkLeaderProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='skleader_profile')

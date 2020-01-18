@@ -8,7 +8,7 @@ from districts.models import District
 from division.models import Division
 from unions.models import Union
 from upazillas.models import Upazilla
-
+import school.strings as school_strings
 
 class School(models.Model):
     name = models.CharField(max_length=264 )
@@ -30,6 +30,11 @@ class School(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+        verbose_name = school_strings.SCHOOL_VERBOSE_NAME
+        verbose_name_plural = school_strings.SCHOOL_VERBOSE_NAME_PLURAL
+        db_table = 'schools'
+
+
 
 class SchoolPost(models.Model):
     school = models.ForeignKey(School, on_delete=models.PROTECT, blank=False, null=False)
@@ -39,4 +44,7 @@ class SchoolPost(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+        verbose_name = school_strings.SCHOOL_POST_VERBOSE_NAME
+        verbose_name_plural = school_strings.SCHOOL_POST_VERBOSE_NAME_PLURAL
+        db_table = 'school_posts'
 
