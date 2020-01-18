@@ -14,12 +14,12 @@ from.models import PeerEducation,School
 class ClassOrientationTest(TestCase):
 
     def setUp(self):
-        user = User.objects.create(email='test@example.com')
+        user = User.objects.create(email='test@example.com', username='01712062778')
         user.set_password('12345')
         user.user_type = 5
         user.save()
         self.user = user
-        admin_user = User.objects.create(email='admin@example.com')
+        admin_user = User.objects.create(email='admin@example.com', username='01712062768')
         admin_user.set_password('12345')
         admin_user.user_type = 1
         admin_user.save()
@@ -53,14 +53,14 @@ class ClassOrientationTest(TestCase):
 
     # view test
     def test_peer_education_add_page_status_code_content_type(self):
-        logged_in = self.client.login(email='test@example.com', password='12345')
+        logged_in = self.client.login(username='01712062778', password='12345')
         self.assertTrue(logged_in)
         orientation_add_response = self.client.get('/peer_education/add/', follow=True)
         self.assertEquals(orientation_add_response.status_code, 200)
         self.assertEquals(orientation_add_response['Content-Type'], 'application/json')
 
     def test_peer_education_update_page_status_code_content_type(self):
-        logged_in = self.client.login(email='test@example.com', password='12345')
+        logged_in = self.client.login(username='01712062778', password='12345')
         self.assertTrue(logged_in)
         orientation_update_response = self.client.get(reverse('peer_education:peer_education_update',
                                                               args=(self.peer_education.id,)), follow=True)

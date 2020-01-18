@@ -153,7 +153,7 @@
                 {% else %}
                     <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
                 {% endif %}
-                <ul class="pagination" style="float: right">
+                <ul class="pagination">
 
                     {% if queryset.has_previous %}
                     <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
