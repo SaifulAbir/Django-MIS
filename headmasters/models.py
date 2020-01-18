@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class HeadmasterProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='headmaster_profile')
-    mobile = models.CharField(max_length=11, unique=True)
+    mobile = models.CharField(max_length=15, unique=True)
     school = models.ForeignKey(School, on_delete=models.PROTECT, null=True)
     image = models.ImageField(upload_to='images/')
     joining_date = models.DateField(null=False, default=timezone.now)
