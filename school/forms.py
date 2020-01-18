@@ -8,10 +8,10 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class SchoolForm(forms.ModelForm):
-    name = forms.CharField(error_messages={'required': 'School name is required.'})
-    school_id = forms.CharField(label='EIIN',error_messages={'required': 'EIIN is required.', 'unique': 'School with this EIIN already exists.'},
+    name = forms.CharField(error_messages={'required': school_strings.SCHOOL_NAME_REQUIRED_ERROR_MSG})
+    school_id = forms.CharField(label=school_strings.SCHOOL_LIST_EIIN_TEXT,error_messages={'required': school_strings.SCHOOL_EIIN_REQUIRED_ERROR_MSG, 'unique': school_strings.SCHOOL_EIIN_UNIQUE_ERROR_MSG},
                                 widget=forms.TextInput(attrs={'type':'text'}))
-    club_establishment_date = forms.DateField(label='dd-mm-yyyy',error_messages={'required': 'Date is required.'},
+    club_establishment_date = forms.DateField(label=school_strings.DATE_LABEL_TEXT,error_messages={'required': school_strings.SCHOOL_DATE_REQUIRED_ERROR_MSG},
                                    widget=forms.DateInput(format='%d-%m-%Y'), input_formats=('%d-%m-%Y',))
     class Meta:
         model = School
@@ -23,8 +23,8 @@ class SchoolForm(forms.ModelForm):
 
 class EditSchoolForm(forms.ModelForm):
     cover_image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    image = forms.ImageField(label=_('SkMember image'), required=False,
-                             error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
+    image = forms.ImageField(required=False,
+                             error_messages={'invalid': _(school_strings.HOME_IMAGE_VALIDATION_ERROR)}, widget=forms.FileInput)
     class Meta:
         model = School
         fields = ['image', 'cover_image_base64']

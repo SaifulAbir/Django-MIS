@@ -17,12 +17,12 @@ from.models import ClubMeetings,School,Topics
 class ClubMeetingsTest(TestCase):
 
     def setUp(self):
-        user = User.objects.create(email='test@example.com')
+        user = User.objects.create(username='01712096801')
         user.set_password('12345')
         user.user_type = 5
         user.save()
         self.user = user
-        admin_user = User.objects.create(email='admin@example.com')
+        admin_user = User.objects.create(username='01712096805')
         admin_user.set_password('12345')
         admin_user.user_type = 1
         admin_user.save()
@@ -75,7 +75,7 @@ class ClubMeetingsTest(TestCase):
 
     #view test
     def test_club_meeting_update_page_status_code(self):
-        logged_in = self.client.login(email='test@example.com', password='12345')
+        logged_in = self.client.login(username='01712096801', password='12345')
         self.assertTrue(logged_in)
         club_update_response = self.client.get(reverse('club_meetings:club_meeting_update',
                                                               args=(self.club_m.id,)), follow=True)
@@ -84,7 +84,7 @@ class ClubMeetingsTest(TestCase):
         # self.assertContains(response = club_update_response, text='', html=True).
 
     def test_when__request_for_club_meeting_report_list__should_return_club_meeting_list(self):
-        logged_in = self.client.login(username='admin@example.com', password='12345')
+        logged_in = self.client.login(username='01712096805', password='12345')
         self.assertTrue(logged_in)
         club_meeting_count = ClubMeetings.objects.count()
         topic = Topics.objects.exclude(name='')
@@ -111,13 +111,13 @@ class ClubMeetingsTest(TestCase):
             self.fail()
 
     def test_when__search_for_club_meeting_report_list__should_return_report_list_page_status_code(self):
-        logged_in = self.client.login(username='admin@example.com', password='12345')
+        logged_in = self.client.login(username='01712096805', password='12345')
         self.assertTrue(logged_in)
         club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'), follow=True)
         self.assertEquals(club_meeting_response.status_code, 200)
 
     def test_when__school_name_is_searched__should_return_respective_club_meeting_list(self):
-        logged_in = self.client.login(username='admin@example.com', password='12345')
+        logged_in = self.client.login(username='01712096805', password='12345')
         self.assertTrue(logged_in)
         club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
                                                 data={'name_contains': 'Mirpur School'}, follow=True)
@@ -125,7 +125,7 @@ class ClubMeetingsTest(TestCase):
                             text='<td>Mirpur School (123)</td>', html=True)
 
     def test_when__division_name_is_searched__should_return_respective_club_meeting_list(self):
-        logged_in = self.client.login(username='admin@example.com', password='12345')
+        logged_in = self.client.login(username='01712096805', password='12345')
         self.assertTrue(logged_in)
         club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
                                                 data={'division_contains': 'Dhaka'}, follow=True)
@@ -133,7 +133,7 @@ class ClubMeetingsTest(TestCase):
                             text='<td>Dhaka</td>', html=True)
 
     def test_when__district_name_is_searched__should_return_respective_club_meeting_list(self):
-        logged_in = self.client.login(username='admin@example.com', password='12345')
+        logged_in = self.client.login(username='01712096805', password='12345')
         self.assertTrue(logged_in)
         club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
                                                 data={'district_contains': 'Gazipur'}, follow=True)
@@ -141,7 +141,7 @@ class ClubMeetingsTest(TestCase):
                             text='<td>Gazipur</td>', html=True)
 
     def test_when__all_are_searched__should_return_respective_club_meeting_list(self):
-        logged_in = self.client.login(username='admin@example.com', password='12345')
+        logged_in = self.client.login(username='01712096805', password='12345')
         self.assertTrue(logged_in)
         club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_search_list'),
                                                 data={'name_contains': 'Mirpur School', 'division_contains': 'Dhaka',

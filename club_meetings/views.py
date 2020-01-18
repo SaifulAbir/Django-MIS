@@ -63,7 +63,7 @@ def club_meeting_add(request):
             # end of image cropping code
             club_meeting.save()
             club_meeting_form.save_m2m()
-            messages.success(request, 'Club Meeting Created!')
+            messages.success(request, club_meeting_strings.CLUB_MEETING_CREATED_MESSAGE)
             # meeting_topic = meeting_topic_form.save(commit = False)
             # meeting_topic.club_meeting = club_meeting
             # meeting_topic.save()
@@ -130,7 +130,7 @@ def club_meeting_update(request, pk):
             # end of image cropping code
             club_meeting.save()
             club_meeting_form.save_m2m()
-            messages.success(request, 'Club Meeting Updated!')
+            messages.success(request, club_meeting_strings.CLUB_MEETING_UPDATED_MESSAGE)
             return HttpResponseRedirect("/club_meetings/club_meeting_list/")
     else:
         club_meeting_form = EditClubMeetingForm(instance=club_meeting, prefix='CMF', user=request.user)

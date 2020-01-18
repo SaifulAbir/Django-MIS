@@ -59,7 +59,7 @@ def headmaster_profile_view(request):
             headmaster_details.headmaster = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
-            messages.success(request, 'Headmaster Created!')
+            messages.success(request, headmaster_strings.HEADMASTER_CREATED)
             return HttpResponseRedirect("/headmasters/headmaster_list/")
 
     else:
@@ -155,7 +155,7 @@ def headmaster_update(request, pk):
             profile.save()
             user.username = profile.mobile
             user.save()
-            messages.success(request, 'Headmaster Updated!')
+            messages.success(request, headmaster_strings.HEADMASTER_UPDATED)
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
         user_form = EditUserForm(instance=user_profile)

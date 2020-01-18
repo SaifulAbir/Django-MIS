@@ -20,12 +20,12 @@
         <td>{{ headmaster.school.district }}</td>
         <td>{{ headmaster.school.upazilla }}</td>
         <td align="center">
-            <a type="button" style="margin-right:10px"
+            <a type="button"
                href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
                 <span class="fa fa-eye"></span>
             </a>
             <a type="button"
-               class=""
+               class="update-icon"
                href="{% url 'headmasters:headmaster_update' headmaster.pk %}">
                 <span class="fa fa-edit"></span>
 

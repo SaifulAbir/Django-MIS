@@ -86,10 +86,10 @@
                     if (data.form_is_valid) {
                         $('#peerSubmit').prop('disabled', true);
                         if(formClass=="js-peer-education-create-form"){
-                            showAlert("Peer Education Created!", "alert-success-customized")
+                            showAlert("{{ peer_education_strings.PEER_EDUCATION_CREATED_MSG }}", "alert-success-customized")
                         }
                         if(formClass=="js-peer-education-update-form"){
-                            showAlert("Peer Education Updated!", "alert-success-customized")
+                            showAlert("{{ peer_education_strings.PEER_EDUCATION_UPDATED_MSG }}", "alert-success-customized")
                         }
 
                         $(".peer-education-box").html(data.html_peer_education_list);  // <-- Replace the table body
@@ -114,11 +114,6 @@
             });
             return false;
         };
-
-        function showAlert(message,alerttype) {
-
-            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-        }
 
         /* Binding */
 

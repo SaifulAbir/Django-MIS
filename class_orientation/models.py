@@ -6,10 +6,10 @@ from django.utils import timezone
 import class_orientation.strings as peer_education_strings
 from school.models import School
 from topics.models import Topics
-
+import class_orientation.strings as class_orientation_strings
 place_choice=(
-    ('1', 'Class'),
-    ('2', 'Community'),
+    ('1', class_orientation_strings.CLASS_CHOICE_TEXT),
+    ('2', class_orientation_strings.COMMUNITY_CHOICE_TEXT),
 )
 
 class PeerEducation(models.Model):

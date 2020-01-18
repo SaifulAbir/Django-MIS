@@ -21,5 +21,4 @@ urlpatterns = [
     path('school_post_detail/<int:pk>', views.school_post_detail_view, name='school_post_detail_view'),
     path('school_post_delete/<int:pk>', views.school_post_delete, name='school_post_delete'),
     path('school_post_update/<int:pk>', views.school_post_update, name='school_post_update'),
-    path('Sk_leaderApproval/', views.Sk_leaderApproval, name='Sk_leaderApproval'),
 ]
