@@ -19,13 +19,13 @@
         <td>{{ skleader.school.division }}</td>
         <td>{{ skleader.school.district }}</td>
         <td>{{ skleader.school.upazilla }}</td>
-        <td align="center"><a type="button" style="margin-right:10px"
+        <td align="center"><a type="button"
                               class=""
                               href="{% url 'skleaders:skleader_detail' skleader.pk %}">
             <span class="fa fa-eye"></span>
         </a>
             <a type="button"
-               class=""
+               class="update-icon"
                href="{% url 'skleaders:skleader_update' skleader.pk %}">
                 <span class="fa fa-edit"></span>
 

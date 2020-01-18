@@ -75,7 +75,7 @@
 
                                         </div>
                                     </div>
-                                    <label for="id_PF-image" class="image-label btn btn-primary pull-left" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
+                                    <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
                                     <input type="file" accept="image/*" placeholder="Headmaster image" class="pull-right img-preview" id="id_PF-image">
                                 </div>
                             </div>
@@ -83,35 +83,35 @@
                         {% render_field profile_form.image_base64 %}
                         {% include 'sknf/_modal_show_image_error.html' %}
                         {% include 'sknf/_crop_modal.html' %}
-                        <div class="row" style="display:none;">
-                            <div class="col-sm-12">
-                                <div class="box box-info">
-                                    <div class="box-body">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>
-                                                    {% render_field profile_form.school class="form-control select2" placeholder=profile_form.school.label %}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="{{ profile_form.joining_date.id_for_label }}">{{ headmaster_strings.FROM_TEXT }}</label>
-                                                    {% render_field profile_form.joining_date type="date" class="form-control" placeholder="Name" %}
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="id_hf-from_date2">{{ headmaster_strings.TO_TEXT }}</label>
-                                                    <input type="text" name="hf-from_date" readonly class="form-control" required="" id="id_hf-from_date2"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+{#                        <div class="row detail-hidden">#}
+{#                            <div class="col-sm-12">#}
+{#                                <div class="box box-info">#}
+{#                                    <div class="box-body">#}
+{#                                        <div class="row">#}
+{#                                            <div class="col-sm-4">#}
+{#                                                <div class="form-group">#}
+{#                                                    <label for="{{ profile_form.school.id_for_label }}">{{ profile_form.school.label }}</label>#}
+{#                                                    {% render_field profile_form.school class="form-control select2" placeholder=profile_form.school.label %}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{##}
+{#                                            <div class="col-sm-4">#}
+{#                                                <div class="form-group">#}
+{#                                                    <label for="{{ profile_form.joining_date.id_for_label }}">{{ headmaster_strings.FROM_TEXT }}</label>#}
+{#                                                    {% render_field profile_form.joining_date type="date" class="form-control" %}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="col-sm-4">#}
+{#                                                <div class="form-group">#}
+{#                                                    <label for="id_hf-from_date2">{{ headmaster_strings.TO_TEXT }}</label>#}
+{#                                                    <input type="text" name="hf-from_date" readonly class="form-control" required="" id="id_hf-from_date2"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="box box-body">
@@ -219,8 +219,8 @@
                                     </button>
                                 </div>
                                 <div class="col-sm-11">
-                                    <img style="position: relative; display: none; width: 50px; top: -6px;" src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
-                                         class="pull-right loader" >
+                                    <img  src="{% static 'sknf/images/loading.webp' %}" alt="Loader" width="80"
+                                         class="pull-right loader loader-style" >
                                     <input type="button" value="{{ headmaster_strings.UPDATE_SCHOOL_INFO_BUTTON }}" class="btn btn-primary pull-right update-school" />
                                 </div>
                             </div>
@@ -230,6 +230,16 @@
             </div>
         </section>
     </form>
+    {% block extra_css %}
+        <style>
+        .loader-style{
+            position: relative;
+            display: none;
+            width: 50px;
+            top: -6px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js%}
     <script type="text/javascript">
@@ -331,7 +341,7 @@
 
                             },
                             success: function (data) {
-                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>School Information Successfully Updated.</span> </div>'
+                                var str = '<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized"><span>{{ headmaster_strings.SCHOOL_INFORMATION_UPDATE_MESSAGE }}</span> </div>'
                                 $('#headmasterinfoajaxupdate').html(str);
                                 $('.loader').hide(1000)
 

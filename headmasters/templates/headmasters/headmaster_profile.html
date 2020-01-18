@@ -45,7 +45,7 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">{{ headmaster_strings.NAME_TEXT }}</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                        {% render_field user_form.first_name class="form-control" placeholder=headmaster_strings.NAME_TEXT %}
                                     </div>
 
                                     <div class="form-group">
