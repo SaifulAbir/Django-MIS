@@ -254,28 +254,36 @@
                 'start': '2020-01-25',
                 'end': '2020-01-24'
             }]);{% endcomment %}
-
-            if(title){
-                $.ajax({
-                    type: 'POST',
-                    url: '/events/api/add_event/',
-                    data: {
-                        'title': title,
-                        'start': start,
-                        'end': end,
-                        'eventId': eventId,
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    success: function (data) {
-                        $('#btnSaveEvent').prop('disabled', true);
-                        $("#modal-event").modal('hide');
-                    }
-                });
+            start_date = $('#id_start').val();
+            end_date = $('#id_end').val();
+            if (end_date>=start_date){
+                if(title){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/events/api/add_event/',
+                        data: {
+                            'title': title,
+                            'start': start,
+                            'end': end,
+                            'eventId': eventId,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function (data) {
+                            $('#btnSaveEvent').prop('disabled', true);
+                            $("#modal-event").modal('hide');
+                        }
+                    });
+                }
+                else{
+                    $('#event-error').addClass('alert alert-danger-error-message');
+                    $('#event-error').html('Title is required');
+                }
             }
             else{
                 $('#event-error').addClass('alert alert-danger-error-message');
-                $('#event-error').html('Title is required');
+                $('#event-error').html('End date can not be less then Start date');
             }
+
         }
 
         $(function () {
