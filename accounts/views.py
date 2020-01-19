@@ -17,7 +17,8 @@ from django.shortcuts import render, redirect, get_object_or_404, render_to_resp
 import base64, uuid
 from django.shortcuts import render, redirect
 from resources import strings as common_strings
-
+from school import strings as school_strings
+from . import strings as acount_strings
 
 # Create your views here.
 from django.template import RequestContext
@@ -56,9 +57,9 @@ def index(request):
     if request.is_ajax():
         data['form_is_valid'] = True
         data['html_list'] = render_to_string('school/partial_school_list_dashboard.html',
-                                             {'school_list': school_list, 'common_strings':common_strings})
+                                             {'school_list': school_list, 'common_strings':common_strings,'school_strings':school_strings,'acount_strings':acount_strings})
         return JsonResponse(data)
-    context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list, 'common_strings':common_strings,
+    context = {'PROJECT_NAME': settings.PROJECT_NAME, 'school_list': school_list, 'common_strings':common_strings,'school_strings':school_strings,'acount_strings':acount_strings,
                'school_total': school_total, 'headmaster_total': headmaster_total, 'skleader_total': skleader_total, 'skmember_total': skmember_total}
     return render(request, 'sknf/index.html', context)
 

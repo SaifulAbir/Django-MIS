@@ -4,7 +4,7 @@
     {% load static %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SKNF</title>
+    <title>{{ account_strings.SKNF_TITLE }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -58,7 +58,7 @@
 
                 {% endif %}
                 {% if next_destination %}
-                <p class="text-danger" style="display: inline-block">
+                <p class="text-danger login-msge" >
                     {{account_strings.PERMISSION_ERROR_MESSAGE}}</p>
                 {% endif %}
                 <div class="">
@@ -163,6 +163,11 @@
     </div>
     <strong>{{account_strings.COPYRIGHT_TEXT}}</strong> {{account_strings.ALL_RIGHTS_RESERVED}}
 </footer>
+<style>
+    .login-msge{
+        display: inline-block
+    }
+</style>
 <!-- jQuery 3 -->
 <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
 <!-- Bootstrap 3.3.7 -->

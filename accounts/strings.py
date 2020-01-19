@@ -71,3 +71,14 @@ ROLE_TEXT = 'Role:'
 EDIT_PROFILE_TEXT = 'Edit Profile'
 SIGN_OUT_BUTTON_TEXT = 'Sign out'
 NAVIGATION_TEXT = 'Toggle navigation'
+
+#Admin Dashboard Strings
+ADMIN_DASHBOARD = 'Admin Dashboard'
+SCHOOLS_COUNT_TEXT = 'Schools'
+HEADMASTER_COUNT_TEXT = 'Headmasters'
+SK_LEADER_COUNT_TEXT = 'SK Leaders'
+SK_MEMBER_COUNT_TEXT = 'SK Members'
+#Admin Dashboard Strings
+
+SKNF_TITLE = 'SKNF'
+FOOTER_VERSION_TEXT = 'Version'
