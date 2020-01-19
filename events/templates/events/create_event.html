@@ -1,6 +1,9 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-    <section class="content-header"style="padding-top:60px"></section>
+    <section class="content-header">
+
+    </section>
+
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -10,7 +13,7 @@
                     <div class="box-body no-padding">
                         <div class="box-header">
                             <form action="/events/event_list" method="get">
-                                <button type="submit" class="btn btn-primary search-headmaster pull-right" autocomplete="off">Export event list</button>
+                                <button type="submit" class="btn btn-primary search-headmaster pull-right" autocomplete="off">{{event_strings.EVENT_EXPORT_BUTTON}}</button>
                             </form>
                         </div>
                         <div id="calendar"></div>
@@ -27,20 +30,20 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">New Event</h4>
+                        <h4 class="modal-title">{{event_strings.EVENT_TITLE}}</h4>
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
-                        <input type="hidden" id="eventId" style="display: none">
+                        <input type="hidden" id="eventId">
                         <div id="event-error"></div>
                         <div class="form-group">
-                            <label for="">Title</label>
+                            <label for="">{{event_strings.EVENT_LABEL_TITLE_TEXT}}</label>
                             <input type="text" name="title" class="form-control" id="id_title">
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group" >
-                                    <label for="id_start">Start</label>
+                                    <label for="id_start">{{event_strings.EVENT_LABEL_START_TEXT}}</label>
                                     <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" id="id_start" data-target="#datetimepicker7" readonly/>
                                         <span class="input-group-addon" data-target="#datetimepicker7" data-toggle="datetimepicker">
@@ -51,7 +54,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="id_end">End</label>
+                                    <label for="id_end">{{event_strings.EVENT_LABEL_END_TEXT}}</label>
                                     <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" id="id_end" data-target="#datetimepicker8" readonly/>
                                         <span class="input-group-addon" data-target="#datetimepicker8" data-toggle="datetimepicker">
@@ -63,13 +66,20 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input style="display: none;" type="button" value="Delete" id="btnDeleteEvent" onclick="clickSaveEvent()" class="btn btn-danger pull-left"/>
-                        <input type="button" value="Save" id="btnSaveEvent" onclick="clickSaveEvent()" class="btn btn-primary form-submit"/>
+                        <input style="display: none;" type="button" value="{{common_strings.DELETE_BUTTON}}" id="btnDeleteEvent" onclick="clickSaveEvent()" class="btn btn-danger pull-left"/>
+                        <input type="button" value="{{common_strings.SAVE_BUTTON}}" id="btnSaveEvent" onclick="clickSaveEvent()" class="btn btn-primary form-submit"/>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+{% endblock %}
+{% block extra_css %}
+<style type="text/css">
+    #eventId{
+        display: none;
+    }
+</style>
 {% endblock %}
 {% block extra_js %}
     <script>
@@ -106,7 +116,7 @@
                     {% endfor %}
                 ],
                 eventClick: function(calEvent, jsEvent, view) {
-                    $('.modal-title').html('Event Details');
+                    $('.modal-title').html('{{event_strings.EVENT_DETAIL_TITLE}}');
                     $('#btnDeleteEvent').show();
                     var startDateWithTime = calEvent.start.format('DD-MM-YYYY h:mm A')
                     var endDateWithTime = calEvent.end.format('DD-MM-YYYY h:mm A')
@@ -117,7 +127,7 @@
                     $('#eventId').val(calEvent.id);
                     $('#id_start').val(startDateWithTime);
                     $('#id_end').val(endDateWithTime);
-                    $('#btnSaveEvent').val('Edit');
+                    $('#btnSaveEvent').val('{{common_strings.EDIT_BUTTON}}');
                     $("#modal-event").modal("show");
                     console.log('events view')
                 },
@@ -126,7 +136,7 @@
                         id: 'calendar',
                         content: {
                             title: { text: event.title },
-                            text: '<span class="title">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'd-M-Y')) + '<br><span class="title">End: </span>' + ($.fullCalendar.formatDate(event.end, 'd-M-Y'))
+                            text: '<span class="title">{{event_strings.EVENT_START_TEXT}} </span>' + ($.fullCalendar.formatDate(event.start, 'd-M-Y')) + '<br><span class="title">{{event_strings.EVENT_END_TEXT}} </span>' + ($.fullCalendar.formatDate(event.end, 'd-M-Y'))
                         },
                         tip: 'true',
                         style: {
@@ -168,8 +178,8 @@
             start=moment(start).format('DD-MM-YYYY h:mm A');
             end=moment(end).format('DD-MM-YYYY h:mm A');
             $('#id_start').val(start);
-            $('.modal-title').html('New Event')
-            $('#btnSaveEvent').val('Save')
+            $('.modal-title').html('{{event_strings.EVENT_TITLE}}')
+            $('#btnSaveEvent').val('{{common_strings.SAVE_BUTTON}}')
             $('#id_end').val(end);
 
             eventAllInputFieldEnabled();
@@ -196,9 +206,9 @@
 
         $("#btnSaveEvent").click(function(){
             var btnValue = $(this).val();
-            if (btnValue == 'Edit'){
+            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
                 eventAllInputFieldEnabled();
-                $(this).val('Update');
+                $(this).val('{{common_strings.UPDATE_BUTTON}}');
                 return false;
             }
         });
@@ -218,11 +228,11 @@
 
         function clickSaveEvent() {
             var btnValue = $("#btnSaveEvent").val();
-            if (btnValue == 'Edit'){
+            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
                 return false;
             }
 
-            if (btnValue == 'Update'){
+            if (btnValue == '{{common_strings.UPDATE_BUTTON}}'){
                 var eventId = $("#eventId").val();
                 if (!eventId){
                     eventId = '';
@@ -276,12 +286,12 @@
                 }
                 else{
                     $('#event-error').addClass('alert alert-danger-error-message');
-                    $('#event-error').html('Title is required');
+                    $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
                 }
             }
             else{
                 $('#event-error').addClass('alert alert-danger-error-message');
-                $('#event-error').html('End date can not be less then Start date');
+                $('#event-error').html('{{event_strings.EVENT_DATE_FRONT_ERROR_MSG}}');
             }
 
         }
@@ -294,7 +304,6 @@
                 widgetPositioning: {
                     vertical: 'bottom',
                 },
-                minDate: moment()
             });
 
             $('#datetimepicker7').datetimepicker().on('dp.change', function (e) {
@@ -308,7 +317,7 @@
 
         $("#btnDeleteEvent").click(function(){
             var txt;
-            var r = confirm("Are you sure want to delete this event!");
+            var r = confirm("{{event_strings.DELETE_EVENT_CONFIRMATION}}");
             var eventId = $("#eventId").val();
             if(r){
                 $.ajax({

@@ -1,5 +1,6 @@
 from datetime import datetime
-
+from . import strings as event_strings
+from resources import strings as common_strings
 from django.core.serializers import json
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -13,7 +14,7 @@ from events.resources import EventResource
 @admin_login_required
 def create_event(request):
     event_list = Event.objects.all()
-    context = {'event_list': event_list}
+    context = {'event_list': event_list, 'event_strings': event_strings, 'common_strings':common_strings}
     return render(request, 'events/create_event.html', context)
 
 @admin_login_required
