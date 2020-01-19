@@ -79,7 +79,7 @@
                 header    : {
                     left  : 'prev,next today',
                     center: 'title',
-                    right : 'month,agendaWeek,agendaDay,list'
+                    right : 'month,agendaWeek,agendaDay, listMonth,listWeek,listDay'
                 },
                 defaultView: 'month',
                 buttonText: {
@@ -87,7 +87,10 @@
                     month: 'Month',
                     week : 'Week',
                     day  : 'Day',
-                    list : 'Event List'
+                    listMonth : "Month",
+                    listWeek : 'Week',
+                    listDay : 'Day',
+
                 },
                 longPressDelay: 50,
                 height: 650,
@@ -156,6 +159,8 @@
                 select: dateSelected
             });
 
+            $('.fc-listMonth-button,.fc-listWeek-button, .fc-listDay-button').prepend('<i class="fa fa-align-left"></i> ');
+            $('.fc-month-button,.fc-agendaWeek-button, .fc-agendaDay-button').prepend('<i class="fa fa-calendar"></i> ');
 
         });
         function dateSelected(start, end, ev, vw){
@@ -232,14 +237,23 @@
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
             });
-            var data = {
+            var data = [
+                {
+                    'title': title,
+                    'start': start,
+                    'end': end
+                }
+            ];
+
+            console.log(data);
+
+            $('#calendar').fullCalendar('addEventSource', data);
+
+            {% comment %}$("#calendar").fullCalendar('addEventSource', [{
                 'title': 'Test',
                 'start': '2020-01-25',
                 'end': '2020-01-24'
-            }
-
-
-            $('#calendar').fullCalendar('updateEvent', data);
+            }]);{% endcomment %}
 
             if(title){
                 $.ajax({
