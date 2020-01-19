@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                     <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
-                                    <input type="file" accept="image/*" placeholder="Headmaster image" class="pull-right img-preview" id="id_PF-image">
+                                    <input type="file" accept="image/*" class="pull-right img-preview" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                                         <tr>
                                             <td width="50%">
                                                 <div class="form-group">
-                                                    <select name="school[]" placeholder="School" class="form-control school-headmaster" id="id_school2">
+                                                    <select name="school[]" placeholder="{{ headmaster_strings.SCHOOL_TEXT }}" class="form-control school-headmaster" id="id_school2">
                                                         <option value="">---------</option>
                                                         {% for school in school_list %}
                                                             {% if headmaster_detail.school.id ==  school.id %}
