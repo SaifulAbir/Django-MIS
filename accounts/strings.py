@@ -82,3 +82,7 @@ SK_MEMBER_COUNT_TEXT = 'SK Members'
 
 SKNF_TITLE = 'SKNF'
 FOOTER_VERSION_TEXT = 'Version'
+
+PASSWORD_GENERATOR_TEXT = 'Password Generator'
+USE_PASSWORD_BUTTON = 'Use Password'
+COPY_PASSWORD_TEXT = 'I have copied this password in a safe place.'
