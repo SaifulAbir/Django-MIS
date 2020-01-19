@@ -199,7 +199,7 @@
                                     <tr>
                                         <td width="50%">
                                             <div class="form-group">
-                                                <select name="school" placeholder="School" class="form-control school-headmaster select2" id="id_school1">
+                                                <select name="school" placeholder={{ skleader_strings.SCHOOL_TEXT }} class="form-control school-headmaster select2" id="id_school1">
                                                     <option value="">---------</option>
                                                     {% for school in school_list %}
                                                         <option value="{{ school.id }}">{{ school.name }}</option>
