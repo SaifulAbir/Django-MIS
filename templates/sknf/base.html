@@ -41,13 +41,14 @@
     {% endblock %}
   </div>
   <!-- /.content-wrapper -->
-
+    {% autoescape off %}
   <footer class="main-footer">
     <div class="pull-right">
-      <b>{{ account_strings.FOOTER_VERSION_TEXT }}</b> {{APP_VERSION_NUMBER}}
+      {% format_values account_strings.FOOTER_VERSION_TEXT APP_VERSION_NUMBER %}
     </div>
-    <strong>Copyright &copy; 2019.</strong> All rights reserved.
+    {{ account_strings.COPYRIGHT_TEXT }}
   </footer>
+    {% endautoescape %}
 
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
