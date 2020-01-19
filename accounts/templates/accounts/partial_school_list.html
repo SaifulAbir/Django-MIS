@@ -6,7 +6,6 @@
     </thead>
     <tbody>
     {% for school in queryset %}
-
     <tr>
         <td><a href="{% url 'school:school_profile' school.id %}">{{ school.name }} ({{ school.division }}, {{ school.district }})</a></td>
     </tr>

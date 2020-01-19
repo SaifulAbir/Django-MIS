@@ -139,7 +139,6 @@ class SchoolTest(TestCase):
 
         s1=self.client.login(username='012345678901', password='12345')
         response = self.client.get('/school_list/',{'name_contains':'mirpur'},follow=True)
-        print(response.content)
         self.assertContains(response = response, status_code=200,  text='Mirpur School', html=True)
 
 
