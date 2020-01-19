@@ -56,7 +56,7 @@ def skmember_profile_view(request):
             headmaster_details.skmember = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
-            messages.success(request, 'SK Member Created!')
+            messages.success(request, sk_strings.SK_MEMBER_CREATED)
             return HttpResponseRedirect("/skmembers/skmember_list/")
 
     else:
@@ -281,7 +281,7 @@ def skmember_update(request, pk):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
-            messages.success(request, 'SK Member Updated!')
+            messages.success(request, sk_strings.SK_MEMBER_UPDATED)
             return HttpResponseRedirect("/skmembers/skmember_list/")
     else:
         user_form = EditSkMemberUserForm(instance=user_profile)

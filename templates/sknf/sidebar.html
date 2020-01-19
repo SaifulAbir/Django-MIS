@@ -5,63 +5,63 @@
       <ul class="sidebar-menu tree" data-widget="tree">
         <li class="home">
           <a href="{% url 'accounts:dashboard' %}">
-            <i class="fa fa-home"></i> <span>Home</span>
+            <i class="fa fa-home"></i> <span>{{account_strings.HOME_MENU_HOME}}</span>
           </a>
         </li>
 
         <li class="school">
           <a href="{% url 'school:school_list' %}">
-            <i class="fa fa-university"></i> <span>Schools</span>
+            <i class="fa fa-university"></i> <span>{{account_strings.SCHOOL_MENU_HOME}}</span>
           </a>
         </li>
         <li class="headmasters">
           <a href="{% url 'headmasters:headmaster_list' %}">
-            <i class="fa fa-user"></i> <span>Headmasters</span>
+            <i class="fa fa-user"></i> <span>{{account_strings.HEADMASTER_MENU_HOME}}</span>
           </a>
         </li>
         <li class="skleaders">
           <a href="{% url 'skleaders:skleader_list' %}">
-            <i class="fa fa-user-plus"></i> <span>SK Leaders</span>
+            <i class="fa fa-user-plus"></i> <span>{{account_strings.SKLEADER_MENU_HOME}}</span>
           </a>
         </li>
         <li class="skmembers">
           <a href="{% url 'skmembers:skmember_list' %}">
-            <i class="fa fa-users"></i> <span>SK Members</span>
+            <i class="fa fa-users"></i> <span>{{account_strings.HOME_MENU_SKMEMBER}}</span>
           </a>
         </li>
         <li class="events">
           <a href="{% url 'events:create_event' %}">
-            <i class="fa fa-calendar"></i> <span>Events</span>
+            <i class="fa fa-calendar"></i> <span>{{account_strings.EVENT_MENU_HOME}}</span>
           </a>
         </li>
 
         <li class="treeview settings-menu" id="settings">
           <a href="#">
-            <i class="fa fa-gears"></i> <span>Settings</span>
+            <i class="fa fa-gears"></i> <span>{{account_strings.SETTING_MENU_HOME}}</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="division-menu"><a href="{% url 'division:division_list' %}"><i class="fa fa-circle-o"></i>Division</a></li>
-            <li class="district-menu"><a href="{% url 'districts:district_list' %}"><i class="fa fa-circle-o"></i>District</a></li>
-            <li class="upazilla-menu"><a href="{% url 'upazillas:upazilla_list' %}"><i class="fa fa-circle-o"></i>Upazila</a></li>
-            <li class="union-menu"><a href="{% url 'unions:union_list' %}"><i class="fa fa-circle-o"></i>Union</a></li>
-            <li class="topics-menu"><a href="{% url 'topics:topics_list' %}"><i class="fa fa-circle-o"></i>Topic</a></li>
-            <li class="eduplus-topics-menu"><a href="{% url 'eduplus_activity:method_list' %}"><i class="fa fa-circle-o"></i>Method</a></li>
+            <li class="division-menu"><a href="{% url 'division:division_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.DIVISION_MENU_HOME}}</a></li>
+            <li class="district-menu"><a href="{% url 'districts:district_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.DISTRICT_MENU_HOME}}</a></li>
+            <li class="upazilla-menu"><a href="{% url 'upazillas:upazilla_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.UPAZILA_MENU_HOME}}</a></li>
+            <li class="union-menu"><a href="{% url 'unions:union_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.UNION_MENU_HOME}}</a></li>
+            <li class="topics-menu"><a href="{% url 'topics:topics_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.TOPIC_MENU_HOME}}</a></li>
+            <li class="eduplus-topics-menu"><a href="{% url 'eduplus_activity:method_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.METHOD_MENU_HOME}}</a></li>
           </ul>
         </li>
         <li class="treeview settings-menu" id="reports">
           <a href="#">
-            <i class="glyphicon glyphicon-list-alt"></i> <span>Reports</span>
+            <i class="glyphicon glyphicon-list-alt"></i> <span>{{account_strings.REPORT_MENU_HOME}}</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="club-meeting-menu"><a href="{% url 'club_meetings:club_meeting_report_list' %}"><i class="fa fa-circle-o"></i>Club Meetings</a></li>
-            <li class="peer-education-menu"><a href="{% url 'peer_education:peer_education_report_list' %}"><i class="fa fa-circle-o"></i>Peer Education</a></li>
-            <li class="eduplus-activity-menu"><a href="{% url 'eduplus_activity:eduplus_activity_report_list' %}"><i class="fa fa-circle-o"></i>Eduplus Activity</a></li>
+            <li class="club-meeting-menu"><a href="{% url 'club_meetings:club_meeting_report_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.HOME_MENU_CLUB_MEETING}}</a></li>
+            <li class="peer-education-menu"><a href="{% url 'peer_education:peer_education_report_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.HOME_MENU_PEER_EDUCATION}}</a></li>
+            <li class="eduplus-activity-menu"><a href="{% url 'eduplus_activity:eduplus_activity_report_list' %}"><i class="fa fa-circle-o"></i>{{account_strings.HOME_MENU_EDUPLUS_ACTIVITY}}</a></li>
           </ul>
         </li>
       </ul>

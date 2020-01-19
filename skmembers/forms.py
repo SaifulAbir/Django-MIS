@@ -11,8 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 
 class SkMemberUserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
-        (5, 'skLeader'),
-        (6, 'skMember'),
+        (5, sk_strings.SK_LEADER),
+        (6, sk_strings.SK_MEMBER),
     )
     class_choice = (
         ('6', '6'),

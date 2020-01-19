@@ -45,12 +45,12 @@
 
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                        {% render_field user_form.first_name class="form-control" placeholder=sk_strings.SK_MEMBER_TABLE_HEADER_NAME %}
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">{{ sk_strings.SK_MEMBER_USERNAME_MOBILE }}</label>
-                                        {% render_field user_form.email class="form-control" placeholder="Username / Mobile Number" %}
+                                        <label for="{{ user_form.email.id_for_label }}">{{ sk_strings.EMAIL_TEXT }}</label>
+                                        {% render_field user_form.email class="form-control" placeholder=sk_strings.EMAIL_TEXT %}
                                     </div>
 
                                     <div class="form-group">
@@ -85,7 +85,8 @@
                                             {% endif %}
                                         </div>
                                     </div>
-                                    <input type="file" accept="image/*" placeholder="SkMember image"  class="img-preview pull-right" id="id_PF-image">
+                                    <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
+                                    <input type="file" accept="image/*" class="img-preview pull-right" id="id_PF-image">
                                 </div>
                             </div>
                         </div>

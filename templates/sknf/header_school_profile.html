@@ -86,7 +86,7 @@
                             <img src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="img-circle" alt="User Image">
                             {% endif %}
 
-                            <p style="margin-top: 3px; margin-bottom: 0;">
+                            <p class="user-name">
                                 {{ user.first_name }}
                             </p>
                         </li>
@@ -166,6 +166,10 @@
     }
     .sidebar-toggle{
         position:fixed!important;
+    }
+    .user-name{
+        margin-top: 3px;
+        margin-bottom: 0;"
     }
 </style>
 {% endblock %}
