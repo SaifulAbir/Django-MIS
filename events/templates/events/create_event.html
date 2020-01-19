@@ -116,7 +116,7 @@
                     $('#id_end').val(endDateWithTime);
                     $('#btnSaveEvent').val('Edit');
                     $("#modal-event").modal("show");
-
+                    console.log('events view')
                 },
                 eventRender: function(event, element) {
                     element.qtip({
@@ -229,6 +229,9 @@
             start = $('#id_start').val();
             end = $('#id_end').val();
 
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+            });
             var data = {
                 'title': 'Test',
                 'start': '2020-01-25',
@@ -236,7 +239,8 @@
             }
 
 
-            ('#calendar').fullCalendar('updateEvent', data);
+            $('#calendar').fullCalendar('updateEvent', data);
+
             if(title){
                 $.ajax({
                     type: 'POST',

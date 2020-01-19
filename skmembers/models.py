@@ -16,7 +16,7 @@ class_choice=(
 
 class SkMemberProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='skmember_profile')
-    mobile = models.CharField(max_length=15, blank=True, null=True)
+    mobile = models.CharField(max_length=20, blank=True, null=True)
     student_class = models.CharField(max_length=10, choices=class_choice, blank=True, null=True)
     roll = models.CharField(max_length=128, blank=True, null=True)
     school = models.ForeignKey(School, on_delete=models.PROTECT, blank=True, null=True)

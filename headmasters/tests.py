@@ -50,7 +50,7 @@ class HeadMasterProfileTest(TestCase):
 
     def test__if_max_leangth_is_added__in_mobile_number(self):
         max_length = HeadmasterProfile._meta.get_field('mobile').max_length
-        self.assertEquals(max_length, 11)
+        self.assertEquals(max_length, 20)
 
 
     def test__when_school_name_is_searched__should_give_result_accordingly(self):
