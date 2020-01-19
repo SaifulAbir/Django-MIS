@@ -83,7 +83,7 @@
                                     </div>
                                 </div>
                                 <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
-                                <input type="file" accept="image/*" placeholder="SkMember image" class="img-preview pull-right" id="id_PF-image">
+                                <input type="file" accept="image/*" class="img-preview pull-right" id="id_PF-image">
                             </div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="{{ profile_form.joining_date.id_for_label }}">{{ sk_strings.DATE_FROM }}</label>
-                                    <input type="text" class="datepicker copydate form-control"  placeholder="dd-mm-yyyy"/>
+                                    <input type="text" class="datepicker copydate form-control"  placeholder={{ common_strings.DATE_PLACEHOLDER }}>
                                     <div class="join-date">
                                         {% render_field profile_form.joining_date class="form-control pastedate" %}
                                     </div>
