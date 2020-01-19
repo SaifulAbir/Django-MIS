@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label>{{ school_strings.SCHOOL_LIST_ADDRESS_TEXT }}:</label>
-                            <input type="text" value="{{school_detail.address}}" class="form-control my-colorpicker1" rows= "4.5" , style = "height:7.7em", readonly>
+                            <input type="text" value="{{school_detail.address}}" class="form-control my-colorpicker1 description-box" rows= "4.5" , readonly>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-body">
-                    <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                    <a type="button" onclick="goBack()"
                        class="btn btn-warning pull-left"
                        href="javascript:void(0)">
                         {{ common_strings.BACK_BUTTON }}
@@ -75,4 +75,9 @@
             </div>
         </div>
     </section>
+    <style>
+    .description-box{
+        height:7.7em;
+    }
+    </style>
 {% endblock %}

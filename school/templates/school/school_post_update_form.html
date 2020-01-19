@@ -31,7 +31,7 @@
             {% render_field post_form.text class="form-control" placeholder=school_strings.POST_TEXT_PLACEHOLDER %}
         </div>
         <div class="form-group post-edit-box">
-            <input type="file"  accept="image/*" placeholder="" class="image-post" id="id_post_image">
+            <input type="file"  accept="image/*" class="image-post" id="id_post_image">
             <input type="button" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image image-position" onclick="choosePic();"></span>
         </div>
         {% render_field post_form.image_base %}
