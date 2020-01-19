@@ -81,4 +81,9 @@ SK_MEMBER_COUNT_TEXT = 'SK Members'
 #Admin Dashboard Strings
 
 SKNF_TITLE = 'SKNF'
-FOOTER_VERSION_TEXT = 'Version'
+FOOTER_VERSION_TEXT = '<b>Version</b> %s'
+COPYRIGHT_TEXT = '<strong>Copyright &copy; 2019.</strong> All rights reserved.'
+CROP_IMAGE_TITLE = 'Crop the photo'
+CROP_BUTTON_TITLE = 'Crop and upload'
+IMAGE_SIZE_LIMIT_MESSAGE = 'Please select image size less than 9 MB'
+Ok_TEXT = 'Ok'
