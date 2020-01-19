@@ -114,7 +114,7 @@
                                     <div class="form-group">
                                         <label for="{{ profile_form.joining_date.id_for_label }}">{{ sk_strings.DATE_FROM }}</label>
                                         <input type="text" class="datepicker copydate form-control"  />
-                                        <div style="display: none">
+                                        <div class="join-date">
                                             {% render_field profile_form.joining_date class="form-control pastedate" placeholder="Name" %}
                                         </div>
                                     </div>
@@ -160,6 +160,9 @@
         }
         #id_PF-image{
             margin-top: 10px;
+        }
+        .join-date{
+            display: none;
         }
 
         </style>
