@@ -72,7 +72,9 @@
                 </div>
             </div>
         </div>
+
     </form>
+    {% include 'events/export_event_list.html' %}
 {% endblock %}
 {% block extra_css %}
 <style type="text/css">
@@ -247,9 +249,6 @@
                     eventId = '';
                 }
             }
-            if (btnValue == 'Export'){
-                $('#submitForm').submit();
-            }
 
 
             var title = $('#id_title').val();
@@ -288,6 +287,7 @@
                     });
                 }
                 else{
+
                     $('#event-error').addClass('alert alert-danger-error-message');
                     $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
                 }
@@ -338,12 +338,14 @@
             }
         });
         $('.search-event').click(function () {
-            $('.modal-title').html('Export with Search');
-            $('#btnSaveEvent').val('Export');
-            $('#btnDeleteEvent').hide();
-            $('.title-div').hide();
-            $('#submitForm').prop('action', 'events/event_list/');
-            $("#modal-event").modal("show");
+            {#$('.modal-title').html('Export with Search');#}
+            {#$('#btnSaveEvent').val('Export');#}
+            {#$('#btnDeleteEvent').hide();#}
+            {#$('.title-div').html('');#}
+            {#$('#id_start').removeAttr("data-target");#}
+            {#$('#id_start').removeClass("datetimepicker-input");#}
+            {#$('#submitForm').prop('action', '/events/event_list/');#}
+            $("#modal-event-list").modal("show");
         });
 
     </script>

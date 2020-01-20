@@ -49,6 +49,17 @@ def delete_event(request):
     return HttpResponse('ok')
 
 def event_list(request):
+    from_date = request.GET.get('start_date')
+    if from_date :
+        fromdate = datetime.strptime(from_date,'%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        fromdate = from_date
+
+    to_date = request.GET.get('end_date')
+    if to_date:
+        todate = datetime.strptime(to_date,'%d-%m-%Y').strftime('%Y-%m-%d')
+    else:
+        todate = to_date
     resource = EventResource()
     dataset = resource.export()
     response = HttpResponse(dataset.csv, content_type='text/csv')
