@@ -61,13 +61,22 @@ class HeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(required=False,
                                     error_messages={'invalid': _(headmaster_strings.IMAGE_FILE_ONLY)}, widget=forms.FileInput)
     joining_date = DateField(error_messages={'required': headmaster_strings.FROM_DATE_REQUIRED})
-    mobile = forms.CharField(error_messages={'required': headmaster_strings.MOBILE_REQUIRED,'max_length': headmaster_strings.MOBILE_LENGTH_EXCEED},
+    mobile = forms.CharField(error_messages={'required': headmaster_strings.MOBILE_REQUIRED},
                              widget=forms.TextInput(attrs={'type':'number'}))
     school = forms.ModelChoiceField(error_messages={'required': headmaster_strings.SCHOOL_REQUIRED}, queryset=School.objects.all())
 
     class Meta:
         model = HeadmasterProfile
         fields = ('mobile','school', 'image','joining_date', 'image_base64')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        mobile = cleaned_data.get("mobile")
+
+        if mobile:
+            if len(mobile)>11:
+                msg = headmaster_strings.MOBILE_LENGTH_EXCEED
+                self.add_error('mobile', msg)
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
@@ -82,12 +91,20 @@ class EditHeadmasterProfileForm(forms.ModelForm):
     image = forms.ImageField(required=False,
                                     error_messages={'invalid': _(headmaster_strings.IMAGE_FILE_ONLY)}, widget=forms.FileInput)
     joining_date = DateField(required=False, error_messages={'required': headmaster_strings.FROM_DATE_REQUIRED})
-    mobile = forms.CharField(error_messages={'required': headmaster_strings.MOBILE_REQUIRED,'max_length': headmaster_strings.MOBILE_LENGTH_EXCEED},
+    mobile = forms.CharField(error_messages={'required': headmaster_strings.MOBILE_REQUIRED},
                              widget=forms.TextInput(attrs={'type':'number'}))
 
     class Meta:
         model = HeadmasterProfile
         fields = ('mobile', 'image','joining_date', 'image_base64')
+    def clean(self):
+        cleaned_data = super().clean()
+        mobile = cleaned_data.get("mobile")
+
+        if mobile:
+            if len(mobile)>11:
+                msg = headmaster_strings.MOBILE_LENGTH_EXCEED
+                self.add_error('mobile', msg)
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)

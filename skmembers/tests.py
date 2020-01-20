@@ -21,7 +21,7 @@ class SkmemberProfileTest(TestCase):
 
     def test__when_Every_field_is_valid___should_pass(self):
         time = timezone.now()
-        s = SkMemberProfile(school=self.school,user=self.user,gender='M',student_class='6',
+        s = SkMemberProfile(name='test',school=self.school,user=self.user,gender='M',student_class='6',
                             roll=10,mobile='018152045',image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()
@@ -35,7 +35,7 @@ class SkmemberProfileTest(TestCase):
             s.full_clean()
 
     def test__when_mobile_is_null__should__pass(self):
-        s = SkMemberProfile(user=self.user,school=self.school,gender='M',student_class='6',
+        s = SkMemberProfile(user=self.user,name='test',school=self.school,gender='M',student_class='6',
                             roll=10,image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()
@@ -43,7 +43,7 @@ class SkmemberProfileTest(TestCase):
             self.fail()
 
     def test__when_mobile_is_empty__should_pass(self):
-        s = SkMemberProfile(user=self.user,school=self.school,gender='M',student_class='6',
+        s = SkMemberProfile(user=self.user,name='test',school=self.school,gender='M',student_class='6',
                             mobile='',roll=10,image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()
@@ -51,7 +51,7 @@ class SkmemberProfileTest(TestCase):
             self.fail()
 
     def test__when_gender_is_null__should_pass(self):
-        s = SkMemberProfile(school=self.school,user=self.user,student_class='6',
+        s = SkMemberProfile(name='test',school=self.school,user=self.user,student_class='6',
                             roll=10,mobile='018152045',image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()
@@ -59,7 +59,7 @@ class SkmemberProfileTest(TestCase):
             self.fail()
 
     def test__when_gender_is_empty__should__pass(self):
-        s = SkMemberProfile(school=self.school,user=self.user,student_class='6',gender='',
+        s = SkMemberProfile(name='test',school=self.school,user=self.user,student_class='6',gender='',
                             roll=10,mobile='018152045',image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()
@@ -67,7 +67,7 @@ class SkmemberProfileTest(TestCase):
             self.fail()
 
     def test__when_student_class_is_null__should__pass(self):
-        s = SkMemberProfile(school=self.school,user=self.user,gender='M',
+        s = SkMemberProfile(name='test',school=self.school,user=self.user,gender='M',
                             roll=10,mobile='018152045',image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()
@@ -75,7 +75,7 @@ class SkmemberProfileTest(TestCase):
             self.fail()
 
     def test__when_student_class_is_empty__should__pass(self):
-        s = SkMemberProfile(school=self.school,user=self.user,gender='M',student_class='',
+        s = SkMemberProfile(name='test',school=self.school,user=self.user,gender='M',student_class='',
                             roll=10,mobile='018152045',image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()
@@ -83,7 +83,7 @@ class SkmemberProfileTest(TestCase):
             self.fail()
 
     def test__when_roll_is_null__should_pass(self):
-        s = SkMemberProfile(school=self.school,user=self.user,gender='M',student_class='6',
+        s = SkMemberProfile(name='test',school=self.school,user=self.user,gender='M',student_class='6',
                             mobile='018152045',image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()
@@ -91,7 +91,7 @@ class SkmemberProfileTest(TestCase):
             self.fail()
 
     def test__when_roll_is_empty__should__pass(self):
-        s = SkMemberProfile(school=self.school,user=self.user,gender='M',student_class='6',
+        s = SkMemberProfile(name='test',school=self.school,user=self.user,gender='M',student_class='6',
                             roll='',mobile='018152045',image='a.png',joining_date=timezone.now())
         try:
             s.full_clean()

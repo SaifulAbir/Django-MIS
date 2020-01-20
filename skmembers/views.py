@@ -55,11 +55,9 @@ def skmember_profile_view(request):
             return HttpResponseRedirect("/skmembers/skmember_list/")
 
     else:
-        user_form = SkMemberUserForm(prefix='UF')
         profile_form = SkMemberProfileForm(prefix='PF')
 
     return render(request, 'skmembers/skmember_profile_add.html', {
-        'user_form': user_form,
         'profile_form': profile_form,
         'sk_strings':sk_strings,
         'common_strings': common_strings
@@ -383,7 +381,7 @@ def skmember_search_list(request, export='null'):
     union = request.GET.get('union_contains')
 
     if name != '' and name is not None:
-        qs = qs.filter(user__first_name__icontains=name)
+        qs = qs.filter(name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
     if mobile != '' and mobile is not None:
