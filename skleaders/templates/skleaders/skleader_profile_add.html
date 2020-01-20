@@ -27,7 +27,7 @@
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                     {% if user_form.errors or profile_form.errors %}
-                                    <div id="alertdiv">
+                                    <div id="alertdiv" class="alert alert-danger-error-message">
                                         <span>
                                             {% for field in user_form %}
                                                 <li class="help-block">{{ field.errors|striptags }}</li>

@@ -37,6 +37,7 @@ def headmaster_profile_view(request):
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data["password"])
+            user.username = profile_form.cleaned_data["mobile"]
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
@@ -53,8 +54,6 @@ def headmaster_profile_view(request):
             # end of image cropping code
 
             profile.save()
-            user.username = profile.mobile
-            user.save()
             headmaster_details = HeadmasterDetails()
             headmaster_details.school = profile_form.cleaned_data["school"]
             headmaster_details.headmaster = profile
@@ -140,6 +139,7 @@ def headmaster_update(request, pk):
                 user.set_password(user_form.cleaned_data["password"])
             else:
                 user.password = old_password
+            user.username = profile_form.cleaned_data["mobile"]
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
@@ -154,8 +154,6 @@ def headmaster_update(request, pk):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
-            user.username = profile.mobile
-            user.save()
             messages.success(request, headmaster_strings.HEADMASTER_UPDATED)
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
