@@ -84,11 +84,10 @@ class EditHeadmasterProfileForm(forms.ModelForm):
     joining_date = DateField(required=False, error_messages={'required': headmaster_strings.FROM_DATE_REQUIRED})
     mobile = forms.CharField(error_messages={'required': headmaster_strings.MOBILE_REQUIRED,'max_length': headmaster_strings.MOBILE_LENGTH_EXCEED},
                              widget=forms.TextInput(attrs={'type':'number'}))
-    school = forms.ModelChoiceField(required=False, error_messages={'required': headmaster_strings.SCHOOL_REQUIRED}, queryset=School.objects.all())
 
     class Meta:
         model = HeadmasterProfile
-        fields = ('mobile','school', 'image','joining_date', 'image_base64')
+        fields = ('mobile', 'image','joining_date', 'image_base64')
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
