@@ -50,19 +50,27 @@ def delete_event(request):
 
 def event_list(request):
     qs = Event.objects.all()
-    from_date = request.GET.get('start_date')
+    from_date = request.POST.get('start_date')
+    print(from_date)
     if from_date :
         fromdate = datetime.strptime(from_date,'%d-%m-%Y').strftime('%Y-%m-%d')
     else:
         fromdate = from_date
 
-    to_date = request.GET.get('end_date')
+    to_date = request.POST.get('end_date')
     if to_date:
         todate = datetime.strptime(to_date,'%d-%m-%Y').strftime('%Y-%m-%d')
     else:
         todate = to_date
+
+    if fromdate:
+        qs = qs.filter(start_date__gte=fromdate)
+    if todate and not fromdate:
+        qs = qs.filter(end_date__lte=todate)
+    if from_date and to_date :
+        qs = qs.filter(start_date__gte=fromdate, end_date__lte=todate)
     resource = EventResource()
-    dataset = resource.export()
+    dataset = resource.export(qs)
     response = HttpResponse(dataset.csv, content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="event_list.csv"'
     return response
