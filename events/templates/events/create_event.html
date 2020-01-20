@@ -225,10 +225,6 @@
 
         });
 
-
-
-
-
         function clickSaveEvent() {
             var btnValue = $("#btnSaveEvent").val();
             if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
@@ -253,10 +249,11 @@
             var standardEndDate = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardEndDateForDB = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
             console.log(standardEndDateForDB);
-            start_date = $('#id_start').val();
-            end_date = $('#id_end').val();
-
-            if (end_date>=start_date){
+            var start_date = $('#id_start').val();
+            var end_date = $('#id_end').val();
+            console.log(start_date);
+            console.log(end_date);
+            if (standardEndDateForDB>=standardStartDateForDB){
                 if(title){
                     $.ajax({
                         type: 'POST',
