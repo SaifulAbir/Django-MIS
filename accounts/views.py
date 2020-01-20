@@ -45,7 +45,7 @@ def index(request):
     school_total = School.objects.count()
     headmaster_total = User.objects.filter(user_type__in=[2,]).count()
     skleader_total = User.objects.filter(user_type__in=[5,]).count()
-    skmember_total = User.objects.filter(user_type__in=[6,]).count()
+    skmember_total = SkMemberProfile.objects.all().count()
     paginator = Paginator(schools, 10)
     page = request.GET.get('page')
     try:
