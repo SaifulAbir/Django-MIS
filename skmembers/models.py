@@ -15,7 +15,9 @@ class_choice=(
 )
 
 class SkMemberProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='skmember_profile')
+    user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='skmember_profile', blank=True, null=True)
+    name = models.CharField((sk_strings.USER_NAME_TEXT), max_length=40)
+    email = models.CharField((sk_strings.USER_EMAIL_TEXT), max_length=254, blank=True, null=True)
     mobile = models.CharField(max_length=20, blank=True, null=True)
     student_class = models.CharField(max_length=10, choices=class_choice, blank=True, null=True)
     roll = models.CharField(max_length=128, blank=True, null=True)

@@ -12,8 +12,8 @@
     <tbody>
     {% for skmember in skmemberprofile_list %}
     <tr>
-        <td>{{skmember.user.first_name}}</td>
-        <td>{{ skmember.user.email }}</td>
+        <td>{{skmember.user.name}}</td>
+        <td>{{ skmember.email }}</td>
         <td>{{ skmember.mobile }}</td>
         <td>{{ skmember.student_class }}</td>
         <td>{{ skmember.get_gender_display }}</td>

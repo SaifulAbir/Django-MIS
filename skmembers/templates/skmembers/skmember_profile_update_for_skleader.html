@@ -44,12 +44,12 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder=sk_strings.SK_MEMBER_TABLE_HEADER_NAME %}
+                                        {% render_field profile_form.name class="form-control" placeholder=sk_strings.SK_MEMBER_TABLE_HEADER_NAME %}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="{{ user_form.email.id_for_label }}">{{ sk_strings.SK_MEMBER_USERNAME_MOBILE }}</label>
-                                        {% render_field user_form.email class="form-control" placeholder=sk_strings.SK_MEMBER_USERNAME_MOBILE %}
+                                        {% render_field profile_form.email class="form-control" placeholder=sk_strings.SK_MEMBER_USERNAME_MOBILE %}
                                     </div>
 
                                     <div class="form-group">
