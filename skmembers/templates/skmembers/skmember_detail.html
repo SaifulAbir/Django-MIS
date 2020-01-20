@@ -22,32 +22,32 @@
                         <div class="box-body">
                             <!-- School Name -->
                             <div class="form-group">
-                                <label>{{ sk_strings.NAME_TEXT }}:</label>
+                                <label>{{ sk_strings.NAME_TEXT }}</label>
                                 <input disabled type="text" value="{{skmember_detail.name}}" class="form-control my-colorpicker1">
                             </div>
                             <!-- /.form group -->
                             <div class="form-group">
-                                <label>{{ sk_strings.EMAIL_TEXT }}:</label>
+                                <label>{{ sk_strings.EMAIL_TEXT }}</label>
                                 <input type="text" value="{{skmember_detail.email}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>{{ sk_strings.MOBILE_TEXT }}:</label>
+                                <label>{{ sk_strings.MOBILE_TEXT }}</label>
                                 <input type="text" value="{{skmember_detail.mobile}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>{{ sk_strings.USER_TYPE_TEXT }}:</label>
+                                <label>{{ sk_strings.USER_TYPE_TEXT }}</label>
                                 <input type="text" value="{{skmember_detail.user.get_user_type_display}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>{{ sk_strings.SCHOOL_TEXT }}:</label>
+                                <label>{{ sk_strings.SCHOOL_TEXT }}</label>
                                 <input type="text" value="{{skmember_detail.school.name}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>{{ sk_strings.CLASS_TEXT }}:</label>
+                                <label>{{ sk_strings.CLASS_TEXT }}</label>
                                 <input type="text" value="{{skmember_detail.student_class}}" class="form-control my-colorpicker1" readonly>
                             </div>
                             <div class="form-group">
-                                <label>{{ sk_strings.ROLL_TEXT }}:</label>
+                                <label>{{ sk_strings.ROLL_TEXT }}</label>
                                 <input type="text" value="{{skmember_detail.roll}}" class="form-control my-colorpicker1" readonly>
                             </div>
 
@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <div class="row-sm-12">
                                 <div class="row-sm-12">
-                                    <label class="center-block text-right">{{ sk_strings.PROFILE_PIC_TEXT }}:</label>
+                                    <label class="center-block text-right">{{ sk_strings.PROFILE_PIC_TEXT }}</label>
                                     {% if skmember_detail.image %}
                                         <img width="220" src="{{ skmember_detail.image.url }}" class="pull-right" alt="Pic"><br />
                                     {% else %}
