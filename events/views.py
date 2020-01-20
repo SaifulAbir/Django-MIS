@@ -24,8 +24,12 @@ def add_event(request):
     title = request.POST.get('title')
     start = request.POST.get('start')
     end = request.POST.get('end')
-    start_date = datetime.strptime(start, '%d-%m-%Y %H:%M %p').strftime('%Y-%m-%d %H:%M:%S')
-    end_date = datetime.strptime(end, '%d-%m-%Y %H:%M %p').strftime('%Y-%m-%d %H:%M:%S')
+    print(start)
+    print(end)
+    start_date = start
+    end_date = end
+    # start_date = datetime.strptime(start, '%d-%m-%Y %H:%M %p').strftime('%Y-%m-%d %H:%M:%S')
+    # end_date = datetime.strptime(end, '%d-%m-%Y %H:%M %p').strftime('%Y-%m-%d %H:%M:%S')
     if eventId:
         evenObj = Event.objects.get(id=eventId)
         evenObj.title = title

@@ -22,3 +22,9 @@ function getCurrentDateStandard() {
     today = yyyy + '-' + mm + '-' + dd;
     return today;
 }
+
+function getDateBdFormatToStandardDateFormat(date) {
+    var array = date.split("-");
+    var date = array[2]+'-'+array[1]+'-'+array[0];
+    return date;
+}

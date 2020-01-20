@@ -119,6 +119,12 @@
                     {% endfor %}
                 ],
                 eventClick: function(calEvent, jsEvent, view) {
+                     //calEvent.title = calEvent.id;
+                    $('#calendar').fullCalendar('updateEvent', calEvent);
+
+                    var sixtyfive = $('#calendar').fullCalendar('clientEvents', 'id=65');
+                    console.log(sixtyfive.title);
+
                     $('.modal-title').html('{{event_strings.EVENT_DETAIL_TITLE}}');
                     $('#btnDeleteEvent').show();
                     var startDateWithTime = calEvent.start.format('DD-MM-YYYY h:mm A')
@@ -190,11 +196,11 @@
             $("#id_start" ).prop( "disabled", false );
             $("#id_end" ).prop( "disabled", false );
             $("#id_title" ).prop( "disabled", false );
+            $("#btnSaveEvent" ).prop( "disabled", false );
 
 
             $('#event-error').html('');
             $('#event-error').removeClass('alert alert-danger-error-message');
-            console.log('yes');
             $("#modal-event").modal("show");
         }
         function saveEvent(start, end, title){
@@ -246,31 +252,15 @@
             }
 
 
+            var title = $('#id_title').val();
+            var start = $('#id_start').val();
+            var end = $('#id_end').val();
 
-            title = $('#id_title').val();
-            start = $('#id_start').val();
-            end = $('#id_end').val();
-
-            $('#calendar').fullCalendar({
-                // put your options and callbacks here
-            });
-            var data = [
-                {
-                    'title': title,
-                    'start': start,
-                    'end': end
-                }
-            ];
-
-            console.log(data);
-
-            $('#calendar').fullCalendar('addEventSource', data);
-
-            {% comment %}$("#calendar").fullCalendar('addEventSource', [{
-                'title': 'Test',
-                'start': '2020-01-25',
-                'end': '2020-01-24'
-            }]);{% endcomment %}
+            var standardStartDate = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
+            var standardStartDateForDB = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
+            var standardEndDate = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
+            var standardEndDateForDB = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
+            console.log(standardEndDateForDB);
             start_date = $('#id_start').val();
             end_date = $('#id_end').val();
             if (end_date>=start_date){
@@ -280,14 +270,20 @@
                         url: '/events/api/add_event/',
                         data: {
                             'title': title,
-                            'start': start,
-                            'end': end,
+                            'start': standardStartDateForDB,
+                            'end': standardEndDateForDB,
                             'eventId': eventId,
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                         },
                         success: function (data) {
                             $('#btnSaveEvent').prop('disabled', true);
                             $("#modal-event").modal('hide');
+                            $("#calendar").fullCalendar('addEventSource', [{
+                                'title': title,
+                                'start': standardStartDate,
+                                'end': standardEndDateForDB,
+                                'allDay': false
+                            }]);
                         }
                     });
                 }
