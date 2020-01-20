@@ -35,5 +35,6 @@ for m in SkMemberProfile.objects.all():
     m.mobile=mobile
     m.save()
 
-
 EOF
+
+
