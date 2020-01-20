@@ -16,7 +16,8 @@ from django.views import generic
 from accounts.decorators import admin_login_required
 from accounts.models import User
 from headmasters import models
-from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm, HeadmasterDetailsForm
+from headmasters.forms import UserForm, HeadmasterProfileForm, EditUserForm, HeadmasterDetailsForm, \
+    EditHeadmasterProfileForm
 from headmasters.models import HeadmasterProfile, HeadmasterDetails
 from school.models import School
 import time
@@ -130,7 +131,7 @@ def headmaster_update(request, pk):
     user_profile = get_object_or_404(User, pk=int(headmaster_profile.user.id))
     if request.method == 'POST':
         user_form = EditUserForm(request.POST, instance=user_profile)
-        profile_form = HeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile, prefix='PF')
+        profile_form = EditHeadmasterProfileForm(request.POST, request.FILES, instance=headmaster_profile, prefix='PF')
         if user_form.is_valid() and profile_form.is_valid():
             old_password = headmaster_profile.user.password
             user = user_form.save(commit=False)
@@ -159,7 +160,7 @@ def headmaster_update(request, pk):
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
         user_form = EditUserForm(instance=user_profile)
-        profile_form = HeadmasterProfileForm(instance=headmaster_profile, prefix='PF')
+        profile_form = EditHeadmasterProfileForm(instance=headmaster_profile, prefix='PF')
 
     return render(request, 'headmasters/headmaster_profile_update.html', {
         'user_form': user_form,

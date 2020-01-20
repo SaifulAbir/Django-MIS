@@ -76,6 +76,27 @@ class HeadmasterProfileForm(forms.ModelForm):
                 raise ValidationError(headmaster_strings.IMAGE_FILE_SIZE_EXCEED)
             return image
 
+class EditHeadmasterProfileForm(forms.ModelForm):
+    image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
+
+    image = forms.ImageField(required=False,
+                                    error_messages={'invalid': _(headmaster_strings.IMAGE_FILE_ONLY)}, widget=forms.FileInput)
+    joining_date = DateField(required=False, error_messages={'required': headmaster_strings.FROM_DATE_REQUIRED})
+    mobile = forms.CharField(error_messages={'required': headmaster_strings.MOBILE_REQUIRED,'max_length': headmaster_strings.MOBILE_LENGTH_EXCEED},
+                             widget=forms.TextInput(attrs={'type':'number'}))
+    school = forms.ModelChoiceField(required=False, error_messages={'required': headmaster_strings.SCHOOL_REQUIRED}, queryset=School.objects.all())
+
+    class Meta:
+        model = HeadmasterProfile
+        fields = ('mobile','school', 'image','joining_date', 'image_base64')
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image', False)
+        if image:
+            if image.size > 1 * 1024 * 1024:
+                raise ValidationError(headmaster_strings.IMAGE_FILE_SIZE_EXCEED)
+            return image
+
 
 
 class HeadmasterDetailsForm(forms.ModelForm):
