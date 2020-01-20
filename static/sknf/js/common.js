@@ -28,3 +28,9 @@ function getDateBdFormatToStandardDateFormat(date) {
     var date = array[2]+'-'+array[1]+'-'+array[0];
     return date;
 }
+
+function eventAllInputFieldEnabled() {
+    $( "#id_start" ).prop( "disabled", false );
+    $( "#id_end" ).prop( "disabled", false );
+    $( "#id_title" ).prop( "disabled", false );
+}
