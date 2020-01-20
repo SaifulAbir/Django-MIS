@@ -47,6 +47,7 @@ USER_PROFILE_CONFIRM_PASSWORD = "Confirm Password"
 GENERATE_PASSWORD_BUTTON = "Generate Password"
 GENERATE_PASSWORD_BUTTON = "Generate Password"
 DATE_FORMAT = "d-m-Y"
+DATE_PLACEHOLDER = "dd-mm-yyyy"
 EXPORT_CSV_BUTTON_TEXT = "Export CSV"
 VALIDATION_CHAR_ERROR_MESSEGE = 'Invalid Validation'
 FUTURE_DATE_VALIDATION_ERROR_MESSEGE = 'This Date cannot be in the future.'

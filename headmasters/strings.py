@@ -25,7 +25,7 @@ GENERATE_PASSWORD ='Genarate Password'
 HEADMASTER = 'headmaster'
 GUIDE_TEACHER = 'Guide Teacher'
 BOTH = 'both'
-
+DATE_PLACEHOLDER = 'dd-mm-yyyy'
 #alert messages
 NAME_REQUIRED = 'Name is required.'
 PASSWORD_REQUIRED = 'Password is required.'

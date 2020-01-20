@@ -33,6 +33,8 @@ def skleader_profile_view(request):
             user = user_form.save(commit=False)
             user.user_type = 5
             user.set_password(user_form.cleaned_data["password"])
+            user.username = profile_form.cleaned_data["mobile"]
+            user.save()
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
@@ -48,8 +50,6 @@ def skleader_profile_view(request):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
-            user.username = profile.mobile
-            user.save()
             headmaster_details = SkleaderDetails()
             headmaster_details.school = profile_form.cleaned_data["school"]
             headmaster_details.skleader = profile
@@ -131,6 +131,7 @@ def skleader_update(request, pk):
                 user.set_password(user_form.cleaned_data["password"])
             else:
                 user.password = old_password
+            user.username = profile_form.cleaned_data["mobile"]
             user.save()
             profile = profile_form.save(commit = False)
             profile.user = user
@@ -147,8 +148,6 @@ def skleader_update(request, pk):
             # end of image cropping code
 
             profile.save()
-            user.username = profile.mobile
-            user.save()
             messages.success(request, skleader_strings.SKLEADER_UPDATED)
             return HttpResponseRedirect("/skleaders/skleader_list/")
     else:

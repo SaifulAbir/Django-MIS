@@ -19,8 +19,8 @@
     <div class="img-ctrl school-cover">
         <form method='POST' class="school-cover-form" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            <div style =" display:inline-block;">
-                <input type="file" accept="image/*" placeholder="SkMember image" class="img-preview cover-image" id="id_image">
+            <div class="image-inline" >
+                <input type="file" accept="image/*" class="img-preview cover-image" id="id_image">
                 <input type="button" value="Change" class="btn btn-primary change-button" id="btn_change" onclick="changePic();">
                 <input type="submit" name="one_picture" value="Upload" id="btn_upload" class="btn btn-primary"/>
             </div>
@@ -126,7 +126,7 @@
                                     {% render_field post_form.text class="form-control" %}
                                 </div>
                                 <div class="form-group post-image">
-                                    <input type="file"  accept="image/*" placeholder="" class="" id="id_post_image">
+                                    <input type="file"  accept="image/*" class="" id="id_post_image">
                                     <input type="button" value="" class="btn btn-primary" id="btn-choose" onclick="choosePic();"><span class="fa fa-image image-icon" onclick="choosePic();"></span>
                                 </div>
                                 {% render_field post_form.image_base64 %}
@@ -262,6 +262,9 @@
     }
     .cover-image{
         display:none!important;
+    }
+    .image-inline{
+        display:inline-block;
     }
 </style>
 {% endblock %}

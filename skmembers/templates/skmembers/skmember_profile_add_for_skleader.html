@@ -45,12 +45,12 @@
 
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">{{ sk_strings.SK_MEMBER_TABLE_HEADER_NAME }}</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder=sk_strings.SK_MEMBER_TABLE_HEADER_NAME %}
+                                        {% render_field profile_form.name class="form-control" placeholder=sk_strings.SK_MEMBER_TABLE_HEADER_NAME %}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="{{ user_form.email.id_for_label }}">{{ sk_strings.EMAIL_TEXT }}</label>
-                                        {% render_field user_form.email class="form-control" placeholder=sk_strings.EMAIL_TEXT %}
+                                        {% render_field profile_form.email class="form-control" placeholder=sk_strings.EMAIL_TEXT %}
                                     </div>
 
                                     <div class="form-group">
@@ -114,8 +114,8 @@
                                     <div class="form-group">
                                         <label for="{{ profile_form.joining_date.id_for_label }}">{{ sk_strings.DATE_FROM }}</label>
                                         <input type="text" class="datepicker copydate form-control"  />
-                                        <div style="display: none">
-                                            {% render_field profile_form.joining_date class="form-control pastedate" placeholder="Name" %}
+                                        <div class="join-date">
+                                            {% render_field profile_form.joining_date class="form-control pastedate" %}
                                         </div>
                                     </div>
                                 </div>
@@ -160,6 +160,9 @@
         }
         #id_PF-image{
             margin-top: 10px;
+        }
+        .join-date{
+            display: none;
         }
 
         </style>
