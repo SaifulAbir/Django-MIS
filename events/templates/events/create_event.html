@@ -338,13 +338,7 @@
             }
         });
         $('.search-event').click(function () {
-            {#$('.modal-title').html('Export with Search');#}
-            {#$('#btnSaveEvent').val('Export');#}
-            {#$('#btnDeleteEvent').hide();#}
-            {#$('.title-div').html('');#}
-            {#$('#id_start').removeAttr("data-target");#}
-            {#$('#id_start').removeClass("datetimepicker-input");#}
-            {#$('#submitForm').prop('action', '/events/event_list/');#}
+            $('.modal-title').html('{{event_strings.EVENT_EXPORT_TITLE}}');
             $("#modal-event-list").modal("show");
         });
 
