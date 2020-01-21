@@ -12,9 +12,7 @@
                 <div class="box box-primary">
                     <div class="box-body no-padding">
                         <div class="box-header">
-<!--                            <form action="/events/event_list" method="get">-->
                                 <button type="submit" class="btn btn-primary search-event pull-right">{{event_strings.EVENT_EXPORT_BUTTON}}</button>
-<!--                            </form>-->
                         </div>
                         <div id="calendar"></div>
                     </div>
@@ -31,7 +29,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">{{event_strings.EVENT_TITLE}}</h4>
-                        <input style="display: none;" type="hidden" value="" id="event_id_js">
+                        <input type="hidden" value="" id="event_id_js">
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
@@ -79,6 +77,9 @@
 {% endblock %}
 {% block extra_css %}
     <style type="text/css">
+        #event_id_js{
+            display: none;
+        }
         #eventId{
             display: none;
         }
