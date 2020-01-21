@@ -162,7 +162,8 @@
                     $('#calendar').fullCalendar('updateEvent', calEvent);
                     $('.modal-title').html('{{event_strings.EVENT_DETAIL_TITLE}}');
                     $('#event_id_js').val(calEvent.id);
-
+                    alert(calEvent.id);
+                    alert(calEvent.start);
                     $('#btnDeleteEvent').show();
                     var startDateWithTime = calEvent.start.format('DD-MM-YYYY h:mm A')
                     var endDateWithTime = calEvent.end.format('DD-MM-YYYY h:mm A')
@@ -171,7 +172,7 @@
                     $("#id_title" ).prop( "disabled", true );
                     $("#btnSaveEvent" ).prop( "disabled", false );
                     $('#id_title').val(calEvent.title);
-                    //$('#eventId').val(calEvent.id);
+                    $('#eventId').val(calEvent.id);
                     $('#id_start').val(startDateWithTime);
                     $('#id_end').val(endDateWithTime);
                     $('#btnSaveEvent').val('{{common_strings.EDIT_BUTTON}}');
@@ -276,12 +277,21 @@
                             $('#eventId').val(data);
                             $('#btnSaveEvent').prop('disabled', true);
                             $("#modal-event").modal('hide');
-                            $("#calendar").fullCalendar('addEventSource', [{
+
+                            $('#calendar').fullCalendar('renderEvent', {
+                                id: data,
+                                title: title,
+                                start: standardStartDate,
+                                end: standardEndDateForDB,
+                                allDay: false
+                            });
+
+                            {% comment %}$("#calendar").fullCalendar('addEventSource', [{
                                 'title': title,
                                 'start': standardStartDate,
                                 'end': standardEndDateForDB,
                                 'allDay': false
-                            }]);
+                            }]);{% endcomment %}
                         }
                     });
                 }
