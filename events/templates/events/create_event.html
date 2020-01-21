@@ -162,8 +162,6 @@
                     $('#calendar').fullCalendar('updateEvent', calEvent);
                     $('.modal-title').html('{{event_strings.EVENT_DETAIL_TITLE}}');
                     $('#event_id_js').val(calEvent.id);
-                    alert(calEvent.id);
-                    alert(calEvent.start);
                     $('#btnDeleteEvent').show();
                     var startDateWithTime = calEvent.start.format('DD-MM-YYYY h:mm A')
                     var endDateWithTime = calEvent.end.format('DD-MM-YYYY h:mm A')
