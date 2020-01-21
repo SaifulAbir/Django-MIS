@@ -7,9 +7,6 @@ from skleaders.models import SkLeaderProfile
 from skmembers.models import SkMemberProfile
 from accounts.models import User
 
-cursor = connection.cursor()
-cursor.execute('update users set username=email;')
-
 
 for h in HeadmasterProfile.objects.all():
     userobj=User.objects.get(pk=h.user_id)

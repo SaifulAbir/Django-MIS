@@ -12,9 +12,7 @@
                 <div class="box box-primary">
                     <div class="box-body no-padding">
                         <div class="box-header">
-                            <!--                            <form action="/events/event_list" method="get">-->
                             <button type="submit" class="btn btn-primary search-event pull-right">{{event_strings.EVENT_EXPORT_BUTTON}}</button>
-                            <!--                            </form>-->
                         </div>
                         <div id="calendar"></div>
                     </div>
@@ -31,7 +29,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">{{event_strings.EVENT_TITLE}}</h4>
-                        <input style="display: none;" type="hidden" value="" id="event_id_js">
+                        <input type="hidden" value="" id="event_id_js">
                     </div>
                     <div class="modal-body">
                         {% csrf_token %}
@@ -79,12 +77,16 @@
 {% endblock %}
 {% block extra_css %}
     <style type="text/css">
+        #event_id_js{
+            display: none;
+        }
         #eventId{
             display: none;
         }
         #btnDeleteEvent{
             display: none;
         }
+
     </style>
 {% endblock %}
 {% block extra_js %}
@@ -103,11 +105,36 @@
 
         $(function () {
             $('#id_title').prop('required',true);
+
+
+
             $('#calendar').fullCalendar({
+                customButtons: {
+                    calendar: {
+                        text: 'Calendar',
+                        click: function() {
+                            $(this).addClass("fc-state-active");
+                            $(".fc-list-button").removeClass("fc-state-active");
+                            $("#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(2)").hide();
+                            $("#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(1)").show();
+                            $(".fc-month-button").trigger("click");
+                        }
+                    },
+                    list: {
+                        text: 'List',
+                        click: function() {
+                            $(this).addClass("fc-state-active");
+                            $(".fc-calendar-button").removeClass("fc-state-active");
+                            $("#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(1)").hide();
+                            $("#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(2)").show();
+                            $(".fc-listMonth-button").trigger("click");
+                        }
+                    }
+                },
                 header    : {
                     left  : 'prev,next today',
                     center: 'title',
-                    right : 'month,agendaWeek,agendaDay, listMonth,listWeek,listDay'
+                    right : 'month,agendaWeek,agendaDay, listMonth,listWeek,listDay calendar,list,'
                 },
                 defaultView: 'month',
                 buttonText: {
@@ -118,6 +145,7 @@
                     listMonth : "Month",
                     listWeek : 'Week',
                     listDay : 'Day',
+
 
                 },
                 longPressDelay: 50,
@@ -137,7 +165,6 @@
                     $('#calendar').fullCalendar('updateEvent', calEvent);
                     $('.modal-title').html('{{event_strings.EVENT_DETAIL_TITLE}}');
                     $('#event_id_js').val(calEvent.id);
-
                     $('#btnDeleteEvent').show();
                     var startDateWithTime = calEvent.start.format('DD-MM-YYYY h:mm A')
                     var endDateWithTime = calEvent.end.format('DD-MM-YYYY h:mm A')
@@ -149,6 +176,7 @@
                     $('#eventId').val(calEvent.id);
                     $('#id_start').val(startDateWithTime);
                     $('#id_end').val(endDateWithTime);
+                    $('#event-error').hide();
                     $('#btnSaveEvent').val('{{common_strings.EDIT_BUTTON}}');
                     $("#modal-event").modal("show");
                 },
@@ -172,10 +200,9 @@
                 },
                 select: dateSelected
             });
-            $('.fc-listMonth-button,.fc-listWeek-button, .fc-listDay-button').prepend('<i class="fa fa-align-left"></i> ');
-            $('.fc-month-button,.fc-agendaWeek-button, .fc-agendaDay-button').prepend('<i class="fa fa-calendar"></i> ');
+            $('.fc-list-button').prepend('<i class="fa fa-align-justify"></i> ');
+            $('.fc-calendar-button').prepend('<i class="fa fa-calendar"></i> ');
         });
-
 
         function dateSelected(start, end, ev, vw){
             $('#id_title').val('');
@@ -223,43 +250,43 @@
             }else if(btnValue == '{{common_strings.SAVE_BUTTON}}'){
                 clickSaveEvent();
             }
-
-
         });
 
         function clickSaveEvent() {
             var btnValue = $("#btnSaveEvent").val();
-            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
+            if (btnValue == '{{common_strings.EDIT_BUTTON}}') {
                 return false;
             }
 
-            if (btnValue == '{{common_strings.UPDATE_BUTTON}}'){
+            if (btnValue == '{{common_strings.UPDATE_BUTTON}}') {
                 var eventId = $("#eventId").val();
-                if (!eventId){
+                if (!eventId) {
                     eventId = '';
                 }
             }
-<<<<<<< HEAD
-            if (btnValue == 'Export'){
-                $('#submitForm').submit();
-            }
-=======
+        }
 
+        function eventAllInputFieldEnabled() {
+            $( "#id_start" ).prop( "disabled", false );
+            $( "#id_end" ).prop( "disabled", false );
+            $( "#id_title" ).prop( "disabled", false );
+        }
 
->>>>>>> features/admin_event
+        function eventAllInputFieldDisabled() {
+            $( "#id_start" ).prop( "disabled", true );
+            $( "#id_end" ).prop( "disabled", true );
+            $( "#id_title" ).prop( "disabled", true );
+        }
+
+        function clickSaveEvent() {
             var title = $('#id_title').val();
             var start = $('#id_start').val();
             var end = $('#id_end').val();
-
             var standardStartDate = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardStartDateForDB = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
             var standardEndDate = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardEndDateForDB = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
-            console.log(standardEndDateForDB);
-            var start_date = $('#id_start').val();
-            var end_date = $('#id_end').val();
-            console.log(start_date);
-            console.log(end_date);
+
             if (standardEndDateForDB>=standardStartDateForDB){
                 if(title){
                     $.ajax({
@@ -269,28 +296,31 @@
                             'title': title,
                             'start': standardStartDateForDB,
                             'end': standardEndDateForDB,
-                            'eventId': eventId,
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                         },
                         success: function (data) {
+                            $('#eventId').val(data);
                             $('#btnSaveEvent').prop('disabled', true);
                             $("#modal-event").modal('hide');
-                            $("#calendar").fullCalendar('addEventSource', [{
-                                'title': title,
-                                'start': standardStartDate,
-                                'end': standardEndDateForDB,
-                                'allDay': false
-                            }]);
+
+                            $('#calendar').fullCalendar('renderEvent', {
+                                id: data['id'],
+                                title: data['title'],
+                                start: data['start'],
+                                end: data['end'],
+                                allDay: false
+                            });
                         }
                     });
                 }
                 else{
-
+                    $('#event-error').show();
                     $('#event-error').addClass('alert alert-danger-error-message');
                     $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
                 }
             }
             else{
+                $('#event-error').show();
                 $('#event-error').addClass('alert alert-danger-error-message');
                 $('#event-error').html('{{event_strings.EVENT_DATE_FRONT_ERROR_MSG}}');
             }
@@ -299,39 +329,21 @@
 
 
         function clickUpdateEvent() {
-            var btnValue = $("#btnSaveEvent").val();
-            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
-                return false;
-            }
-
-            if (btnValue == '{{common_strings.UPDATE_BUTTON}}'){
-                var eventId = $("#eventId").val();
-                if (!eventId){
-                    eventId = '';
-                }
-            }
-            if (btnValue == 'Export'){
-                $('#submitForm').submit();
-            }
-
-
             var title = $('#id_title').val();
             var start = $('#id_start').val();
             var end = $('#id_end').val();
+            var eventId = $('#eventId').val();
 
             var standardStartDate = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardStartDateForDB = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
             var standardEndDate = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardEndDateForDB = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
-            console.log(standardEndDateForDB);
-            var start_date = $('#id_start').val();
-            var end_date = $('#id_end').val();
 
-            if (end_date>=start_date){
+            if (standardEndDateForDB>=standardStartDateForDB){
                 if(title){
                     $.ajax({
                         type: 'POST',
-                        url: '/events/api/add_event/',
+                        url: '/events/api/update_event/',
                         data: {
                             'title': title,
                             'start': standardStartDateForDB,
@@ -343,19 +355,33 @@
                             $('#btnSaveEvent').prop('disabled', true);
                             $("#modal-event").modal('hide');
                             var title = $("#id_title").val();
+
+
                             var eventobj = $('#calendar').fullCalendar('clientEvents', $("#event_id_js").val());
-                            eventobj[0].title = title;
+                            eventobj[0].title = data['title'];
+                            eventobj[0].start = data['start'];
+                            eventobj[0].end = data['end'];
                             $('#calendar').fullCalendar('updateEvent', eventobj[0]);
 
+
+                            {% comment %}$('#calendar').fullCalendar('renderEvent', {
+                                id: data['id'],
+                                title: data['title'],
+                                start: data['start'],
+                                end: data['end'],
+                                allDay: false
+                            });{% endcomment %}
                         }
                     });
                 }
                 else{
                     $('#event-error').addClass('alert alert-danger-error-message');
+                    $('#event-error').show();
                     $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
                 }
             }
             else{
+                $('#event-error').show();
                 $('#event-error').addClass('alert alert-danger-error-message');
                 $('#event-error').html('{{event_strings.EVENT_DATE_FRONT_ERROR_MSG}}');
             }
@@ -363,6 +389,7 @@
         }
 
         $(function () {
+            $(".fc-calendar-button").addClass("fc-state-active");
             $('#datetimepicker7,#datetimepicker8').datetimepicker({
                 useCurrent: true,
                 autoclose: true,
