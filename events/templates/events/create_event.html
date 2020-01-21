@@ -144,7 +144,7 @@
                     listMonth : "Month",
                     listWeek : 'Week',
                     listDay : 'Day',
-                    test : 'TEst',
+
 
                 },
                 longPressDelay: 50,
@@ -202,10 +202,6 @@
             $('.fc-calendar-button').prepend('<i class="fa fa-calendar"></i> ');
         });
 
-            $('.fc-listMonth-button,.fc-listWeek-button, .fc-listDay-button').prepend('<i class="fa fa-align-left"></i> ');
-            $('.fc-month-button,.fc-agendaWeek-button, .fc-agendaDay-button').prepend('<i class="fa fa-calendar"></i> ');
-
-        });
         function dateSelected(start, end, ev, vw){
             $('#id_title').val('');
             start=moment(start).format('DD-MM-YYYY h:mm A');
@@ -252,6 +248,7 @@
             }else if(btnValue == '{{common_strings.SAVE_BUTTON}}'){
                 clickSaveEvent();
             }
+             });
 
         function eventAllInputFieldEnabled() {
             $( "#id_start" ).prop( "disabled", false );
@@ -283,11 +280,11 @@
                             'title': title,
                             'start': standardStartDateForDB,
                             'end': standardEndDateForDB,
-                            'eventId': eventId,
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                         },
                         success: function (data) {
-                            $('#eventId').val(data);
+                            console.log(data);
+                            {% comment %}$('#eventId').val(data);
                             $('#btnSaveEvent').prop('disabled', true);
                             $("#modal-event").modal('hide');
 
@@ -297,7 +294,7 @@
                                 start: standardStartDate,
                                 end: standardEndDateForDB,
                                 allDay: false
-                            });
+                            });{% endcomment %}
 
                             {% comment %}$("#calendar").fullCalendar('addEventSource', [{
                                 'title': title,

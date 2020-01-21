@@ -1,4 +1,7 @@
 from datetime import datetime
+
+from pip._vendor.requests import Response
+
 from . import strings as event_strings
 from resources import strings as common_strings
 from django.core.serializers import json
@@ -27,7 +30,13 @@ def add_event(request):
     if title and start:
         event = Event(title=title,start_date=start_date,end_date=end_date)
         event.save()
-        return HttpResponse(event.id)
+        data = {
+            'id': event.id,
+            'title': event.title,
+            'start': event.start_date,
+            'end': event.end_date
+        }
+        return HttpResponse(data)
     else:
         return False
 
