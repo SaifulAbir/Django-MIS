@@ -32,21 +32,12 @@ class SkUserForm(forms.ModelForm):
         ('9', '9'),
 
         ("10", '10'),)
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
     first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
 
     password = forms.CharField(error_messages={'required': skleader_strings.PASSWORD_REQUIRED},
-=======
-    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
 
-    password = forms.CharField(error_messages={'required': 'Password is required.'},
->>>>>>> features/admin_skmember
-=======
-    first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
-
-    password = forms.CharField(error_messages={'required': skleader_strings.PASSWORD_REQUIRED},
->>>>>>> feature/hotfix_0.9
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     confirm_password = forms.CharField(error_messages={'required': skleader_strings.CONFIRM_PASSWORD_REQUIRED},
@@ -67,15 +58,10 @@ class SkUserForm(forms.ModelForm):
         return cleaned_data
 
 class EditSkUserForm(forms.ModelForm):
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
     first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
-=======
-    first_name = forms.CharField(error_messages={'required': 'Name is required.'})
->>>>>>> features/admin_skmember
-=======
-    first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
->>>>>>> feature/hotfix_0.9
+
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=SkUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))

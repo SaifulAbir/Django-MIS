@@ -45,7 +45,6 @@ USER_PROFILE_USERNAME = "Username / Mobile Number"
 USER_PROFILE_PASSWORD = "Password"
 USER_PROFILE_CONFIRM_PASSWORD = "Confirm Password"
 GENERATE_PASSWORD_BUTTON = "Generate Password"
-GENERATE_PASSWORD_BUTTON = "Generate Password"
 DATE_FORMAT = "d-m-Y"
 DATE_PLACEHOLDER = "dd-mm-yyyy"
 EXPORT_CSV_BUTTON_TEXT = "Export CSV"
@@ -59,15 +58,8 @@ SIGN_IN_BUTTON = 'Sign in'
 PROFILE_ROLE_LABEL = 'Role:'
 PROFILE_EMAIL_LABEL = 'Mobile:'
 HEADER_SKNF_LOGO_TEXT = 'SKNF'
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
 UPDATE_BASIC_INFO_BUTTON= 'Update Basic Information'
 UPDATE_DETAIL_INFO_BUTTON= 'Update Detail Information'
->>>>>>> feature/admin_skleader
-=======
-UPDATE_BASIC_INFO_BUTTON= 'Update Basic Information'
-UPDATE_DETAIL_INFO_BUTTON= 'Update Detail Information'
->>>>>>> feature/hotfix_0.9
+
 # Common Strings
