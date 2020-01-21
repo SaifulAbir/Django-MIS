@@ -327,6 +327,9 @@ def load_previous_school(request):
 def load_previous_headmaster_mobile(request):
     previous_headmaster_mobile = list(HeadmasterProfile.objects.values_list('mobile', flat=True))
     return JsonResponse(previous_headmaster_mobile, safe=False)
+def load_previous_skmember_mobile(request):
+    previous_skmember_mobile = list(SkMemberProfile.objects.values_list('mobile', flat=True))
+    return JsonResponse(previous_skmember_mobile, safe=False)
 def load_previous_eiin(request):
     previous_eiins = list(School.objects.values_list('school_id', flat=True))
     return JsonResponse(previous_eiins, safe=False)

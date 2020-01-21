@@ -23,6 +23,7 @@ NEW_HEADMASTER_BUTTON = 'New Headmaster'
 EMAIL_TEXT = 'Email'
 GENERATE_PASSWORD ='Genarate Password'
 
+<<<<<<< HEAD
 #alert messages
 NAME_REQUIRED = 'Name is required.'
 PASSWORD_REQUIRED = 'Password is required.'
@@ -33,3 +34,9 @@ SCHOOL_REQUIRED = 'School is required.'
 MOBILE_LENGTH_EXCEED = 'Moblie Number can not exceed 11 digits'
 FROM_DATE_REQUIRED = 'From date is required.'
 IMAGE_FILE_SIZE_EXCEED = "Image file too large ( > 1mb )"
+=======
+HEADMASTER_VERBOSE_NAME = 'Headmaster'
+HEADMASTER_VERBOSE_NAME_PLURAL = 'Headmasters'
+HEADMASTER_DETAIL_VERBOSE_NAME = 'Headmaster Detail'
+HEADMASTER_DETAIL_VERBOSE_NAME_PLURAL = 'Headmaster Details'
+>>>>>>> features/admin_skmember

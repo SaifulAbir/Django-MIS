@@ -1,30 +1,32 @@
 <table   id="example1" class=" skmember-search-table table table-bordered table-striped">
     <thead>
     <tr>
-        <th class="col-sm-3">Name</th>
-        <th class="col-sm-2">Username</th>
-        <th class="col-sm-2">Mobile</th>
-        <th class="col-sm-3">School</th>
-        <th class="col-sm-1">Class</th>
-        <th class="col-sm-1">Actions</th>
+        <th class="col-sm-2">{{ sk_strings.NAME_TEXT }}</th>
+        <th class="col-sm-2">{{ sk_strings.MOBILE_TEXT }}</th>
+        <th class="col-sm-4">{{ sk_strings.SCHOOL_TEXT }}</th>
+        <th class="col-sm-1">{{ sk_strings.DIVISION_TEXT }}</th>
+        <th class="col-sm-1">{{ sk_strings.DISTRICT_TEXT }}</th>
+        <th class="col-sm-1">{{ sk_strings.UPAZILA_TEXT }}</th>
+        <th class="fixed-col col-sm-1 text-center">{{ common_strings.LIST_ACTION_TEXT }}</th>
     </tr>
     </thead>
     <tbody>
     {% for skmember in queryset %}
     <tr>
         <td>{{skmember.user.first_name}}</td>
-        <td>{{ skmember.user.email }}</td>
         <td>{{ skmember.mobile }}</td>
         <td>{{ skmember.school }}</td>
-        <td>{{ skmember.student_class }}</td>
+        <td>{{ skmember.school.division }}</td>
+        <td>{{ skmember.school.district }}</td>
+        <td>{{ skmember.school.upazilla }}</td>
         <td align="center">
-            <a type="button" style="margin-right:10px"
-               class=""
+            <a type="button"
+               class="view-icon"
                href="{% url 'skmembers:skmember_detail' skmember.pk %}">
                 <span class="fa fa-eye"></span>
             </a>
             <a type="button"
-               class=""
+               class="update-icon"
                href="{% url 'skmembers:skmember_update' skmember.pk %}">
                 <span class="fa fa-edit"></span>
 
@@ -38,8 +40,12 @@
 
     </tfoot>
 </table>
-<p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
-<ul class="pagination" style="float: right">
+{% if queryset %}
+<p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index queryset.end_index queryset.paginator.count %}</p>
+{% else %}
+<p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+{% endif %}
+<ul class="pagination" >
 
     {% if queryset.has_previous %}
     <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
