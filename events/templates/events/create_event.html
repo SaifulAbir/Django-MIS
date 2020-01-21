@@ -12,7 +12,7 @@
                 <div class="box box-primary">
                     <div class="box-body no-padding">
                         <div class="box-header">
-                                <button type="submit" class="btn btn-primary search-event pull-right">{{event_strings.EVENT_EXPORT_BUTTON}}</button>
+                            <button type="submit" class="btn btn-primary search-event pull-right">{{event_strings.EVENT_EXPORT_BUTTON}}</button>
                         </div>
                         <div id="calendar"></div>
                     </div>
@@ -176,6 +176,7 @@
                     $('#eventId').val(calEvent.id);
                     $('#id_start').val(startDateWithTime);
                     $('#id_end').val(endDateWithTime);
+                    $('#event-error').hide();
                     $('#btnSaveEvent').val('{{common_strings.EDIT_BUTTON}}');
                     $("#modal-event").modal("show");
                 },
@@ -249,7 +250,7 @@
             }else if(btnValue == '{{common_strings.SAVE_BUTTON}}'){
                 clickSaveEvent();
             }
-             });
+        });
 
         function eventAllInputFieldEnabled() {
             $( "#id_start" ).prop( "disabled", false );
@@ -299,11 +300,13 @@
                     });
                 }
                 else{
+                    $('#event-error').show();
                     $('#event-error').addClass('alert alert-danger-error-message');
                     $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
                 }
             }
             else{
+                $('#event-error').show();
                 $('#event-error').addClass('alert alert-danger-error-message');
                 $('#event-error').html('{{event_strings.EVENT_DATE_FRONT_ERROR_MSG}}');
             }
@@ -358,12 +361,13 @@
                     });
                 }
                 else{
-
                     $('#event-error').addClass('alert alert-danger-error-message');
+                    $('#event-error').show();
                     $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
                 }
             }
             else{
+                $('#event-error').show();
                 $('#event-error').addClass('alert alert-danger-error-message');
                 $('#event-error').html('{{event_strings.EVENT_DATE_FRONT_ERROR_MSG}}');
             }
