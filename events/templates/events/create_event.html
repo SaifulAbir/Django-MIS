@@ -73,7 +73,9 @@
                 </div>
             </div>
         </div>
+
     </form>
+    {% include 'events/export_event_list.html' %}
 {% endblock %}
 {% block extra_css %}
     <style type="text/css">
@@ -237,9 +239,14 @@
                     eventId = '';
                 }
             }
+<<<<<<< HEAD
             if (btnValue == 'Export'){
                 $('#submitForm').submit();
             }
+=======
+
+
+>>>>>>> features/admin_event
             var title = $('#id_title').val();
             var start = $('#id_start').val();
             var end = $('#id_end').val();
@@ -278,6 +285,7 @@
                     });
                 }
                 else{
+
                     $('#event-error').addClass('alert alert-danger-error-message');
                     $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
                 }
@@ -394,12 +402,8 @@
             }
         });
         $('.search-event').click(function () {
-            $('.modal-title').html('Export with Search');
-            $('#btnSaveEvent').val('Export');
-            $('#btnDeleteEvent').hide();
-            $('.title-div').hide();
-            $('#submitForm').prop('action', 'events/event_list/');
-            $("#modal-event").modal("show");
+            $('.modal-title').html('{{event_strings.EVENT_EXPORT_TITLE}}');
+            $("#modal-event-list").modal("show");
         });
 
     </script>
