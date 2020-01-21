@@ -1,217 +1,406 @@
 {% extends 'sknf/base.html' %}
 {% block body_block %}
-<section class="content-header"style="padding-top:60px">
+    <section class="content-header">
 
-</section>
+    </section>
 
-<!-- Main content -->
-<section class="content">
-  <div class="row">
-    <div class="">
-      <!-- /. box -->
-
-    </div>
-    <!-- /.col -->
-    <div class="col-md-12">
-      <div class="box box-primary">
-        <div class="box-body no-padding">
-          <!-- THE CALENDAR -->
-          <div id="calendar"></div>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /. box -->
-    </div>
-    <!-- /.col -->
-  </div>
-</section>
-<form method="POST" id="submitForm">
-<div class="modal fade" id="modal-event">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">New Event</h4>
-      </div>
-      <div class="modal-body">
-        {% csrf_token %}
-        <div id="event-error"></div>
-        <div class="form-group">
-          <label for="">Title</label>
-          <input type="text" name="title" class="form-control" id="id_title">
-        </div>
+    <!-- Main content -->
+    <section class="content">
         <div class="row">
-          <div class="col-md-6">
-          <div class="form-group" >
-            <label for="id_start">Start</label>
-            <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
-              <input type="text" class="form-control datetimepicker-input" id="id_start" data-target="#datetimepicker7" readonly/>
-              <span class="input-group-addon" data-target="#datetimepicker7" data-toggle="datetimepicker">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+            <div class=""></div>
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body no-padding">
+                        <div class="box-header">
+                            <!--                            <form action="/events/event_list" method="get">-->
+                            <button type="submit" class="btn btn-primary search-event pull-right">{{event_strings.EVENT_EXPORT_BUTTON}}</button>
+                            <!--                            </form>-->
+                        </div>
+                        <div id="calendar"></div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-          <label for="id_end">End</label>
-          <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
-            <input type="text" class="form-control datetimepicker-input" id="id_end" data-target="#datetimepicker8" readonly/>
-            <span class="input-group-addon" data-target="#datetimepicker8" data-toggle="datetimepicker">
+    </section>
+    <form method="POST" id="submitForm">
+        <div class="modal fade" id="modal-event">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">{{event_strings.EVENT_TITLE}}</h4>
+                        <input style="display: none;" type="hidden" value="" id="event_id_js">
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <input type="hidden" id="eventId">
+                        <div id="event-error"></div>
+                        <div class="form-group title-div">
+                            <label for="">{{event_strings.EVENT_LABEL_TITLE_TEXT}}</label>
+                            <input type="text" name="title" class="form-control" id="id_title">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" >
+                                    <label for="id_start">{{event_strings.EVENT_LABEL_START_TEXT}}</label>
+                                    <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="id_start" data-target="#datetimepicker7" readonly/>
+                                        <span class="input-group-addon" data-target="#datetimepicker7" data-toggle="datetimepicker">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
-          </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_end">{{event_strings.EVENT_LABEL_END_TEXT}}</label>
+                                    <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="id_end" data-target="#datetimepicker8" readonly/>
+                                        <span class="input-group-addon" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" value="{{common_strings.DELETE_BUTTON}}" id="btnDeleteEvent" class="btn btn-danger pull-left"/>
+                        <input type="button" value="{{common_strings.SAVE_BUTTON}}" id="btnSaveEvent" class="btn btn-primary form-submit"/>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <input type="button" value="Save" id="btnSaveEvent" onclick="clickSaveEvent()" class="btn btn-primary form-submit"/>
-      </div>
-    </div>
-  </div>
-</div>
-</form>
+    </form>
+{% endblock %}
+{% block extra_css %}
+    <style type="text/css">
+        #eventId{
+            display: none;
+        }
+        #btnDeleteEvent{
+            display: none;
+        }
+    </style>
 {% endblock %}
 {% block extra_js %}
-<script>
-  $(function () {
-    $('#id_title').prop('required',true);
-    $('#calendar').fullCalendar({
-      header    : {
-        left  : 'prev,next today',
-        center: 'title',
-        right : 'month,agendaWeek,agendaDay,list'
-      },
-      defaultView: 'month',
-      buttonText: {
-        today: 'Today',
-        month: 'Month',
-        week : 'Week',
-        day  : 'Day',
-        list : 'Event List'
-      },
-      longPressDelay: 50,
-      height: 650,
-      events: [
-        {% for i in event_list %}
-        {
-            title: "{{ i.title}}",
-            start: '{{ i.start_date|date:"Y-m-d H:i" }}',
-            end: '{{ i.end_date|date:"Y-m-d H:i" }}',
-            allDay: 'false'
-        },
-        {% endfor %}
-      ],
-      eventRender: function(event, element) {
-            element.qtip({
-                id: 'calendar',
-                content: {
-                title: { text: event.title },
-                text: '<span class="title">Start: </span>' + ($.fullCalendar.formatDate(event.start, 'd-M-Y')) + '<br><span class="title">End: </span>' + ($.fullCalendar.formatDate(event.end, 'd-M-Y'))
+    <script type="text/javascript">
+        function eventAllInputFieldEnabled() {
+            $( "#id_start" ).prop( "disabled", false );
+            $( "#id_end" ).prop( "disabled", false );
+            $( "#id_title" ).prop( "disabled", false );
+        }
+
+        function eventAllInputFieldDisabled() {
+            $( "#id_start" ).prop( "disabled", true );
+            $( "#id_end" ).prop( "disabled", true );
+            $( "#id_title" ).prop( "disabled", true );
+        }
+
+        $(function () {
+            $('#id_title').prop('required',true);
+            $('#calendar').fullCalendar({
+                header    : {
+                    left  : 'prev,next today',
+                    center: 'title',
+                    right : 'month,agendaWeek,agendaDay, listMonth,listWeek,listDay'
                 },
-                tip: 'true',
-                style: {
-                    classes: 'qtip-default  qtip qtip-light qtip-rounded',
-                    background: 'black',
-                    color: '#FFFFFF'
+                defaultView: 'month',
+                buttonText: {
+                    today: 'Today',
+                    month: 'Month',
+                    week : 'Week',
+                    day  : 'Day',
+                    listMonth : "Month",
+                    listWeek : 'Week',
+                    listDay : 'Day',
+
                 },
-                position: {
-                    my : 'bottom center',
-                    at: 'top center',
-                    viewport: $('#calendar'),
-                }
+                longPressDelay: 50,
+                height: 650,
+                events: [
+                    {% for i in event_list %}
+                        {
+                            id: "{{ i.id }}",
+                            title: "{{ i.title }}",
+                            start: '{{ i.start_date|date:"Y-m-d H:i" }}',
+                            end: '{{ i.end_date|date:"Y-m-d H:i" }}',
+                            allDay: 'false'
+                        },
+                    {% endfor %}
+                ],
+                eventClick: function(calEvent, jsEvent, view) {
+                    $('#calendar').fullCalendar('updateEvent', calEvent);
+                    $('.modal-title').html('{{event_strings.EVENT_DETAIL_TITLE}}');
+                    $('#event_id_js').val(calEvent.id);
+
+                    $('#btnDeleteEvent').show();
+                    var startDateWithTime = calEvent.start.format('DD-MM-YYYY h:mm A')
+                    var endDateWithTime = calEvent.end.format('DD-MM-YYYY h:mm A')
+                    $("#id_start").datetimepicker('disable');
+                    $("#id_end").datetimepicker('disable');
+                    $("#id_title" ).prop( "disabled", true );
+                    $("#btnSaveEvent" ).prop( "disabled", false );
+                    $('#id_title').val(calEvent.title);
+                    $('#eventId').val(calEvent.id);
+                    $('#id_start').val(startDateWithTime);
+                    $('#id_end').val(endDateWithTime);
+                    $('#btnSaveEvent').val('{{common_strings.EDIT_BUTTON}}');
+                    $("#modal-event").modal("show");
+                },
+                eventRender: function(event, element) {
+
+                },
+                timezone: 'local',
+                selectable  : true,
+                eventAfterRender: function (event, element, view) {
+                    var today = new Date();
+                    if (event.start < today && event.end > today) {
+                        //event.color = "#FFB347";
+                        element.css('background-color', '#FFB347');
+                    } else if (event.start < today && event.end < today) {
+                        //event.color = "#77DD77";
+                        element.css('background-color', '#77DD77');
+                    } else if (event.start > today && event.end > today) {
+                        //event.color = "#AEC6CF";
+                        element.css('background-color', '#AEC6CF');
+                    }
+                },
+                select: dateSelected
             });
-      },
-      timezone: 'local',
-      selectable  : true,
-      eventAfterRender: function (event, element, view) {
-        var today = new Date();
-        if (event.start < today && event.end > today) {
-            //event.color = "#FFB347";
-            element.css('background-color', '#FFB347');
-        } else if (event.start < today && event.end < today) {
-            //event.color = "#77DD77";
-            element.css('background-color', '#77DD77');
-        } else if (event.start > today && event.end > today) {
-            //event.color = "#AEC6CF";
-            element.css('background-color', '#AEC6CF');
+            $('.fc-listMonth-button,.fc-listWeek-button, .fc-listDay-button').prepend('<i class="fa fa-align-left"></i> ');
+            $('.fc-month-button,.fc-agendaWeek-button, .fc-agendaDay-button').prepend('<i class="fa fa-calendar"></i> ');
+        });
+
+
+        function dateSelected(start, end, ev, vw){
+            $('#id_title').val('');
+            start=moment(start).format('DD-MM-YYYY h:mm A');
+            end=moment(end).format('DD-MM-YYYY h:mm A');
+            $('#id_start').val(start);
+            $('.modal-title').html('{{event_strings.EVENT_TITLE}}')
+            $('#btnSaveEvent').val('{{common_strings.SAVE_BUTTON}}')
+            $('#id_end').val(end);
+
+            eventAllInputFieldEnabled();
+            $('#btnDeleteEvent').hide();
+            $("#id_start" ).prop( "disabled", false );
+            $("#id_end" ).prop( "disabled", false );
+            $("#id_title" ).prop( "disabled", false );
+            $("#btnSaveEvent" ).prop( "disabled", false );
+
+
+            $('#event-error').html('');
+            $('#event-error').removeClass('alert alert-danger-error-message');
+            $("#modal-event").modal("show");
         }
-    },
-      select: dateSelected
-    });
-  });
-  function dateSelected(start, end, ev, vw){
-    $('#id_title').val('');
-    start=moment(start).format('DD-MM-YYYY h:mm A');
-    end=moment(end).format('DD-MM-YYYY h:mm A');
-    $('#id_start').val(start);
-    $('#id_end').val(end);
-    $('#event-error').html('');
-    $('#event-error').removeClass('alert alert-danger-error-message');
-    $("#modal-event").modal("show");
-
-  }
-  function saveEvent(start, end, title){
-    console.log(start)
-    console.log(end)
-    event = {
-        id : 1,
-        title: title,
-        start :start,
-        end: end
-    };
-    $('#calendar').fullCalendar('renderEvent', event);
-  }
-
-
-  function clickSaveEvent() {
-    title = $('#id_title').val();
-    start = $('#id_start').val();
-    end = $('#id_end').val();
-    if(title){
-      $.ajax({
-        type: 'POST',
-        url: '/events/api/add_event/',
-        data: {
-          'title': title,
-          'start': start,
-          'end': end,
-          csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success: function (data) {
-            $('#btnSaveEvent').prop('disabled', true);
-            $("#modal-event").modal('hide');
-            location.reload();
+        function saveEvent(start, end, title){
+            event = {
+                id : 1,
+                title: title,
+                start :start,
+                end: end
+            };
+            $('#calendar').fullCalendar('renderEvent', event);
         }
-      });
-    }
-    else{
-      $('#event-error').addClass('alert alert-danger-error-message');
-      $('#event-error').html('Title is required');
-    }
-  }
-  $(function () {
-        $('#datetimepicker7,#datetimepicker8').datetimepicker({
-          useCurrent: false,
-          ignoreReadonly: true,
-          format: 'DD-M-YYYY hh:mm A',
-          widgetPositioning: {
-            vertical: 'bottom',
-          },
-          minDate: moment()
+
+
+        //Change Edit button to Update Button and enable all fields for further edit
+        $("#btnSaveEvent").click(function(){
+            var btnValue = $(this).val();
+            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
+                eventAllInputFieldEnabled();
+                $(this).val('{{common_strings.UPDATE_BUTTON}}');
+                return false;
+            }
+
+            if (btnValue == '{{common_strings.UPDATE_BUTTON}}') {
+                clickUpdateEvent();
+            }else if(btnValue == '{{common_strings.SAVE_BUTTON}}'){
+                clickSaveEvent();
+            }
+
+
         });
 
-        $('#datetimepicker7').datetimepicker().on('dp.change', function (e) {
-            $('#datetimepicker8').data("DateTimePicker").minDate(e.date);
-        });
-        $('#datetimepicker8').on("dp.change", function (e) {
-            $('#datetimepicker7').data("DateTimePicker").maxDate(e.date);
+        function clickSaveEvent() {
+            var btnValue = $("#btnSaveEvent").val();
+            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
+                return false;
+            }
+
+            if (btnValue == '{{common_strings.UPDATE_BUTTON}}'){
+                var eventId = $("#eventId").val();
+                if (!eventId){
+                    eventId = '';
+                }
+            }
+            if (btnValue == 'Export'){
+                $('#submitForm').submit();
+            }
+            var title = $('#id_title').val();
+            var start = $('#id_start').val();
+            var end = $('#id_end').val();
+
+            var standardStartDate = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
+            var standardStartDateForDB = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
+            var standardEndDate = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
+            var standardEndDateForDB = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
+            console.log(standardEndDateForDB);
+            var start_date = $('#id_start').val();
+            var end_date = $('#id_end').val();
+            console.log(start_date);
+            console.log(end_date);
+            if (standardEndDateForDB>=standardStartDateForDB){
+                if(title){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/events/api/add_event/',
+                        data: {
+                            'title': title,
+                            'start': standardStartDateForDB,
+                            'end': standardEndDateForDB,
+                            'eventId': eventId,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function (data) {
+                            $('#btnSaveEvent').prop('disabled', true);
+                            $("#modal-event").modal('hide');
+                            $("#calendar").fullCalendar('addEventSource', [{
+                                'title': title,
+                                'start': standardStartDate,
+                                'end': standardEndDateForDB,
+                                'allDay': false
+                            }]);
+                        }
+                    });
+                }
+                else{
+                    $('#event-error').addClass('alert alert-danger-error-message');
+                    $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
+                }
+            }
+            else{
+                $('#event-error').addClass('alert alert-danger-error-message');
+                $('#event-error').html('{{event_strings.EVENT_DATE_FRONT_ERROR_MSG}}');
+            }
+
+        }
+
+
+        function clickUpdateEvent() {
+            var btnValue = $("#btnSaveEvent").val();
+            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
+                return false;
+            }
+
+            if (btnValue == '{{common_strings.UPDATE_BUTTON}}'){
+                var eventId = $("#eventId").val();
+                if (!eventId){
+                    eventId = '';
+                }
+            }
+            if (btnValue == 'Export'){
+                $('#submitForm').submit();
+            }
+
+
+            var title = $('#id_title').val();
+            var start = $('#id_start').val();
+            var end = $('#id_end').val();
+
+            var standardStartDate = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
+            var standardStartDateForDB = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
+            var standardEndDate = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
+            var standardEndDateForDB = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
+            console.log(standardEndDateForDB);
+            var start_date = $('#id_start').val();
+            var end_date = $('#id_end').val();
+
+            if (end_date>=start_date){
+                if(title){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/events/api/add_event/',
+                        data: {
+                            'title': title,
+                            'start': standardStartDateForDB,
+                            'end': standardEndDateForDB,
+                            'eventId': eventId,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function (data) {
+                            $('#btnSaveEvent').prop('disabled', true);
+                            $("#modal-event").modal('hide');
+                            var title = $("#id_title").val();
+                            var eventobj = $('#calendar').fullCalendar('clientEvents', $("#event_id_js").val());
+                            eventobj[0].title = title;
+                            $('#calendar').fullCalendar('updateEvent', eventobj[0]);
+
+                        }
+                    });
+                }
+                else{
+                    $('#event-error').addClass('alert alert-danger-error-message');
+                    $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
+                }
+            }
+            else{
+                $('#event-error').addClass('alert alert-danger-error-message');
+                $('#event-error').html('{{event_strings.EVENT_DATE_FRONT_ERROR_MSG}}');
+            }
+
+        }
+
+        $(function () {
+            $('#datetimepicker7,#datetimepicker8').datetimepicker({
+                useCurrent: true,
+                autoclose: true,
+                ignoreReadonly: true,
+                format: 'DD-M-YYYY hh:mm A',
+                widgetPositioning: {
+                    vertical: 'bottom',
+                },
+            });
+
+            $('#datetimepicker7').datetimepicker().on('dp.change', function (e) {
+                $('#datetimepicker8').data("DateTimePicker").minDate(e.date);
+            });
+            $('#datetimepicker8').on("dp.change", function (e) {
+                $('#datetimepicker7').data("DateTimePicker").maxDate(e.date);
+            });
+
         });
 
-    });
+        $("#btnDeleteEvent").click(function(){
+            var txt;
+            var r = confirm("{{event_strings.DELETE_EVENT_CONFIRMATION}}");
+            var eventId = $("#eventId").val();
+            if(r){
+                $.ajax({
+                    type: 'POST',
+                    url: '/events/api/delete_event/',
+                    data: {
+                        'eventId': eventId,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        $("#modal-event").modal('hide');
+                        $('#calendar').fullCalendar( 'removeEvents', $("#event_id_js").val());
+                    }
+                });
+            }
+        });
+        $('.search-event').click(function () {
+            $('.modal-title').html('Export with Search');
+            $('#btnSaveEvent').val('Export');
+            $('#btnDeleteEvent').hide();
+            $('.title-div').hide();
+            $('#submitForm').prop('action', 'events/event_list/');
+            $("#modal-event").modal("show");
+        });
 
-</script>
+    </script>
 {% endblock %}

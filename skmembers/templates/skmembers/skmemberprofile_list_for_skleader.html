@@ -14,7 +14,7 @@
         <div class="box-header">
             <span id = "alert_placeholder">
                 {% if messages %}
-                <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                <div id="alertdiv" class="alert alert-success-customized">
                     <span>
                         {% for message in messages %}
                         {{ message }}
@@ -46,8 +46,8 @@
                 <tbody>
                 {% for skmember in skmemberprofile_list %}
                 <tr>
-                    <td>{{skmember.user.first_name}}</td>
-                    <td>{{ skmember.user.email }}</td>
+                    <td>{{skmember.name}}</td>
+                    <td>{{ skmember.email }}</td>
                     <td>{{ skmember.mobile }}</td>
                     <td>{{ skmember.student_class }}</td>
                     <td>{{ skmember.get_gender_display }}</td>

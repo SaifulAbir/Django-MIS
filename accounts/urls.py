@@ -5,7 +5,7 @@ from accounts.views import *
 from headmasters.views import headmaster_profile_view
 from .forms import PrettyAuthenticationForm
 from .views import index, events, custom_login, admin_profile_update, headmaster_profile_update, \
-    skleader_profile_update, search_school_list, load_previous_school, load_previous_eiin, load_previous_user, home_login, load_previous_skleader_mobile
+    skleader_profile_update, search_school_list, load_previous_school, load_previous_eiin, load_previous_user, home_login
 
 app_name = 'accounts'
 
@@ -33,6 +33,7 @@ urlpatterns = [
     path('load_previous_unions/', load_previous_union, name='load_previous_unions'),
     path('load_previous_users/', load_previous_user, name='load_previous_users'),
 <<<<<<< HEAD
+<<<<<<< HEAD
     path('load_previous_headmaster_mobile/', load_previous_headmaster_mobile, name='load_previous_headmaster_mobile'),
 <<<<<<< HEAD
     path('load_previous_headmaster/', load_previous_headmaster, name='load_previous_headmaster'),
@@ -44,6 +45,14 @@ urlpatterns = [
 =======
     path('load_previous_skmember_mobile/', load_previous_skmember_mobile, name='load_previous_skmember_mobile'),
 >>>>>>> features/admin_skmember
+=======
+    path('load_previous_headmaster_mobile/', load_previous_headmaster_mobile, name='load_previous_headmaster_mobile'),
+    path('load_previous_skleader_mobile/', load_previous_skleader_mobile, name='load_previous_skleader_mobile'),
+    path('load_previous_headmaster/', load_previous_headmaster, name='load_previous_headmaster'),
+    path('load_previous_skleader/', load_previous_skleader, name='load_previous_skleader'),
+    path('load_previous_skmember/', load_previous_skmember, name='load_previous_skmember'),
+    path('load_previous_skmember_mobile/', load_previous_skmember_mobile, name='load_previous_skmember_mobile'),
+>>>>>>> feature/hotfix_0.9
 
 ]
 

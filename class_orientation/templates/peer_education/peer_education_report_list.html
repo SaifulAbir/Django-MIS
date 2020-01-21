@@ -110,7 +110,7 @@
                 <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
                 {% endif %}
                 {% include 'peer_education/_modal.html' %}
-                <ul class="pagination" style="float: right">
+                <ul class="pagination">
 
                     {% if peereducation_list.has_previous %}
                     <li><a class="paginator" href="?page={{ peereducation_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
@@ -203,6 +203,9 @@
                         'info'        : false,
                         'paging'      : false,
                         'ordering'    : false,
+                        "language": {
+                            "emptyTable":     "No Result Found"
+                        }
                     });
                 }
             });

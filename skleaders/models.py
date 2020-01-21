@@ -15,16 +15,20 @@ class_choice=(
 )
 GENDER_CHOICES = (
         ('', '--Select--'),
-        ('M', 'Male'),
-        ('F', 'Female'),
+        ('M', strings.MALE),
+        ('F', strings.FEMALE),
     )
 class SkLeaderProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='skleader_profile')
+<<<<<<< HEAD
 <<<<<<< HEAD
     mobile = models.CharField(max_length=11)
 =======
     mobile = models.CharField(max_length=11, unique=True)
 >>>>>>> features/admin_skmember
+=======
+    mobile = models.CharField(max_length=20, unique=True)
+>>>>>>> feature/hotfix_0.9
     student_class = models.CharField(max_length=10,choices=class_choice, blank=True, null=True)
     roll = models.CharField(max_length=128, blank=True, null=True)
     school = models.ForeignKey(School, on_delete=models.PROTECT, null=True)

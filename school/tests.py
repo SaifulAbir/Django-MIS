@@ -24,7 +24,7 @@ class SchoolTest(TestCase):
         s4.save()
         self.union = s4
 
-        user = User.objects.create(email='a@g.com')
+        user = User.objects.create(username='012345678901')
         user.set_password('12345')
         user.user_type = 1
         user.save()
@@ -51,12 +51,13 @@ class SchoolTest(TestCase):
         with self.assertRaises(ValidationError):
             s.full_clean()
 
-    def test__when_school_name_is_duplicate__should_raise_error(self):
+    def test__when_school_name_is_duplicate__should__pass(self):
         sl1 = School( name='Mirpur School', school_id = 123)
         sl2 = School( name='Mirpur School', school_id = 12)
-        with self.assertRaises(IntegrityError):
-            sl1.save()
-            sl2.save()
+        try:
+            sl2.full_clean()
+        except:
+            self.fail()
 
     def test__when_school_code_is_duplicate__should_raise_error(self):
         sl1 = School( name='Mirpur School', school_id = 123)
@@ -136,9 +137,9 @@ class SchoolTest(TestCase):
                    district=self.district, upazilla=self.upazilla, union=self.union, )
         s.save()
 
-        s1=self.client.login(email='a@g.com', password='12345')
+        s1=self.client.login(username='012345678901', password='12345')
         response = self.client.get('/school_list/',{'name_contains':'mirpur'},follow=True)
-        self.assertContains(response = response, status_code=200,  text='<td><a href="/5/">Mirpur School</a></td>', html=True)
+        self.assertContains(response = response, status_code=200,  text='Mirpur School', html=True)
 
 
 

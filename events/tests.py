@@ -40,6 +40,13 @@ class EventTests(TestCase):
             title="test", start_date=timezone.now(), end_date=timezone.now() - timezone.timedelta(days=2))
         with self.assertRaises(ValidationError):
             event.full_clean()
+    def test__if_end_date_before_start_date__should__pass(self):
+        event = Event(
+            title="test", start_date=timezone.now(), end_date=timezone.now() + timezone.timedelta(days=2))
+        try:
+            event.full_clean()
+        except:
+            self.fail()
 
     def test__start_date_null_validation_added(self):
         null = Event._meta.get_field('start_date').null

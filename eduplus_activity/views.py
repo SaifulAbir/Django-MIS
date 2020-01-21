@@ -65,7 +65,7 @@ def edu_plus_activity_add(request):
             # end of image cropping code
             edu_plus_activity.save()
             edu_plus_activity_form.save_m2m()
-            messages.success(request, 'Eduplus Activity Created!')
+            messages.success(request, edu_strings.EDUPLUS_ACTIVITY_CREATED_MSG)
             return HttpResponseRedirect("/eduplus_activity/eduplus_activity_list/")
 
     else:
@@ -136,7 +136,7 @@ def edu_plus_activity_update(request, pk):
             # end of image cropping code
             edu_plus_activity.save()
             edu_plus_activity_form.save_m2m()
-            messages.success(request, 'Eduplus Activity Updated!')
+            messages.success(request, edu_strings.EDUPLUS_ACTIVITY_UPDATED_MSG)
             return HttpResponseRedirect("/eduplus_activity/eduplus_activity_list/")
     else:
         edu_plus_activity_form = EditEduPlusActivityForm(instance=edu_plus_activity, prefix='EPA', user=request.user)

@@ -30,15 +30,10 @@ from . import strings as sk_strings
 @admin_login_required
 def skmember_profile_view(request):
     if request.method == 'POST':
-        user_form = SkMemberUserForm(request.POST, prefix='UF')
         profile_form = SkMemberProfileForm(request.POST, files=request.FILES, prefix='PF')
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save(commit=False)
-            user.user_type = 6
-            user.save()
+        if profile_form.is_valid():
             profile = profile_form.save(commit = False)
-            profile.user = user
             # image cropping code start here
             img_base64 = profile_form.cleaned_data.get('image_base64')
             if img_base64:
@@ -56,15 +51,13 @@ def skmember_profile_view(request):
             headmaster_details.skmember = profile
             headmaster_details.from_date = profile_form.cleaned_data["joining_date"]
             headmaster_details.save()
-            messages.success(request, 'SK Member Created!')
+            messages.success(request, sk_strings.SK_MEMBER_CREATED)
             return HttpResponseRedirect("/skmembers/skmember_list/")
 
     else:
-        user_form = SkMemberUserForm(prefix='UF')
         profile_form = SkMemberProfileForm(prefix='PF')
 
     return render(request, 'skmembers/skmember_profile_add.html', {
-        'user_form': user_form,
         'profile_form': profile_form,
         'sk_strings':sk_strings,
         'common_strings': common_strings
@@ -73,21 +66,15 @@ def skmember_profile_view(request):
 @headmaster_mentor_skleader_login_required
 def skmember_profile_view_skleader(request):
     if request.method == 'POST':
-        user_form = SkMemberUserForm(request.POST, prefix='UF')
         profile_form = SkMemberProfileFormForSkleader(request.POST, files=request.FILES, prefix='PF')
-        if user_form.is_valid() and profile_form.is_valid():
+        if profile_form.is_valid():
             id = request.user.id
             if request.user.is_authenticated and request.user.user_type == 5:
                 objSkLeader = SkLeaderProfile.objects.get(user_id=id)
             elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
                 objSkLeader = HeadmasterProfile.objects.get(user_id=id)
             school_id = objSkLeader.school_id
-
-            user = user_form.save(commit=False)
-            user.user_type = 6
-            user.save()
             profile = profile_form.save(commit = False)
-            profile.user = user
             profile.school_id = school_id
             # image cropping code start here
             img_base64 = profile_form.cleaned_data.get('image_base64')
@@ -109,11 +96,9 @@ def skmember_profile_view_skleader(request):
             messages.success(request, sk_strings.SK_MEMBER_CREATE_MSG)
             return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
-        user_form = SkMemberUserForm(prefix='UF')
         profile_form = SkMemberProfileFormForSkleader(prefix='PF')
 
     return render(request, 'skmembers/skmember_profile_add_for_skleader.html', {
-        'user_form': user_form,
         'profile_form': profile_form,
         'sk_strings':sk_strings,
         'common_strings': common_strings
@@ -122,7 +107,7 @@ def skmember_profile_view_skleader(request):
 @headmaster_mentor_skleader_login_required
 def skmember_update_for_skleader(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
-    user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
+    # user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
     skmember_details = SkmemberDetails.objects.filter(skmember=pk)
     try:
         h_user = request.user
@@ -136,22 +121,21 @@ def skmember_update_for_skleader(request, pk):
         skleader = None
     school_list = School.objects.all()
     if request.method == 'POST':
-        user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
+        # user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
         profile_form = EditSkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save(commit=False)
-            user.save()
+        if profile_form.is_valid():
+            # user = user_form.save(commit=False)
+            # user.save()
             profile = profile_form.save(commit=False)
-            profile.user = user
+            # profile.user = user
             profile.save()
             messages.success(request, sk_strings.SK_MEMBER_UPDATE_MSG)
             return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
-        user_form = EditSkMemberUserForm(instance=user_profile)
+        # user_form = EditSkMemberUserForm(instance=user_profile)
         profile_form = EditSkMemberProfileForm(instance=skmember_profile)
 
     return render(request, 'skmembers/skmember_profile_update_for_skleader.html', {
-        'user_form': user_form,
         'profile_form': profile_form,
         'skmember_profile': skmember_profile,
         'pk': pk,
@@ -197,7 +181,7 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
             objSkLeader = SkLeaderProfile.objects.get(user_id=loggedinuser)
         elif self.request.user.is_authenticated and self.request.user.user_type == 2 or self.request.user.user_type == 3 or self.request.user.user_type == 4:
             objSkLeader = HeadmasterProfile.objects.get(user_id=loggedinuser)
-        queryset = SkMemberProfile.objects.filter(user__user_type__in=[6,],school_id=objSkLeader.school_id)
+        queryset = SkMemberProfile.objects.filter(school_id=objSkLeader.school_id)
 
         return queryset
 
@@ -208,7 +192,7 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
             objSkLeader = SkLeaderProfile.objects.get(user_id=loggedinuser)
         elif self.request.user.is_authenticated and self.request.user.user_type == 2 or self.request.user.user_type == 3 or self.request.user.user_type == 4:
             objSkLeader = HeadmasterProfile.objects.get(user_id=loggedinuser)
-        skmembers = SkMemberProfile.objects.filter(user__user_type__in=[6, ], school_id=objSkLeader.school_id)
+        skmembers = SkMemberProfile.objects.filter(school_id=objSkLeader.school_id)
         paginator = Paginator(skmembers, self.paginate_by)
         page = self.request.GET.get('page')
 
@@ -229,7 +213,7 @@ class SkmemberListforSkLeader(LoginRequiredMixin, generic.ListView):
 
 @admin_login_required
 def skmember_list(request,export='null'):
-    qs=SkMemberProfile.objects.filter(user__user_type__in=[6])
+    qs=SkMemberProfile.objects.all()
     name= request.GET.get('name_contains')
     school= request.GET.get('school_contains')
 
@@ -259,17 +243,12 @@ def skmember_list(request,export='null'):
 @admin_login_required
 def skmember_update(request, pk):
     skmember_profile = get_object_or_404(SkMemberProfile, pk=pk)
-    user_profile = get_object_or_404(User, pk=int(skmember_profile.user.id))
     skmember_details = SkmemberDetails.objects.filter(skmember=pk)
     school_list = School.objects.all()
     if request.method == 'POST':
-        user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
         profile_form = EditSkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile, prefix='PF')
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save(commit=False)
-            user.save()
+        if profile_form.is_valid():
             profile = profile_form.save(commit = False)
-            profile.user = user
             # image cropping code start here
             img_base64 = profile_form.cleaned_data.get('image_base64')
             if img_base64:
@@ -281,14 +260,12 @@ def skmember_update(request, pk):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
-            messages.success(request, 'SK Member Updated!')
+            messages.success(request, sk_strings.SK_MEMBER_UPDATED)
             return HttpResponseRedirect("/skmembers/skmember_list/")
     else:
-        user_form = EditSkMemberUserForm(instance=user_profile)
         profile_form = EditSkMemberProfileForm(instance=skmember_profile, prefix='PF')
 
     return render(request, 'skmembers/skmember_profile_update.html', {
-        'user_form': user_form,
         'profile_form': profile_form,
         'skmember_profile': skmember_profile,
         'pk': pk,
@@ -394,7 +371,7 @@ def skmember_details_update_for_skleader(request):
 
 def skmember_search_list(request, export='null'):
     data = dict()
-    qs = SkMemberProfile.objects.filter(user__user_type__in=[6])
+    qs = SkMemberProfile.objects.all()
     name = request.GET.get('name_contains')
     school = request.GET.get('school_contains')
     mobile = request.GET.get('mobile_contains')
@@ -404,7 +381,7 @@ def skmember_search_list(request, export='null'):
     union = request.GET.get('union_contains')
 
     if name != '' and name is not None:
-        qs = qs.filter(user__first_name__icontains=name)
+        qs = qs.filter(name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
     if mobile != '' and mobile is not None:
@@ -448,7 +425,7 @@ def pagination(request):
         objSkLeader = SkLeaderProfile.objects.get(user_id=loggedinuser)
     elif request.user.is_authenticated and request.user.user_type == 2 or request.user.user_type == 3 or request.user.user_type == 4:
         objSkLeader = HeadmasterProfile.objects.get(user_id=loggedinuser)
-    skmembers = SkMemberProfile.objects.filter(user__user_type__in=[6, ], school_id=objSkLeader.school_id)
+    skmembers = SkMemberProfile.objects.filter(school_id=objSkLeader.school_id)
     paginator = Paginator(skmembers, 10)
     page = request.GET.get('page')
     try:

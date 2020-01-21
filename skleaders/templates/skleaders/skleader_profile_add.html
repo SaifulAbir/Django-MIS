@@ -4,16 +4,22 @@
     {% load static %}
     <form method='POST' enctype="multipart/form-data" novalidate>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <section class="content-header"style="padding-top:60px">
             <h1>Add New SK Leader</h1>
 =======
+=======
+>>>>>>> feature/hotfix_0.9
         <section class="content-header">
             {% if not profile_form.instance.pk %}
                 <h1>{{ skleader_strings.NEW_SKLEADER_PAGE_TITLE }}</h1>
             {% else %}
                 <h1>{{ skleader_strings.UPDATE_SKLEADER_PAGE_TITLE }}</h1>
             {% endif %}
+<<<<<<< HEAD
 >>>>>>> feature/admin_skleader
+=======
+>>>>>>> feature/hotfix_0.9
         </section>
         <section class="content">
             <div class="row">
@@ -27,17 +33,21 @@
                             {% endif %}
                         </div>
 
-                        <div class="row" style="padding-bottom: 10px;">
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                     {% if user_form.errors or profile_form.errors %}
+<<<<<<< HEAD
 <<<<<<< HEAD
                                         <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                                         padding-bottom: 3px;" class="alert alert-danger-error-message">
 =======
                                     <div id="alertdiv">
 >>>>>>> feature/admin_skleader
+=======
+                                    <div id="alertdiv" class="alert alert-danger-error-message">
+>>>>>>> feature/hotfix_0.9
                                         <span>
                                             {% for field in user_form %}
                                                 <li class="help-block">{{ field.errors|striptags }}</li>
@@ -52,12 +62,12 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="{{ user_form.first_name.id_for_label }}">{{ skleader_strings.NAME_TEXT }}</label>
-                                        {% render_field user_form.first_name class="form-control" placeholder="Name" %}
+                                        {% render_field user_form.first_name class="form-control" placeholder=skleader_strings.NAME_TEXT %}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="{{ user_form.email.id_for_label }}">{{ skleader_strings.EMAIL_TEXT }}</label>
-                                        {% render_field user_form.email class="form-control" placeholder="Email" %}
+                                        {% render_field user_form.email class="form-control" placeholder=skleader_strings.EMAIL_TEXT %}
                                     </div>
 
                                     <div class="form-group">
@@ -118,7 +128,7 @@
                                         </div>
                                     </div>
                                     <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
-                                    <input type="file" accept="image/*" placeholder="Skleader image" class="pull-right img-preview" id="id_PF-image">
+                                    <input type="file" accept="image/*" class="pull-right img-preview" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
@@ -145,8 +155,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="{{ profile_form.joining_date.id_for_label }}">{{ skleader_strings.FROM_TEXT }}</label>
-                                        <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
-                                        <div style="display: none">
+                                        <input type="text" class="datepicker copydate form-control" placeholder="{{common_strings.DATE_PLACEHOLDER}}" />
+                                        <div class="join-date">
                                             {% render_field profile_form.joining_date class="form-control pastedate" %}
                                         </div>
                                     </div>
@@ -176,11 +186,20 @@
     </form>
     {% include 'sknf/_modal_show_image_error.html' %}
     {% include 'sknf/_crop_modal.html' %}
+{% block extra_css %}
+        <style>
+        .join-date{
+            display: none;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js%}
     <script>
         var currentDate;
         currentDate = getCurrentDate(true);
         $('.datepicker').val(currentDate);
+        var currentStandardDate = getCurrentDateStandard()
+        $('#id_PF-joining_date').val(currentStandardDate);
     </script>
 {% endblock %}

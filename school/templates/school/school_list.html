@@ -108,9 +108,7 @@
                     <span class="fa fa-plus"></span>
                     {{ school_strings.NEW_SCHOOL_BUTTON_TEXT }}
                 </a>
-                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-school pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
-
-
+                <button type="submit" class="btn btn-primary export-school pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
 
 
             </div>
@@ -135,6 +133,9 @@
         }
         .box-title{
             display: inline-block;
+        }
+        .export-school{
+            margin-right: 5px;
         }
         </style>
         {% endblock %}
@@ -168,8 +169,14 @@
                 success: function (data) {
                     if (data.form_is_valid) {
                         if(formClass=="js-school-delete-form"){
-                            $("body").html(data.html_school_list);
-                            showAlert("School Deleted!", "alert alert-danger-customized")
+                            $(".box-body").html(data.html_school_list);
+                            status = data.status
+                            if (status=='true') {
+                                showAlert("{{school_strings.SCHOOL_DELETED_MSG}}", "alert alert-danger-customized")
+                            }
+                            else {
+                                showAlert("{{school_strings.SCHOOL_DELETED_WITH_CHILD_DATA_EXIST_MSG}}", "alert alert-danger-customized")
+                            }
                         }
                         $("#modal-school").modal("hide");
                     }
@@ -178,7 +185,6 @@
                     }
                 }
             });
-            location.reload();
             return false;
         };
 
@@ -236,16 +242,9 @@
         pagination(".box-body", '/search_school_list/', name, eiin, division, district, upazilla, union, '.box-body .school-search-table');
         /* Binding */
 
-        function showAlert(message,alerttype) {
-
-            $('#alert_placeholder').html('<div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert ' +  alerttype + '"><span>'+message+'</span></div>');
-
-        }
-
         // Delete school
-        $(".school-table").on("click", ".js-delete-school", loadForm);
-        $("#modal-school").on("submit", ".js-school-delete-form", saveForm)
-        $('')
+        $(".box-body").on("click", ".js-delete-school", loadForm);
+        $("#modal-school").on("submit", ".js-school-delete-form", saveForm);
 
     });
 

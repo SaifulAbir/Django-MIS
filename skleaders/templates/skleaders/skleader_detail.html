@@ -20,40 +20,36 @@
                             <div class="box-body">
                                 <!-- School Name -->
                                 <div class="form-group">
-                                    <label>{{ skleader_strings.NAME_TEXT }}:</label>
+                                    <label>{{ skleader_strings.NAME_TEXT }}</label>
                                     <input disabled type="text" value="{{skleader_detail.user.first_name}}" class="form-control my-colorpicker1">
                                 </div>
                                 <!-- /.form group -->
                                 <div class="form-group">
-                                    <label>{{ skleader_strings.EMAIL_TEXT }}:</label>
+                                    <label>{{ skleader_strings.EMAIL_TEXT }}</label>
                                     <input type="text" value="{{skleader_detail.user.email}}" class="form-control my-colorpicker1" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ skleader_strings.MOBILE_TEXT }}:</label>
+                                    <label>{{ skleader_strings.MOBILE_TEXT }}</label>
                                     <input type="text" value="{{skleader_detail.mobile}}" class="form-control my-colorpicker1" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ skleader_strings.USER_TYPE_TEXT }}:</label>
-                                    <input type="text" value="{{skleader_detail.user.get_user_type_display}}" class="form-control my-colorpicker1" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label>{{ skleader_strings.SCHOOL_TEXT }}:</label>
+                                    <label>{{ skleader_strings.SCHOOL_TEXT }}</label>
                                     <input type="text" value="{{skleader_detail.school.name}}" class="form-control my-colorpicker1" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ skleader_strings.CLASS_TEXT }}:</label>
+                                    <label>{{ skleader_strings.CLASS_TEXT }}</label>
                                     <input type="text" value="{{skleader_detail.student_class}}" class="form-control my-colorpicker1" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ skleader_strings.ROLL_TEXT }}:</label>
+                                    <label>{{ skleader_strings.ROLL_TEXT }}</label>
                                     <input type="text" value="{{skleader_detail.roll}}" class="form-control my-colorpicker1" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ skleader_strings.EMERGENCY_CONTACT_PERSON }}:</label>
+                                    <label>{{ skleader_strings.EMERGENCY_CONTACT_PERSON }}</label>
                                     <input type="text" value="{{skleader_detail.emergency_contact_person}}" class="form-control my-colorpicker1" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{skleader_strings.EMERGENCY_CONTACT_NUMBER}}:</label>
+                                    <label>{{skleader_strings.EMERGENCY_CONTACT_NUMBER}}</label>
                                     <input type="text" value="{{skleader_detail.emergency_contact_number}}" class="form-control my-colorpicker1" readonly>
                                 </div>
                             </div>
@@ -63,7 +59,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <div class="col-sm-12">
-                                        <label class="center-block text-right">{{ skleader_strings.PROFILE_PICTURE }}:</label>
+                                        <label class="center-block text-right">{{ skleader_strings.PROFILE_PICTURE }}</label>
                                         {% if skleader_detail.image %}
                                             <img width="220" src="{{ skleader_detail.image.url }}" class="pull-right" alt="Pic"><br />
                                         {% else %}

@@ -15,8 +15,8 @@ from resources import strings as common_strings
 
 class SkUserForm(forms.ModelForm):
     USER_TYPE_CHOICES = (
-        (5, 'skLeader'),
-        (6, 'skMember'),
+        (5, skleader_strings.SK_LEADER),
+        (6, skleader_strings.SK_MEMBER),
     )
 
     class_choice = (
@@ -33,6 +33,7 @@ class SkUserForm(forms.ModelForm):
 
         ("10", '10'),)
 <<<<<<< HEAD
+<<<<<<< HEAD
     first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
 
     password = forms.CharField(error_messages={'required': skleader_strings.PASSWORD_REQUIRED},
@@ -41,6 +42,11 @@ class SkUserForm(forms.ModelForm):
 
     password = forms.CharField(error_messages={'required': 'Password is required.'},
 >>>>>>> features/admin_skmember
+=======
+    first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
+
+    password = forms.CharField(error_messages={'required': skleader_strings.PASSWORD_REQUIRED},
+>>>>>>> feature/hotfix_0.9
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     confirm_password = forms.CharField(error_messages={'required': skleader_strings.CONFIRM_PASSWORD_REQUIRED},
@@ -62,10 +68,14 @@ class SkUserForm(forms.ModelForm):
 
 class EditSkUserForm(forms.ModelForm):
 <<<<<<< HEAD
+<<<<<<< HEAD
     first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
 =======
     first_name = forms.CharField(error_messages={'required': 'Name is required.'})
 >>>>>>> features/admin_skmember
+=======
+    first_name = forms.CharField(error_messages={'required': skleader_strings.NAME_REQUIRED})
+>>>>>>> feature/hotfix_0.9
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
     user_type = forms.ChoiceField(required=False, choices=SkUserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
@@ -86,8 +96,7 @@ class EditSkUserForm(forms.ModelForm):
 
 class SkLeaderProfileForm(forms.ModelForm):
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    mobile = forms.CharField(error_messages={'required': skleader_strings.MOBILE_REQUIRED,
-                                             'max_length': skleader_strings.MOBILE_LENGTH_EXCEED},
+    mobile = forms.CharField(error_messages={'required': skleader_strings.MOBILE_REQUIRED},
                              widget=forms.TextInput(attrs={'type':'number'}))
 
     joining_date = forms.DateField(error_messages={'required': skleader_strings.FROM_DATE_REQUIRED})
@@ -96,7 +105,7 @@ class SkLeaderProfileForm(forms.ModelForm):
 
     student_class = forms.ChoiceField(required=False,
                                       choices=SkUserForm.class_choice, widget=forms.Select())
-    image = forms.ImageField(label=_('Skleader image'), required=False,
+    image = forms.ImageField(required=False,
                              error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
     school = forms.ModelChoiceField(error_messages={'required': skleader_strings.SCHOOL_REQUIRED}, queryset=School.objects.all())
     gender = forms.ChoiceField(required=False, choices=GENDER_CHOICES)
@@ -105,6 +114,14 @@ class SkLeaderProfileForm(forms.ModelForm):
         model = SkLeaderProfile
         fields = ('mobile', 'image', 'student_class', 'roll', 'school','joining_date','emergency_contact_person','emergency_contact_number', 'gender', 'image_base64')
 
+    def clean(self):
+        cleaned_data = super().clean()
+        mobile = cleaned_data.get("mobile")
+
+        if mobile:
+            if len(mobile)>11:
+                msg = skleader_strings.MOBILE_LENGTH_EXCEED
+                self.add_error('mobile', msg)
     def clean_image(self):
 
         image = self.cleaned_data.get('image', False)
@@ -138,6 +155,14 @@ class EditSkLeaderProfileForm(forms.ModelForm):
         model = SkLeaderProfile
         fields = ('mobile', 'image', 'student_class', 'roll','joining_date', 'emergency_contact_person','emergency_contact_number', 'gender', 'image_base64')
 
+    def clean(self):
+        cleaned_data = super().clean()
+        mobile = cleaned_data.get("mobile")
+
+        if mobile:
+            if len(mobile)>11:
+                msg = skleader_strings.MOBILE_LENGTH_EXCEED
+                self.add_error('mobile', msg)
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
         if image:

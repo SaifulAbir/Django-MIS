@@ -47,6 +47,7 @@ USER_PROFILE_CONFIRM_PASSWORD = "Confirm Password"
 GENERATE_PASSWORD_BUTTON = "Generate Password"
 GENERATE_PASSWORD_BUTTON = "Generate Password"
 DATE_FORMAT = "d-m-Y"
+DATE_PLACEHOLDER = "dd-mm-yyyy"
 EXPORT_CSV_BUTTON_TEXT = "Export CSV"
 VALIDATION_CHAR_ERROR_MESSEGE = 'Invalid Validation'
 FUTURE_DATE_VALIDATION_ERROR_MESSEGE = 'This Date cannot be in the future.'
@@ -56,12 +57,17 @@ EDIT_PROFILE_BUTTON = 'Edit Profile'
 SIGN_OUT_BUTTON = 'Sign out'
 SIGN_IN_BUTTON = 'Sign in'
 PROFILE_ROLE_LABEL = 'Role:'
-PROFILE_EMAIL_LABEL = 'Email:'
+PROFILE_EMAIL_LABEL = 'Mobile:'
 HEADER_SKNF_LOGO_TEXT = 'SKNF'
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
 UPDATE_BASIC_INFO_BUTTON= 'Update Basic Information'
 UPDATE_DETAIL_INFO_BUTTON= 'Update Detail Information'
 >>>>>>> feature/admin_skleader
+=======
+UPDATE_BASIC_INFO_BUTTON= 'Update Basic Information'
+UPDATE_DETAIL_INFO_BUTTON= 'Update Detail Information'
+>>>>>>> feature/hotfix_0.9
 # Common Strings

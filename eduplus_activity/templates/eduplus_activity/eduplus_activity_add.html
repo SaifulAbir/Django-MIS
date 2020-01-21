@@ -65,12 +65,12 @@
                                 </div>
                                 <ul id="id_EPA-attendance">
                                     {% for eduplus in eduplus_activity.attendance.all %}
-                                    <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{eduplus.id}}" placeholder="Attendance" class="" checked="">
+                                    <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{eduplus.id}}" placeholder="{{edu_strings.EDUPLUS_ACTIVITY_LABEL_ATTENDANCE}}" class="" checked="">
                                         {{eduplus.first_name}}</label>
                                     </li>
                                     {% endfor %}
                                     {% for member in all_member %}
-                                    <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{member.id}}" placeholder="Attendance" class="">
+                                    <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{member.id}}" placeholder="{{edu_strings.EDUPLUS_ACTIVITY_LABEL_ATTENDANCE}}" class="">
                                         {{member.first_name}}</label>
                                     </li>
                                     {% endfor %}
@@ -84,7 +84,8 @@
                                 {% else %}
                                 <img height="auto" width="100%" src="{% static 'sknf/images/default_picture.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
                                 {% endif %}
-                                <input type="file" accept="image/*" placeholder="Headmaster image" class="img-preview pull-left" id="id_EPA-image">
+                                <label for="id_EPA-image" class="cover-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
+                                <input type="file" accept="image/*" class="img-preview pull-left" id="id_EPA-image">
                             </div>
                             <br>
                         </div>

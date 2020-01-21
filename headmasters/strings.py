@@ -22,8 +22,15 @@ UNION_TEXT = 'Union'
 NEW_HEADMASTER_BUTTON = 'New Headmaster'
 EMAIL_TEXT = 'Email'
 GENERATE_PASSWORD ='Genarate Password'
+<<<<<<< HEAD
 
 <<<<<<< HEAD
+=======
+HEADMASTER = 'headmaster'
+GUIDE_TEACHER = 'Guide Teacher'
+BOTH = 'both'
+DATE_PLACEHOLDER = 'dd-mm-yyyy'
+>>>>>>> feature/hotfix_0.9
 #alert messages
 NAME_REQUIRED = 'Name is required.'
 PASSWORD_REQUIRED = 'Password is required.'
@@ -31,12 +38,25 @@ CONFIRM_PASSWORD_REQUIRED = 'Confirm password is required.'
 USER_TYPE_REQUIRED = 'User type is required.'
 PASSWORD_NOT_MATCHED = "Password does not match."
 SCHOOL_REQUIRED = 'School is required.'
+MOBILE_REQUIRED = 'Mobile is required.'
 MOBILE_LENGTH_EXCEED = 'Moblie Number can not exceed 11 digits'
 FROM_DATE_REQUIRED = 'From date is required.'
+IMAGE_FILE_ONLY = "Image files only"
 IMAGE_FILE_SIZE_EXCEED = "Image file too large ( > 1mb )"
+<<<<<<< HEAD
 =======
 HEADMASTER_VERBOSE_NAME = 'Headmaster'
 HEADMASTER_VERBOSE_NAME_PLURAL = 'Headmasters'
 HEADMASTER_DETAIL_VERBOSE_NAME = 'Headmaster Detail'
 HEADMASTER_DETAIL_VERBOSE_NAME_PLURAL = 'Headmaster Details'
 >>>>>>> features/admin_skmember
+=======
+HEADMASTER_CREATED = 'Headmaster Created!'
+HEADMASTER_UPDATED = 'Headmaster Updated!'
+SCHOOL_INFORMATION_UPDATE_MESSAGE = 'School Information Successfully Updated.'
+
+HEADMASTER_VERBOSE_NAME = 'Headmaster'
+HEADMASTER_VERBOSE_NAME_PLURAL = 'Headmasters'
+HEADMASTER_DETAIL_VERBOSE_NAME = 'Headmaster Detail'
+HEADMASTER_DETAIL_VERBOSE_NAME_PLURAL = 'Headmaster Details'
+>>>>>>> feature/hotfix_0.9

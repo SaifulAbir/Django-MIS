@@ -2,9 +2,9 @@
 {% block body_block %}
 {% load static %}
 
-<section class="content-header" style="padding-top:60px">
+<section class="content-header">
    <h1>
-      Admin Dashboard
+      {{ acount_strings.ADMIN_DASHBOARD }}
    </h1>
 </section>
 
@@ -15,7 +15,7 @@
          <!-- Main content -->
          <div class="box">
             <div class="box-header">
-               <h3 style="display: inline-block;" class="box-title"></h3>
+               <h3 class="box-title"></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -34,7 +34,7 @@
             <div class="small-box bg-aqua">
                <div class="inner">
                   <h3>{{school_total}}</h3>
-                  <p>Schools</p>
+                  <p>{{ acount_strings.SCHOOLS_COUNT_TEXT }}</p>
                </div>
                <div class="icon">
                   <i class="fa fa-university"></i>
@@ -46,7 +46,7 @@
             <div class="small-box bg-green">
                <div class="inner">
                   <h3>{{headmaster_total}}</h3>
-                  <p>Headmasters</p>
+                  <p>{{ acount_strings.HEADMASTER_COUNT_TEXT }}</p>
                </div>
                <div class="icon">
                   <i class="fa fa-user"></i>
@@ -58,7 +58,7 @@
             <div class="small-box bg-red">
                <div class="inner">
                   <h3>{{skleader_total}}</h3>
-                  <p>SK Leaders</p>
+                  <p>{{ acount_strings.SK_LEADER_COUNT_TEXT }}</p>
                </div>
                <div class="icon">
                   <i class="fa fa-user-plus"></i>
@@ -70,7 +70,7 @@
             <div class="small-box bg-yellow">
                <div class="inner">
                   <h3>{{skmember_total}}</h3>
-                  <p>SK Members</p>
+                  <p>{{ acount_strings.SK_MEMBER_COUNT_TEXT }}</p>
                   <br>
                </div>
                <div class="icon">
@@ -82,6 +82,13 @@
       </div>
    </div>
 </section>
+    {% block extra_css %}
+        <style>
+        .box-title{
+            display: inline-block;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 {% block extra_js %}
 <script type="text/javascript">
@@ -138,8 +145,17 @@ $(function () {
             'info'        : false,
             'paging'      : false,
             'ordering'    : false,
+      "language": {
+          "emptyTable":     "No Result Found"
+      }
         });
-   pagination('.box-body', '/dashboard/', '', '', '', '.box-body .dashboard-school-list')
+    $('.box-body').on('click', '.paginator', function (e) {
+        e.preventDefault();
+        var addressValue = $(this).attr("href");
+        var url = '/dashboard/'+addressValue;
+        paginator('.box-body', url, '.box-body .dashboard-school-list', {'name': '', 'school':'', 'division':'',
+            'district':'', 'upazila':'', 'union':'', 'form_date':'', 'to_date':'', 'topic':'','mobile':''});
+    });
 
 });
 

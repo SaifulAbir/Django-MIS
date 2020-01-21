@@ -10,7 +10,7 @@
     <div class="box">
         <form method="GET" action="." class="search-form-skleader">
             <div class="box-header">
-                <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <div class="shop-search main-box card-block" >
                     <div class="row">
                         <div class="form-group col-sm-4">
                             <strong>{{ skleader_strings.NAME_TEXT }}</strong>
@@ -100,7 +100,7 @@
                     <span class="fa fa-plus"></span>
                     {{ skleader_strings.NEW_SKLEADER_PAGE_TITLE }}
                 </a>
-                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-skleader pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
+                <button type="submit" class="btn btn-primary export-skleader pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -125,13 +125,13 @@
                         <td>{{ skleader.school.division }}</td>
                         <td>{{ skleader.school.district }}</td>
                         <td>{{ skleader.school.upazilla }}</td>
-                        <td align="center"><a type="button" style="margin-right:10px"
+                        <td align="center"><a type="button"
                                               class=""
                                               href="{% url 'skleaders:skleader_detail' skleader.pk %}">
                             <span class="fa fa-eye"></span>
                         </a>
                             <a type="button"
-                               class=""
+                               class="update-icon"
                                href="{% url 'skleaders:skleader_update' skleader.pk %}">
                                 <span class="fa fa-edit"></span>
 
@@ -187,6 +187,19 @@
     </div>
     <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <Style>
+        .shop-search{
+            border: 1px solid rgb(204, 204, 204);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding-bottom: 0px;"
+        }
+        .export-skleader{
+            margin-right: 5px;
+        }
+        </Style>
+        {% endblock %}
 {% endblock %}
 
 {% block extra_js %}
@@ -199,6 +212,9 @@
             'info': false,
             'paging': false,
             'ordering'    : false,
+            "language": {
+                "emptyTable":     "No Result Found"
+            }
         });
 
         $('.search-skleader').on('click', function (event) {

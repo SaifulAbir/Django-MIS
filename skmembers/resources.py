@@ -6,11 +6,7 @@ from .models import School,SkMemberProfile
 from accounts.models import User
 
 class SkmemberResource(resources.ModelResource):
-    user =fields.Field(
-        column_name='Sk Member Name',
-        attribute='user',
-        widget=ForeignKeyWidget(User, 'first_name'))
-
+    name = Field(attribute='name', column_name='Sk Member Name',)
     mobile= Field(attribute='mobile', column_name='Mobile Number')
 
 

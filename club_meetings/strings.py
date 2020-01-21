@@ -27,3 +27,13 @@ YES ='Yes'
 NO = 'No'
 CROP_PHOTO_TITLE = 'Crop the photo'
 CROP_PHOTO_BUTTON = 'Crop and upload'
+
+
+#messages
+CLASS_RROM_REQUIRED = 'Class room is required.'
+ONE_TOPIC_REQUIRED = 'Select at least one topic.'
+ATTENDANCE_REQUIRED = 'Member attendance is required.'
+DATE_REQUIRED = 'Date is required.'
+IMAGE_FILE_ONLY = "Image files only"
+CLUB_MEETING_CREATED_MESSAGE = 'Club Meeting Created!'
+CLUB_MEETING_UPDATED_MESSAGE = 'Club Meeting Updated!'
