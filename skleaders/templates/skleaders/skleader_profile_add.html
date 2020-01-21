@@ -3,8 +3,17 @@
     {% load widget_tweaks %}
     {% load static %}
     <form method='POST' enctype="multipart/form-data" novalidate>
+<<<<<<< HEAD
         <section class="content-header"style="padding-top:60px">
             <h1>Add New SK Leader</h1>
+=======
+        <section class="content-header">
+            {% if not profile_form.instance.pk %}
+                <h1>{{ skleader_strings.NEW_SKLEADER_PAGE_TITLE }}</h1>
+            {% else %}
+                <h1>{{ skleader_strings.UPDATE_SKLEADER_PAGE_TITLE }}</h1>
+            {% endif %}
+>>>>>>> feature/admin_skleader
         </section>
         <section class="content">
             <div class="row">
@@ -12,9 +21,9 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             {% if not profile_form.instance.pk %}
-                                <h3 class="box-title">Basic Information</h3>
+                                <h3 class="box-title">{{ skleader_strings.BASIC_INFO_TEXT }}</h3>
                             {% else %}
-                                <h3 class="box-title">Basic Information</h3>
+                                <h3 class="box-title">{{ skleader_strings.BASIC_INFO_TEXT }}</h3>
                             {% endif %}
                         </div>
 
@@ -23,14 +32,18 @@
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                     {% if user_form.errors or profile_form.errors %}
+<<<<<<< HEAD
                                         <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
                                         padding-bottom: 3px;" class="alert alert-danger-error-message">
+=======
+                                    <div id="alertdiv">
+>>>>>>> feature/admin_skleader
                                         <span>
                                             {% for field in user_form %}
-                                                <li class="help-block" style="color:red;margin-bottom: 5px;">{{ field.errors|striptags }}</li>
+                                                <li class="help-block">{{ field.errors|striptags }}</li>
                                             {% endfor %}
                                             {% for field in profile_form %}
-                                                <li class="help-block" style="color:red;margin-bottom: 5px;" >{{ field.errors|striptags }}</li>
+                                                <li class="help-block">{{ field.errors|striptags }}</li>
                                             {% endfor %}
                                         </span>
                                     </div>
@@ -38,13 +51,13 @@
                                 </span>
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="{{ user_form.first_name.id_for_label }}">Name</label>
+                                        <label for="{{ user_form.first_name.id_for_label }}">{{ skleader_strings.NAME_TEXT }}</label>
                                         {% render_field user_form.first_name class="form-control" placeholder="Name" %}
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.email.id_for_label }}">Username / Mobile Number</label>
-                                        {% render_field user_form.email class="form-control" placeholder="Username / Mobile Number" %}
+                                        <label for="{{ user_form.email.id_for_label }}">{{ skleader_strings.EMAIL_TEXT }}</label>
+                                        {% render_field user_form.email class="form-control" placeholder="Email" %}
                                     </div>
 
                                     <div class="form-group">
@@ -53,7 +66,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.student_class.id_for_label }}">Class</label>
+                                        <label for="{{ profile_form.student_class.id_for_label }}">{{ skleader_strings.CLASS_TEXT }}</label>
                                         {% render_field profile_form.student_class class="form-control" placeholder=profile_form.student_class.label %}
                                     </div>
 
@@ -68,14 +81,14 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.emergency_contact_person.id_for_label }}">{{ profile_form.emergency_contact_person.label }}</label>
-                                        {% render_field profile_form.emergency_contact_person class="form-control" placeholder=profile_form.emergency_contact_person.label %}
+                                        <label for="{{ profile_form.emergency_contact_person.id_for_label }}">{{ skleader_strings.EMERGENCY_CONTACT_PERSON }}</label>
+                                        {% render_field profile_form.emergency_contact_person class="form-control" placeholder=skleader_strings.EMERGENCY_CONTACT_PERSON %}
 
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ profile_form.emergency_contact_number.id_for_label }}">{{ profile_form.emergency_contact_number.label }}</label>
-                                        {% render_field profile_form.emergency_contact_number class="form-control" placeholder=profile_form.emergency_contact_number.label %}
+                                        <label for="{{ profile_form.emergency_contact_number.id_for_label }}">{{ skleader_strings.EMERGENCY_CONTACT_NUMBER }}</label>
+                                        {% render_field profile_form.emergency_contact_number class="form-control" placeholder=skleader_strings.EMERGENCY_CONTACT_NUMBER %}
 
                                     </div>
 
@@ -85,13 +98,13 @@
                                         <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         <button type="button"
                                                 class="btn btn-primary pull-right js-genarate-password">
-                                            Genarate Password
+                                            {{ common_strings.GENERATE_PASSWORD_BUTTON }}
                                         </button>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="{{ user_form.confirm_password.id_for_label }}">Confirm Password</label>
-                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=user_form.confirm_password.label %}
+                                        <label for="{{ user_form.confirm_password.id_for_label }}">{{ common_strings.USER_PROFILE_CONFIRM_PASSWORD }}</label>
+                                        {% render_field user_form.confirm_password class="form-control" id="confirm-generated-pass" placeholder=common_strings.USER_PROFILE_CONFIRM_PASSWORD %}
                                     </div>
 
                                 </div>
@@ -101,10 +114,11 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <div class="col-sm-12">
-                                            <img style="border-radius: 5px; border: 2px solid #ccc;" width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
+                                            <img width="220" src="{% static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" class="jcrop-holder pull-right" alt="Pic"><br />
                                         </div>
                                     </div>
-                                    <input type="file" accept="image/*" placeholder="Skleader image" style="margin-top: 10px;" class="pull-right img-preview" id="id_PF-image">
+                                    <label for="id_PF-image" class="image-label btn btn-primary pull-right" >{{ common_strings.SELECT_IMAGE_BUTTON }}</label>
+                                    <input type="file" accept="image/*" placeholder="Skleader image" class="pull-right img-preview" id="id_PF-image">
                                 </div>
                             </div>
                         </div>
@@ -117,7 +131,7 @@
                 <div class="col-sm-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">School Information</h3>
+                            <h3 class="box-title">{{ skleader_strings.SCHOOL_INFO_TEXT }}</h3>
                         </div>
                         <div class="box-body required">
                             <div class="row">
@@ -130,7 +144,7 @@
 
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="{{ profile_form.joining_date.id_for_label }}">From</label>
+                                        <label for="{{ profile_form.joining_date.id_for_label }}">{{ skleader_strings.FROM_TEXT }}</label>
                                         <input type="text" class="datepicker copydate form-control" placeholder="dd-mm-yyyy" />
                                         <div style="display: none">
                                             {% render_field profile_form.joining_date class="form-control pastedate" %}
@@ -139,19 +153,19 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="id_hf-from_date">To</label>
+                                        <label for="id_hf-from_date">{{ skleader_strings.TO_TEXT }}</label>
                                         <input type="text" name="hf-from_date" readonly class="form-control" id="id_hf-from_date"><input type="hidden" name="initial-hf-from_date" value="2019-09-18 07:40:03+00:00" class="form-control" id="initial-hf-id_hf-from_date">
                                     </div>
                                 </div>
                             </div>
                             <div class="">
-                                <a type="button" style="margin-right: 5px;" onclick="goBack()"
+                                <a type="button"onclick="goBack()"
                                    class="btn btn-warning pull-left"
                                    href="javascript:void(0)">
-                                    Back
+                                    {{ common_strings.BACK_BUTTON }}
                                 </a>
 
-                                <input type="submit" id="save-btn" value="Save" class="btn btn-primary pull-right"/>
+                                <input type="submit" id="save-btn" value="{{ common_strings.SAVE_BUTTON }}" class="btn btn-primary pull-right"/>
                             </div>
                         </div>
                     </div>
