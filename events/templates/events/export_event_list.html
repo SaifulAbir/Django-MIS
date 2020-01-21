@@ -1,0 +1,35 @@
+
+<div class="modal fade" id="modal-event-list">
+    <div class="modal-dialog">
+        <div class="modal-content 12">
+            <form action="/events/event_list/" class="event-form" method='POST'>
+                {% csrf_token %}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title export-title">{{event_strings.EVENT_EXPORT_TITLE}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_start">{{event_strings.START_DATE_TEXT}}</label>
+                                <input type="text" name="start_date" class="form-control datepicker" id="id_start">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_end">{{event_strings.END_DATE_TEXT}}</label>
+                                <input type="text" name="end_date" class="form-control datepicker" id="id_end">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="{{event_strings.EXPORT_BTN_TEXT}}" id="eventSubmit" class="btn btn-primary form-submit"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

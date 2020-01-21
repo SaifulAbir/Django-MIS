@@ -12,9 +12,9 @@
                 <div class="box box-primary">
                     <div class="box-body no-padding">
                         <div class="box-header">
-                            <!--                            <form action="/events/event_list" method="get">-->
-                            <button type="submit" class="btn btn-primary search-event pull-right">{{event_strings.EVENT_EXPORT_BUTTON}}</button>
-                            <!--                            </form>-->
+<!--                            <form action="/events/event_list" method="get">-->
+                                <button type="submit" class="btn btn-primary search-event pull-right">{{event_strings.EVENT_EXPORT_BUTTON}}</button>
+<!--                            </form>-->
                         </div>
                         <div id="calendar"></div>
                     </div>
@@ -73,7 +73,9 @@
                 </div>
             </div>
         </div>
+
     </form>
+    {% include 'events/export_event_list.html' %}
 {% endblock %}
 {% block extra_css %}
     <style type="text/css">
@@ -200,7 +202,10 @@
             $('.fc-calendar-button').prepend('<i class="fa fa-calendar"></i> ');
         });
 
+            $('.fc-listMonth-button,.fc-listWeek-button, .fc-listDay-button').prepend('<i class="fa fa-align-left"></i> ');
+            $('.fc-month-button,.fc-agendaWeek-button, .fc-agendaDay-button').prepend('<i class="fa fa-calendar"></i> ');
 
+        });
         function dateSelected(start, end, ev, vw){
             $('#id_title').val('');
             start=moment(start).format('DD-MM-YYYY h:mm A');
@@ -248,8 +253,17 @@
                 clickSaveEvent();
             }
 
+        function eventAllInputFieldEnabled() {
+            $( "#id_start" ).prop( "disabled", false );
+            $( "#id_end" ).prop( "disabled", false );
+            $( "#id_title" ).prop( "disabled", false );
+        }
 
-        });
+        function eventAllInputFieldDisabled() {
+            $( "#id_start" ).prop( "disabled", true );
+            $( "#id_end" ).prop( "disabled", true );
+            $( "#id_title" ).prop( "disabled", true );
+        }
 
         function clickSaveEvent() {
             var title = $('#id_title').val();
@@ -269,6 +283,7 @@
                             'title': title,
                             'start': standardStartDateForDB,
                             'end': standardEndDateForDB,
+                            'eventId': eventId,
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                         },
                         success: function (data) {
@@ -340,6 +355,7 @@
                     });
                 }
                 else{
+
                     $('#event-error').addClass('alert alert-danger-error-message');
                     $('#event-error').html('{{event_strings.TITLE_REQUIRED_ERROR_MSG}}');
                 }
@@ -392,12 +408,8 @@
             }
         });
         $('.search-event').click(function () {
-            $('.modal-title').html('Export with Search');
-            $('#btnSaveEvent').val('Export');
-            $('#btnDeleteEvent').hide();
-            $('.title-div').hide();
-            $('#submitForm').prop('action', 'events/event_list/');
-            $("#modal-event").modal("show");
+            $('.modal-title').html('{{event_strings.EVENT_EXPORT_TITLE}}');
+            $("#modal-event-list").modal("show");
         });
 
     </script>
