@@ -283,25 +283,17 @@
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                         },
                         success: function (data) {
-                            console.log(data);
-                            {% comment %}$('#eventId').val(data);
+                            $('#eventId').val(data);
                             $('#btnSaveEvent').prop('disabled', true);
                             $("#modal-event").modal('hide');
 
                             $('#calendar').fullCalendar('renderEvent', {
-                                id: data,
-                                title: title,
-                                start: standardStartDate,
-                                end: standardEndDateForDB,
+                                id: data['id'],
+                                title: data['title'],
+                                start: data['start'],
+                                end: data['end'],
                                 allDay: false
-                            });{% endcomment %}
-
-                            {% comment %}$("#calendar").fullCalendar('addEventSource', [{
-                                'title': title,
-                                'start': standardStartDate,
-                                'end': standardEndDateForDB,
-                                'allDay': false
-                            }]);{% endcomment %}
+                            });
                         }
                     });
                 }
@@ -345,9 +337,22 @@
                             $('#btnSaveEvent').prop('disabled', true);
                             $("#modal-event").modal('hide');
                             var title = $("#id_title").val();
+
+
                             var eventobj = $('#calendar').fullCalendar('clientEvents', $("#event_id_js").val());
-                            eventobj[0].title = title;
+                            eventobj[0].title = data['title'];
+                            eventobj[0].start = data['start'];
+                            eventobj[0].end = data['end'];
                             $('#calendar').fullCalendar('updateEvent', eventobj[0]);
+
+
+                            {% comment %}$('#calendar').fullCalendar('renderEvent', {
+                                id: data['id'],
+                                title: data['title'],
+                                start: data['start'],
+                                end: data['end'],
+                                allDay: false
+                            });{% endcomment %}
                         }
                     });
                 }

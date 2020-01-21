@@ -12,7 +12,7 @@ from django.shortcuts import render
 from accounts.decorators import admin_login_required
 from events.models import Event
 from events.resources import EventResource
-
+import json
 
 @admin_login_required
 def create_event(request):
@@ -30,13 +30,14 @@ def add_event(request):
     if title and start:
         event = Event(title=title,start_date=start_date,end_date=end_date)
         event.save()
-        data = {
+        data = json.dumps({
             'id': event.id,
             'title': event.title,
             'start': event.start_date,
             'end': event.end_date
-        }
-        return HttpResponse(data)
+        })
+        return HttpResponse(data, content_type='application/json')
+
     else:
         return False
 
@@ -54,7 +55,13 @@ def update_event(request):
         evenObj.start_date = start_date
         evenObj.end_date = end_date
         evenObj.save()
-        return HttpResponse(evenObj.id)
+        data = json.dumps({
+            'id': evenObj.id,
+            'title': evenObj.title,
+            'start': evenObj.start_date,
+            'end': evenObj.end_date
+        })
+        return HttpResponse(data, content_type='application/json')
     else:
         return HttpResponse('Invalid event ID')
 
