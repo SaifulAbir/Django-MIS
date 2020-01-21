@@ -5,7 +5,7 @@ from django.forms import DateField
 
 from school.models import School
 from sknf import settings
-
+from . import strings as headmaster_strings
 from accounts.models import User
 from .models import HeadmasterProfile, HeadmasterDetails
 from django.utils.translation import ugettext_lazy as _
@@ -17,10 +17,10 @@ class UserForm(forms.ModelForm):
         (3, 'Guide Teacher'),
         (4, 'both'),
     )
-    email = forms.EmailField(error_messages={'required': 'Email is required.'})
-    password = forms.CharField(error_messages={'required': 'Password is required.'}, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    confirm_password = forms.CharField(error_messages={'required': 'Confirm password is required.'}, widget=forms.PasswordInput())
-    user_type = forms.ChoiceField(error_messages={'required': 'User type is required.'}, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+    first_name = forms.CharField(error_messages={'required': headmaster_strings.NAME_REQUIRED})
+    password = forms.CharField(error_messages={'required': headmaster_strings.PASSWORD_REQUIRED}, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    confirm_password = forms.CharField(error_messages={'required': headmaster_strings.CONFIRM_PASSWORD_REQUIRED}, widget=forms.PasswordInput())
+    user_type = forms.ChoiceField(error_messages={'required': headmaster_strings.USER_TYPE_REQUIRED}, choices=USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     class Meta:
         model = User
         fields = ('first_name', 'email', 'password', 'user_type')
@@ -31,15 +31,14 @@ class UserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match.")
+            self.add_error('confirm_password', headmaster_strings.PASSWORD_NOT_MATCHED)
 
         return cleaned_data
 
 class EditUserForm(forms.ModelForm):
-    email = forms.EmailField(error_messages={'required': 'Email is required.'})
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
-    user_type = forms.ChoiceField(error_messages={'required': 'User type is required.'}, choices=UserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
+    user_type = forms.ChoiceField(error_messages={'required': headmaster_strings.USER_TYPE_REQUIRED}, choices=UserForm.USER_TYPE_CHOICES, widget=forms.RadioSelect(attrs={'class': 'radio'}))
     class Meta:
         model = User
         fields = ('first_name', 'email', 'password', 'user_type')
@@ -50,7 +49,7 @@ class EditUserForm(forms.ModelForm):
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password does not match.")
+            self.add_error('confirm_password', headmaster_strings.PASSWORD_NOT_MATCHED)
 
         return cleaned_data
 
@@ -60,10 +59,10 @@ class HeadmasterProfileForm(forms.ModelForm):
 
     image = forms.ImageField(label=_('Headmaster image'), required=False,
                                     error_messages={'invalid': _("Image files only")}, widget=forms.FileInput)
-    joining_date = DateField(error_messages={'required': 'From date is required.'})
-    mobile = forms.CharField(error_messages={'required': 'Mobile is required.','max_length': 'Moblie Number can not exceed 11 digits'},
+    joining_date = DateField(error_messages={'required': headmaster_strings.FROM_DATE_REQUIRED})
+    mobile = forms.CharField(error_messages={'required': 'Mobile is required.','max_length': headmaster_strings.MOBILE_LENGTH_EXCEED},
                              widget=forms.TextInput(attrs={'type':'number'}))
-    school = forms.ModelChoiceField(error_messages={'required': 'School is required.'}, queryset=School.objects.all())
+    school = forms.ModelChoiceField(error_messages={'required': headmaster_strings.SCHOOL_REQUIRED}, queryset=School.objects.all())
 
     class Meta:
         model = HeadmasterProfile
@@ -73,23 +72,10 @@ class HeadmasterProfileForm(forms.ModelForm):
         image = self.cleaned_data.get('image', False)
         if image:
             if image.size > 1 * 1024 * 1024:
-                raise ValidationError("Image file too large ( > 1mb )")
+                raise ValidationError(headmaster_strings.IMAGE_FILE_SIZE_EXCEED)
             return image
 
-    # def save(self, commit=True):
-    #     new_image = super(HeadmasterProfileForm, self).save(commit=False)
-    #
-    #     x = self.cleaned_data.get('x')
-    #     y = self.cleaned_data.get('y')
-    #     w = self.cleaned_data.get('width')
-    #     h = self.cleaned_data.get('height')
-    #
-    #     image = Image.open(new_image.image)
-    #     cropped_image = iimage.crop((x, y, w + x, h + y))
-    #     resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
-    #     resized_image.save(new_image.image.path)
-    #
-    #     return new_image
+
 
 class HeadmasterDetailsForm(forms.ModelForm):
 

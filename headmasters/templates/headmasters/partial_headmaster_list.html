@@ -1,20 +1,24 @@
 <table   id="example1" class=" headmaster-search-table table table-bordered table-striped">
     <thead>
     <tr>
-        <th class="col-sm-2">Name</th>
-        <th class="col-sm-2">Username</th>
-        <th class="col-sm-4">School</th>
-        <th class="col-sm-2">Mobile</th>
-        <th class="col-sm-2">Actions</th>
+        <th class="col-sm-3">{{ headmaster_strings.NAME_TEXT }}</th>
+        <th class="col-sm-1">{{ headmaster_strings.MOBILE_TEXT }}</th>
+        <th class="col-sm-4">{{ headmaster_strings.SCHOOL_TEXT }}</th>
+        <th class="col-sm-1">{{ headmaster_strings.DIVISION_TEXT }}</th>
+        <th class="col-sm-1">{{ headmaster_strings.DISTRICT_TEXT }}</th>
+        <th class="col-sm-1">{{ headmaster_strings.UPAZILA_TEXT }}</th>
+        <th class="fixed-col col-sm-1 text-center">{{ common_strings.LIST_ACTION_TEXT }}</th>
     </tr>
     </thead>
     <tbody>
     {% for headmaster in queryset %}
     <tr>
         <td>{{headmaster.user.first_name}}</td>
-        <td>{{ headmaster.user.email }}</td>
-        <td>{{ headmaster.school }}</td>
         <td>{{ headmaster.mobile }}</td>
+        <td>{{ headmaster.school }}</td>
+        <td>{{ headmaster.school.division }}</td>
+        <td>{{ headmaster.school.district }}</td>
+        <td>{{ headmaster.school.upazilla }}</td>
         <td align="center">
             <a type="button" style="margin-right:10px"
                href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
@@ -35,8 +39,12 @@
 
     </tfoot>
 </table>
-<p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
-<ul class="pagination" style="float: right">
+{% if queryset %}
+    <p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index queryset.end_index queryset.paginator.count %}</p>
+{% else %}
+    <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+{% endif %}
+<ul class="pagination">
 
     {% if queryset.has_previous %}
     <li><a class="paginator" href="?page={{ queryset.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>

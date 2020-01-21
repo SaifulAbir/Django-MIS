@@ -370,6 +370,7 @@ ul#id_EPA-attendance {
 #id_PF-image{
     margin-top: 10px;
     padding-bottom:10px;
+    display: None;
 }
 /*EDIT PROFILE*/
 
@@ -403,4 +404,10 @@ ul#id_EPA-attendance {
 
 .fixed-col{
     min-width: 100px;
+}
+
+.image-label{
+    margin-top: 10px;
+    margin-right: 86px;
+    margin-bottom: 10px;
 }

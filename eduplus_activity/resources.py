@@ -4,11 +4,6 @@ from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
 from datetime import datetime
 
 from accounts.models import User
-from districts.models import District
-from division.models import Division
-from topics.models import Topics
-from unions.models import Union
-from upazillas.models import Upazilla
 from .models import School, EduPlusActivity, Method
 
 

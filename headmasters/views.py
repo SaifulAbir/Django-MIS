@@ -6,7 +6,8 @@ from django.core.files.base import ContentFile
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
-
+from . import strings as headmaster_strings
+from resources import strings as common_strings
 # Create your views here.
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
@@ -51,6 +52,8 @@ def headmaster_profile_view(request):
             # end of image cropping code
 
             profile.save()
+            user.username = profile.mobile
+            user.save()
             headmaster_details = HeadmasterDetails()
             headmaster_details.school = profile_form.cleaned_data["school"]
             headmaster_details.headmaster = profile
@@ -67,6 +70,8 @@ def headmaster_profile_view(request):
     return render(request, 'headmasters/headmaster_profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'headmaster_strings': headmaster_strings,
+        'common_strings':common_strings
         #'headmaster_form_details': headmaster_form_details,
     })
 
@@ -78,16 +83,25 @@ class HeadmasterDetail(LoginRequiredMixin, generic.DetailView):
     model = models.HeadmasterProfile
     template_name = 'headmasters/headmaster_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["headmaster_strings"] = headmaster_strings
+        context["common_strings"] = common_strings
+        return context
+
 
 @admin_login_required
 def headmaster_list(request, export='null'):
     qs=HeadmasterProfile.objects.filter(user__user_type__in=[2,3,4])
     name= request.GET.get('name_contains')
     school= request.GET.get('school_contains')
+    mobile = request.GET.get('mobile_contains')
     if name !='' and name is not None:
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
+    if mobile != '' and mobile is not None:
+        qs = qs.filter(mobile__icontains=mobile)
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')
     try:
@@ -98,7 +112,7 @@ def headmaster_list(request, export='null'):
         queryset = paginator.page(paginator.num_pages)
     if export != 'export':
         return render(request, 'headmasters/headmasterprofile_list.html',
-                      {'queryset': queryset, 'name': name, 'school': school,})
+                      {'queryset': queryset, 'name': name, 'school': school,'headmaster_strings':headmaster_strings,'common_strings':common_strings})
     else:
         resource = HeadmasterResource()
         dataset = resource.export(qs)
@@ -139,6 +153,8 @@ def headmaster_update(request, pk):
                 profile.image = 'images/' + filename
             # end of image cropping code
             profile.save()
+            user.username = profile.mobile
+            user.save()
             messages.success(request, 'Headmaster Updated!')
             return HttpResponseRedirect("/headmasters/headmaster_list/")
     else:
@@ -152,6 +168,8 @@ def headmaster_update(request, pk):
         'headmaster_details': headmaster_details,
         'school_list': school_list,
         'pk': pk,
+        'headmaster_strings':headmaster_strings,
+        'common_strings':common_strings
     })
 
 @admin_login_required
@@ -191,21 +209,32 @@ def headermaster_school_details_update(request):
     time.sleep(1)
     return HttpResponse('ok')
 
-def headmaster_home(request):
-    obj_head = HeadmasterProfile.objects.filter(pk=request.user.id)
-
-    return render(request, 'headmasters/headmaster_home.html')
 
 def headmaster_search_list(request, export='null'):
     data = dict()
     qs = HeadmasterProfile.objects.filter(user__user_type__in=[2, 3, 4])
     name = request.GET.get('name_contains')
     school = request.GET.get('school_contains')
+    mobile = request.GET.get('mobile_contains')
+    division = request.GET.get('division_contains')
+    district = request.GET.get('district_contains')
+    upazila = request.GET.get('upazila_contains')
+    union = request.GET.get('union_contains')
 
     if name != '' and name is not None:
         qs = qs.filter(user__first_name__icontains=name)
     if school != '' and school is not None:
         qs = qs.filter(school__name__icontains=school)
+    if mobile != '' and mobile is not None:
+        qs = qs.filter(mobile__icontains=mobile)
+    if division != '' and division is not None:
+        qs = qs.filter(school__division__name__icontains=division)
+    if district != '' and district is not None:
+        qs = qs.filter(school__district__name__icontains=district)
+    if upazila != '' and upazila is not None:
+        qs = qs.filter(school__upazilla__name__icontains=upazila)
+    if union != '' and union is not None:
+        qs = qs.filter(school__union__name__icontains=union)
 
     paginator = Paginator(qs, 10)
     page = request.GET.get('page')
@@ -215,11 +244,11 @@ def headmaster_search_list(request, export='null'):
         queryset = paginator.page(1)
     except EmptyPage:
         queryset = paginator.page(paginator.num_pages)
-    if name == '' and school == '':
+    if name == '' and school == '' and mobile =='' and division == '' and district == '' and upazila == '' and union=='':
         queryset = None
     data['form_is_valid'] = True
     data['html_list'] = render_to_string('headmasters/partial_headmaster_list.html',
-                                                {'queryset': queryset})
+                                                {'queryset': queryset,'headmaster_strings':headmaster_strings,'common_strings':common_strings})
 
     if export != 'export':
         return JsonResponse(data)

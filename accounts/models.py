@@ -12,33 +12,34 @@ class UserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def _create_user(self, email, password, **extra_fields):
-        """Create and save a User with the given email and password."""
-        if not email:
-            raise ValueError(account_strings.USER_EMAIL_VALIDATION_ERROR)
+    def _create_user(self, username, email, password, **extra_fields):
+        """
+        Create and save a user with the given username, email, and password.
+        """
+        if not username:
+            raise ValueError('The given username must be set')
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        username = self.model.normalize_username(username)
+        user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
-        """Create and save a regular User with the given email and password."""
+    def create_user(self, username, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(username, email, password, **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
-        """Create and save a SuperUser with the given email and password."""
+    def create_superuser(self, username, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
         if extra_fields.get('is_staff') is not True:
-            raise ValueError(account_strings.SUPER_USER_STAFF_ERROR)
+            raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
-            raise ValueError(account_strings.SUPER_USER_SUPERUSER_ERROR)
+            raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(username, email, password, **extra_fields)
 
 
 class User(AbstractUser):
@@ -53,13 +54,14 @@ class User(AbstractUser):
 
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=6)
     image = models.ImageField(upload_to=account_strings.USER_IMAGE_TEXT, default='')
-    username = None
+    username = models.CharField(max_length=150, unique=True)
     email_verifiaction_code = models.CharField(max_length=100, null=True, blank=True, default='')
     email_verified = models.CharField(max_length=1, null=True, blank=True, default=0)
-    email = models.CharField(_(account_strings.USER_EMAIL_TEXT), unique=True, max_length=254 )  # changes email to unique and blank to false
-    first_name = models.CharField(_(account_strings.USER_FIRST_NAME_TEXT), max_length=40, blank=True)
+    email = models.CharField(_(account_strings.USER_EMAIL_TEXT), max_length=254, blank=True, null=True)  # changes email to unique and blank to false
+    first_name = models.CharField(_(account_strings.USER_FIRST_NAME_TEXT), max_length=40)
+    EMAIL_FIELD = account_strings.EMAIL_FIELD_TEXT
     USERNAME_FIELD = account_strings.USERNAME_FIELD_TEXT
-    REQUIRED_FIELDS = []  # removes email from REQUIRED_FIELDS
+    REQUIRED_FIELDS = ['email']  # removes email from REQUIRED_FIELDS
 
     objects = UserManager()
 

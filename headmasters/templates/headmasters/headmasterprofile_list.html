@@ -2,43 +2,84 @@
 {% block body_block %}
 
 <!-- Main content -->
-<section class="content-header"style="padding-top:60px">
+<section class="content-header">
     <h1>
-        Headmasters/Guide Teachers
+        {{ headmaster_strings.HEADMASTER_LIST_PAGE_TITLE }}
     </h1>
 </section>
 <section class="content">
-
     <div class="box">
         <form method="GET" action="." class="search-form-headmaster">
             <div class="box-header">
-                <div class="shop-search main-box card-block" style="border: 1px solid rgb(204, 204, 204); margin-bottom: 10px; border-radius: 5px; padding-bottom: 0px;">
+                <div class="shop-search main-box card-block">
 
                     <div class="row">
-                        <div class="form-group col-sm-5">
-                            <strong>Name</strong>
+                        <div class="form-group col-sm-4">
+                            <strong>{{ headmaster_strings.NAME_TEXT }}</strong>
                             {% if name is not None %}
-                            <input class="form-control" type="search" value="{{name}}" name="name_contains" />
+                            <input class="form-control" type="search" value="" name="name_contains" />
                             {% else %}
                             <input class="form-control" type="search" name="name_contains"/>
                             {% endif %}
                         </div>
 
-                        <div class="form-group col-sm-5">
-                            <strong>School</strong>
+                        <div class="form-group col-sm-4">
+                            <strong>{{ headmaster_strings.SCHOOL_TEXT }}</strong>
                             {% if school is not None %}
-                            <input class="form-control " type="search" value="{{school}}" name="school_contains" />
+                            <input class="form-control " type="search" value="" name="school_contains" />
                             {% else %}
                             <input class="form-control " type="search" name="school_contains" />
                             {% endif %}
                         </div>
+                        <div class="form-group col-sm-4">
+                            <strong>{{ headmaster_strings.MOBILE_TEXT }}</strong>
+                            {% if school is not None %}
+                                <input class="form-control " type="search" value="" name="mobile_contains" />
+                            {% else %}
+                                <input class="form-control " type="search" name="mobile_contains" />
+                            {% endif %}
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <strong>{{ headmaster_strings.DIVISION_TEXT }}</strong>
+                            {% if name is not None %}
+                                <input class="form-control" type="search" value="" name="division_contains" />
+                            {% else %}
+                                <input class="form-control" type="search" name="division_contains"/>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group col-sm-3">
+                            <strong>{{ headmaster_strings.DISTRICT_TEXT }}</strong>
+                            {% if school is not None %}
+                                <input class="form-control " type="search" value="" name="district_contains" />
+                            {% else %}
+                                <input class="form-control " type="search" name="district_contains" />
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ headmaster_strings.UPAZILA_TEXT }}</strong>
+                            {% if school is not None %}
+                                <input class="form-control " type="search" value="" name="upazila_contains" />
+                            {% else %}
+                                <input class="form-control " type="search" name="upazila_contains" />
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <strong>{{ headmaster_strings.UNION_TEXT }}</strong>
+                            {% if school is not None %}
+                                <input class="form-control " type="search" value="" name="union_contains" />
+                            {% else %}
+                                <input class="form-control " type="search" name="union_contains" />
+                            {% endif %}
+                        </div>
+                    </div>
+
                     <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary search-headmaster">Search</button>
+                        <button type="submit" class="btn btn-primary search-headmaster">{{ common_strings.SEARCH_BUTTON }}</button>
                     </div>
                     <div class="clearfix"></div>
-
-
                 </div>
             </div>
 
@@ -47,7 +88,7 @@
             <div class="box-header">
                 <span id = "alert_placeholder">
                     {% if messages %}
-                    <div id="alertdiv" style="font-size:20px;margin-top:15px;" class="alert alert-success-customized">
+                    <div id="alertdiv" class="alert alert-success-customized">
                         <span>
                             {% for message in messages %}
                             {{ message }}
@@ -60,36 +101,40 @@
                    class="btn btn-primary pull-right"
                    href="{% url 'headmasters:headmaster_profile' %}">
                     <span class="fa fa-plus"></span>
-                    New Headmaster
+                    {{ headmaster_strings.NEW_HEADMASTER_BUTTON }}
                 </a>
-                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-headmaster pull-right">Export CSV</button>
+                <button type="submit" style="margin-right: 5px;" class="btn btn-primary export-headmaster pull-right">{{ common_strings.EXPORT_CSV_BUTTON_TEXT }}</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
                 <table   id="example1" class=" headmaster-search-table table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th class="col-sm-2">Name</th>
-                        <th class="col-sm-2">Username</th>
-                        <th class="col-sm-4">School</th>
-                        <th class="col-sm-2">Mobile</th>
-                        <th class="col-sm-2">Actions</th>
+                        <th class="col-sm-3">{{ headmaster_strings.NAME_TEXT }}</th>
+                        <th class="col-sm-1">{{ headmaster_strings.MOBILE_TEXT }}</th>
+                        <th class="col-sm-4">{{ headmaster_strings.SCHOOL_TEXT }}</th>
+                        <th class="col-sm-1">{{ headmaster_strings.DIVISION_TEXT }}</th>
+                        <th class="col-sm-1">{{ headmaster_strings.DISTRICT_TEXT }}</th>
+                        <th class="col-sm-1">{{ headmaster_strings.UPAZILA_TEXT }}</th>
+                        <th class="fixed-col col-sm-1 text-center">{{ common_strings.LIST_ACTION_TEXT }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for headmaster in queryset %}
                     <tr>
                         <td>{{headmaster.user.first_name}}</td>
-                        <td>{{ headmaster.user.email }}</td>
-                        <td>{{ headmaster.school }}</td>
                         <td>{{ headmaster.mobile }}</td>
+                        <td>{{ headmaster.school }}</td>
+                        <td>{{ headmaster.school.division }}</td>
+                        <td>{{ headmaster.school.district }}</td>
+                        <td>{{ headmaster.school.upazilla }}</td>
                         <td align="center">
-                            <a type="button" style="margin-right:10px"
+                            <a type="button" style="margin-right:10px" class="view-icon"
                                href="{% url 'headmasters:headmaster_detail' headmaster.pk %}">
                                 <span class="fa fa-eye"></span>
                             </a>
                             <a type="button"
-                               class=""
+                               class="update-icon"
                                href="{% url 'headmasters:headmaster_update' headmaster.pk %}">
                                 <span class="fa fa-edit"></span>
 
@@ -103,7 +148,11 @@
 
                     </tfoot>
                 </table>
-                <p class="table-information">Showing {{ queryset.start_index }} to {{ queryset.end_index }} of {{ queryset.paginator.count }} entries</p>
+                {% if queryset %}
+                    <p class="table-information">{% format_values common_strings.PAGINATION_INFO queryset.start_index queryset.end_index queryset.paginator.count %}</p>
+                {% else %}
+                    <p class="table-information">{{common_strings.PAGINATION_NULL_INFO_TEXT}}</p>
+                {% endif %}
                 <ul class="pagination" style="float: right">
 
                     {% if queryset.has_previous %}
@@ -141,12 +190,22 @@
 
     <!-- /.content -->
 </section>
+    {% block extra_css %}
+        <style>
+        .shop-search{
+            border: 1px solid rgb(204, 204, 204);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding-bottom: 0px;
+        }
+        </style>
+        {% endblock %}
 {% endblock %}
 
 {% block extra_js %}
 <script>
     $(function () {
-        var name, school;
+        var name, school, mobile, division, district, upazila, union;
         $('.headmaster-search-table').dataTable({
             'lengthChange': false,
             'searching': false,
@@ -160,13 +219,24 @@
             $(".headmaster-search-table").DataTable().destroy();
             name_contains = $("input[name='name_contains']").val();
             school_contains = $("input[name='school_contains']").val();
-            name = name_contains, school = school_contains;
+            mobile_contains = $("input[name='mobile_contains']").val();
+            division_contains = $("input[name='division_contains']").val();
+            district_contains = $("input[name='district_contains']").val();
+            upazila_contains = $("input[name='upazila_contains']").val();
+            union_contains = $("input[name='union_contains']").val();
+            name = name_contains, school = school_contains, mobile = mobile_contains, division = division_contains,
+            district = district_contains, upazila = upazila_contains, union = union_contains;
             $.ajax({
                 type: 'GET',
                 url: '/headmasters/search_headmaster_list/',
                 data: {
                     'name_contains': name_contains,
                     'school_contains': school_contains,
+                    'mobile_contains' : mobile_contains,
+                    'division_contains' : division_contains,
+                    'district_contains': district_contains,
+                    'upazila_contains' : upazila_contains,
+                    'union_contains' : union_contains,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 success: function (data) {
@@ -180,15 +250,30 @@
                         'info': false,
                         'paging': false,
                         'ordering'    : false,
+                        "language": {
+                            "emptyTable":     "No Result Found"
+                        }
                     });
                 }
             });
         });
         // auto suggesion
-        autoSuggesion('/load_previous_users/', "input[name='name_contains']");
+        autoSuggesion('/load_previous_headmaster/', "input[name='name_contains']");
         autoSuggesion('/load_previous_schools/', "input[name='school_contains']");
+        autoSuggesion('/load_previous_divisions/', "input[name='division_contains']");
+        autoSuggesion('/load_previous_districts/', "input[name='district_contains']");
+        autoSuggesion('/load_previous_upazillas/', "input[name='upazila_contains']");
+        autoSuggesion('/load_previous_unions/', "input[name='union_contains']");
+        autoSuggesion('/load_previous_headmaster_mobile/', "input[name='mobile_contains']");
+
+        $('.box-body').on('click', '.paginator', function (e) {
+            e.preventDefault();
+            var addressValue = $(this).attr("href");
+            var url = '/headmasters/search_headmaster_list/'+addressValue;
+            paginator(".table-responsive", url, '.headmaster-search-table', {'name': name, 'school':school, 'division':division,
+                'district':district, 'upazila':upazila, 'union':union, 'form_date':'', 'to_date':'', 'topic':'','mobile':mobile});
+        });
         // auto suggesion
-        pagination(".box-body", '/headmasters/search_headmaster_list/', name, school, '.box-body .headmaster-search-table');
     });
     //for headmaster search export
     $(".export-headmaster").click(function() {

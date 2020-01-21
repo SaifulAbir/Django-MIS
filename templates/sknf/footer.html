@@ -26,6 +26,7 @@
 <script src="{% static 'sknf/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'sknf/js/tempusdominus-bootstrap-3.js' %}"></script>
 <script src="{% static 'sknf/js/cropper.min.js' %}"></script>
+<script src="{% static 'sknf/js/common.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 <!--<script src="{% static 'sknf/js/jquery-cropper.min.js' %}"></script>-->
 <script>
@@ -216,6 +217,12 @@
             $("#modalCrop").modal('hide');
             $("#id_PF-image").val("");
         });
+
+        $('.close').click(function() {
+            $("#id_PF-image").val("");
+
+        });
+
     });
     function autoSuggesion(url, id) {
         var previousItems = new Bloodhound({
@@ -310,7 +317,8 @@
                 'union_contains': opts['union'],
                 'fromdate_contains': opts['form_date'],
                 'todate_contains': opts['to_date'],
-                'topics_contains': opts['topic']
+                'topics_contains': opts['topic'],
+                'mobile_contains' : opts['mobile']
             },
             success: function (data) {
                 $(id).html(data.html_list);
