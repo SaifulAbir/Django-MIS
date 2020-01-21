@@ -49,7 +49,7 @@ def delete_event(request):
     return HttpResponse('ok')
 
 def event_list(request):
-    qs = Event.objects.all()
+    qs = Event.objects.order_by('start_date')
     from_date = request.POST.get('start_date')
     print(from_date)
     if from_date :
