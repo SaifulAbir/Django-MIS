@@ -423,3 +423,6 @@ ul#id_EPA-attendance {
 .image-width{
     max-width: 100%;
 }
+#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(2)  {
+    display: none;
+}

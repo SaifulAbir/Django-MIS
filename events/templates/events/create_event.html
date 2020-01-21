@@ -83,6 +83,7 @@
         #btnDeleteEvent{
             display: none;
         }
+
     </style>
 {% endblock %}
 {% block extra_js %}
@@ -101,11 +102,36 @@
 
         $(function () {
             $('#id_title').prop('required',true);
+
+
+
             $('#calendar').fullCalendar({
+                customButtons: {
+                    calendar: {
+                        text: 'Calendar',
+                        click: function() {
+                            $(this).addClass("fc-state-active");
+                            $(".fc-list-button").removeClass("fc-state-active");
+                            $("#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(2)").hide();
+                            $("#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(1)").show();
+                            $(".fc-month-button").trigger("click");
+                        }
+                    },
+                    list: {
+                        text: 'List',
+                        click: function() {
+                            $(this).addClass("fc-state-active");
+                            $(".fc-calendar-button").removeClass("fc-state-active");
+                            $("#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(1)").hide();
+                            $("#calendar .fc-toolbar .fc-right .fc-button-group:nth-child(2)").show();
+                            $(".fc-listMonth-button").trigger("click");
+                        }
+                    }
+                },
                 header    : {
                     left  : 'prev,next today',
                     center: 'title',
-                    right : 'month,agendaWeek,agendaDay, listMonth,listWeek,listDay'
+                    right : 'month,agendaWeek,agendaDay, listMonth,listWeek,listDay calendar,list,'
                 },
                 defaultView: 'month',
                 buttonText: {
@@ -116,6 +142,7 @@
                     listMonth : "Month",
                     listWeek : 'Week',
                     listDay : 'Day',
+                    test : 'TEst',
 
                 },
                 longPressDelay: 50,
@@ -144,7 +171,7 @@
                     $("#id_title" ).prop( "disabled", true );
                     $("#btnSaveEvent" ).prop( "disabled", false );
                     $('#id_title').val(calEvent.title);
-                    $('#eventId').val(calEvent.id);
+                    //$('#eventId').val(calEvent.id);
                     $('#id_start').val(startDateWithTime);
                     $('#id_end').val(endDateWithTime);
                     $('#btnSaveEvent').val('{{common_strings.EDIT_BUTTON}}');
@@ -170,8 +197,8 @@
                 },
                 select: dateSelected
             });
-            $('.fc-listMonth-button,.fc-listWeek-button, .fc-listDay-button').prepend('<i class="fa fa-align-left"></i> ');
-            $('.fc-month-button,.fc-agendaWeek-button, .fc-agendaDay-button').prepend('<i class="fa fa-calendar"></i> ');
+            $('.fc-list-button').prepend('<i class="fa fa-align-justify"></i> ');
+            $('.fc-calendar-button').prepend('<i class="fa fa-calendar"></i> ');
         });
 
 
@@ -226,33 +253,14 @@
         });
 
         function clickSaveEvent() {
-            var btnValue = $("#btnSaveEvent").val();
-            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
-                return false;
-            }
-
-            if (btnValue == '{{common_strings.UPDATE_BUTTON}}'){
-                var eventId = $("#eventId").val();
-                if (!eventId){
-                    eventId = '';
-                }
-            }
-            if (btnValue == 'Export'){
-                $('#submitForm').submit();
-            }
             var title = $('#id_title').val();
             var start = $('#id_start').val();
             var end = $('#id_end').val();
-
             var standardStartDate = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardStartDateForDB = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
             var standardEndDate = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardEndDateForDB = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
-            console.log(standardEndDateForDB);
-            var start_date = $('#id_start').val();
-            var end_date = $('#id_end').val();
-            console.log(start_date);
-            console.log(end_date);
+
             if (standardEndDateForDB>=standardStartDateForDB){
                 if(title){
                     $.ajax({
@@ -262,10 +270,10 @@
                             'title': title,
                             'start': standardStartDateForDB,
                             'end': standardEndDateForDB,
-                            'eventId': eventId,
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                         },
                         success: function (data) {
+                            $('#eventId').val(data);
                             $('#btnSaveEvent').prop('disabled', true);
                             $("#modal-event").modal('hide');
                             $("#calendar").fullCalendar('addEventSource', [{
@@ -291,39 +299,21 @@
 
 
         function clickUpdateEvent() {
-            var btnValue = $("#btnSaveEvent").val();
-            if (btnValue == '{{common_strings.EDIT_BUTTON}}'){
-                return false;
-            }
-
-            if (btnValue == '{{common_strings.UPDATE_BUTTON}}'){
-                var eventId = $("#eventId").val();
-                if (!eventId){
-                    eventId = '';
-                }
-            }
-            if (btnValue == 'Export'){
-                $('#submitForm').submit();
-            }
-
-
             var title = $('#id_title').val();
             var start = $('#id_start').val();
             var end = $('#id_end').val();
+            var eventId = $('#eventId').val();
 
             var standardStartDate = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardStartDateForDB = moment(start, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
             var standardEndDate = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD h:mm A');
             var standardEndDateForDB = moment(end, 'DD-MM-YYYY h:mm A').format('YYYY-MM-DD HH:mm:ss');
-            console.log(standardEndDateForDB);
-            var start_date = $('#id_start').val();
-            var end_date = $('#id_end').val();
 
-            if (end_date>=start_date){
+            if (standardEndDateForDB>=standardStartDateForDB){
                 if(title){
                     $.ajax({
                         type: 'POST',
-                        url: '/events/api/add_event/',
+                        url: '/events/api/update_event/',
                         data: {
                             'title': title,
                             'start': standardStartDateForDB,
@@ -338,7 +328,6 @@
                             var eventobj = $('#calendar').fullCalendar('clientEvents', $("#event_id_js").val());
                             eventobj[0].title = title;
                             $('#calendar').fullCalendar('updateEvent', eventobj[0]);
-
                         }
                     });
                 }
@@ -355,6 +344,7 @@
         }
 
         $(function () {
+            $(".fc-calendar-button").addClass("fc-state-active");
             $('#datetimepicker7,#datetimepicker8').datetimepicker({
                 useCurrent: true,
                 autoclose: true,
