@@ -42,8 +42,10 @@
     }
 
     $(".customer-select2").select2();
-    function goBack() {
-        window.history.back();
+    function goBack(e) {
+        e = e || window.event;
+        e.preventDefault();
+        history.go(-1);
     }
     $(document).ready(function () {
         $('.sidebar-menu').tree();
