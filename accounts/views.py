@@ -270,6 +270,10 @@ def home_login(request):
     form = PrettyAuthenticationForm()
     data = dict()
     qs = School.objects.all()
+    school_total = School.objects.count()
+    headmaster_total = User.objects.filter(user_type__in=[2, ]).count()
+    skleader_total = User.objects.filter(user_type__in=[5, ]).count()
+    skmember_total = SkMemberProfile.objects.all().count()
     name = request.POST.get('name_contains')
     division = request.GET.get('division_contains')
     district = request.GET.get('district_contains')
@@ -286,7 +290,8 @@ def home_login(request):
     if union != '' and union is not None:
         qs = qs.filter(union__name__icontains=union)
     return render(request, 'accounts/home_login.html', {'name': name, 'division': division, 'district': district, 'upazilla': upazilla, 'union': union,
-                                                        'form':form, 'next_destination':next_destination, 'account_strings': account_strings, 'common_strings':common_strings})
+                                                        'form':form, 'next_destination':next_destination, 'account_strings': account_strings, 'common_strings':common_strings,
+                                                        'school_total': school_total, 'headmaster_total': headmaster_total, 'skleader_total': skleader_total, 'skmember_total': skmember_total})
 
 def search_school_list(request):
     data = dict()
