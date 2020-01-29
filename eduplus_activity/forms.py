@@ -92,9 +92,9 @@ class EditEduPlusActivityForm(forms.ModelForm):
         else:
             school_profile = None
         # prev_member = EduPlusActivity.attendance.through.objects.filter(eduplusactivity_id=self.instance)
-        sk_profile = SkMemberProfile.objects.filter(school__id=school_profile.id, user__user_type=6)
+        sk_profile = SkMemberProfile.objects.filter(school__id=school_profile.id)
         # prev_sk = (prev_member | sk_profile).distinct()
-        u_profile = User.objects.filter(skmember_profile__in=sk_profile)
+        #u_profile = User.objects.filter(skmember_profile__in=sk_profile)
         # self.fields['attendance'].queryset = prev_member
         # self.fields['attendance'].queryset = u_profile
 # class MeetingTopicsForm(forms.ModelForm):
