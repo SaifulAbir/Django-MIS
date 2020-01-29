@@ -45,7 +45,7 @@ class EduplusActivityTest(TestCase):
                                    roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
         skleader.save()
         self.skleader = skleader
-        sk = SkMemberProfile(school=self.school, user=self.user, gender='M', student_class='6',
+        sk = SkMemberProfile(school=self.school, gender='M', student_class='6',
                             roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
 
         t1= Topics(name='Knowledge')
@@ -89,11 +89,11 @@ class EduplusActivityTest(TestCase):
 
     def test__if_required_data_is_given__should_pass(self):
         topic = Topics.objects.exclude(name='')
-        user = User.objects.filter(user_type='6')
+        user = SkMemberProfile.objects.all()
         instance = EduPlusActivity.objects.create(date=timezone.now(), school=self.school,presence_skleader=True, skleader=self.skleader,method=self.method, description='Nothing done')
 
         instance.topics.set(topic)
-        instance.attendance.set(user)
+        instance.student_attendance.set(user)
         try:
             instance.full_clean()
         except:
@@ -123,11 +123,11 @@ class EduplusActivityTest(TestCase):
         self.assertTrue(logged_in)
         eduplus_activity_count = EduPlusActivity.objects.count()
         topic = Topics.objects.exclude(name='')
-        user = User.objects.filter(user_type='6')
+        user = SkMemberProfile.objects.all()
         instance = EduPlusActivity.objects.create(date=timezone.now(), school=self.school, presence_skleader=True,skleader=self.skleader,method=self.method,
                                                   description='Nothing done')
         instance.topics.set(topic)
-        instance.attendance.set(user)
+        instance.student_attendance.set(user)
         eduplus_activity_response = self.client.get(reverse('eduplus_activity:eduplus_activity_report_list'), follow=True)
         self.assertEqual(EduPlusActivity.objects.count(), eduplus_activity_count + 1)
         self.assertContains(response=eduplus_activity_response, status_code=200,
