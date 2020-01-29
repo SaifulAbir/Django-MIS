@@ -47,19 +47,19 @@
                 <h5 class="sign-in-info">{{account_strings.SIGN_IN_INFO}}</h5>
                 {% csrf_token %}
                 {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}
-                <p class="text-danger error-info">{{ error }}</p>
-                {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <p class="text-danger error-info">{{ error }}</p>
+                    {% endfor %}
                 {% endif %}
                 {% if messages %}
-                {% for message in messages %}
-                <p class="text-danger text-center error-msg">{{ message }}</p>
-                {% endfor %}
+                    {% for message in messages %}
+                        <p class="text-danger text-center error-msg">{{ message }}</p>
+                    {% endfor %}
 
                 {% endif %}
                 {% if next_destination %}
-                <p class="text-danger login-msge" >
-                    {{account_strings.PERMISSION_ERROR_MESSAGE}}</p>
+                    <p class="text-danger login-msge" >
+                        {{account_strings.PERMISSION_ERROR_MESSAGE}}</p>
                 {% endif %}
                 <div class="">
                     <div class="form-group">
@@ -80,7 +80,7 @@
         </div>
     </div>
 </header>
-<main>
+<main class="main-height">
     <div class="row main-container">
         <div class="col-md-6" id="result-wrapper">
             <div class="container-fluid">
@@ -96,40 +96,86 @@
             </div>
         </div>
         <div class="col-md-6" id="form-wrapper">
+            <div class="sknf-stat">
+                <div class="row">
+                    <div class="col-md-6">
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>{{school_total}}</h3>
+                                    <p>{{ account_strings.SCHOOLS_COUNT_TEXT }}</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-university"></i>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>{{headmaster_total}}</h3>
+                                    <p>{{ account_strings.HEADMASTER_COUNT_TEXT }}</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                            <div class="small-box bg-red">
+                                <div class="inner">
+                                    <h3>{{skleader_total}}</h3>
+                                    <p>{{account_strings.SK_LEADER_COUNT_TEXT}}</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-user-plus"></i>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3>{{skmember_total}}</h3>
+                                <p>{{account_strings.SK_MEMBER_COUNT_TEXT}}</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form role="form" class="text-center" id="search-form-id">
-                <div class="box-header">
+                <div class="box-header" style="padding-top: 0px">
                     <h3 class="text-center sknf-info">{{account_strings.SCHOOL_SEARCH_INFO}}<br>{{account_strings.SEARCH_MESSAGE}}</h3>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-8 col-md-offset-2">
                         <div class="form-group">
                             <input type="text" name="name_contains" class="form-control typehead tt-query" id="school-name" autocomplete="off" placeholder="{{account_strings.SEARCH_SCHOOL_PLACEHOLDER}}">
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-4 col-md-offset-2">
                         <div class="form-group">
                             <input type="text" name="division_contains" class="form-control typehead tt-query" id="division-name" autocomplete="off" placeholder="{{account_strings.SEARCH_DIVISION_PLACEHOLDER}}">
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <input type="text" name="district_contains" class="form-control typehead tt-query" id="district-name" autocomplete="off" placeholder="{{account_strings.SEARCH_DISTRICT_PLACEHOLDER}}">
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-4 col-md-offset-2">
                         <div class="form-group">
                             <input type="text" name="upazilla_contains" class="form-control typehead tt-query" id="upazilla-name" autocomplete="off" placeholder="{{account_strings.SEARCH_UPAZILLA_PLACEHOLDER}}">
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <input type="text" name="union_contains" class="form-control typehead tt-query" id="union-name" autocomplete="off" placeholder="{{account_strings.SEARCH_UNION_PLACEHOLDER}}">
                         </div>
@@ -144,7 +190,7 @@
                 </div>
                 <!-- /.box-body -->
             </form>
-            <h3 class="text-center sknf-info">{{account_strings.SKNF_WEB_INFO}}<a href="http://www.shornokishoree.org/" target="_blank">{{account_strings.SKNF_WEB_URL}}</a></h3>
+            <h4 class="text-center sknf-info">{{account_strings.SKNF_WEB_INFO}}<a href="http://www.shornokishoree.org/" target="_blank">{{account_strings.SKNF_WEB_URL}}</a></h4>
         </div>
         <div class="col-md-6 main-container-col">
             <div id="map"></div>
@@ -158,11 +204,11 @@
     </div>
 </main>
 
-<footer>
-    <div class="pull-right">
-        <b>{{account_strings.VERSION_TEXT}}</b>{{APP_VERSION_NUMBER}}
+<footer class="container-fluid">
+    <div class="row footer-row">
+        <div class="col-md-6"><strong>{{account_strings.COPYRIGHT_TEXT_LOGIN}}</strong> {{account_strings.ALL_RIGHTS_RESERVED}}</div>
+        <div class="col-md-6 text-right"><b>{{account_strings.VERSION_TEXT}}</b>{{APP_VERSION_NUMBER}}</div>
     </div>
-    <strong>{{account_strings.COPYRIGHT_TEXT_LOGIN}}</strong> {{account_strings.ALL_RIGHTS_RESERVED}}
 </footer>
 <style>
     .login-msge{

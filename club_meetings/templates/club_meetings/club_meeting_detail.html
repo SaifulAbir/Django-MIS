@@ -86,11 +86,13 @@
                        href="javascript:void(0)">
                         {{common_strings.BACK_BUTTON}}
                     </a>
+                    {% if user.is_authenticated and user.user_type != 1 %}
                     <a type="button"
                        class="btn btn-primary pull-right"
                        href="{% url 'club_meetings:club_meeting_update' club_meeting_detail.pk %}">
                         {{common_strings.EDIT_BUTTON}}
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
