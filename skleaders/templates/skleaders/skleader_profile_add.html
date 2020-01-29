@@ -3,23 +3,12 @@
     {% load widget_tweaks %}
     {% load static %}
     <form method='POST' enctype="multipart/form-data" novalidate>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <section class="content-header"style="padding-top:60px">
-            <h1>Add New SK Leader</h1>
-=======
-=======
->>>>>>> feature/hotfix_0.9
         <section class="content-header">
             {% if not profile_form.instance.pk %}
                 <h1>{{ skleader_strings.NEW_SKLEADER_PAGE_TITLE }}</h1>
             {% else %}
                 <h1>{{ skleader_strings.UPDATE_SKLEADER_PAGE_TITLE }}</h1>
             {% endif %}
-<<<<<<< HEAD
->>>>>>> feature/admin_skleader
-=======
->>>>>>> feature/hotfix_0.9
         </section>
         <section class="content">
             <div class="row">
@@ -38,16 +27,7 @@
                                 <div class="box-body">
                                     <span id = "alert_placeholder">
                                     {% if user_form.errors or profile_form.errors %}
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                        <div id="alertdiv" style="font-size:15px;margin-top:15px;padding-top: 2px;
-                                        padding-bottom: 3px;" class="alert alert-danger-error-message">
-=======
-                                    <div id="alertdiv">
->>>>>>> feature/admin_skleader
-=======
                                     <div id="alertdiv" class="alert alert-danger-error-message">
->>>>>>> feature/hotfix_0.9
                                         <span>
                                             {% for field in user_form %}
                                                 <li class="help-block">{{ field.errors|striptags }}</li>
