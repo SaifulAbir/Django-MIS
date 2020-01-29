@@ -152,7 +152,7 @@ input#id_CMF-presence_skleader {
     margin-left: 40px;
 }
 
-ul#id_CMF-attendance {
+ul#id_CMF-student_attendance {
     list-style: NONE;
 }
 
@@ -282,7 +282,7 @@ input#id_EPA-presence_skleader {
     /* padding-left: 10px; */
     margin-left: 40px;
 }
-ul#id_EPA-attendance {
+ul#id_EPA-student_attendance {
     list-style: none;
 }
 

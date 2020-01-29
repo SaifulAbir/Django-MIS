@@ -22,7 +22,7 @@ class ClubMeetingForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         queryset=Topics.objects.all(),
         required=True, error_messages={'required': strings.ONE_TOPIC_REQUIRED})
-    attendance = forms.ModelMultipleChoiceField(
+    student_attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(attrs={'checked': 'checked'}),
         queryset=None,
         required=True, error_messages={'required': strings.ATTENDANCE_REQUIRED})
@@ -31,7 +31,7 @@ class ClubMeetingForm(forms.ModelForm):
                              error_messages={'invalid': _(strings.IMAGE_FILE_ONLY)}, widget=forms.FileInput)
     class Meta:
         model= ClubMeetings
-        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "attendance", 'image_base64']
+        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "student_attendance", 'image_base64']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
@@ -49,9 +49,9 @@ class ClubMeetingForm(forms.ModelForm):
         else:
             school_profile = None
 
-        sk_profile = SkMemberProfile.objects.filter(school__id=school_profile.id, user__user_type=6)
-        u_profile = User.objects.filter(skmember_profile__in=sk_profile)
-        self.fields['attendance'].queryset = u_profile
+        sk_profile = SkMemberProfile.objects.filter(school__id=school_profile.id)
+        # u_profile = User.objects.filter(skmember_profile__in=sk_profile)
+        self.fields['student_attendance'].queryset = sk_profile
 
 class EditClubMeetingForm(forms.ModelForm):
     presence_guide_teacher = forms.BooleanField(required=False)
@@ -62,16 +62,16 @@ class EditClubMeetingForm(forms.ModelForm):
         queryset=Topics.objects.all(),
         required=True, error_messages={'required': strings.ONE_TOPIC_REQUIRED})
     image_base64 = forms.CharField(required=False, widget=forms.HiddenInput())
-    attendance = forms.ModelMultipleChoiceField(
+    student_attendance = forms.ModelMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        queryset=User.objects.filter(user_type=6),
+        queryset=SkMemberProfile.objects.all(),
         required=True, error_messages={'required': strings.ATTENDANCE_REQUIRED})
     date = forms.DateField(widget=forms.DateInput(format = '%d-%m-%Y'), input_formats=('%d-%m-%Y',),error_messages={'required': strings.DATE_REQUIRED})
     image = forms.ImageField( required=False,
                              error_messages={'invalid': _(strings.IMAGE_FILE_ONLY)}, widget=forms.FileInput)
     class Meta:
         model= ClubMeetings
-        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "attendance", 'image_base64']
+        fields=["date", "class_room", "presence_guide_teacher", "image", "topics", "presence_skleader", "student_attendance", 'image_base64']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
@@ -87,7 +87,7 @@ class EditClubMeetingForm(forms.ModelForm):
             school_profile = get_object_or_404(School, pk=h_profile.school.id)
         else:
             school_profile = None
-        prev_member = ClubMeetings.attendance.through.objects.filter(clubmeetings_id=self.instance)
+        # prev_member = ClubMeetings.attendance.through.objects.filter(clubmeetings_id=self.instance)
         sk_profile = SkMemberProfile.objects.filter(school__id=school_profile.id, user__user_type=6)
         # prev_sk = (prev_member | sk_profile).distinct()
         u_profile = User.objects.filter(skmember_profile__in=sk_profile)

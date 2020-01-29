@@ -66,18 +66,18 @@
                                     {% render_field club_meeting_form.presence_skleader class="" placeholder=club_meeting_form.presence_skleader.label %}
                                     <label for="{{ club_meeting_form.presence_skleader.id_for_label }}">{{skleader_meeting_eduplus.user.first_name}} (SK Leader)</label>
                                     {% if not club_meeting_form.instance.pk %}
-                                    {% render_field club_meeting_form.attendance class="" placeholder=club_meeting_form.attendance.label %}
+                                    {% render_field club_meeting_form.student_attendance class="" placeholder=club_meeting_form.student_attendance.label %}
                                     {% endif %}
                                 </div>
-                                <ul id="id_CMF-attendance">
-                                    {% for club in club_meeting.attendance.all %}
-                                    <li><label for="id_CMF-attendance_0"><input type="checkbox" name="CMF-attendance" value="{{club.id}}" class="" checked="">
-                                        {{club.first_name}}</label>
+                                <ul id="id_CMF-student_attendance">
+                                    {% for club in club_meeting.student_attendance.all %}
+                                    <li><label for="id_CMF-student_attendance_0"><input type="checkbox" name="CMF-student_attendance" value="{{club.id}}" class="" checked="">
+                                        {{club.name}}</label>
                                     </li>
                                     {% endfor %}
                                             {% for member in all_member %}
-                                    <li><label for="id_CMF-attendance_0"><input type="checkbox" name="CMF-attendance" value="{{member.id}}"class="">
-                                        {{member.first_name}}</label>
+                                    <li><label for="id_CMF-student_attendance"><input type="checkbox" name="CMF-student_attendance" value="{{member.id}}"class="">
+                                        {{member.name}}</label>
                                     </li>
                                     {% endfor %}
                                 </ul>

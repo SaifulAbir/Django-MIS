@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from accounts.models import User
+from headmasters.models import HeadmasterProfile
 from school.models import School
 from skleaders.models import SkLeaderProfile
 from topics.models import Topics
@@ -14,9 +15,10 @@ class ClubMeetings(models.Model):
     class_room= models.CharField(max_length=100)
     school = models.ForeignKey(School, on_delete=models.PROTECT, null=True)
     presence_guide_teacher = models.BooleanField(default=False)
+    guide_teacher = models.ForeignKey(HeadmasterProfile, on_delete=models.PROTECT, null=True)
     presence_skleader = models.BooleanField(default=False)
     skleader = models.ForeignKey(SkLeaderProfile, on_delete=models.PROTECT, null=True)
-    attendance= models.ManyToManyField(User, related_name='a_profile')
+    student_attendance= models.ManyToManyField(SkMemberProfile, related_name='a_profile')
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     topics = models.ManyToManyField(Topics)
 
