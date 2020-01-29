@@ -15,7 +15,6 @@ class_choice=(
 )
 
 class SkMemberProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='skmember_profile', blank=True, null=True)
     name = models.CharField((sk_strings.USER_NAME_TEXT), max_length=40)
     email = models.CharField((sk_strings.USER_EMAIL_TEXT), max_length=254, blank=True, null=True)
     mobile = models.CharField(max_length=20, blank=True, null=True)
@@ -27,7 +26,7 @@ class SkMemberProfile(models.Model):
     joining_date = models.DateField(null=False, blank=False, default=timezone.now)
 
     def __str__(self):
-        return self.user.first_name
+        return self.name
     class Meta:
         verbose_name = sk_strings.SKMEMBER_VERBOSE_NAME
         verbose_name_plural = sk_strings.SKMEMBER_VERBOSE_NAME_PLURAL
