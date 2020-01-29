@@ -7,6 +7,7 @@ from django.utils import timezone
 
 from districts.models import District
 from division.models import Division
+from headmasters.models import HeadmasterProfile
 from.models import ClubMeetings,School,Topics,User
 
 from accounts.models import User
@@ -45,10 +46,13 @@ class ClubMeetingsTest(TestCase):
         s2.save()
         self.club_m = s2
 
-        s = SkMemberProfile(school=self.school, user=self.user, gender='M', student_class='6',
+        s = SkMemberProfile(school=self.school, gender='M', student_class='6',
                             roll=10, mobile='018152045', image='a.png', joining_date=timezone.now())
 
-
+        h1 = HeadmasterProfile(user=self.user, school=self.school, joining_date=timezone.now(), image='1.png',
+                              mobile='0181543421')
+        h1.save()
+        self.headmaster = h1
         t1= Topics(name='Knowledge')
         t1.save()
         t2= Topics(name='Learning')
@@ -88,11 +92,11 @@ class ClubMeetingsTest(TestCase):
         self.assertTrue(logged_in)
         club_meeting_count = ClubMeetings.objects.count()
         topic = Topics.objects.exclude(name='')
-        user = User.objects.filter(user_type='6')
+        user = SkMemberProfile.objects.all()
         instance = ClubMeetings.objects.create(date=timezone.now(), school=self.school, class_room='7', presence_guide_teacher='1', skleader = self.skleader,
                          presence_skleader='1')
         instance.topics.set(topic)
-        instance.attendance.set(user)
+        instance.student_attendance.set(user)
         club_meeting_response = self.client.get(reverse('club_meetings:club_meeting_report_list'), follow=True)
         self.assertEqual(ClubMeetings.objects.count(), club_meeting_count + 1)
         self.assertContains(response=club_meeting_response, status_code=200,
@@ -100,11 +104,11 @@ class ClubMeetingsTest(TestCase):
 
     def test__if_required_field_are_given__should_pass(self):
         topic = Topics.objects.exclude(name='')
-        user = User.objects.filter(user_type='6')
-        instance = ClubMeetings.objects.create(school=self.school,class_room='105', skleader = self.skleader)
+        user = SkMemberProfile.objects.all()
+        instance = ClubMeetings.objects.create(school=self.school,class_room='105', skleader = self.skleader, guide_teacher=self.headmaster)
 
         instance.topics.set(topic)
-        instance.attendance.set(user)
+        instance.student_attendance.set(user)
         try:
             instance.full_clean()
         except:
