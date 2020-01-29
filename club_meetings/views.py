@@ -43,6 +43,13 @@ def club_meeting_add(request):
                                                             user__user_type=5).latest('school__id')
             except SkLeaderProfile.DoesNotExist:
                 sk_profile = None
+
+        if school_profile is not None:
+            try:
+                guide_profile = HeadmasterProfile.objects.filter(school__id=school_profile.id,
+                                                            user__user_type=2).latest('school__id')
+            except HeadmasterProfile.DoesNotExist:
+                guide_profile = None
     if request.method == 'POST':
         club_meeting_form = ClubMeetingForm(request.POST, files=request.FILES, prefix='CMF', user=request.user)
         # meeting_topic_form = MeetingTopicsForm(request.POST, prefix='MTF')
@@ -51,6 +58,8 @@ def club_meeting_add(request):
             club_meeting.school = profile.school
             if sk_profile:
                 club_meeting.skleader = sk_profile
+            if guide_profile:
+                club_meeting.guide_teacher = guide_profile
             # image cropping code start here
             img_base64 = club_meeting_form.cleaned_data.get('image_base64')
             if img_base64:
@@ -112,8 +121,8 @@ class ClubMeetingsList(LoginRequiredMixin, generic.ListView):
 def club_meeting_update(request, pk):
     club_meeting = get_object_or_404(ClubMeetings, pk=pk)
     # prev_member = ClubMeetings.attendance.through.objects.filter(clubmeetings_id=club_meeting)
-    sk_profile = SkMemberProfile.objects.filter(school__id=club_meeting.school.id, user__user_type=6)
-    all_member = User.objects.filter(skmember_profile__in=sk_profile)
+    sk_profile = SkMemberProfile.objects.filter(school__id=club_meeting.school.id)
+    # all_member = User.objects.filter(skmember_profile__in=sk_profile)
     if request.method == 'POST':
         club_meeting_form = EditClubMeetingForm(request.POST, request.FILES, instance=club_meeting, prefix='CMF', user=request.user )
         if club_meeting_form.is_valid():
@@ -138,7 +147,7 @@ def club_meeting_update(request, pk):
     return render(request, 'club_meetings/club_meeting_add.html', {
         'club_meeting_form': club_meeting_form,
         'club_meeting': club_meeting,
-        'all_member': all_member,
+        'all_member': sk_profile,
         'club_meeting_strings':club_meeting_strings,
         'common_strings':common_strings
     })

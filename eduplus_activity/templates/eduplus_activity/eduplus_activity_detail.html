@@ -51,7 +51,7 @@
                                         {{skleader_meeting_eduplus.user.first_name}}&nbsp;(SK Leader)
                                     </li>
                                     {% endif %}
-                                    {% for attendance in eduplus_activity_detail.attendance.all %}
+                                    {% for attendance in eduplus_activity_detail.student_attendance.all %}
                                     <li>{{attendance}}</li>
                                     {% endfor %}
                                 </ul>

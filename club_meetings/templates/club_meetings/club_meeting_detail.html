@@ -55,7 +55,7 @@
                                         {{user.first_name}}&nbsp;(SK Leader)
                                     </li>
                                     {% endif %}
-                                    {% for attendance in club_meeting_detail.attendance.all %}
+                                    {% for attendance in club_meeting_detail.student_attendance.all %}
                                     <li>{{attendance}}</li>
                                     {% endfor %}
                                 </ul>
