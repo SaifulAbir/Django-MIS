@@ -64,7 +64,7 @@
                                 <div class="form-group">
                                     <label for="{{ club_meeting_form.attendance.id_for_label }}">{{ club_meeting_strings.CLUB_MEETING_ATTENDANCE_TEXT }}</label><br>
                                     {% render_field club_meeting_form.presence_skleader class="" placeholder=club_meeting_form.presence_skleader.label %}
-                                    <label for="{{ club_meeting_form.presence_skleader.id_for_label }}">{{user.first_name}} (SK Leader)</label>
+                                    <label for="{{ club_meeting_form.presence_skleader.id_for_label }}">{{skleader_meeting_eduplus.user.first_name}} (SK Leader)</label>
                                     {% if not club_meeting_form.instance.pk %}
                                     {% render_field club_meeting_form.attendance class="" placeholder=club_meeting_form.attendance.label %}
                                     {% endif %}
