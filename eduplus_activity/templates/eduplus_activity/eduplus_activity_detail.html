@@ -48,10 +48,10 @@
                                 <ul>
                                     {% if eduplus_activity_detail.presence_skleader %}
                                     <li>
-                                        {{skleader_meeting_eduplus.user.first_name}}&nbsp;(SK Leader)
+                                        {{eduplus_activity_detail.skleader.user.first_name}}&nbsp;(SK Leader)
                                     </li>
                                     {% endif %}
-                                    {% for attendance in eduplus_activity_detail.attendance.all %}
+                                    {% for attendance in eduplus_activity_detail.student_attendance.all %}
                                     <li>{{attendance}}</li>
                                     {% endfor %}
                                 </ul>

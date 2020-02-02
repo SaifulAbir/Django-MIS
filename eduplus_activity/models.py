@@ -6,6 +6,7 @@ import eduplus_activity.strings as eduplus_activity_strings
 from accounts.models import User
 from school.models import School
 from skleaders.models import SkLeaderProfile
+from skmembers.models import SkMemberProfile
 from topics.models import Topics
 
 class Method(models.Model):
@@ -27,7 +28,7 @@ class EduPlusActivity(models.Model):
     school = models.ForeignKey(School, on_delete=models.PROTECT, null=True)
     presence_skleader = models.BooleanField(default=False)
     skleader = models.ForeignKey(SkLeaderProfile, on_delete=models.PROTECT, null=True)
-    attendance= models.ManyToManyField(User, related_name='member_profile')
+    student_attendance= models.ManyToManyField(SkMemberProfile, related_name='member_profile')
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     topics = models.ManyToManyField(Topics)
     method = models.ForeignKey(Method, on_delete=models.PROTECT)

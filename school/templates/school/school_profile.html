@@ -80,12 +80,12 @@
                         {% if skmember.image %}
                         <div class="col-xs-6"align="center">
                             <img class="image-responsive sk-member-image" align="center" src="{{ skmember.image.url }}" alt="Photo">
-                            <p><strong>{{skmember.user}}</strong></p>
+                            <p><strong>{{skmember.name}}</strong></p>
                         </div>
                         {% else %}
                         <div class="col-xs-6" align="center">
                             <img class="image-responsive sk-member-image" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
-                            <p><strong>{{skmember.user}}</strong></p>
+                            <p><strong>{{skmember.name}}</strong></p>
                         </div>
                         {% endif %}
                         {% endfor %}
@@ -167,12 +167,12 @@
                         {% if skmember.image %}
                         <div class="col-xs-6"align="center">
                             <img class="image-responsive sk-member-image" align="center" src="{{ skmember.image.url }}" alt="Photo">
-                            <p><strong>{{skmember.user}}</strong></p>
+                            <p><strong>{{skmember.name}}</strong></p>
                         </div>
                         {% else %}
                         <div class="col-xs-6" align="center">
                             <img class="image-responsive sk-member-image" src="{%static 'sknf/images/blank-profile-picture-973460_960_720.png' %}" alt="Photo">
-                            <p><strong>{{skmember.user}}</strong></p>
+                            <p><strong>{{skmember.name}}</strong></p>
                         </div>
                         {% endif %}
                         {% endfor %}

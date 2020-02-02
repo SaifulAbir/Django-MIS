@@ -52,10 +52,10 @@
                                 <ul>
                                     {% if club_meeting_detail.presence_skleader %}
                                     <li>
-                                        {{user.first_name}}&nbsp;(SK Leader)
+                                        {{club_meeting_detail.skleader.user.first_name}}&nbsp;(SK Leader)
                                     </li>
                                     {% endif %}
-                                    {% for attendance in club_meeting_detail.attendance.all %}
+                                    {% for attendance in club_meeting_detail.student_attendance.all %}
                                     <li>{{attendance}}</li>
                                     {% endfor %}
                                 </ul>

@@ -118,8 +118,8 @@ class EduplusActivityList(LoginRequiredMixin, generic.ListView):
 def edu_plus_activity_update(request, pk):
     edu_plus_activity = get_object_or_404(EduPlusActivity, pk=pk)
     # prev_member = ClubMeetings.attendance.through.objects.filter(clubmeetings_id=club_meeting)
-    sk_profile = SkMemberProfile.objects.filter(school__id=edu_plus_activity.school.id, user__user_type=6)
-    all_member = User.objects.filter(skmember_profile__in=sk_profile)
+    all_member = SkMemberProfile.objects.filter(school__id=edu_plus_activity.school.id)
+    # all_member = User.objects.filter(skmember_profile__in=sk_profile)
     if request.method == 'POST':
         edu_plus_activity_form = EditEduPlusActivityForm(request.POST, request.FILES, instance=edu_plus_activity, prefix='EPA', user=request.user )
         if edu_plus_activity_form.is_valid():
@@ -145,7 +145,6 @@ def edu_plus_activity_update(request, pk):
         'edu_plus_activity_form': edu_plus_activity_form,
         'eduplus_activity': edu_plus_activity,
         'all_member': all_member,
-        'sk_lead': sk_profile,
         'edu_strings':edu_strings,'common_strings':common_strings
     })
 

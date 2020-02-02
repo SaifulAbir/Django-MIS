@@ -60,18 +60,18 @@
                                     {% render_field edu_plus_activity_form.presence_skleader class="" placeholder=edu_plus_activity_form.presence_skleader.label %}
                                     <label for="{{ edu_plus_activity_form.presence_skleader.id_for_label }}">{{skleader_meeting_eduplus.user.first_name}} (SK Leader)</label>
                                     {% if not edu_plus_activity_form.instance.pk %}
-                                    {% render_field edu_plus_activity_form.attendance class="" placeholder=edu_plus_activity_form.attendance.label %}
+                                    {% render_field edu_plus_activity_form.student_attendance class="" placeholder=edu_plus_activity_form.student_attendance.label %}
                                     {% endif %}
                                 </div>
-                                <ul id="id_EPA-attendance">
-                                    {% for eduplus in eduplus_activity.attendance.all %}
-                                    <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{eduplus.id}}" placeholder="{{edu_strings.EDUPLUS_ACTIVITY_LABEL_ATTENDANCE}}" class="" checked="">
-                                        {{eduplus.first_name}}</label>
+                                <ul id="id_EPA-student_attendance">
+                                    {% for eduplus in eduplus_activity.student_attendance.all %}
+                                    <li><label for="id_EPA-student_attendance_0"><input type="checkbox" name="EPA-student_attendance" value="{{eduplus.id}}" placeholder="{{edu_strings.EDUPLUS_ACTIVITY_LABEL_ATTENDANCE}}" class="" checked="">
+                                        {{eduplus.name}}</label>
                                     </li>
                                     {% endfor %}
                                     {% for member in all_member %}
-                                    <li><label for="id_EPA-attendance_0"><input type="checkbox" name="EPA-attendance" value="{{member.id}}" placeholder="{{edu_strings.EDUPLUS_ACTIVITY_LABEL_ATTENDANCE}}" class="">
-                                        {{member.first_name}}</label>
+                                    <li><label for="id_EPA-student_attendance_0"><input type="checkbox" name="EPA-student_attendance" value="{{member.id}}" placeholder="{{edu_strings.EDUPLUS_ACTIVITY_LABEL_ATTENDANCE}}" class="">
+                                        {{member.name}}</label>
                                     </li>
                                     {% endfor %}
                                 </ul>
