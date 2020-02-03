@@ -12,15 +12,15 @@ class EduPlusActivityResource(resources.ModelResource):
     class Meta:
         model = EduPlusActivity
         exclude = ('id','presence_skleader','image','skleader','topics','method')
-        export_order = ('date','topic','method','school', 'attendance','division','district','upazila','union','description' )
+        export_order = ('date','topic','method','school', 'student_attendance','division','district','upazila','union','description' )
         widgets = {
             'date': {'format': '%d.%m.%Y'},
         }
 
 
-    def dehydrate_attendance(self, eduPlusActivity):
+    def dehydrate_student_attendance(self, EduPlusActivity):
         #EduPlusActivity.objects.fil
-        alldata = list(eduPlusActivity.attendance.all())
+        alldata = list(EduPlusActivity.student_attendance.all())
         return len(alldata)
 
     school = fields.Field(
@@ -48,8 +48,8 @@ class EduPlusActivityResource(resources.ModelResource):
     topic = fields.Field(column_name='Topics',
                          attribute='topics', widget=ManyToManyWidget(Method, ',', 'name'))
     method = fields.Field(column_name='Method', attribute='method')
-    attendance = fields.Field(column_name='Attendance',
-                         attribute='attendance', widget=ManyToManyWidget(User, ',', 'first_name'))
+    student_attendance = fields.Field(column_name='Attendance',
+                         attribute='student_attendance', widget=ManyToManyWidget(User, ',', 'first_name'))
     date = fields.Field(column_name='Date',attribute='date')
     description = fields.Field(column_name='Description',attribute='description')
 

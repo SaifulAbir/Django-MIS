@@ -30,10 +30,10 @@ class ClubMeetingResource(resources.ModelResource):
         attribute='school',
         widget=ForeignKeyWidget(School, 'name'))
 
-    attendance = fields.Field(column_name='Attendance', attribute='attendance')
+    student_attendance = fields.Field(column_name='Attendance', attribute='student_attendance')
 
-    def dehydrate_attendance(self, ClubMeetings):
-        return  ClubMeetings.attendance.all().count()
+    def dehydrate_student_attendance(self, ClubMeetings):
+        return  ClubMeetings.student_attendance.all().count()
 
     division = fields.Field(
         column_name='Division',
@@ -58,4 +58,4 @@ class ClubMeetingResource(resources.ModelResource):
     class Meta:
         model = ClubMeetings
         fields = ("date", 'topics', "school","division", 'district')
-        export_order = ('date', 'topics', "school", 'attendance', "division", 'district', 'upazilla')
+        export_order = ('date', 'topics', "school", 'student_attendance', "division", 'district', 'upazilla')
