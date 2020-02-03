@@ -122,18 +122,28 @@ def skmember_update_for_skleader(request, pk):
     school_list = School.objects.all()
     if request.method == 'POST':
         # user_form = EditSkMemberUserForm(request.POST, instance=user_profile)
-        profile_form = EditSkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile)
+        profile_form = EditSkMemberProfileForm(request.POST, request.FILES, instance=skmember_profile, prefix='PF')
         if profile_form.is_valid():
             # user = user_form.save(commit=False)
             # user.save()
             profile = profile_form.save(commit=False)
+            # image cropping code start here
+            img_base64 = profile_form.cleaned_data.get('image_base64')
+            if img_base64:
+                format, imgstr = img_base64.split(';base64,')
+                ext = format.split('/')[-1]
+                filename = str(uuid.uuid4()) + '-skmember.' + ext
+                data = ContentFile(base64.b64decode(imgstr), name=filename)
+                profile.image.save(filename, data, save=True)
+                profile.image = 'images/' + filename
+            # end of image cropping code
             # profile.user = user
             profile.save()
             messages.success(request, sk_strings.SK_MEMBER_UPDATE_MSG)
             return HttpResponseRedirect("/skmembers/skmember_list_for_skleader/")
     else:
         # user_form = EditSkMemberUserForm(instance=user_profile)
-        profile_form = EditSkMemberProfileForm(instance=skmember_profile)
+        profile_form = EditSkMemberProfileForm(instance=skmember_profile, prefix='PF')
 
     return render(request, 'skmembers/skmember_profile_update_for_skleader.html', {
         'profile_form': profile_form,
