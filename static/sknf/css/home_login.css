@@ -441,6 +441,7 @@ and (max-width : 480px) {
         color: #000;
         padding-left: 0px;
         padding-right: 15px;
+        padding-bottom: 10px;
     }
     .col-md-6{
         padding-right: 0px;
