@@ -438,7 +438,6 @@ and (max-width : 480px) {
     #result-wrapper{
         display: none;
         background-color: #ffffff;
-        height: 100%;
         color: #000;
         padding-left: 0px;
         padding-right: 15px;
